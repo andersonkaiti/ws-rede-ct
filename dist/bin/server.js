@@ -1,6 +1,6 @@
 import {
   app
-} from "../chunk-5AMDJ3MJ.js";
+} from "../chunk-SB5KD63V.js";
 
 // bin/server.ts
 import http from "node:http";
