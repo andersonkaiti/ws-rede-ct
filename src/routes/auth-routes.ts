@@ -1,11 +1,13 @@
 import { Router, type Request, type Response } from "express";
+import { clerkMiddleware } from "../middlewares/clerk.ts";
+import { makeClerkAuthController } from "../factories/controllers/clerk.factory.ts";
+
+const { clerkAuthController } = makeClerkAuthController();
 
 const router = Router();
 
-router.get("/auth", (_req: Request, res: Response) => {
-  res.status(200).json({
-    message: "Auth User com Clark",
-  });
+router.get("/", clerkMiddleware, async (req: Request, res: Response) => {
+  await clerkAuthController.handle(req, res);
 });
 
-export { router as AuthRouter };
+export { router as authRoutes };
