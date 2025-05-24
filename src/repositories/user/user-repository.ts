@@ -1,8 +1,8 @@
 import type { PrismaClient } from "@prisma/client";
 import type { IUserRepository } from "./iuser-repository.d.ts";
-import { IUserCreatedEvent } from "../../models/user-created-event.js";
-import { IUserUpdatedEvent } from "../../models/user-updated-event.js";
-import { IUserDeletedEvent } from "../../models/user-deleted-event.js";
+import type { IUserCreatedEvent } from "../../models/user-created-event.js";
+import type { IUserUpdatedEvent } from "../../models/user-updated-event.js";
+import type { IUserDeletedEvent } from "../../models/user-deleted-event.js";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -15,9 +15,19 @@ export class UserRepository implements IUserRepository {
   }: IUserCreatedEvent["data"]) {
     await this.prisma.user.create({
       data: {
-        ...user,
         firstName: first_name,
-        lastName: last_name,
+        lastName: last_name ?? "",
+        id: user.id,
+        createdAt: user.created_at,
+        lastSignInAt: user.last_sign_in_at,
+        updatedAt: user.updated_at,
+        imageUrl: user.image_url,
+        profileImageUrl: user.profile_image_url,
+        privateMetadata: user.private_metadata,
+        publicMetadata: user.public_metadata,
+        unsafeMetadata: user.unsafe_metadata,
+        username: user.username,
+
         emailAddresses: {
           create: email_addresses.map((email) => ({
             emailAddress: email.email_address,
@@ -35,7 +45,9 @@ export class UserRepository implements IUserRepository {
     await this.prisma.user.update({
       where: { id: user.id },
       data: {
-        ...user,
+        firstName: user.first_name,
+        lastName: user.last_name ?? "",
+
         emailAddresses: {
           update: user.email_addresses.map((email) => ({
             where: { id: email.id },
