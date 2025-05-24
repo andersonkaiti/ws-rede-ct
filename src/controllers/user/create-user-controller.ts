@@ -31,7 +31,6 @@ export class CreateUserController {
       if (eventType === "user.created") {
         await this.userRepository.create({
           created_at: new Date(created_at),
-          birthday: new Date(birthday),
           last_sign_in_at: new Date(last_sign_in_at),
           updated_at: new Date(updated_at),
           email_addresses: email_addresses,
