@@ -7,7 +7,7 @@ export interface IUserUpdatedEvent {
 }
 
 export interface Data {
-  birthday: string;
+  birthday?: string;
   created_at: number;
   email_addresses: EmailAddress[];
   external_accounts: any[];

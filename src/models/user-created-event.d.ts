@@ -7,7 +7,7 @@ export interface IUserCreatedEvent {
 }
 
 export interface IData {
-  birthday: Date;
+  birthday?: Date;
   created_at: Date;
   email_addresses: IEmailAddress[];
   external_accounts: any[];
