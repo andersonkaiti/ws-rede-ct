@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String         @id
+  firstName            String
+  lastName             String
+  createdAt            DateTime       @default(now())
+  birthday             DateTime?
+  imageUrl             String?
+  profileImageUrl      String?
+  lastSignInAt         DateTime?
+  updatedAt            DateTime       @updatedAt
+  username             String?
+  emailAddresses       EmailAddress[] @relation("UserEmailAddresses")
+  privateMetadata      Json?
+  publicMetadata       Json?
+  unsafeMetadata       Json?
+}
+
+model EmailAddress {
+  id            String   @id
+  emailAddress  String   @unique
+  object        String
+  verification  Json
+  userId        String
+  userAddresses User     @relation("UserEmailAddresses", fields: [userId], references: [id], map: "EmailAddress_userId_fkey_2", onDelete: Cascade)
+  linkedTo      Json?
+}

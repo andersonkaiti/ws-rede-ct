@@ -1,0 +1,11 @@
+version: "3.4"
+
+services:
+  postgres:
+    image: bitnami/postgresql:17.4.0
+    environment:
+      POSTGRESQL_USER: root
+      ALLOW_EMPTY_PASSWORD: yes
+      POSTGRESQL_DATABASE: rede_ct
+    ports:
+      - "5432:5432"
