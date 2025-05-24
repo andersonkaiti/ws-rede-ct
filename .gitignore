@@ -1,6 +1,6 @@
 .vercel
 
-# Dependency directories
+# dependency directories
 node_modules/
 
 # dotenv environment variable files
