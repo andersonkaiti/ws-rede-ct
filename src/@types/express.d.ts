@@ -1,11 +1,13 @@
-import "express";
+import * as express from "express";
 
-declare module "express" {
-  export interface Request {
-    headers: Request["headers"] & {
-      "svix-id": string;
-      "svix-timestamp": string;
-      "svix-signature": string;
-    };
+declare global {
+  namespace Express {
+    interface Request {
+      headers: express.Request["headers"] & {
+        "svix-id": string;
+        "svix-timestamp": string;
+        "svix-signature": string;
+      };
+    }
   }
 }
