@@ -1,7 +1,7 @@
 import { type Request, type Response } from "express";
-import type { IUserCreatedEvent } from "../../models/user-created-event.js";
-import type { IClerkWebhookService } from "../../services/clerk-webhook/iclerk-webhook.js";
-import type { IUserRepository } from "../../repositories/user/iuser-repository.js";
+import type { IUserCreatedEvent } from "../../models/user-created-event.d.ts";
+import type { IClerkWebhookService } from "../../services/clerk-webhook/iclerk-webhook.d.ts";
+import type { IUserRepository } from "../../repositories/user/iuser-repository.d.ts";
 
 export class CreateUserController {
   constructor(
@@ -31,7 +31,6 @@ export class CreateUserController {
       if (eventType === "user.created") {
         await this.userRepository.create({
           created_at: new Date(created_at),
-          last_sign_in_at: new Date(last_sign_in_at),
           updated_at: new Date(updated_at),
           email_addresses: email_addresses,
           ...rest,

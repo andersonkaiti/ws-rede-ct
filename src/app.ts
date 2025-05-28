@@ -3,6 +3,7 @@ import cors, { type CorsOptions } from "cors";
 import { indexRoutes } from "./routes/index-routes.ts";
 import { authRoutes } from "./routes/auth-routes.ts";
 import { userRoutes } from "./routes/user-routes.ts";
+import { newsRoutes } from "./routes/news-routes.ts";
 
 const app: Application = express();
 
@@ -19,5 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/", indexRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/news", newsRoutes);
 
 export { app };
