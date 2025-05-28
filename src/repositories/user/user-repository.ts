@@ -1,8 +1,8 @@
 import type { PrismaClient } from "@prisma/client";
 import type { IUserRepository } from "./iuser-repository.d.ts";
-import type { IUserCreatedEvent } from "../../models/user-created-event.js";
-import type { IUserUpdatedEvent } from "../../models/user-updated-event.js";
-import type { IUserDeletedEvent } from "../../models/user-deleted-event.js";
+import type { IUserCreatedEvent } from "../../models/user-created-event.d.ts";
+import type { IUserUpdatedEvent } from "../../models/user-updated-event.d.ts";
+import type { IUserDeletedEvent } from "../../models/user-deleted-event.d.ts";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -15,25 +15,18 @@ export class UserRepository implements IUserRepository {
   }: IUserCreatedEvent["data"]) {
     await this.prisma.user.create({
       data: {
-        firstName: first_name,
-        lastName: last_name ?? "",
+        first_name: first_name,
+        last_name: last_name,
         id: user.id,
-        createdAt: user.created_at,
-        lastSignInAt: user.last_sign_in_at,
-        updatedAt: user.updated_at,
-        imageUrl: user.image_url,
-        profileImageUrl: user.profile_image_url,
-        privateMetadata: user.private_metadata,
-        publicMetadata: user.public_metadata,
-        unsafeMetadata: user.unsafe_metadata,
-        username: user.username,
+        created_at: user.created_at,
+        updated_at: user.updated_at,
+        image_url: user.image_url,
+        profile_image_url: user.profile_image_url,
 
-        emailAddresses: {
+        email_addresses: {
           create: email_addresses.map((email) => ({
-            emailAddress: email.email_address,
-            object: email.object,
-            verification: JSON.stringify(email.verification),
-            linkedTo: JSON.stringify(email.linked_to),
+            email_address: email.email_address,
+            linked_to: JSON.stringify(email.linked_to),
             id: email.id,
           })),
         },
@@ -45,17 +38,17 @@ export class UserRepository implements IUserRepository {
     await this.prisma.user.update({
       where: { id: user.id },
       data: {
-        firstName: user.first_name,
-        lastName: user.last_name ?? "",
+        first_name: user.first_name,
+        last_name: user.last_name,
+        image_url: user.image_url,
+        profile_image_url: user.profile_image_url,
 
-        emailAddresses: {
+        email_addresses: {
           update: user.email_addresses.map((email) => ({
             where: { id: email.id },
             data: {
-              emailAddress: email.email_address,
-              object: email.object,
-              verification: JSON.stringify(email.verification),
-              linkedTo: JSON.stringify(email.linked_to),
+              email_address: email.email_address,
+              linked_to: JSON.stringify(email.linked_to),
             },
           })),
         },
