@@ -5,24 +5,40 @@ import type { INewsDTO, IUpdateNewsDTO } from "../../dto/news.js";
 export class NewsRepository implements INewsRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create({ title, content, author_id }: INewsDTO): Promise<News> {
+  async create({
+    title,
+    content,
+    author_id,
+    image_url,
+  }: INewsDTO): Promise<News> {
     return await this.prisma.news.create({
       data: {
         title,
         content,
         author_id,
+        image_url,
+      },
+      include: {
+        author: true,
       },
     });
   }
 
   async findAll(): Promise<News[]> {
-    return await this.prisma.news.findMany();
+    return await this.prisma.news.findMany({
+      include: {
+        author: true,
+      },
+    });
   }
 
   async findById(id: string): Promise<News | null> {
     return await this.prisma.news.findUnique({
       where: {
         id,
+      },
+      include: {
+        author: true,
       },
     });
   }
@@ -43,6 +59,9 @@ export class NewsRepository implements INewsRepository {
       data: {
         title: news.title,
         content: news.content,
+        ...(news.image_url && {
+          image_url: news.image_url,
+        }),
       },
     });
   }

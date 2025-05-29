@@ -7,14 +7,19 @@ import {
   makeFindNewsByIdController,
   makeUpdateNewsController,
 } from "../factories/controllers/news.factory.ts";
+import { upload } from "../middlewares/multer.ts";
 
 const routes = Router();
 
-routes.post("/", async (req: Request, res: Response) => {
-  const { createNewsController } = makeCreateNewsController();
+routes.post(
+  "/",
+  upload.single("image"),
+  async (req: Request, res: Response) => {
+    const { createNewsController } = makeCreateNewsController();
 
-  await createNewsController.handle(req, res);
-});
+    await createNewsController.handle(req, res);
+  }
+);
 
 routes.get("/", async (req: Request, res: Response) => {
   const { findAllNewsController } = makeFindAllNewsController();
@@ -34,11 +39,15 @@ routes.get("/author/:author_id", async (req: Request, res: Response) => {
   await findNewsByAuthorIdController.handle(req, res);
 });
 
-routes.put("/:id", async (req: Request, res: Response) => {
-  const { updateNewsController } = makeUpdateNewsController();
+routes.put(
+  "/:id",
+  upload.single("image"),
+  async (req: Request, res: Response) => {
+    const { updateNewsController } = makeUpdateNewsController();
 
-  await updateNewsController.handle(req, res);
-});
+    await updateNewsController.handle(req, res);
+  }
+);
 
 routes.delete("/:id", async (req: Request, res: Response) => {
   const { deleteNewsController } = makeDeleteNewsController();

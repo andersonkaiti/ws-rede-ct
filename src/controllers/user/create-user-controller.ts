@@ -1,5 +1,5 @@
 import { type Request, type Response } from "express";
-import type { IUserCreatedEvent } from "../../models/user-created-event.d.ts";
+import type { IUserCreatedEvent } from "../../events/user-created-event.js";
 import type { IClerkWebhookService } from "../../services/clerk-webhook/iclerk-webhook.d.ts";
 import type { IUserRepository } from "../../repositories/user/iuser-repository.d.ts";
 

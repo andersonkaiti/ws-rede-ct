@@ -1,18 +1,11 @@
 import type { PrismaClient } from "@prisma/client";
 import type { IUserRepository } from "./iuser-repository.d.ts";
-import type { IUserCreatedEvent } from "../../models/user-created-event.d.ts";
-import type { IUserUpdatedEvent } from "../../models/user-updated-event.d.ts";
-import type { IUserDeletedEvent } from "../../models/user-deleted-event.d.ts";
+import type { IUserDeletedDTO, IUserDTO } from "../../dto/user.d.ts";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create({
-    email_addresses,
-    first_name,
-    last_name,
-    ...user
-  }: IUserCreatedEvent["data"]) {
+  async create({ email_addresses, first_name, last_name, ...user }: IUserDTO) {
     await this.prisma.user.create({
       data: {
         first_name: first_name,
@@ -34,7 +27,7 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  async update(user: IUserUpdatedEvent["data"]) {
+  async update(user: IUserDTO) {
     await this.prisma.user.update({
       where: { id: user.id },
       data: {
@@ -56,7 +49,7 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  async delete(user: IUserDeletedEvent["data"]) {
+  async delete(user: IUserDeletedDTO) {
     await this.prisma.user.delete({
       where: { id: user.id },
     });

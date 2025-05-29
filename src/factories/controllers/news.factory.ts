@@ -5,10 +5,14 @@ import { makeNewsRepository } from "../repositories/news.factory.ts";
 import { FindAllNewsController } from "../../controllers/news/find-all-news-controller.ts";
 import { FindNewsByIdController } from "../../controllers/news/find-news-by-id-controller.ts";
 import { FindByAuthorController } from "../../controllers/news/find-news-by-author-id-controller.ts";
+import { makeFirebaseStorageService } from "../services/firebase-storage.factory.ts";
 
 export function makeCreateNewsController() {
   return {
-    createNewsController: new CreateNewsController(makeNewsRepository()),
+    createNewsController: new CreateNewsController(
+      makeNewsRepository(),
+      makeFirebaseStorageService()
+    ),
   };
 }
 
@@ -34,12 +38,18 @@ export function makeFindNewsByAuthorIdController() {
 
 export function makeUpdateNewsController() {
   return {
-    updateNewsController: new UpdateNewsController(makeNewsRepository()),
+    updateNewsController: new UpdateNewsController(
+      makeNewsRepository(),
+      makeFirebaseStorageService()
+    ),
   };
 }
 
 export function makeDeleteNewsController() {
   return {
-    deleteNewsController: new DeleteNewsController(makeNewsRepository()),
+    deleteNewsController: new DeleteNewsController(
+      makeNewsRepository(),
+      makeFirebaseStorageService()
+    ),
   };
 }
