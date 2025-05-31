@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "tsx --watch .",
     "build": "tsup",
-    "start": "node ./dist/bin/server.js",
+    "start": "node ./dist/server.js",
     "postinstall": "npx prisma generate"
   },
   "keywords": [],
