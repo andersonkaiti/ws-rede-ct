@@ -3,6 +3,7 @@ import {
   makeCreateUserController,
   makeUpdateUserController,
   makeDeleteUserController,
+  makeFindAllUsersController,
 } from "../factories/controllers/user.factory.ts";
 
 const { createUserController } = makeCreateUserController();
@@ -31,5 +32,11 @@ router.post(
     await deleteUserController.handle(req, res);
   }
 );
+
+router.get("/", async (req: Request, res: Response) => {
+  const { findAllUsersController } = makeFindAllUsersController();
+
+  await findAllUsersController.handle(req, res);
+});
 
 export { router as userRoutes };

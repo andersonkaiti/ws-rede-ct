@@ -1,6 +1,6 @@
 import type { News, PrismaClient } from "@prisma/client";
-import type { INewsRepository } from "./inews-repository.d.ts";
 import type { INewsDTO, IUpdateNewsDTO } from "../../dto/news.js";
+import type { INewsRepository } from "./inews-repository.d.ts";
 
 export class NewsRepository implements INewsRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -29,6 +29,9 @@ export class NewsRepository implements INewsRepository {
       include: {
         author: true,
       },
+      orderBy: {
+        created_at: "desc",
+      },
     });
   }
 
@@ -47,6 +50,9 @@ export class NewsRepository implements INewsRepository {
     return await this.prisma.news.findMany({
       where: {
         author_id,
+      },
+      orderBy: {
+        created_at: "desc",
       },
     });
   }

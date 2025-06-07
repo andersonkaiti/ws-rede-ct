@@ -4,6 +4,7 @@ import { indexRoutes } from "./routes/index-routes.ts";
 import { authRoutes } from "./routes/auth-routes.ts";
 import { userRoutes } from "./routes/user-routes.ts";
 import { newsRoutes } from "./routes/news-routes.ts";
+import { teamRoutes } from "./routes/team-routes.ts";
 
 const app: Application = express();
 
@@ -21,5 +22,6 @@ app.use("/", indexRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/news", newsRoutes);
+app.use("/team", teamRoutes);
 
 export { app };
