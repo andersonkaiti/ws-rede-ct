@@ -54,4 +54,12 @@ export class UserRepository implements IUserRepository {
       where: { id: user.id },
     });
   }
+
+  async findAll() {
+    return await this.prisma.user.findMany({
+      include: {
+        email_addresses: true,
+      },
+    });
+  }
 }
