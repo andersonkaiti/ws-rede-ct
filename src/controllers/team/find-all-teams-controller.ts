@@ -10,9 +10,11 @@ export class FindAllController {
 
       return res.status(200).json(teams);
     } catch (error) {
-      return res.status(500).json({
-        message: "Internal server error",
-      });
+      if (error instanceof Error) {
+        return res.status(500).json({
+          message: error.message,
+        });
+      }
     }
   }
 }

@@ -5,6 +5,7 @@ import { FindAllController } from "../../controllers/team/find-all-teams-control
 import { FindTeamByIdController } from "../../controllers/team/find-team-by-id-controller.ts";
 import { FindTeamByTypeController } from "../../controllers/team/find-team-by-type-controller.ts";
 import { UpdateTeamController } from "../../controllers/team/update-team-controller.ts";
+import { TeamMemberRepository } from "../../repositories/team-member/team-member-repository.ts";
 import { TeamRepository } from "../../repositories/team/team-repository.ts";
 
 export function makeFindAllTeamsController() {
@@ -37,7 +38,10 @@ export function makeCreateTeamController() {
 
 export function makeUpdateTeamController() {
   return {
-    updateTeamController: new UpdateTeamController(new TeamRepository(prisma)),
+    updateTeamController: new UpdateTeamController(
+      new TeamRepository(prisma),
+      new TeamMemberRepository(prisma)
+    ),
   };
 }
 

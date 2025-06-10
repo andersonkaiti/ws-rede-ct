@@ -100,15 +100,15 @@ model Team {
 }
 
 model TeamMember {
-  id         String   @id @default(uuid())
-  name       String
-  role       String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  team_id    String
-  team       Team     @relation(fields: [team_id], references: [id], onDelete: Cascade)
-  user_id    String
-  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id          String   @id @default(uuid())
+  role        String
+  description String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  team_id     String
+  team        Team     @relation(fields: [team_id], references: [id], onDelete: Cascade)
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("team_members")
 }
@@ -120,7 +120,7 @@ model Researcher {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   in_memorian Boolean  @default(false)
-  etps        ETP[] // Many-to-many relationship with ETPs
+  etps        ETP[]
 
   @@map("researchers")
 }

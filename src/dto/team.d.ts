@@ -1,21 +1,12 @@
-export interface ITeamMemberDTO {
-  id?: string;
-  name: string;
-  role: string;
-  user_id: string;
-  team_id?: string;
-}
-
-export interface ICreateTeamMemberDTO extends ITeamMemberDTO {}
+import { ITeamMemberDTO } from "./team-member.js";
 
 export interface ICreateTeamDTO {
   name: string;
   type: string;
-  members: ICreateTeamMemberDTO[];
+  members: Omit<ITeamMemberDTO, "team_id">[];
 }
 
 export interface IUpdateTeamDTO {
   id: string;
   name: string;
-  members: ITeamMemberDTO[];
 }

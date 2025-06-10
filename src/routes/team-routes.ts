@@ -1,5 +1,10 @@
 import { Router, type Request, type Response } from "express";
 import {
+  makeCreateTeamMemberController,
+  makeDeleteTeamMemberController,
+  makeUpdateTeamMemberController,
+} from "../factories/controllers/team-member.factory.ts";
+import {
   makeCreateTeamController,
   makeDeleteTeamController,
   makeFindAllTeamsController,
@@ -34,6 +39,18 @@ router.post("/", async (req: Request, res: Response) => {
   await createTeamController.handle(req, res);
 });
 
+router.put("/member/:id", async (req: Request, res: Response) => {
+  const { updateTeamMemberController } = makeUpdateTeamMemberController();
+
+  await updateTeamMemberController.handle(req, res);
+});
+
+router.post("/member/:team_id", async (req: Request, res: Response) => {
+  const { createTeamMemberController } = makeCreateTeamMemberController();
+
+  await createTeamMemberController.handle(req, res);
+});
+
 router.put("/:id", async (req: Request, res: Response) => {
   const { updateTeamController } = makeUpdateTeamController();
 
@@ -44,6 +61,12 @@ router.delete("/:id", async (req: Request, res: Response) => {
   const { deleteTeamController } = makeDeleteTeamController();
 
   await deleteTeamController.handle(req, res);
+});
+
+router.delete("/member/:id", async (req: Request, res: Response) => {
+  const { deleteTeamMemberController } = makeDeleteTeamMemberController();
+
+  await deleteTeamMemberController.handle(req, res);
 });
 
 export { router as teamRoutes };
