@@ -1,8 +1,8 @@
 import type { Bucket } from "@google-cloud/storage";
-import type { IFirebaseStorageService } from "./ifirebase-storage.d.ts";
-import type { FileType } from "../../@types/file.d.ts";
 import { type Request } from "express";
 import { randomUUID } from "node:crypto";
+import type { FileType } from "../../@types/file.d.ts";
+import type { IFirebaseStorageService } from "./ifirebase-storage.d.ts";
 export class FirebaseStorageService implements IFirebaseStorageService {
   constructor(private readonly bucket: Bucket) {}
 
@@ -41,9 +41,16 @@ export class FirebaseStorageService implements IFirebaseStorageService {
     return downloadUrl;
   }
 
-  async updateFile(req: Request, fileType: FileType): Promise<string> {
+  async updateFile(
+    req: Request,
+    fileType: FileType
+  ): Promise<string | undefined> {
     if (!req.file) {
       throw new Error("Arquivo não encontrado.");
+    }
+
+    if (req.file.size === 0) {
+      return;
     }
 
     try {
