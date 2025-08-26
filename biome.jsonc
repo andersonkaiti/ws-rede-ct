@@ -6,13 +6,18 @@
       "semicolons": "asNeeded"
     }
   },
+  "files": {
+    "includes": ["**", "!**/dist"]
+  },
   "linter": {
     "rules": {
       "nursery": {
         "useConsistentTypeDefinitions": "off"
       },
       "style": {
-        "noParameterProperties": "off"
+        "noParameterProperties": "off",
+        "noNamespace": "off",
+        "noEnum": "off"
       },
       "suspicious": {
         "noConsole": "off"

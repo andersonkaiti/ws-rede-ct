@@ -1,7 +1,8 @@
-import { type Request, type Response } from "express";
-import type { IUserCreatedEvent } from "../../events/user-created-event.js";
-import type { IClerkWebhookService } from "../../services/clerk-webhook/iclerk-webhook.d.ts";
-import type { IUserRepository } from "../../repositories/user/iuser-repository.d.ts";
+import type { Request, Response } from 'express'
+import { HttpStatus } from '../../@types/status-code.ts'
+import type { IUserCreatedEvent } from '../../events/user-created-event.js'
+import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
+import type { IClerkWebhookService } from '../../services/clerk-webhook/iclerk-webhook.d.ts'
 
 export class CreateUserController {
   constructor(
@@ -12,39 +13,34 @@ export class CreateUserController {
   async handle(req: Request, res: Response) {
     try {
       const event =
-        await this.clerkWebhookService.verifyEvent<IUserCreatedEvent>(req);
+        await this.clerkWebhookService.verifyEvent<IUserCreatedEvent>(req)
 
-      if (!event) throw new Error("Erro ao verificar webhook.");
+      if (!event) {
+        throw new Error('Erro ao verificar webhook.')
+      }
 
       const {
         type: eventType,
-        data: {
-          created_at,
-          birthday,
-          last_sign_in_at,
-          updated_at,
-          email_addresses,
-          ...rest
-        },
-      } = event;
+        data: { created_at, updated_at, email_addresses, ...rest },
+      } = event
 
-      if (eventType === "user.created") {
+      if (eventType === 'user.created') {
         await this.userRepository.create({
           created_at: new Date(created_at),
           updated_at: new Date(updated_at),
-          email_addresses: email_addresses,
+          email_addresses,
           ...rest,
-        });
+        })
 
-        res.status(201).json({
-          message: "Usuário criado com sucesso.",
-        });
+        res.status(HttpStatus.CREATED).json({
+          message: 'Usuário criado com sucesso.',
+        })
       }
     } catch (err) {
       if (err instanceof Error) {
-        res.status(400).json({
+        res.status(HttpStatus.BAD_REQUEST).json({
           message: err.message,
-        });
+        })
       }
     }
   }

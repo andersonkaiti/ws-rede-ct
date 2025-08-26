@@ -1,12 +1,16 @@
-import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
-import { type Request, type Response, type NextFunction } from "express";
+import { ClerkExpressWithAuth } from '@clerk/clerk-sdk-node'
+import type { NextFunction, Request, Response } from 'express'
 
-const clerkAuth = ClerkExpressWithAuth();
+const clerkAuth = ClerkExpressWithAuth()
 
 export const clerkMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  return clerkAuth(req as any, res as any, next);
-};
+  return clerkAuth(
+    req as unknown as Parameters<typeof clerkAuth>[0],
+    res as unknown as Parameters<typeof clerkAuth>[1],
+    next
+  )
+}

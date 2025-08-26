@@ -1,6 +1,6 @@
-import type { News, PrismaClient } from "@prisma/client";
-import type { INewsDTO, IUpdateNewsDTO } from "../../dto/news.js";
-import type { INewsRepository } from "./inews-repository.d.ts";
+import type { News, PrismaClient } from '@prisma/client'
+import type { INewsDTO, IUpdateNewsDTO } from '../../dto/news.js'
+import type { INewsRepository } from './inews-repository.d.ts'
 
 export class NewsRepository implements INewsRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -21,7 +21,7 @@ export class NewsRepository implements INewsRepository {
       include: {
         author: true,
       },
-    });
+    })
   }
 
   async findAll(): Promise<News[]> {
@@ -30,9 +30,9 @@ export class NewsRepository implements INewsRepository {
         author: true,
       },
       orderBy: {
-        created_at: "desc",
+        created_at: 'desc',
       },
-    });
+    })
   }
 
   async findById(id: string): Promise<News | null> {
@@ -43,7 +43,7 @@ export class NewsRepository implements INewsRepository {
       include: {
         author: true,
       },
-    });
+    })
   }
 
   async findByAuthorId(author_id: string): Promise<News[]> {
@@ -52,9 +52,9 @@ export class NewsRepository implements INewsRepository {
         author_id,
       },
       orderBy: {
-        created_at: "desc",
+        created_at: 'desc',
       },
-    });
+    })
   }
 
   async update(news: IUpdateNewsDTO): Promise<News> {
@@ -69,7 +69,7 @@ export class NewsRepository implements INewsRepository {
           image_url: news.image_url,
         }),
       },
-    });
+    })
   }
 
   async delete(id: string): Promise<void> {
@@ -77,6 +77,6 @@ export class NewsRepository implements INewsRepository {
       where: {
         id,
       },
-    });
+    })
   }
 }

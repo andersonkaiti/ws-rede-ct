@@ -1,4 +1,4 @@
-import { Router, type Request, type Response } from "express";
+import { type Request, type Response, Router } from 'express'
 import {
   makeCreateNewsController,
   makeDeleteNewsController,
@@ -6,53 +6,53 @@ import {
   makeFindNewsByAuthorIdController,
   makeFindNewsByIdController,
   makeUpdateNewsController,
-} from "../factories/controllers/news.factory.ts";
-import { upload } from "../middlewares/multer.ts";
+} from '../factories/controllers/news.factory.ts'
+import { upload } from '../middlewares/multer.ts'
 
-const routes = Router();
+const routes = Router()
 
 routes.post(
-  "/",
-  upload.single("image"),
+  '/',
+  upload.single('image'),
   async (req: Request, res: Response) => {
-    const { createNewsController } = makeCreateNewsController();
+    const { createNewsController } = makeCreateNewsController()
 
-    await createNewsController.handle(req, res);
+    await createNewsController.handle(req, res)
   }
-);
+)
 
-routes.get("/", async (req: Request, res: Response) => {
-  const { findAllNewsController } = makeFindAllNewsController();
+routes.get('/', async (req: Request, res: Response) => {
+  const { findAllNewsController } = makeFindAllNewsController()
 
-  await findAllNewsController.handle(req, res);
-});
+  await findAllNewsController.handle(req, res)
+})
 
-routes.get("/:id", async (req: Request, res: Response) => {
-  const { findNewsByIdController } = makeFindNewsByIdController();
+routes.get('/:id', async (req: Request, res: Response) => {
+  const { findNewsByIdController } = makeFindNewsByIdController()
 
-  await findNewsByIdController.handle(req, res);
-});
+  await findNewsByIdController.handle(req, res)
+})
 
-routes.get("/author/:author_id", async (req: Request, res: Response) => {
-  const { findNewsByAuthorIdController } = makeFindNewsByAuthorIdController();
+routes.get('/author/:author_id', async (req: Request, res: Response) => {
+  const { findNewsByAuthorIdController } = makeFindNewsByAuthorIdController()
 
-  await findNewsByAuthorIdController.handle(req, res);
-});
+  await findNewsByAuthorIdController.handle(req, res)
+})
 
 routes.put(
-  "/:id",
-  upload.single("image"),
+  '/:id',
+  upload.single('image'),
   async (req: Request, res: Response) => {
-    const { updateNewsController } = makeUpdateNewsController();
+    const { updateNewsController } = makeUpdateNewsController()
 
-    await updateNewsController.handle(req, res);
+    await updateNewsController.handle(req, res)
   }
-);
+)
 
-routes.delete("/:id", async (req: Request, res: Response) => {
-  const { deleteNewsController } = makeDeleteNewsController();
+routes.delete('/:id', async (req: Request, res: Response) => {
+  const { deleteNewsController } = makeDeleteNewsController()
 
-  await deleteNewsController.handle(req, res);
-});
+  await deleteNewsController.handle(req, res)
+})
 
-export { routes as newsRoutes };
+export { routes as newsRoutes }

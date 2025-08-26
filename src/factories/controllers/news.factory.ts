@@ -1,11 +1,11 @@
-import { CreateNewsController } from "../../controllers/news/create-news-controller.ts";
-import { UpdateNewsController } from "../../controllers/news/update-news-controller.ts";
-import { DeleteNewsController } from "../../controllers/news/delete-news-controller.ts";
-import { makeNewsRepository } from "../repositories/news.factory.ts";
-import { FindAllNewsController } from "../../controllers/news/find-all-news-controller.ts";
-import { FindNewsByIdController } from "../../controllers/news/find-news-by-id-controller.ts";
-import { FindByAuthorController } from "../../controllers/news/find-news-by-author-id-controller.ts";
-import { makeFirebaseStorageService } from "../services/firebase-storage.factory.ts";
+import { CreateNewsController } from '../../controllers/news/create-news-controller.ts'
+import { DeleteNewsController } from '../../controllers/news/delete-news-controller.ts'
+import { FindAllNewsController } from '../../controllers/news/find-all-news-controller.ts'
+import { FindByAuthorController } from '../../controllers/news/find-news-by-author-id-controller.ts'
+import { FindNewsByIdController } from '../../controllers/news/find-news-by-id-controller.ts'
+import { UpdateNewsController } from '../../controllers/news/update-news-controller.ts'
+import { makeNewsRepository } from '../repositories/news.factory.ts'
+import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
 
 export function makeCreateNewsController() {
   return {
@@ -13,19 +13,19 @@ export function makeCreateNewsController() {
       makeNewsRepository(),
       makeFirebaseStorageService()
     ),
-  };
+  }
 }
 
 export function makeFindAllNewsController() {
   return {
     findAllNewsController: new FindAllNewsController(makeNewsRepository()),
-  };
+  }
 }
 
 export function makeFindNewsByIdController() {
   return {
     findNewsByIdController: new FindNewsByIdController(makeNewsRepository()),
-  };
+  }
 }
 
 export function makeFindNewsByAuthorIdController() {
@@ -33,7 +33,7 @@ export function makeFindNewsByAuthorIdController() {
     findNewsByAuthorIdController: new FindByAuthorController(
       makeNewsRepository()
     ),
-  };
+  }
 }
 
 export function makeUpdateNewsController() {
@@ -42,7 +42,7 @@ export function makeUpdateNewsController() {
       makeNewsRepository(),
       makeFirebaseStorageService()
     ),
-  };
+  }
 }
 
 export function makeDeleteNewsController() {
@@ -51,5 +51,5 @@ export function makeDeleteNewsController() {
       makeNewsRepository(),
       makeFirebaseStorageService()
     ),
-  };
+  }
 }

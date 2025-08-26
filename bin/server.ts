@@ -1,10 +1,10 @@
-import http, { type Server } from "node:http";
-import { app } from "../src/app.ts";
+import http, { type Server } from 'node:http'
+import { app } from '../src/app.ts'
 
-const server: Server = http.createServer(app);
+const server: Server = http.createServer(app)
 
-const PORT = 4_000;
+const PORT = 4000
 
 server.listen(PORT, () => {
-  console.log(`🚀 Aplicação rodando na porta ${PORT}.`);
-});
+  console.log(`🚀 Aplicação rodando na porta ${PORT}.`)
+})

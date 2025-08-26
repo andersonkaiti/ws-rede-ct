@@ -1,23 +1,23 @@
-import { type Request, type Response } from "express";
+import type { Request, Response } from 'express'
+import { HttpStatus } from '../@types/status-code.ts'
 
 interface ClerkAuth {
-  userId: string;
-  [key: string]: any;
+  userId: string
+  [key: string]: unknown
 }
 
 export class ClerkAuthController {
-  async handle(req: Request, res: Response) {
-    const auth = (req as { auth?: ClerkAuth }).auth;
+  handle(req: Request, res: Response) {
+    const auth = (req as { auth?: ClerkAuth }).auth
 
-    if (!auth || !auth.userId) {
-      res.status(401).json({ message: "Não autenticado" });
-      return;
+    if (!auth?.userId) {
+      res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Não autenticado' })
+      return
     }
 
-    // Se autenticado, envia resposta com status 200
-    res.status(200).json({
-      message: "Usuário autenticado com Clerk",
+    res.status(HttpStatus.OK).json({
+      message: 'Usuário autenticado com Clerk',
       userId: auth.userId,
-    });
+    })
   }
 }

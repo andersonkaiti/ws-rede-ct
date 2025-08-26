@@ -1,19 +1,21 @@
-import { type Request, type Response } from "express";
-import type { INewsRepository } from "../../repositories/news/inews-repository.d.ts";
+import type { Request, Response } from 'express'
+import { HttpStatus } from '../../@types/status-code.ts'
+import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 
 export class FindNewsByIdController {
   constructor(private readonly newsRepository: INewsRepository) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { id } = req.params;
+      const { id } = req.params
 
-      const news = await this.newsRepository.findById(id);
+      const news = await this.newsRepository.findById(id)
 
-      res.status(200).json(news);
+      res.status(HttpStatus.OK).json(news)
     } catch (error) {
+      console.error(error)
       if (error instanceof Error) {
-        res.status(500).json({ message: error.message });
+        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
       }
     }
   }

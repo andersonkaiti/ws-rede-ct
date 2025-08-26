@@ -1,11 +1,12 @@
-import { Router, type Request, type Response } from "express";
+import { type Request, type Response, Router } from 'express'
+import { HttpStatus } from '../@types/status-code.ts'
 
-const router = Router();
+const router = Router()
 
-router.get("/", (_req: Request, res: Response) => {
-  res.status(200).json({
-    message: "Rede CT",
-  });
-});
+router.get('/', (_req: Request, res: Response) => {
+  res.status(HttpStatus.OK).json({
+    message: 'Rede CT',
+  })
+})
 
-export { router as indexRoutes };
+export { router as indexRoutes }
