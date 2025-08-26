@@ -1,6 +1,6 @@
-import type { PrismaClient } from "@prisma/client";
-import type { IUserRepository } from "./iuser-repository.d.ts";
-import type { IUserDeletedDTO, IUserDTO } from "../../dto/user.d.ts";
+import type { PrismaClient } from '@prisma/client'
+import type { IUserDeletedDTO, IUserDTO } from '../../dto/user.d.ts'
+import type { IUserRepository } from './iuser-repository.d.ts'
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -8,8 +8,8 @@ export class UserRepository implements IUserRepository {
   async create({ email_addresses, first_name, last_name, ...user }: IUserDTO) {
     await this.prisma.user.create({
       data: {
-        first_name: first_name,
-        last_name: last_name,
+        first_name,
+        last_name,
         id: user.id,
         created_at: user.created_at,
         updated_at: user.updated_at,
@@ -24,7 +24,7 @@ export class UserRepository implements IUserRepository {
           })),
         },
       },
-    });
+    })
   }
 
   async update(user: IUserDTO) {
@@ -46,13 +46,13 @@ export class UserRepository implements IUserRepository {
           })),
         },
       },
-    });
+    })
   }
 
   async delete(user: IUserDeletedDTO) {
     await this.prisma.user.delete({
       where: { id: user.id },
-    });
+    })
   }
 
   async findAll() {
@@ -60,6 +60,6 @@ export class UserRepository implements IUserRepository {
       include: {
         email_addresses: true,
       },
-    });
+    })
   }
 }

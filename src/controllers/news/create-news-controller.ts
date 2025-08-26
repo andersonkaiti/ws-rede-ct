@@ -1,7 +1,8 @@
-import { type Request, type Response } from "express";
-import type { INewsRepository } from "../../repositories/news/inews-repository.d.ts";
-import type { IFirebaseStorageService } from "../../services/firebase-storage/ifirebase-storage.js";
-import { File } from "../../@types/file.ts";
+import type { Request, Response } from 'express'
+import { File } from '../../@types/file.ts'
+import { HttpStatus } from '../../@types/status-code.ts'
+import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
+import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
 export class CreateNewsController {
   constructor(
@@ -11,24 +12,22 @@ export class CreateNewsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { title, content, author_id } = req.body;
+      const { title, content, author_id } = req.body
 
-      const image_url = await this.firebaseStorageService.uploadFile(
-        req,
-        File.NEWS
-      );
+      const image_url = this.firebaseStorageService.uploadFile(req, File.NEWS)
 
       const news = await this.newsRepository.create({
         title,
         content,
         author_id,
         image_url,
-      });
+      })
 
-      res.status(201).json(news);
+      res.status(HttpStatus.CREATED).json(news)
     } catch (error) {
+      console.error(error)
       if (error instanceof Error) {
-        res.status(500).json({ message: error.message });
+        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
       }
     }
   }

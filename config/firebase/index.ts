@@ -1,6 +1,7 @@
-import admin, { type ServiceAccount } from "firebase-admin";
-import { config } from "dotenv";
-config();
+import { config } from 'dotenv'
+import admin, { type ServiceAccount } from 'firebase-admin'
+
+config()
 
 const app = admin.initializeApp({
   credential: admin.credential.cert({
@@ -16,12 +17,12 @@ const app = admin.initializeApp({
     clientX509CertUrl: process.env.FIREBASE_CLIENT_X509_CERT_URL,
   } as ServiceAccount),
   storageBucket: process.env.FIREBASE_BUCKET,
-});
+})
 
 if (app.name) {
-  console.log("🔥 Firebase conectado com sucesso!");
+  console.log('🔥 Firebase conectado com sucesso!')
 } else {
-  console.error("❌ Erro ao se conectar ao Firebase.");
+  console.error('❌ Erro ao se conectar ao Firebase.')
 }
 
-export { app };
+export { app }

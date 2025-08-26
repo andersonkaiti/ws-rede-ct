@@ -1,9 +1,9 @@
-import { Router, type Request, type Response } from "express";
+import { type Request, type Response, Router } from 'express'
 import {
   makeCreateTeamMemberController,
   makeDeleteTeamMemberController,
   makeUpdateTeamMemberController,
-} from "../factories/controllers/team-member.factory.ts";
+} from '../factories/controllers/team-member.factory.ts'
 import {
   makeCreateTeamController,
   makeDeleteTeamController,
@@ -11,62 +11,62 @@ import {
   makeFindTeamByIdController,
   makeFindTeamByTypeController,
   makeUpdateTeamController,
-} from "../factories/controllers/team.factory.ts";
+} from '../factories/controllers/team.factory.ts'
 
-const router = Router();
+const router = Router()
 
-router.get("/", async (req: Request, res: Response) => {
-  const { findAllTeamsController } = makeFindAllTeamsController();
+router.get('/', async (req: Request, res: Response) => {
+  const { findAllTeamsController } = makeFindAllTeamsController()
 
-  await findAllTeamsController.handle(req, res);
-});
+  await findAllTeamsController.handle(req, res)
+})
 
-router.get("/id/:id", async (req: Request, res: Response) => {
-  const { findTeamByIdController } = makeFindTeamByIdController();
+router.get('/id/:id', async (req: Request, res: Response) => {
+  const { findTeamByIdController } = makeFindTeamByIdController()
 
-  await findTeamByIdController.handle(req, res);
-});
+  await findTeamByIdController.handle(req, res)
+})
 
-router.get("/type/:type", async (req: Request, res: Response) => {
-  const { findTeamByTypeController } = makeFindTeamByTypeController();
+router.get('/type/:type', async (req: Request, res: Response) => {
+  const { findTeamByTypeController } = makeFindTeamByTypeController()
 
-  await findTeamByTypeController.handle(req, res);
-});
+  await findTeamByTypeController.handle(req, res)
+})
 
-router.post("/", async (req: Request, res: Response) => {
-  const { createTeamController } = makeCreateTeamController();
+router.post('/', async (req: Request, res: Response) => {
+  const { createTeamController } = makeCreateTeamController()
 
-  await createTeamController.handle(req, res);
-});
+  await createTeamController.handle(req, res)
+})
 
-router.put("/member/:id", async (req: Request, res: Response) => {
-  const { updateTeamMemberController } = makeUpdateTeamMemberController();
+router.put('/member/:id', async (req: Request, res: Response) => {
+  const { updateTeamMemberController } = makeUpdateTeamMemberController()
 
-  await updateTeamMemberController.handle(req, res);
-});
+  await updateTeamMemberController.handle(req, res)
+})
 
-router.post("/member/:team_id", async (req: Request, res: Response) => {
-  const { createTeamMemberController } = makeCreateTeamMemberController();
+router.post('/:team_id/member', async (req: Request, res: Response) => {
+  const { createTeamMemberController } = makeCreateTeamMemberController()
 
-  await createTeamMemberController.handle(req, res);
-});
+  await createTeamMemberController.handle(req, res)
+})
 
-router.put("/:id", async (req: Request, res: Response) => {
-  const { updateTeamController } = makeUpdateTeamController();
+router.put('/:id', async (req: Request, res: Response) => {
+  const { updateTeamController } = makeUpdateTeamController()
 
-  await updateTeamController.handle(req, res);
-});
+  await updateTeamController.handle(req, res)
+})
 
-router.delete("/:id", async (req: Request, res: Response) => {
-  const { deleteTeamController } = makeDeleteTeamController();
+router.delete('/member/:id', async (req: Request, res: Response) => {
+  const { deleteTeamMemberController } = makeDeleteTeamMemberController()
 
-  await deleteTeamController.handle(req, res);
-});
+  await deleteTeamMemberController.handle(req, res)
+})
 
-router.delete("/member/:id", async (req: Request, res: Response) => {
-  const { deleteTeamMemberController } = makeDeleteTeamMemberController();
+router.delete('/:id', async (req: Request, res: Response) => {
+  const { deleteTeamController } = makeDeleteTeamController()
 
-  await deleteTeamMemberController.handle(req, res);
-});
+  await deleteTeamController.handle(req, res)
+})
 
-export { router as teamRoutes };
+export { router as teamRoutes }

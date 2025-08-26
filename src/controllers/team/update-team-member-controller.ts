@@ -1,23 +1,25 @@
-import { type Request, type Response } from "express";
-import type { ITeamMemberRepository } from "../../repositories/team-member/iteam-member-repository.js";
+import type { Request, Response } from 'express'
+import { HttpStatus } from '../../@types/status-code.ts'
+import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.js'
 
 export class UpdateTeamMemberController {
   constructor(private readonly teamMemberRepository: ITeamMemberRepository) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { member } = req.body;
+      const { member } = req.body
 
       const teamMember = await this.teamMemberRepository.update({
         member,
-      });
+      })
 
-      res.status(200).json(teamMember);
+      res.status(HttpStatus.OK).json(teamMember)
     } catch (error) {
+      console.error(error)
       if (error instanceof Error) {
-        res.status(500).json({
+        res.status(HttpStatus.BAD_REQUEST).json({
           message: error.message,
-        });
+        })
       }
     }
   }

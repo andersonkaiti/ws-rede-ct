@@ -1,7 +1,8 @@
-import { type Request, type Response } from "express";
-import type { IUserDeletedEvent } from "../../events/user-deleted-event.js";
-import type { IClerkWebhookService } from "../../services/clerk-webhook/iclerk-webhook.d.ts";
-import type { IUserRepository } from "../../repositories/user/iuser-repository.d.ts";
+import type { Request, Response } from 'express'
+import { HttpStatus } from '../../@types/status-code.ts'
+import type { IUserDeletedEvent } from '../../events/user-deleted-event.js'
+import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
+import type { IClerkWebhookService } from '../../services/clerk-webhook/iclerk-webhook.d.ts'
 
 export class DeleteUserController {
   constructor(
@@ -12,24 +13,26 @@ export class DeleteUserController {
   async handle(req: Request, res: Response) {
     try {
       const event =
-        await this.clerkWebhookService.verifyEvent<IUserDeletedEvent>(req);
+        await this.clerkWebhookService.verifyEvent<IUserDeletedEvent>(req)
 
-      if (!event) throw new Error("Erro ao verificar webhook.");
+      if (!event) {
+        throw new Error('Erro ao verificar webhook.')
+      }
 
-      const { type: eventType, data: user } = event;
+      const { type: eventType, data: user } = event
 
-      if (eventType === "user.deleted") {
-        await this.userRepository.delete(user);
+      if (eventType === 'user.deleted') {
+        await this.userRepository.delete(user)
 
-        res.status(200).json({
-          message: "Usuário deletado com sucesso.",
-        });
+        res.status(HttpStatus.OK).json({
+          message: 'Usuário deletado com sucesso.',
+        })
       }
     } catch (err) {
       if (err instanceof Error) {
-        res.status(400).json({
+        res.status(HttpStatus.BAD_REQUEST).json({
           message: err.message,
-        });
+        })
       }
     }
   }

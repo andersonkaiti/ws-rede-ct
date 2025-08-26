@@ -1,19 +1,21 @@
-import { type Request, type Response } from "express";
-import type { INewsRepository } from "../../repositories/news/inews-repository.js";
+import type { Request, Response } from 'express'
+import { HttpStatus } from '../../@types/status-code.ts'
+import type { INewsRepository } from '../../repositories/news/inews-repository.js'
 
 export class FindByAuthorController {
   constructor(private readonly newsRepository: INewsRepository) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { author_id } = req.params;
+      const { author_id } = req.params
 
-      const news = await this.newsRepository.findByAuthorId(author_id);
+      const news = await this.newsRepository.findByAuthorId(author_id)
 
-      res.status(200).json(news);
+      res.status(HttpStatus.OK).json(news)
     } catch (error) {
+      console.error(error)
       if (error instanceof Error) {
-        res.status(500).json({ message: error.message });
+        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
       }
     }
   }

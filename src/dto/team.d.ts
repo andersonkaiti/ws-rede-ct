@@ -1,12 +1,26 @@
-import { ITeamMemberDTO } from "./team-member.js";
+export interface IUserDTO {
+  id: string
+  first_name: string
+  last_name?: string
+  image_url?: string
+  profile_image_url?: string
+  created_at: Date
+  updated_at: Date
+  email_addresses: IEmailAddress[]
+}
+
+export interface ITeamMemberDTO {
+  role: string
+  user: IUserDTO
+}
 
 export interface ICreateTeamDTO {
-  name: string;
-  type: string;
-  members: Omit<ITeamMemberDTO, "team_id">[];
+  name: string
+  type: string
+  members: ITeamMemberDTO[]
 }
 
 export interface IUpdateTeamDTO {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }

@@ -1,7 +1,7 @@
-import { ClerkAuthController } from "../../controllers/clerk-auth-controller.ts";
+import { ClerkAuthController } from '../../controllers/clerk-auth-controller.ts'
 
 export function makeClerkAuthController() {
-  const clerkAuthController = new ClerkAuthController();
+  const clerkAuthController = new ClerkAuthController()
 
-  return { clerkAuthController };
+  return { clerkAuthController }
 }
