@@ -70,6 +70,14 @@ export class TeamMemberRepository implements ITeamMemberRepository {
     )
   }
 
+  async delete(id: ITeamMemberDTO['id']): Promise<void> {
+    await this.prisma.teamMember.deleteMany({
+      where: {
+        id,
+      },
+    })
+  }
+
   async deleteMany(ids: ITeamMemberDTO['id'][]): Promise<void> {
     await Promise.all(
       ids.map(async (id) => {

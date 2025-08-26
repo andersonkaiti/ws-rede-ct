@@ -11,5 +11,6 @@ export interface ITeamMemberRepository {
   create(teamMember: ICreateTeamMemberDTO): Promise<TeamMember>
   update(teamMember: IUpdateTeamMemberDTO): Promise<TeamMember>
   updateMany(team: IUpdateTeamMembersDTO): Promise<void>
+  delete(id: ITeamMemberDTO['id']): Promise<void>
   deleteMany(ids: ITeamMemberDTO['id'][]): Promise<void>
 }
