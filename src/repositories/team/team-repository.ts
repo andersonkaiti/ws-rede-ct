@@ -1,25 +1,27 @@
-import { type PrismaClient, type Team } from "@prisma/client";
-import type { ICreateTeamMemberDTO } from "../../dto/team-member.d.ts";
-import type { IUpdateTeamDTO } from "../../dto/team.d.ts";
-import type { ITeamRepository } from "./iteam-repository.d.ts";
+import type { PrismaClient, Team } from '@prisma/client'
+import type { ICreateTeamDTO, IUpdateTeamDTO } from '../../dto/team.d.ts'
+import type { ITeamRepository } from './iteam-repository.d.ts'
 
 export class TeamRepository implements ITeamRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(team: ICreateTeamMemberDTO): Promise<Team> {
+  async create({ members, name, type }: ICreateTeamDTO): Promise<Team> {
     return await this.prisma.team.create({
       data: {
-        name: team.name,
-        type: team.type,
+        name,
+        type,
         team_members: {
-          create: team.members.map((member) => ({
+          create: members.map((member) => ({
             role: member.role,
-            description: member.description,
-            user_id: member.user_id,
+            user: {
+              connect: {
+                id: member.user.id,
+              },
+            },
           })),
         },
       },
-    });
+    })
   }
 
   async findAll(): Promise<Team[]> {
@@ -31,7 +33,7 @@ export class TeamRepository implements ITeamRepository {
           },
         },
       },
-    });
+    })
   }
 
   async findById(id: string): Promise<Team | null> {
@@ -46,7 +48,7 @@ export class TeamRepository implements ITeamRepository {
           },
         },
       },
-    });
+    })
   }
 
   async findByType(type: string): Promise<Team[] | null> {
@@ -61,18 +63,18 @@ export class TeamRepository implements ITeamRepository {
           },
         },
       },
-    });
+    })
   }
 
-  async update(team: IUpdateTeamDTO): Promise<Team> {
+  async update({ id, name }: IUpdateTeamDTO): Promise<Team> {
     return await this.prisma.team.update({
       where: {
-        id: team.id,
+        id,
       },
       data: {
-        name: team.name,
+        name,
       },
-    });
+    })
   }
 
   async delete(id: string): Promise<void> {
@@ -80,6 +82,6 @@ export class TeamRepository implements ITeamRepository {
       where: {
         id,
       },
-    });
+    })
   }
 }
