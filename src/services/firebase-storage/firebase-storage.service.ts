@@ -9,7 +9,7 @@ const IMAGE_PATH_REGEX = /\/images\/.+$/
 export class FirebaseStorageService implements IFirebaseStorageService {
   constructor(private readonly bucket: Bucket) {}
 
-  uploadFile(req: Request, fileType: FileType): string {
+  async uploadFile(req: Request, fileType: FileType): Promise<string> {
     if (!req.file) {
       throw new Error('Arquivo não encontrado.')
     }
@@ -23,25 +23,31 @@ export class FirebaseStorageService implements IFirebaseStorageService {
       `images/${fileType}/${author_id}/${fileName}`
     )
 
-    const fileStream = fileRef.createWriteStream({
-      metadata: {
-        contentType: file?.mimetype,
-      },
+    return await new Promise((resolve, reject) => {
+      const fileStream = fileRef.createWriteStream({
+        metadata: {
+          contentType: file?.mimetype,
+        },
+      })
+
+      fileStream.on('error', (error) => {
+        console.log(error)
+        reject(error)
+      })
+
+      fileStream.on('finish', async () => {
+        try {
+          await fileRef.makePublic()
+          const downloadUrl = `https://storage.googleapis.com/${this.bucket.name}/${fileRef.name}`
+          resolve(downloadUrl)
+        } catch (error) {
+          console.error(error)
+          reject(error)
+        }
+      })
+
+      fileStream.end(file?.buffer)
     })
-
-    fileStream.on('error', (error) => {
-      console.log(error)
-    })
-
-    fileStream.on('finish', async () => {
-      await fileRef.makePublic()
-    })
-
-    fileStream.end(file?.buffer)
-
-    const downloadUrl = `https://storage.googleapis.com/${this.bucket.name}/${fileRef.name}`
-
-    return downloadUrl
   }
 
   async updateFile(
