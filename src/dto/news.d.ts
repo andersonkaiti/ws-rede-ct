@@ -8,3 +8,20 @@ export interface INewsDTO {
 export interface IUpdateNewsDTO extends Omit<INewsDTO, 'author_id'> {
   id: string
 }
+
+export interface IFindAllDTO {
+  title?: string
+  content?: string
+  updated_at?: string
+  author_id?: string
+}
+
+export interface IFindNewsByAuthorIdDTO {
+  author_id: string
+  filter: {
+    orderBy?: string
+    updated_at?: string
+    title?: string
+    content?: string
+  }
+}

@@ -9,7 +9,24 @@ export class FindByAuthorController {
     try {
       const { author_id } = req.params
 
-      const news = await this.newsRepository.findByAuthorId(author_id)
+      const orderBy =
+        typeof req.query.orderBy === 'string' ? req.query.orderBy : undefined
+      const updated_at =
+        typeof req.query.date === 'string' ? req.query.date : undefined
+      const title =
+        typeof req.query.title === 'string' ? req.query.title : undefined
+      const content =
+        typeof req.query.content === 'string' ? req.query.content : undefined
+
+      const news = await this.newsRepository.findByAuthorId({
+        author_id,
+        filter: {
+          orderBy,
+          updated_at,
+          title,
+          content,
+        },
+      })
 
       res.status(HttpStatus.OK).json(news)
     } catch (error) {
