@@ -1,5 +1,9 @@
-import type { News, PrismaClient } from '@prisma/client'
-import type { INewsDTO, IUpdateNewsDTO } from '../../dto/news.js'
+import type { News, Prisma, PrismaClient } from '@prisma/client'
+import type {
+  IFindNewsByAuthorIdDTO,
+  INewsDTO,
+  IUpdateNewsDTO,
+} from '../../dto/news.ts'
 import type { INewsRepository } from './inews-repository.d.ts'
 
 export class NewsRepository implements INewsRepository {
@@ -46,13 +50,57 @@ export class NewsRepository implements INewsRepository {
     })
   }
 
-  async findByAuthorId(author_id: string): Promise<News[]> {
+  async findByAuthorId({
+    author_id,
+    filter: { updated_at, orderBy = 'updated_at', content, title },
+  }: IFindNewsByAuthorIdDTO): Promise<News[]> {
+    const where: Prisma.NewsWhereInput = {
+      author_id,
+    }
+
+    if (updated_at) {
+      where.updated_at = {
+        equals: new Date(updated_at),
+      }
+    }
+
+    const or: Prisma.NewsWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (content) {
+      or.push({
+        content: {
+          contains: content,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    const validOrders: Record<string, string> = {
+      created_at: 'created_at',
+      updated_at: 'updated_at',
+      title: 'title',
+      content: 'content',
+    }
+
+    const validatedOrder = validOrders[orderBy] || 'updated_at'
+
     return await this.prisma.news.findMany({
-      where: {
-        author_id,
-      },
+      where,
       orderBy: {
-        created_at: 'desc',
+        [validatedOrder]: 'desc',
       },
     })
   }
