@@ -1,5 +1,9 @@
-import type { PrismaClient, Team } from '@prisma/client'
-import type { ICreateTeamDTO, IUpdateTeamDTO } from '../../dto/team.d.ts'
+import type { Prisma, PrismaClient, Team } from '@prisma/client'
+import type {
+  ICreateTeamDTO,
+  IFindByTypeDTO,
+  IUpdateTeamDTO,
+} from '../../dto/team.d.ts'
 import type { ITeamRepository } from './iteam-repository.d.ts'
 
 export class TeamRepository implements ITeamRepository {
@@ -51,11 +55,29 @@ export class TeamRepository implements ITeamRepository {
     })
   }
 
-  async findByType(type: string): Promise<Team[] | null> {
+  async findByType({
+    type,
+    filter: { name, updated_at },
+  }: IFindByTypeDTO): Promise<Team[] | null> {
+    const where: Prisma.TeamWhereInput = {
+      type,
+    }
+
+    if (updated_at) {
+      where.updated_at = {
+        equals: new Date(updated_at),
+      }
+    }
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
     return await this.prisma.team.findMany({
-      where: {
-        type,
-      },
+      where,
       include: {
         team_members: {
           include: {

@@ -24,3 +24,11 @@ export interface IUpdateTeamDTO {
   id: string
   name: string
 }
+
+export interface IFindByTypeDTO {
+  type: string
+  filter: {
+    name?: string
+    updated_at?: string
+  }
+}
