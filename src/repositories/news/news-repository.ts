@@ -1,5 +1,6 @@
 import type { News, Prisma, PrismaClient } from '@prisma/client'
 import type {
+  IFindAllDTO,
   IFindNewsByAuthorIdDTO,
   INewsDTO,
   IUpdateNewsDTO,
@@ -28,11 +29,56 @@ export class NewsRepository implements INewsRepository {
     })
   }
 
-  async findAll(): Promise<News[]> {
+  async findAll({
+    author_id,
+    content,
+    title,
+    updated_at,
+  }: IFindAllDTO): Promise<News[]> {
+    const where: Prisma.NewsWhereInput = {}
+
+    if (updated_at) {
+      where.updated_at = {
+        equals: new Date(updated_at),
+      }
+    }
+
+    if (author_id) {
+      where.author_id = {
+        contains: author_id,
+        mode: 'insensitive',
+      }
+    }
+
+    const or: Prisma.NewsWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (content) {
+      or.push({
+        content: {
+          contains: content,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
     return await this.prisma.news.findMany({
       include: {
         author: true,
       },
+      where,
       orderBy: {
         created_at: 'desc',
       },
