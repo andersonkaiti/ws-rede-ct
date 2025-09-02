@@ -11,20 +11,20 @@ export class FindAllNewsController {
         typeof req.query.title === 'string' ? req.query.title : undefined
       const content =
         typeof req.query.content === 'string' ? req.query.content : undefined
-      const updated_at =
-        typeof req.query.updated_at === 'string'
-          ? req.query.updated_at
-          : undefined
       const author_id =
         typeof req.query.author_id === 'string'
           ? req.query.author_id
+          : undefined
+      const order_by =
+        req.query.order_by === 'asc' || req.query.order_by === 'desc'
+          ? req.query.order_by
           : undefined
 
       const news = await this.newsRepository.findAll({
         author_id,
         content,
         title,
-        updated_at,
+        order_by,
       })
 
       res.status(HttpStatus.OK).json(news)

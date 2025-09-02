@@ -33,15 +33,9 @@ export class NewsRepository implements INewsRepository {
     author_id,
     content,
     title,
-    updated_at,
+    order_by,
   }: IFindAllDTO): Promise<News[]> {
     const where: Prisma.NewsWhereInput = {}
-
-    if (updated_at) {
-      where.updated_at = {
-        equals: new Date(updated_at),
-      }
-    }
 
     if (author_id) {
       where.author_id = {
@@ -74,13 +68,15 @@ export class NewsRepository implements INewsRepository {
       where.OR = or
     }
 
+    console.log(where)
+
     return await this.prisma.news.findMany({
       include: {
         author: true,
       },
       where,
       orderBy: {
-        created_at: 'desc',
+        updated_at: order_by || 'desc',
       },
     })
   }
