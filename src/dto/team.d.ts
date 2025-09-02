@@ -29,6 +29,5 @@ export interface IFindByTypeDTO {
   type: string
   filter: {
     name?: string
-    updated_at?: string
   }
 }
