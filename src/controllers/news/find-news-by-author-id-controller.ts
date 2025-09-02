@@ -9,10 +9,8 @@ export class FindByAuthorController {
     try {
       const { author_id } = req.params
 
-      const orderBy =
-        typeof req.query.orderBy === 'string' ? req.query.orderBy : undefined
-      const updated_at =
-        typeof req.query.date === 'string' ? req.query.date : undefined
+      const order_by =
+        typeof req.query.order_by === 'string' ? req.query.order_by : undefined
       const title =
         typeof req.query.title === 'string' ? req.query.title : undefined
       const content =
@@ -21,8 +19,7 @@ export class FindByAuthorController {
       const news = await this.newsRepository.findByAuthorId({
         author_id,
         filter: {
-          orderBy,
-          updated_at,
+          order_by,
           title,
           content,
         },

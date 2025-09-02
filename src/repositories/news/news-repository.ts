@@ -94,16 +94,10 @@ export class NewsRepository implements INewsRepository {
 
   async findByAuthorId({
     author_id,
-    filter: { updated_at, orderBy = 'updated_at', content, title },
+    filter: { order_by = 'updated_at', content, title },
   }: IFindNewsByAuthorIdDTO): Promise<News[]> {
     const where: Prisma.NewsWhereInput = {
       author_id,
-    }
-
-    if (updated_at) {
-      where.updated_at = {
-        equals: new Date(updated_at),
-      }
     }
 
     const or: Prisma.NewsWhereInput[] = []
@@ -137,7 +131,7 @@ export class NewsRepository implements INewsRepository {
       content: 'content',
     }
 
-    const validatedOrder = validOrders[orderBy] || 'updated_at'
+    const validatedOrder = validOrders[order_by] || 'updated_at'
 
     return await this.prisma.news.findMany({
       where,

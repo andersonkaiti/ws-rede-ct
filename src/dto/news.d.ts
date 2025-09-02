@@ -19,8 +19,7 @@ export interface IFindAllDTO {
 export interface IFindNewsByAuthorIdDTO {
   author_id: string
   filter: {
-    orderBy?: string
-    updated_at?: string
+    order_by?: string
     title?: string
     content?: string
   }
