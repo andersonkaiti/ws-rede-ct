@@ -57,16 +57,10 @@ export class TeamRepository implements ITeamRepository {
 
   async findByType({
     type,
-    filter: { name, updated_at },
+    filter: { name },
   }: IFindByTypeDTO): Promise<Team[] | null> {
     const where: Prisma.TeamWhereInput = {
       type,
-    }
-
-    if (updated_at) {
-      where.updated_at = {
-        equals: new Date(updated_at),
-      }
     }
 
     if (name) {

@@ -12,15 +12,14 @@ export interface IUpdateNewsDTO extends Omit<INewsDTO, 'author_id'> {
 export interface IFindAllDTO {
   title?: string
   content?: string
-  updated_at?: string
   author_id?: string
+  order_by?: 'asc' | 'desc'
 }
 
 export interface IFindNewsByAuthorIdDTO {
   author_id: string
   filter: {
-    orderBy?: string
-    updated_at?: string
+    order_by?: 'asc' | 'desc'
     title?: string
     content?: string
   }
