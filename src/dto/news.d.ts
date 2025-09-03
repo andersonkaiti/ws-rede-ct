@@ -10,10 +10,16 @@ export interface IUpdateNewsDTO extends Omit<INewsDTO, 'author_id'> {
 }
 
 export interface IFindAllDTO {
-  title?: string
-  content?: string
-  author_id?: string
-  order_by?: 'asc' | 'desc'
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    content?: string
+    author_id?: string
+    order_by?: 'asc' | 'desc'
+  }
 }
 
 export interface IFindNewsByAuthorIdDTO {
@@ -22,5 +28,13 @@ export interface IFindNewsByAuthorIdDTO {
     order_by?: 'asc' | 'desc'
     title?: string
     content?: string
+  }
+}
+
+export interface ICountNewsDTO {
+  filter: {
+    title?: string
+    content?: string
+    author_id?: string
   }
 }

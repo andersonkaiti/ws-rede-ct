@@ -1,5 +1,6 @@
 import type { News, Prisma, PrismaClient } from '@prisma/client'
 import type {
+  ICountNewsDTO,
   IFindAllDTO,
   IFindNewsByAuthorIdDTO,
   INewsDTO,
@@ -30,10 +31,8 @@ export class NewsRepository implements INewsRepository {
   }
 
   async findAll({
-    author_id,
-    content,
-    title,
-    order_by = 'desc',
+    pagination: { offset, limit },
+    filter: { author_id, content, title, order_by = 'desc' },
   }: IFindAllDTO): Promise<News[]> {
     const where: Prisma.NewsWhereInput = {}
 
@@ -76,6 +75,8 @@ export class NewsRepository implements INewsRepository {
       orderBy: {
         updated_at: order_by,
       },
+      skip: offset,
+      take: limit,
     })
   }
 
@@ -150,6 +151,47 @@ export class NewsRepository implements INewsRepository {
       where: {
         id,
       },
+    })
+  }
+
+  async count({
+    filter: { author_id, content, title },
+  }: ICountNewsDTO): Promise<number> {
+    const where: Prisma.NewsWhereInput = {}
+
+    if (author_id) {
+      where.author_id = {
+        contains: author_id,
+        mode: 'insensitive',
+      }
+    }
+
+    const or: Prisma.NewsWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (content) {
+      or.push({
+        content: {
+          contains: content,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.news.count({
+      where,
     })
   }
 }
