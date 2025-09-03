@@ -93,6 +93,7 @@ export class NewsRepository implements INewsRepository {
 
   async findByAuthorId({
     author_id,
+    pagination: { offset, limit },
     filter: { order_by = 'desc', content, title },
   }: IFindNewsByAuthorIdDTO): Promise<News[]> {
     const where: Prisma.NewsWhereInput = {
@@ -128,6 +129,8 @@ export class NewsRepository implements INewsRepository {
       orderBy: {
         updated_at: order_by,
       },
+      skip: offset,
+      take: limit,
     })
   }
 

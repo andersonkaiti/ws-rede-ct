@@ -24,6 +24,10 @@ export interface IFindAllDTO {
 
 export interface IFindNewsByAuthorIdDTO {
   author_id: string
+  pagination: {
+    offset: number
+    limit: number
+  }
   filter: {
     order_by?: 'asc' | 'desc'
     title?: string
