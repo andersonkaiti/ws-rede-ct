@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 import { HttpStatus } from '../../@types/status-code.ts'
-import type { IUserCreatedEvent } from '../../events/user-created-event.js'
+import type { IUserCreatedEvent } from '../../events/user-created-event.d.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IClerkWebhookService } from '../../services/clerk-webhook/iclerk-webhook.d.ts'
 
@@ -26,8 +26,8 @@ export class CreateUserController {
 
       if (eventType === 'user.created') {
         await this.userRepository.create({
-          created_at: new Date(created_at),
-          updated_at: new Date(updated_at),
+          created_at,
+          updated_at,
           email_addresses,
           ...rest,
         })

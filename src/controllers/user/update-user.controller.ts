@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 import { HttpStatus } from '../../@types/status-code.ts'
-import type { IUserUpdatedEvent } from '../../events/user-updated-event.js'
+import type { IUserUpdatedEvent } from '../../events/user-updated-event.d.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IClerkWebhookService } from '../../services/clerk-webhook/iclerk-webhook.d.ts'
 
@@ -19,15 +19,12 @@ export class UpdateUserController {
         throw new Error('Erro ao verificar webhook.')
       }
 
-      const {
-        type: eventType,
-        data: { email_addresses, ...user },
-      } = event
+      const { type: eventType, data } = event
 
       if (eventType === 'user.updated') {
         await this.userRepository.update({
-          ...user,
-          email_addresses,
+          ...data,
+          last_name: data.last_name === null ? undefined : data.last_name,
         })
 
         res.status(HttpStatus.OK).json({

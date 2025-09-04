@@ -22,7 +22,7 @@ export class DeleteUserController {
       const { type: eventType, data: user } = event
 
       if (eventType === 'user.deleted') {
-        await this.userRepository.delete(user)
+        await this.userRepository.delete(user.id)
 
         res.status(HttpStatus.OK).json({
           message: 'Usuário deletado com sucesso.',

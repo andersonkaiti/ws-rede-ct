@@ -24,6 +24,21 @@ export class FindAllNewsController {
 
   async handle(req: Request, res: Response) {
     try {
+      const parseResult = findAllNewsSchema.safeParse({
+        page: req.query.page,
+        limit: req.query.limit,
+        title: req.query.title,
+        content: req.query.content,
+        author_id: req.query.author_id,
+        order_by: req.query.order_by,
+      })
+
+      if (!parseResult.success) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          errors: z.treeifyError(parseResult.error),
+        })
+      }
+
       const {
         page,
         limit,
@@ -31,15 +46,7 @@ export class FindAllNewsController {
         content,
         order_by = 'desc',
         title,
-      } = findAllNewsSchema.parse({
-        page: req.query.page,
-        limit: req.query.limit,
-
-        title: req.query.title,
-        content: req.query.content,
-        author_id: req.query.author_id,
-        order_by: req.query.order_by,
-      })
+      } = parseResult.data
 
       const offset = limit * page - limit
 

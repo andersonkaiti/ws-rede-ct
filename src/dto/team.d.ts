@@ -1,3 +1,5 @@
+import type { IEmailAddress } from './user.ts'
+
 export interface IUserDTO {
   id: string
   first_name: string

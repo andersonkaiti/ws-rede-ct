@@ -11,8 +11,8 @@ export class UserRepository implements IUserRepository {
         first_name,
         last_name,
         id: user.id,
-        created_at: user.created_at,
-        updated_at: user.updated_at,
+        created_at: new Date(user.created_at),
+        updated_at: new Date(user.updated_at),
         image_url: user.image_url,
         profile_image_url: user.profile_image_url,
 
@@ -49,9 +49,9 @@ export class UserRepository implements IUserRepository {
     })
   }
 
-  async delete(user: IUserDeletedDTO) {
+  async delete(userId: IUserDeletedDTO) {
     await this.prisma.user.delete({
-      where: { id: user.id },
+      where: { id: userId },
     })
   }
 

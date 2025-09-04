@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 import { HttpStatus } from '../../@types/status-code.ts'
-import type { ITeamRepository } from '../../repositories/team/iteam-repository.js'
+import type { ITeamRepository } from '../../repositories/team/iteam-repository.ts'
 
 export class FindAllController {
   constructor(private readonly teamRepository: ITeamRepository) {}

@@ -11,7 +11,12 @@ export interface ITeamMemberDTO {
 export interface ICreateTeamMemberDTO extends ITeamMemberDTO {}
 
 export interface IUpdateTeamMemberDTO {
-  member: ITeamMemberDTO
+  member: {
+    id: string
+    role: string
+    user_id: string
+    description: string
+  }
 }
 
 export interface IUpdateTeamMembersDTO {

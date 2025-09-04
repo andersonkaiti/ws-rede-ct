@@ -1,10 +1,5 @@
 import { type Request, type Response, Router } from 'express'
 import {
-  makeCreateTeamMemberController,
-  makeDeleteTeamMemberController,
-  makeUpdateTeamMemberController,
-} from '../factories/controllers/team-member.factory.ts'
-import {
   makeCreateTeamController,
   makeDeleteTeamController,
   makeFindAllTeamsController,
@@ -12,6 +7,11 @@ import {
   makeFindTeamByTypeController,
   makeUpdateTeamController,
 } from '../factories/controllers/team.factory.ts'
+import {
+  makeCreateTeamMemberController,
+  makeDeleteTeamMemberController,
+  makeUpdateTeamMemberController,
+} from '../factories/controllers/team-member.factory.ts'
 
 const router = Router()
 

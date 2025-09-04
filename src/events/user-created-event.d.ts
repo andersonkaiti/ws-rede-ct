@@ -7,8 +7,8 @@ export interface IUserCreatedEvent {
 }
 
 export interface IData {
-  birthday?: Date
-  created_at: Date
+  birthday?: number
+  created_at: number
   email_addresses: IEmailAddress[]
   external_accounts: unknown[]
   external_id: string
@@ -17,7 +17,7 @@ export interface IData {
   id: string
   image_url: string
   last_name: string
-  last_sign_in_at: Date
+  last_sign_in_at: number
   object: string
   password_enabled: boolean
   phone_numbers: unknown[]
@@ -29,7 +29,7 @@ export interface IData {
   public_metadata: IMetadata
   two_factor_enabled: boolean
   unsafe_metadata: IMetadata
-  updated_at: Date
+  updated_at: number
   username: null
   web3_wallets: unknown[]
 }

@@ -1,8 +1,15 @@
 import type { Request, Response } from 'express'
+import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
+
+const createNewsSchema = z.object({
+  author_id: z.string(),
+  title: z.string().min(1),
+  content: z.string().min(1),
+})
 
 export class CreateNewsController {
   constructor(
@@ -12,7 +19,14 @@ export class CreateNewsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { title, content, author_id } = req.body
+      const parseResult = createNewsSchema.safeParse(req.body)
+
+      if (!parseResult.success) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          errors: z.treeifyError(parseResult.error),
+        })
+      }
+      const { title, content, author_id } = parseResult.data
 
       const image_url = await this.firebaseStorageService.uploadFile(
         req,
