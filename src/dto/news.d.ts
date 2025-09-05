@@ -1,12 +1,15 @@
 export interface INewsDTO {
   title: string
   content: string
-  author_id: string
-  image_url?: string
+  authorId: string
+  imageUrl: string
 }
 
-export interface IUpdateNewsDTO extends Omit<INewsDTO, 'author_id'> {
+export interface IUpdateNewsDTO {
   id: string
+  title: string
+  content: string
+  imageUrl?: string
 }
 
 export interface IFindAllDTO {
@@ -17,19 +20,19 @@ export interface IFindAllDTO {
   filter: {
     title?: string
     content?: string
-    author_id?: string
-    order_by?: 'asc' | 'desc'
+    authorId?: string
+    orderBy?: 'asc' | 'desc'
   }
 }
 
 export interface IFindNewsByAuthorIdDTO {
-  author_id: string
+  authorId: string
   pagination: {
     offset: number
     limit: number
   }
   filter: {
-    order_by?: 'asc' | 'desc'
+    orderBy?: 'asc' | 'desc'
     title?: string
     content?: string
   }
@@ -39,6 +42,6 @@ export interface ICountNewsDTO {
   filter: {
     title?: string
     content?: string
-    author_id?: string
+    authorId?: string
   }
 }

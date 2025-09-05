@@ -16,7 +16,7 @@ export class FindNewsByIdController {
 
       if (!parseResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.treeifyError(parseResult.error),
+          errors: z.prettifyError(parseResult.error),
         })
       }
 

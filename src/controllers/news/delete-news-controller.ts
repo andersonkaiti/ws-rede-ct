@@ -20,15 +20,33 @@ export class DeleteNewsController {
 
       if (!parseResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.treeifyError(parseResult.error),
+          errors: z.prettifyError(parseResult.error),
         })
       }
 
       const { id } = parseResult.data
 
+      const authenticatedUserId = req.user.id
+
+      const news = await this.newsRepository.findById(id)
+
+      if (!news) {
+        return res.status(HttpStatus.NOT_FOUND).json({
+          message: 'Notícia não encontrada.',
+        })
+      }
+
+      if (news.author.id !== authenticatedUserId) {
+        return res.status(HttpStatus.UNAUTHORIZED).json({
+          message: 'Sem permissão.',
+        })
+      }
+
       await Promise.all([
         this.newsRepository.delete(id),
-        this.firebaseStorageService.deleteFile(req),
+        this.firebaseStorageService.deleteFile({
+          imageUrl: news.imageUrl as string,
+        }),
       ])
 
       res.status(HttpStatus.OK).json({
