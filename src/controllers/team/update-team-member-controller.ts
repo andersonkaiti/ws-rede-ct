@@ -4,12 +4,10 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 
 const updateTeamMemberBodySchema = z.object({
-  member: z.object({
-    id: z.uuid(),
-    role: z.string(),
-    user_id: z.string(),
-    description: z.string(),
-  }),
+  id: z.uuid(),
+  role: z.string(),
+  userId: z.string(),
+  description: z.string(),
 })
 
 export class UpdateTeamMemberController {
@@ -21,15 +19,13 @@ export class UpdateTeamMemberController {
 
       if (!parseResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.treeifyError(parseResult.error),
+          errors: z.prettifyError(parseResult.error),
         })
       }
 
-      const { member } = parseResult.data
+      const member = parseResult.data
 
-      const teamMember = await this.teamMemberRepository.update({
-        member,
-      })
+      const teamMember = await this.teamMemberRepository.update(member)
 
       res.status(HttpStatus.OK).json(teamMember)
     } catch (error) {

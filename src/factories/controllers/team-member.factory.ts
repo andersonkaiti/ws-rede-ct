@@ -3,11 +3,13 @@ import { CreateTeamMemberController } from '../../controllers/team/create-team-m
 import { DeleteTeamMemberController } from '../../controllers/team/delete-team-member-controller.ts'
 import { UpdateTeamMemberController } from '../../controllers/team/update-team-member-controller.ts'
 import { TeamMemberRepository } from '../../repositories/team-member/team-member-repository.ts'
+import { makeUserRepository } from '../repositories/user.factory.ts'
 
 export function makeCreateTeamMemberController() {
   return {
     createTeamMemberController: new CreateTeamMemberController(
-      new TeamMemberRepository(prisma)
+      new TeamMemberRepository(prisma),
+      makeUserRepository()
     ),
   }
 }

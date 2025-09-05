@@ -2,34 +2,53 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
+import type { IUserRepository } from '../../repositories/user/iuser-repository.ts'
 
 const createTeamMemberSchema = z.object({
+  teamId: z.uuid(),
   member: z.object({
-    user_id: z.string(),
+    userId: z.uuid(),
     role: z.string(),
     description: z.string(),
   }),
 })
 
 export class CreateTeamMemberController {
-  constructor(private readonly teamMemberRepository: ITeamMemberRepository) {}
+  constructor(
+    private readonly teamMemberRepository: ITeamMemberRepository,
+    private readonly userRepository: IUserRepository
+  ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { team_id } = req.params
-      const parseResult = createTeamMemberSchema.safeParse(req.body)
+      const parseResult = createTeamMemberSchema.safeParse({
+        ...req.body,
+        teamId: req.params,
+      })
 
       if (!parseResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.treeifyError(parseResult.error),
+          errors: z.prettifyError(parseResult.error),
         })
       }
 
-      const { member } = parseResult.data
+      const {
+        teamId,
+        member: { userId, ...rest },
+      } = parseResult.data
+
+      const user = await this.userRepository.findById(userId)
+
+      if (!user) {
+        return res.status(HttpStatus.NOT_FOUND).json({
+          message: 'O usuário não existe.',
+        })
+      }
 
       const teamMember = await this.teamMemberRepository.create({
-        ...member,
-        team_id,
+        ...rest,
+        userId,
+        teamId,
       })
 
       res.status(HttpStatus.CREATED).json(teamMember)

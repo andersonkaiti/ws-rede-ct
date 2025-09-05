@@ -1,9 +1,9 @@
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import type { ITeamMemberDTO } from '../../dto/team-member.d.ts'
-import type { ITeamRepository } from '../../repositories/team/iteam-repository.ts'
+import type { IIncomingMembers } from '../../dto/team.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
+import type { ITeamRepository } from '../../repositories/team/iteam-repository.ts'
 
 const updateTeamParamsSchema = z.object({
   id: z.uuid(),
@@ -13,11 +13,11 @@ const updateTeamBodySchema = z.object({
   name: z.string().min(1),
   members: z.array(
     z.object({
+      id: z.uuid(),
       role: z.string(),
       user: z.object({
-        id: z.string(),
-        first_name: z.string(),
-        last_name: z.string().optional(),
+        id: z.uuid(),
+        name: z.string(),
       }),
     })
   ),
@@ -34,14 +34,14 @@ export class UpdateTeamController {
       const paramsResult = updateTeamParamsSchema.safeParse(req.params)
       if (!paramsResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.treeifyError?.(paramsResult.error),
+          errors: z.prettifyError?.(paramsResult.error),
         })
       }
 
       const bodyResult = updateTeamBodySchema.safeParse(req.body)
       if (!bodyResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.treeifyError(bodyResult.error),
+          errors: z.prettifyError(bodyResult.error),
         })
       }
 
@@ -52,7 +52,7 @@ export class UpdateTeamController {
         await this.teamMemberRepository.findByTeamId(teamId)
 
       const incomingIdMembers = members.map(
-        (member: Omit<ITeamMemberDTO, 'team_id' | 'user_id'>) => member.id
+        (member: IIncomingMembers) => member.id
       )
 
       const memberIdsToDelete = existingMembers
@@ -62,7 +62,7 @@ export class UpdateTeamController {
       await this.teamMemberRepository.deleteMany(memberIdsToDelete)
 
       await this.teamMemberRepository.updateMany({
-        id: teamId,
+        teamId,
         members,
       })
 

@@ -1,22 +1,21 @@
-import { type Request, type Response, Router } from 'express'
+import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateTeamController,
   makeDeleteTeamController,
-  makeFindAllTeamsController,
   makeFindTeamByIdController,
   makeFindTeamByTypeController,
+  makeFindTeamsController,
   makeUpdateTeamController,
 } from '../factories/controllers/team.factory.ts'
-import {
-  makeCreateTeamMemberController,
-  makeDeleteTeamMemberController,
-  makeUpdateTeamMemberController,
-} from '../factories/controllers/team-member.factory.ts'
+import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
 const router = Router()
 
+const { authMiddleware } = makeAuthMiddleware()
+
 router.get('/', async (req: Request, res: Response) => {
-  const { findAllTeamsController } = makeFindAllTeamsController()
+  const { findTeamsController: findAllTeamsController } =
+    makeFindTeamsController()
 
   await findAllTeamsController.handle(req, res)
 })
@@ -33,40 +32,40 @@ router.get('/type/:type', async (req: Request, res: Response) => {
   await findTeamByTypeController.handle(req, res)
 })
 
-router.post('/', async (req: Request, res: Response) => {
-  const { createTeamController } = makeCreateTeamController()
+router.post(
+  '/',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { createTeamController } = makeCreateTeamController()
 
-  await createTeamController.handle(req, res)
-})
+    await createTeamController.handle(req, res)
+  }
+)
 
-router.put('/member/:id', async (req: Request, res: Response) => {
-  const { updateTeamMemberController } = makeUpdateTeamMemberController()
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateTeamController } = makeUpdateTeamController()
 
-  await updateTeamMemberController.handle(req, res)
-})
+    await updateTeamController.handle(req, res)
+  }
+)
 
-router.post('/:team_id/member', async (req: Request, res: Response) => {
-  const { createTeamMemberController } = makeCreateTeamMemberController()
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteTeamController } = makeDeleteTeamController()
 
-  await createTeamMemberController.handle(req, res)
-})
-
-router.put('/:id', async (req: Request, res: Response) => {
-  const { updateTeamController } = makeUpdateTeamController()
-
-  await updateTeamController.handle(req, res)
-})
-
-router.delete('/member/:id', async (req: Request, res: Response) => {
-  const { deleteTeamMemberController } = makeDeleteTeamMemberController()
-
-  await deleteTeamMemberController.handle(req, res)
-})
-
-router.delete('/:id', async (req: Request, res: Response) => {
-  const { deleteTeamController } = makeDeleteTeamController()
-
-  await deleteTeamController.handle(req, res)
-})
+    await deleteTeamController.handle(req, res)
+  }
+)
 
 export { router as teamRoutes }

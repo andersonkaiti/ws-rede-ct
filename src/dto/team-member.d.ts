@@ -1,31 +1,24 @@
-export interface ITeamMemberDTO {
+export interface ICreateTeamMemberDTO {
   role: string
-  team_id: string
-  user_id: string
+  teamId: string
+  userId: string
   description?: string
-  id?: string
-  created_at?: string
-  updated_at?: string
 }
 
-export interface ICreateTeamMemberDTO extends ITeamMemberDTO {}
-
 export interface IUpdateTeamMemberDTO {
-  member: {
-    id: string
-    role: string
-    user_id: string
-    description: string
-  }
+  id: string
+  role: string
+  userId: string
+  description: string
 }
 
 export interface IUpdateTeamMembersDTO {
-  id: string
+  teamId: string
   members: {
     role: string
     user: {
       id: string
-      first_name: string
+      name: string
     }
   }[]
 }

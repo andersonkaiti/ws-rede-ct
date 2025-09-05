@@ -4,15 +4,14 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.d.ts'
 
 const createTeamSchema = z.object({
-  type: z.string().min(1),
   name: z.string().min(1),
+  type: z.string().min(1),
   members: z.array(
     z.object({
       role: z.string(),
       user: z.object({
         id: z.string(),
-        first_name: z.string(),
-        last_name: z.string().optional(),
+        name: z.string().min(1),
       }),
     })
   ),
@@ -23,15 +22,11 @@ export class CreateTeamController {
 
   async handle(req: Request, res: Response) {
     try {
-      console.log(req.body.members)
-
       const parseResult = createTeamSchema.safeParse(req.body)
-
-      console.log(parseResult.data)
 
       if (!parseResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.treeifyError(parseResult.error),
+          errors: z.prettifyError(parseResult.error),
         })
       }
 
