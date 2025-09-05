@@ -1,13 +1,20 @@
 import { type Request, type Response, Router } from 'express'
-import { makeClerkAuthController } from '../factories/controllers/clerk.factory.ts'
-import { clerkMiddleware } from '../middlewares/clerk.ts'
+import {
+  makeSignInController,
+  makeSignUpController,
+} from '../factories/controllers/auth.factory.ts'
 
 const router = Router()
 
-router.get('/', clerkMiddleware, async (req: Request, res: Response) => {
-  const { clerkAuthController } = makeClerkAuthController()
+const { signUpController } = makeSignUpController()
+const { signInController } = makeSignInController()
 
-  await clerkAuthController.handle(req, res)
+router.post('/sign-up', async (req: Request, res: Response) => {
+  await signUpController.handle(req, res)
+})
+
+router.post('/sign-in', async (req: Request, res: Response) => {
+  await signInController.handle(req, res)
 })
 
 export { router as authRoutes }

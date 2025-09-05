@@ -1,6 +1,6 @@
 import type { Request } from 'express'
 import type { Webhook } from 'svix'
-import type { IClerkWebhookService } from './iclerk-webhook.js'
+import type { IClerkWebhookService } from './iclerk-webhook.ts'
 
 export class ClerkWebhookService implements IClerkWebhookService {
   constructor(private readonly webhook: Webhook) {}

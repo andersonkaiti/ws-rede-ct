@@ -1,18 +1,15 @@
-export interface IEmailAddress {
-  email_address: string
-  id: string
-  linked_to: unknown[]
+import type { UserRole } from '@prisma/client'
+
+export interface ICreateUserDTO {
+  name: string
+  emailAddress: string
+  passwordHash: string
 }
 
-export interface IUserDTO {
+export interface IUpdateUserDTO {
   id: string
-  first_name: string
-  last_name?: string
-  image_url?: string
-  profile_image_url?: string
-  created_at: number
-  updated_at: number
-  email_addresses: IEmailAddress[]
+  name?: string
+  passwordHash?: string
+  avatarUrl?: string
+  role?: UserRole
 }
-
-export type IUserDeletedDTO = IUserDTO['id']

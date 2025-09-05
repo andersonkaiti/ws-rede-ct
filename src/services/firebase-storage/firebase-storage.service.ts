@@ -1,27 +1,21 @@
 import { randomUUID } from 'node:crypto'
 import type { Bucket } from '@google-cloud/storage'
-import type { Request } from 'express'
-import type { FileType } from '../../@types/file.d.ts'
-import type { IFirebaseStorageService } from './ifirebase-storage.d.ts'
+import type {
+  IDeleteFile,
+  IFirebaseStorageService,
+  IUpdateFile,
+  IUploadFile,
+} from './ifirebase-storage.d.ts'
 
 const IMAGE_PATH_REGEX = /\/images\/.+$/
 
 export class FirebaseStorageService implements IFirebaseStorageService {
   constructor(private readonly bucket: Bucket) {}
 
-  async uploadFile(req: Request, fileType: FileType): Promise<string> {
-    if (!req.file) {
-      throw new Error('Arquivo não encontrado.')
-    }
-
-    const file = req.file
-    const author_id = req.body.author_id
-
+  async uploadFile({ file, folder, id }: IUploadFile): Promise<string> {
     const fileName = `${randomUUID()}-${file?.originalname}`
 
-    const fileRef = this.bucket.file(
-      `images/${fileType}/${author_id}/${fileName}`
-    )
+    const fileRef = this.bucket.file(`images/${folder}/${id}/${fileName}`)
 
     return await new Promise((resolve, reject) => {
       const fileStream = fileRef.createWriteStream({
@@ -46,24 +40,18 @@ export class FirebaseStorageService implements IFirebaseStorageService {
         }
       })
 
-      fileStream.end(file?.buffer)
+      fileStream.end(file.buffer)
     })
   }
 
-  async updateFile(
-    req: Request,
-    fileType: FileType
-  ): Promise<string | undefined> {
-    if (!req.file) {
-      throw new Error('Arquivo não encontrado.')
-    }
-
-    if (req.file.size === 0) {
-      return
-    }
-
+  async updateFile({
+    file,
+    id,
+    imageUrl,
+    folder,
+  }: IUpdateFile): Promise<string> {
     try {
-      const filePath = this.getPath(req.body.image_url)
+      const filePath = this.getPath(imageUrl)
 
       if (!filePath) {
         throw new Error('Arquivo não encontrado.')
@@ -71,7 +59,11 @@ export class FirebaseStorageService implements IFirebaseStorageService {
 
       const [_, newImageUrl] = await Promise.all([
         this.bucket.file(filePath).delete(),
-        this.uploadFile(req, fileType),
+        this.uploadFile({
+          file,
+          id,
+          folder,
+        }),
       ])
 
       return newImageUrl
@@ -81,12 +73,8 @@ export class FirebaseStorageService implements IFirebaseStorageService {
     }
   }
 
-  async deleteFile(req: Request): Promise<void> {
-    if (!req.body.image_url) {
-      throw new Error('Arquivo não encontrado.')
-    }
-
-    const filePath = this.getPath(req.body.image_url)
+  async deleteFile({ imageUrl }: IDeleteFile): Promise<void> {
+    const filePath = this.getPath(imageUrl)
 
     if (!filePath) {
       throw new Error('Arquivo não encontrado.')

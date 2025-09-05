@@ -1,8 +1,11 @@
-import type { IUserDeletedDTO, IUserDTO } from '../../dto/user.d.ts'
+import type { User } from '@prisma/client'
+import type { ICreateUserDTO, IUpdateUserDTO } from '../../dto/user.d.ts'
 
 export interface IUserRepository {
-  create(user: IUserDTO): Promise<void>
-  update(user: IUserDTO): Promise<void>
-  delete(user: IUserDeletedDTO): Promise<void>
-  findAll(): Promise<User[]>
+  create(user: ICreateUserDTO): Promise<void>
+  update(user: IUpdateUserDTO): Promise<void>
+  deleteById(user: string): Promise<void>
+  find(): Promise<Omit<User, 'passwordHash'>[]>
+  findByEmail(emailAddress: string): Promise<User | null>
+  findById(id: string): Promise<User | null>
 }
