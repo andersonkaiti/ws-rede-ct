@@ -7,94 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
-  id                String         @id
-  first_name        String
-  last_name         String?
-  created_at        DateTime       @default(now())
-  image_url         String?
-  profile_image_url String?
-  updated_at        DateTime       @updatedAt
-  email_addresses   EmailAddress[] @relation("user_email_addresses")
-  News              News[]
-  Pendency          Pendency[]
-  ETP               ETP[]
-  Highlight         Highlight[]
-  team_members      TeamMember[]
+  id           String   @id @default(uuid())
+  name         String
+  passwordHash String   @map("password_hash")
+  avatarUrl    String?  @map("avatar_url")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  emailAddress String   @unique @map("email_address")
+  role         UserRole @default(USER)
+
+  news       News[]
+  TeamMember TeamMember[]
 
   @@map("users")
 }
 
-model EmailAddress {
-  id            String @id
-  email_address String @unique
-  user_id       String
-  userAddresses User   @relation("user_email_addresses", fields: [user_id], references: [id], onDelete: Cascade)
-  linked_to     Json?
-
-  @@map("email_addresses")
-}
-
 model News {
-  id         String   @id @default(uuid())
-  title      String
-  content    String
-  image_url  String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  author     User     @relation(fields: [author_id], references: [id])
-  author_id  String
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  imageUrl  String?  @map("image_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String   @map("author_id")
 
   @@map("news")
 }
 
-model Certificate {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  url         String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("certificates")
-}
-
-model Pendency {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  type        String
-  status      String
-  author_id   String
-  author      User     @relation(fields: [author_id], references: [id], onDelete: Cascade)
-
-  @@map("pendencies")
-}
-
-model ETP {
-  id           String        @id @default(uuid())
-  name         String
-  description  String
-  created_at   DateTime      @default(now())
-  updated_at   DateTime      @updatedAt
-  status       String
-  author_id    String
-  author       User          @relation(fields: [author_id], references: [id], onDelete: Cascade)
-  researchers  Researcher[]
-  publications Publication[]
-
-  @@map("etps")
-}
-
 model Team {
-  id           String       @id @default(uuid())
-  name         String
-  type         String
-  created_at   DateTime     @default(now())
-  updated_at   DateTime     @updatedAt
-  team_members TeamMember[]
+  id          String       @id @default(uuid())
+  name        String
+  type        String
+  description String?
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  members     TeamMember[]
 
   @@map("teams")
 }
@@ -103,146 +57,13 @@ model TeamMember {
   id          String   @id @default(uuid())
   role        String
   description String?
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  team_id     String
-  team        Team     @relation(fields: [team_id], references: [id], onDelete: Cascade)
-  user_id     String
-  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  teamId      String   @map("team_id")
+  team        Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId      String   @map("user_id")
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([teamId, userId])
   @@map("team_members")
-}
-
-model Researcher {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  in_memorian Boolean  @default(false)
-  etps        ETP[]
-
-  @@map("researchers")
-}
-
-model Partner {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  image_url   String?
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("partners")
-}
-
-model Congress {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  image_url   String?
-  url         String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("congresses")
-}
-
-model Course {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  image_url   String?
-  url         String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("courses")
-}
-
-model Book {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  image_url   String?
-  url         String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("books")
-}
-
-model Notice {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  type        String
-
-  @@map("notices")
-}
-
-model Law {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  url         String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("laws")
-}
-
-model Museum {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("museums")
-}
-
-model Highlight {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  user_id     String
-  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("highlights")
-}
-
-model Publication {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  type        String // journal, book, documentary, etc
-  url         String?
-  image_url   String?
-  etp_id      String?
-  etp         ETP?     @relation(fields: [etp_id], references: [id])
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("publications")
-}
-
-model Event {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  type        String // congress, webinar, course, etc
-  start_date  DateTime
-  end_date    DateTime
-  url         String?
-  image_url   String?
-  location    String?
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-
-  @@map("events")
 }
