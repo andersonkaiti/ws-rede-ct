@@ -1,4 +1,4 @@
-import { type Request, type Response, Router } from 'express'
+import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateNewsController,
   makeDeleteNewsController,
@@ -7,12 +7,18 @@ import {
   makeFindNewsByIdController,
   makeUpdateNewsController,
 } from '../factories/controllers/news.factory.ts'
+import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
 const routes = Router()
 
+const { authMiddleware } = makeAuthMiddleware()
+
 routes.post(
   '/',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
   upload.single('image'),
   async (req: Request, res: Response) => {
     const { createNewsController } = makeCreateNewsController()
@@ -33,7 +39,7 @@ routes.get('/:id', async (req: Request, res: Response) => {
   await findNewsByIdController.handle(req, res)
 })
 
-routes.get('/author/:author_id', async (req: Request, res: Response) => {
+routes.get('/author/:authorId', async (req: Request, res: Response) => {
   const { findNewsByAuthorIdController } = makeFindNewsByAuthorIdController()
 
   await findNewsByAuthorIdController.handle(req, res)
@@ -41,6 +47,9 @@ routes.get('/author/:author_id', async (req: Request, res: Response) => {
 
 routes.put(
   '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
   upload.single('image'),
   async (req: Request, res: Response) => {
     const { updateNewsController } = makeUpdateNewsController()
@@ -49,10 +58,16 @@ routes.put(
   }
 )
 
-routes.delete('/:id', async (req: Request, res: Response) => {
-  const { deleteNewsController } = makeDeleteNewsController()
+routes.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteNewsController } = makeDeleteNewsController()
 
-  await deleteNewsController.handle(req, res)
-})
+    await deleteNewsController.handle(req, res)
+  }
+)
 
 export { routes as newsRoutes }

@@ -6,14 +6,13 @@ import type { INewsRepository } from '../../repositories/news/inews-repository.t
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 7
 
-const findByAuthorSchem = z.object({
+const findByAuthorSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
-  author_id: z.string(),
+  authorId: z.string(),
   title: z.string().optional(),
   content: z.string().optional(),
-  order_by: z
+  orderBy: z
     .union([z.enum(['asc', 'desc']), z.literal('')])
     .optional()
     .transform((value) => (value === '' ? undefined : value)),
@@ -24,28 +23,35 @@ export class FindByAuthorController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { page, limit, author_id, content, order_by, title } =
-        findByAuthorSchem.parse({
-          page: req.query.page,
-          limit: req.query.limit,
+      const parseResult = findByAuthorSchema.safeParse({
+        page: req.query.page,
+        limit: req.query.limit,
+        author_id: req.params.author_id,
+        title: req.query.title,
+        content: req.query.content,
+        order_by: req.query.order_by,
+      })
 
-          author_id: req.params.author_id,
-          title: req.query.title,
-          content: req.query.content,
-          order_by: req.query.order_by,
+      if (!parseResult.success) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          errors: z.prettifyError(parseResult.error),
         })
+      }
 
-      const offset = page * limit - limit
+      const { page, limit, authorId, content, orderBy, title } =
+        parseResult.data
+
+      const offset = limit * page - limit
 
       const [news, totalUserNews] = await Promise.all([
         this.newsRepository.findByAuthorId({
-          author_id,
+          authorId,
           pagination: {
             offset,
             limit,
           },
           filter: {
-            order_by,
+            orderBy,
             title,
             content,
           },
@@ -53,7 +59,7 @@ export class FindByAuthorController {
 
         this.newsRepository.count({
           filter: {
-            author_id,
+            authorId,
             content,
             title,
           },

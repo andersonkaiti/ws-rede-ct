@@ -1,7 +1,22 @@
-import type { Request } from 'express'
+export interface IUploadFile {
+  file: Express.Multer.File
+  id: string
+  folder: File.USER
+}
+
+export interface IUpdateFile {
+  file: Express.Multer.File
+  id: string
+  imageUrl: string
+  folder: File.USER
+}
+
+export interface IDeleteFile {
+  imageUrl: string
+}
 
 export interface IFirebaseStorageService {
-  uploadFile(req: Request, fileType: FileType): Promise<string>
-  updateFile(req: Request, fileType: FileType): Promise<string | undefined>
-  deleteFile(req: Request): Promise<void>
+  uploadFile(data: IUploadFile): Promise<string>
+  updateFile(data: IUpdateFile): Promise<string>
+  deleteFile(req: IDeleteFile): Promise<void>
 }

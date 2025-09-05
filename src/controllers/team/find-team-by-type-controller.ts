@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import z from 'zod'
+import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.ts'
 
@@ -13,10 +13,18 @@ export class FindTeamByTypeController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { type, name } = findTeamsByTypeSchema.parse({
+      const parseResult = findTeamsByTypeSchema.safeParse({
         type: req.params.type,
         name: req.query.name,
       })
+
+      if (!parseResult.success) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          errors: z.prettifyError?.(parseResult.error),
+        })
+      }
+
+      const { type, name } = parseResult.data
 
       const team = await this.teamRepository.findByType({
         type,

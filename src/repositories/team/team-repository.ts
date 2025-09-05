@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient, Team } from '@prisma/client'
+import type { Prisma, PrismaClient } from '@prisma/client'
 import type {
   ICreateTeamDTO,
   IFindByTypeDTO,
@@ -9,12 +9,12 @@ import type { ITeamRepository } from './iteam-repository.d.ts'
 export class TeamRepository implements ITeamRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create({ members, name, type }: ICreateTeamDTO): Promise<Team> {
+  async create({ members, name, type }: ICreateTeamDTO) {
     return await this.prisma.team.create({
       data: {
         name,
         type,
-        team_members: {
+        members: {
           create: members.map((member) => ({
             role: member.role,
             user: {
@@ -28,10 +28,10 @@ export class TeamRepository implements ITeamRepository {
     })
   }
 
-  async findAll(): Promise<Team[]> {
+  async findAll() {
     return await this.prisma.team.findMany({
       include: {
-        team_members: {
+        members: {
           include: {
             user: true,
           },
@@ -40,13 +40,13 @@ export class TeamRepository implements ITeamRepository {
     })
   }
 
-  async findById(id: string): Promise<Team | null> {
+  async findById(id: string) {
     return await this.prisma.team.findUnique({
       where: {
         id,
       },
       include: {
-        team_members: {
+        members: {
           include: {
             user: true,
           },
@@ -55,10 +55,7 @@ export class TeamRepository implements ITeamRepository {
     })
   }
 
-  async findByType({
-    type,
-    filter: { name },
-  }: IFindByTypeDTO): Promise<Team[] | null> {
+  async findByType({ type, filter: { name } }: IFindByTypeDTO) {
     const where: Prisma.TeamWhereInput = {
       type,
     }
@@ -73,7 +70,7 @@ export class TeamRepository implements ITeamRepository {
     return await this.prisma.team.findMany({
       where,
       include: {
-        team_members: {
+        members: {
           include: {
             user: true,
           },
@@ -82,7 +79,7 @@ export class TeamRepository implements ITeamRepository {
     })
   }
 
-  async update({ id, name }: IUpdateTeamDTO): Promise<Team> {
+  async update({ id, name }: IUpdateTeamDTO) {
     return await this.prisma.team.update({
       where: {
         id,
@@ -93,7 +90,7 @@ export class TeamRepository implements ITeamRepository {
     })
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string) {
     await this.prisma.team.delete({
       where: {
         id,

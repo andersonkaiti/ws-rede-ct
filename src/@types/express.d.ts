@@ -1,3 +1,5 @@
+import type { IJWTPayload } from '../services/auth/jwt/ijwt.ts'
+
 interface MulterFile extends Express.Multer.File {
   image_url?: string
 }
@@ -9,6 +11,7 @@ declare global {
       'svix-timestamp': string
       'svix-signature': string
       file: MulterFile
+      user: IJWTPayload
     }
   }
 }

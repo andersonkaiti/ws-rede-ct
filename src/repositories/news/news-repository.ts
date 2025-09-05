@@ -1,4 +1,4 @@
-import type { News, Prisma, PrismaClient } from '@prisma/client'
+import type { Prisma, PrismaClient } from '@prisma/client'
 import type {
   ICountNewsDTO,
   IFindAllDTO,
@@ -11,34 +11,28 @@ import type { INewsRepository } from './inews-repository.d.ts'
 export class NewsRepository implements INewsRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create({
-    title,
-    content,
-    author_id,
-    image_url,
-  }: INewsDTO): Promise<News> {
+  async create({ authorId, ...news }: INewsDTO) {
     return await this.prisma.news.create({
       data: {
-        title,
-        content,
-        author_id,
-        image_url,
-      },
-      include: {
-        author: true,
+        ...news,
+        author: {
+          connect: {
+            id: authorId,
+          },
+        },
       },
     })
   }
 
-  async findAll({
+  async find({
     pagination: { offset, limit },
-    filter: { author_id, content, title, order_by = 'desc' },
-  }: IFindAllDTO): Promise<News[]> {
+    filter: { authorId, content, title, orderBy = 'desc' },
+  }: IFindAllDTO) {
     const where: Prisma.NewsWhereInput = {}
 
-    if (author_id) {
-      where.author_id = {
-        contains: author_id,
+    if (authorId) {
+      where.authorId = {
+        contains: authorId,
         mode: 'insensitive',
       }
     }
@@ -68,22 +62,28 @@ export class NewsRepository implements INewsRepository {
     }
 
     return await this.prisma.news.findMany({
+      where,
+      omit: {
+        authorId: true,
+      },
       include: {
         author: true,
       },
-      where,
       orderBy: {
-        updated_at: order_by,
+        updatedAt: orderBy,
       },
       skip: offset,
       take: limit,
     })
   }
 
-  async findById(id: string): Promise<News | null> {
+  async findById(id: string) {
     return await this.prisma.news.findUnique({
       where: {
         id,
+      },
+      omit: {
+        authorId: true,
       },
       include: {
         author: true,
@@ -92,12 +92,12 @@ export class NewsRepository implements INewsRepository {
   }
 
   async findByAuthorId({
-    author_id,
+    authorId,
     pagination: { offset, limit },
-    filter: { order_by = 'desc', content, title },
-  }: IFindNewsByAuthorIdDTO): Promise<News[]> {
+    filter: { orderBy = 'desc', content, title },
+  }: IFindNewsByAuthorIdDTO) {
     const where: Prisma.NewsWhereInput = {
-      author_id,
+      authorId,
     }
 
     const or: Prisma.NewsWhereInput[] = []
@@ -125,16 +125,19 @@ export class NewsRepository implements INewsRepository {
     }
 
     return await this.prisma.news.findMany({
+      omit: {
+        authorId: true,
+      },
       where,
       orderBy: {
-        updated_at: order_by,
+        updatedAt: orderBy,
       },
       skip: offset,
       take: limit,
     })
   }
 
-  async update(news: IUpdateNewsDTO): Promise<News> {
+  async update(news: IUpdateNewsDTO) {
     return await this.prisma.news.update({
       where: {
         id: news.id,
@@ -142,9 +145,7 @@ export class NewsRepository implements INewsRepository {
       data: {
         title: news.title,
         content: news.content,
-        ...(news.image_url && {
-          image_url: news.image_url,
-        }),
+        imageUrl: news.imageUrl,
       },
     })
   }
@@ -157,14 +158,12 @@ export class NewsRepository implements INewsRepository {
     })
   }
 
-  async count({
-    filter: { author_id, content, title },
-  }: ICountNewsDTO): Promise<number> {
+  async count({ filter: { authorId, content, title } }: ICountNewsDTO) {
     const where: Prisma.NewsWhereInput = {}
 
-    if (author_id) {
-      where.author_id = {
-        contains: author_id,
+    if (authorId) {
+      where.authorId = {
+        contains: authorId,
         mode: 'insensitive',
       }
     }

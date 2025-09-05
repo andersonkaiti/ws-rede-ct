@@ -1,7 +1,6 @@
-import type { PrismaClient, TeamMember } from '@prisma/client'
+import type { PrismaClient } from '@prisma/client'
 import type {
   ICreateTeamMemberDTO,
-  ITeamMemberDTO,
   IUpdateTeamMemberDTO,
   IUpdateTeamMembersDTO,
 } from '../../dto/team-member.d.ts'
@@ -10,23 +9,21 @@ import type { ITeamMemberRepository } from './iteam-member-repository.d.ts'
 export class TeamMemberRepository implements ITeamMemberRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async findByTeamId(teamId: string): Promise<TeamMember[]> {
+  async findByTeamId(teamId: string) {
     return await this.prisma.teamMember.findMany({
       where: {
-        team_id: teamId,
+        teamId,
       },
     })
   }
 
-  async create(member: ICreateTeamMemberDTO): Promise<TeamMember> {
+  async create(teamMember: ICreateTeamMemberDTO) {
     return await this.prisma.teamMember.create({
-      data: member,
+      data: teamMember,
     })
   }
 
-  async update({
-    member: { id, ...member },
-  }: IUpdateTeamMemberDTO): Promise<TeamMember> {
+  async update({ id, ...member }: IUpdateTeamMemberDTO) {
     return await this.prisma.teamMember.update({
       where: {
         id,
@@ -35,13 +32,13 @@ export class TeamMemberRepository implements ITeamMemberRepository {
     })
   }
 
-  async updateMany({ id, members }: IUpdateTeamMembersDTO): Promise<void> {
+  async updateMany({ id, members }: IUpdateTeamMembersDTO) {
     await Promise.all(
       members.map(async (member) => {
         const existingMember = await this.prisma.teamMember.findFirst({
           where: {
-            team_id: id,
-            user_id: member.user.id,
+            teamId: id,
+            userId: member.user.id,
           },
           include: {
             user: true,
@@ -60,8 +57,8 @@ export class TeamMemberRepository implements ITeamMemberRepository {
         } else {
           await this.prisma.teamMember.create({
             data: {
-              team_id: id,
-              user_id: member.user.id,
+              teamId: id,
+              userId: member.user.id,
               role: member.role,
             },
           })
@@ -70,7 +67,7 @@ export class TeamMemberRepository implements ITeamMemberRepository {
     )
   }
 
-  async delete(id: ITeamMemberDTO['id']): Promise<void> {
+  async delete(id: string) {
     await this.prisma.teamMember.deleteMany({
       where: {
         id,
@@ -78,7 +75,7 @@ export class TeamMemberRepository implements ITeamMemberRepository {
     })
   }
 
-  async deleteMany(ids: ITeamMemberDTO['id'][]): Promise<void> {
+  async deleteMany(ids: string[]) {
     await Promise.all(
       ids.map(async (id) => {
         await this.prisma.teamMember.delete({

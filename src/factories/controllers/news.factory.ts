@@ -1,8 +1,8 @@
 import { CreateNewsController } from '../../controllers/news/create-news-controller.ts'
 import { DeleteNewsController } from '../../controllers/news/delete-news-controller.ts'
-import { FindAllNewsController } from '../../controllers/news/find-all-news-controller.ts'
 import { FindByAuthorController } from '../../controllers/news/find-news-by-author-id-controller.ts'
 import { FindNewsByIdController } from '../../controllers/news/find-news-by-id-controller.ts'
+import { FindNewsController } from '../../controllers/news/find-news-controller.ts'
 import { UpdateNewsController } from '../../controllers/news/update-news-controller.ts'
 import { makeNewsRepository } from '../repositories/news.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
@@ -18,7 +18,7 @@ export function makeCreateNewsController() {
 
 export function makeFindAllNewsController() {
   return {
-    findAllNewsController: new FindAllNewsController(makeNewsRepository()),
+    findAllNewsController: new FindNewsController(makeNewsRepository()),
   }
 }
 

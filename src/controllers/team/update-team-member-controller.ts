@@ -1,17 +1,31 @@
 import type { Request, Response } from 'express'
+import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.js'
+import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
+
+const updateTeamMemberBodySchema = z.object({
+  id: z.uuid(),
+  role: z.string(),
+  userId: z.string(),
+  description: z.string(),
+})
 
 export class UpdateTeamMemberController {
   constructor(private readonly teamMemberRepository: ITeamMemberRepository) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { member } = req.body
+      const parseResult = updateTeamMemberBodySchema.safeParse(req.body)
 
-      const teamMember = await this.teamMemberRepository.update({
-        member,
-      })
+      if (!parseResult.success) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          errors: z.prettifyError(parseResult.error),
+        })
+      }
+
+      const member = parseResult.data
+
+      const teamMember = await this.teamMemberRepository.update(member)
 
       res.status(HttpStatus.OK).json(teamMember)
     } catch (error) {
