@@ -23,7 +23,7 @@ export class CreateTeamMemberController {
     try {
       const parseResult = createTeamMemberSchema.safeParse({
         ...req.body,
-        teamId: req.params,
+        teamId: req.params.teamId,
       })
 
       if (!parseResult.success) {

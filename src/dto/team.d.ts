@@ -3,9 +3,9 @@ export interface ICreateTeamDTO {
   type: string
   members: {
     role: string
+    description: string
     user: {
       id: string
-      name: string
     }
   }[]
 }

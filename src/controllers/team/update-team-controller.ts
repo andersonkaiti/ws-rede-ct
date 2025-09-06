@@ -2,8 +2,8 @@ import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { IIncomingMembers } from '../../dto/team.ts'
-import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.ts'
+import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 
 const updateTeamParamsSchema = z.object({
   id: z.uuid(),
