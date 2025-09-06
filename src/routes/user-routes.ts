@@ -35,9 +35,9 @@ router.delete(
 )
 
 router.get('/', async (req: Request, res: Response) => {
-  const { findAllUsersController } = makeFindUsersController()
+  const { findUsersController } = makeFindUsersController()
 
-  await findAllUsersController.handle(req, res)
+  await findUsersController.handle(req, res)
 })
 
 export { router as userRoutes }
