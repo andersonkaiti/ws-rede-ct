@@ -9,7 +9,6 @@ const createTeamSchema = z.object({
   members: z.array(
     z.object({
       role: z.string().min(1),
-      description: z.string().min(1),
       user: z.object({
         id: z.string(),
       }),
