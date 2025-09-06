@@ -18,7 +18,6 @@ export interface IUpdateTeamMembersDTO {
     role: string
     user: {
       id: string
-      name: string
     }
   }[]
 }

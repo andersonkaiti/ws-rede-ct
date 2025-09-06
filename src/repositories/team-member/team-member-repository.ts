@@ -47,11 +47,11 @@ export class TeamMemberRepository implements ITeamMemberRepository {
 
   async updateMany({ members, teamId }: IUpdateTeamMembersDTO) {
     await Promise.all(
-      members.map(async (member) => {
+      members.map(async ({ user, role }) => {
         const existingMember = await this.prisma.teamMember.findFirst({
           where: {
             teamId,
-            userId: member.user.id,
+            userId: user.id,
           },
           include: {
             user: true,
@@ -64,15 +64,15 @@ export class TeamMemberRepository implements ITeamMemberRepository {
               id: existingMember.id,
             },
             data: {
-              role: member.role,
+              role,
             },
           })
         } else {
           await this.prisma.teamMember.create({
             data: {
               teamId,
-              userId: member.user.id,
-              role: member.role,
+              userId: user.id,
+              role,
             },
           })
         }

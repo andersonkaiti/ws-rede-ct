@@ -5,19 +5,15 @@ import type { IIncomingMembers } from '../../dto/team.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 
-const updateTeamParamsSchema = z.object({
-  id: z.uuid(),
-})
-
 const updateTeamBodySchema = z.object({
+  id: z.uuid(),
   name: z.string().min(1),
   members: z.array(
     z.object({
-      id: z.uuid(),
       role: z.string(),
+      id: z.uuid(),
       user: z.object({
         id: z.uuid(),
-        name: z.string(),
       }),
     })
   ),
@@ -31,22 +27,18 @@ export class UpdateTeamController {
 
   async handle(req: Request, res: Response) {
     try {
-      const paramsResult = updateTeamParamsSchema.safeParse(req.params)
-      if (!paramsResult.success) {
+      const parseResult = updateTeamBodySchema.safeParse({
+        id: req.params.id,
+        ...req.body,
+      })
+
+      if (!parseResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError?.(paramsResult.error),
+          errors: z.prettifyError(parseResult.error),
         })
       }
 
-      const bodyResult = updateTeamBodySchema.safeParse(req.body)
-      if (!bodyResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(bodyResult.error),
-        })
-      }
-
-      const { id: teamId } = paramsResult.data
-      const { name, members } = bodyResult.data
+      const { name, members, id: teamId } = parseResult.data
 
       const existingMembers =
         await this.teamMemberRepository.findByTeamId(teamId)
@@ -73,6 +65,7 @@ export class UpdateTeamController {
 
       res.status(HttpStatus.OK).json(team)
     } catch (error) {
+      console.error(error)
       if (error instanceof Error) {
         res.status(HttpStatus.BAD_REQUEST).json({
           message: error.message,
