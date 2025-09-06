@@ -64,6 +64,5 @@ model TeamMember {
   userId      String   @map("user_id")
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([teamId, userId])
   @@map("team_members")
 }
