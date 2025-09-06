@@ -6,7 +6,7 @@ import type { INewsRepository } from '../../repositories/news/inews-repository.t
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 7
 
-const findByAuthorSchema = z.object({
+const findNewsByAuthorSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
   authorId: z.string(),
@@ -18,12 +18,12 @@ const findByAuthorSchema = z.object({
     .transform((value) => (value === '' ? undefined : value)),
 })
 
-export class FindByAuthorController {
+export class FindNewsByAuthorController {
   constructor(private readonly newsRepository: INewsRepository) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findByAuthorSchema.safeParse({
+      const parseResult = findNewsByAuthorSchema.safeParse({
         page: req.query.page,
         limit: req.query.limit,
         author_id: req.params.author_id,
