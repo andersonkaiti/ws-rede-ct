@@ -23,6 +23,6 @@ export function makeDeleteUserController() {
 
 export function makeFindUsersController() {
   return {
-    findAllUsersController: new FindUsersController(makeUserRepository()),
+    findUsersController: new FindUsersController(makeUserRepository()),
   }
 }
