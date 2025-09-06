@@ -2,7 +2,7 @@ export interface ICreateTeamMemberDTO {
   role: string
   teamId: string
   userId: string
-  description?: string
+  description: string
 }
 
 export interface IUpdateTeamMemberDTO {

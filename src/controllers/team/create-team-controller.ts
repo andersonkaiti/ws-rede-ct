@@ -8,10 +8,10 @@ const createTeamSchema = z.object({
   type: z.string().min(1),
   members: z.array(
     z.object({
-      role: z.string(),
+      role: z.string().min(1),
+      description: z.string().min(1),
       user: z.object({
         id: z.string(),
-        name: z.string().min(1),
       }),
     })
   ),

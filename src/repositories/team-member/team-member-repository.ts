@@ -1,4 +1,4 @@
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient, TeamMember } from '@prisma/client'
 import type {
   ICreateTeamMemberDTO,
   IUpdateTeamMemberDTO,
@@ -9,6 +9,14 @@ import type { ITeamMemberRepository } from './iteam-member-repository.d.ts'
 export class TeamMemberRepository implements ITeamMemberRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
+  async findById(id: string): Promise<TeamMember | null> {
+    return await this.prisma.teamMember.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async findByTeamId(teamId: string) {
     return await this.prisma.teamMember.findMany({
       where: {
@@ -17,9 +25,14 @@ export class TeamMemberRepository implements ITeamMemberRepository {
     })
   }
 
-  async create(teamMember: ICreateTeamMemberDTO) {
+  async create({ description, role, teamId, userId }: ICreateTeamMemberDTO) {
     return await this.prisma.teamMember.create({
-      data: teamMember,
+      data: {
+        role,
+        description,
+        teamId,
+        userId,
+      },
     })
   }
 
@@ -32,12 +45,12 @@ export class TeamMemberRepository implements ITeamMemberRepository {
     })
   }
 
-  async updateMany({ id, members }: IUpdateTeamMembersDTO) {
+  async updateMany({ members, teamId }: IUpdateTeamMembersDTO) {
     await Promise.all(
       members.map(async (member) => {
         const existingMember = await this.prisma.teamMember.findFirst({
           where: {
-            teamId: id,
+            teamId,
             userId: member.user.id,
           },
           include: {
@@ -57,7 +70,7 @@ export class TeamMemberRepository implements ITeamMemberRepository {
         } else {
           await this.prisma.teamMember.create({
             data: {
-              teamId: id,
+              teamId,
               userId: member.user.id,
               role: member.role,
             },

@@ -1,6 +1,6 @@
 import { CreateNewsController } from '../../controllers/news/create-news-controller.ts'
 import { DeleteNewsController } from '../../controllers/news/delete-news-controller.ts'
-import { FindByAuthorController } from '../../controllers/news/find-news-by-author-id-controller.ts'
+import { FindNewsByAuthorController } from '../../controllers/news/find-news-by-author-id-controller.ts'
 import { FindNewsByIdController } from '../../controllers/news/find-news-by-id-controller.ts'
 import { FindNewsController } from '../../controllers/news/find-news-controller.ts'
 import { UpdateNewsController } from '../../controllers/news/update-news-controller.ts'
@@ -30,7 +30,7 @@ export function makeFindNewsByIdController() {
 
 export function makeFindNewsByAuthorIdController() {
   return {
-    findNewsByAuthorIdController: new FindByAuthorController(
+    findNewsByAuthorIdController: new FindNewsByAuthorController(
       makeNewsRepository()
     ),
   }

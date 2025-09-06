@@ -4,11 +4,29 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.ts'
 import type { IBcryptService } from '../../services/auth/bcrypt/ibcryptjs.ts'
 
-const createUserSchema = z.object({
-  name: z.string(),
-  email: z.email(),
-  password: z.string(),
-})
+const PASSWORD_MIN_LENGTH = 8
+
+const createUserSchema = z
+  .object({
+    name: z.string('Nome é obrigatório.').min(1, 'Nome é obrigatório.'),
+    email: z.email('E-mail inválido.').min(1, 'E-mail é obrigatório.'),
+    password: z
+      .string('A senha é obrigatória.')
+      .min(
+        PASSWORD_MIN_LENGTH,
+        `A senha deve ter pelo menos ${PASSWORD_MIN_LENGTH} caracteres.`
+      ),
+    confirmPassword: z
+      .string('A senha é obrigatória.')
+      .min(
+        PASSWORD_MIN_LENGTH,
+        `A senha deve ter pelo menos ${PASSWORD_MIN_LENGTH} caracteres.`
+      ),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem.',
+    path: ['confirmPassword'],
+  })
 
 export class SignUpController {
   constructor(
@@ -32,7 +50,7 @@ export class SignUpController {
         await this.userRepository.findByEmail(emailAddress)
 
       if (userAlreadyExists) {
-        return res.status(HttpStatus.CONFLICT).json({
+        return res.status(HttpStatus.BAD_REQUEST).json({
           message: 'Usuário já existe.',
         })
       }
