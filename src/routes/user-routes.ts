@@ -1,20 +1,29 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeDeleteUserController,
+  makeFindUserController,
   makeFindUsersController,
   makeUpdateUserController,
 } from '../factories/controllers/user.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
+import { upload } from '../middlewares/multer.ts'
 
 const router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findUserController } = makeFindUserController()
+
+  await findUserController.handle(req, res)
+})
 
 router.put(
   '/',
   (req: Request, res: Response, next: NextFunction) => {
     authMiddleware.authenticated(req, res, next)
   },
+  upload.single('avatarImage'),
   async (req: Request, res: Response) => {
     const { updateUserController } = makeUpdateUserController()
 
