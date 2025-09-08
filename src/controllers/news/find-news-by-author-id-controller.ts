@@ -29,7 +29,7 @@ export class FindNewsByAuthorController {
         author_id: req.params.author_id,
         title: req.query.title,
         content: req.query.content,
-        order_by: req.query.order_by,
+        orderBy: req.query.order_by,
       })
 
       if (!parseResult.success) {
@@ -66,7 +66,7 @@ export class FindNewsByAuthorController {
         }),
       ])
 
-      const totalPages = Math.ceil(totalUserNews / limit)
+      const totalPages = Math.max(Math.ceil(totalUserNews / limit), 1)
 
       res.status(HttpStatus.OK).json({
         page,

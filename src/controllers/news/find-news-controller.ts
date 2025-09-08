@@ -1,12 +1,12 @@
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import type { INewsRepository } from '../../repositories/news/inews-repository.js'
+import type { INewsRepository } from '../../repositories/news/inews-repository.ts'
 
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 9
 
-const findAllNewsSchema = z.object({
+const findNewsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
 
@@ -24,13 +24,13 @@ export class FindNewsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findAllNewsSchema.safeParse({
+      const parseResult = findNewsSchema.safeParse({
         page: req.query.page,
         limit: req.query.limit,
         title: req.query.title,
         content: req.query.content,
-        author_id: req.query.author_id,
-        order_by: req.query.order_by,
+        authorId: req.query.author_id,
+        orderBy: req.query.order_by,
       })
 
       if (!parseResult.success) {
@@ -39,14 +39,8 @@ export class FindNewsController {
         })
       }
 
-      const {
-        page,
-        limit,
-        authorId,
-        content,
-        orderBy = 'desc',
-        title,
-      } = parseResult.data
+      const { page, limit, authorId, content, orderBy, title } =
+        parseResult.data
 
       const offset = limit * page - limit
 
@@ -73,7 +67,7 @@ export class FindNewsController {
         }),
       ])
 
-      const totalPages = Math.min(Math.ceil(totalNews / limit), 1)
+      const totalPages = Math.max(Math.ceil(totalNews / limit), 1)
 
       res.status(HttpStatus.OK).json({
         page,
