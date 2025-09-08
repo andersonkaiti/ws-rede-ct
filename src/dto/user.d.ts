@@ -1,5 +1,3 @@
-import type { UserRole } from '@prisma/client'
-
 export interface ICreateUserDTO {
   name: string
   emailAddress: string
@@ -9,7 +7,8 @@ export interface ICreateUserDTO {
 export interface IUpdateUserDTO {
   id: string
   name?: string
-  passwordHash?: string
+  lattesUrl?: string
+  orcid?: string
+  phone?: string
   avatarUrl?: string
-  role?: UserRole
 }

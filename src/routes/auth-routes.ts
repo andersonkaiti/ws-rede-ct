@@ -1,4 +1,5 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
+import { HttpStatus } from '../@types/status-code.ts'
 import {
   makeFindAuthenticatedUserController,
   makeFindAuthenticatedUserNewsController,
@@ -45,6 +46,18 @@ router.get(
       makeFindAuthenticatedUserNewsController()
 
     await findAuthenticatedUserController.handle(req, res)
+  }
+)
+
+router.get(
+  '/admin',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  (_req: Request, res: Response) => {
+    res.status(HttpStatus.OK).json({
+      success: true,
+    })
   }
 )
 
