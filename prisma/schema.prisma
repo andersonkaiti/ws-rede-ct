@@ -20,7 +20,7 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
   emailAddress String   @unique @map("email_address")
-  orcid        String?  @unique @map("orcid")
+  orcid        String?  @map("orcid")
   phone        String?
   lattesUrl    String?  @map("lattes_url")
   role         UserRole @default(USER)
