@@ -27,7 +27,7 @@ export class FindAuthenticatedUserNewsController {
         limit: req.query.limit,
         title: req.query.title,
         content: req.query.content,
-        order_by: req.query.order_by,
+        orderBy: req.query.order_by,
       })
 
       if (!parseResult.success) {
