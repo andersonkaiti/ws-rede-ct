@@ -15,8 +15,6 @@ async function seed() {
     name: 'Anderson Kaiti',
     passwordHash: await bcrypt.hash('123456789'),
     role: 'ADMIN',
-    avatarUrl:
-      'https://firebasestorage.googleapis.com/v0/b/rede-ct.firebasestorage.app/o/images%2Fuser-mocks%2FChatGPT%20Image%2024%20de%20ago.%20de%202025%2C%2023_05_38.jpg?alt=media&token=36ddf5df-531e-4d3a-a124-a52819d3ee76',
     phone: '14998053657',
     orcid: null,
     lattesUrl: null,
