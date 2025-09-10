@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient } from '@prisma/client'
+import type { Certification, Prisma, PrismaClient } from '@prisma/client'
 import type {
   ICountCertificationsDTO,
   IFindCertificationsDTO,
@@ -73,6 +73,14 @@ export class CertificationRepository implements ICertificationRepository {
       take: limit,
       orderBy: {
         updatedAt: orderBy,
+      },
+    })
+  }
+
+  async findById(id: string): Promise<Certification | null> {
+    return await this.prisma.certification.findFirst({
+      where: {
+        id,
       },
     })
   }

@@ -1,5 +1,6 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
+  makeFindCertificationByIdController,
   makeFindCertificationsController,
   makeRegisterCertificationController,
 } from '../factories/controllers/certification.factory.ts'
@@ -35,4 +36,18 @@ router.get(
     await findCertificationsController.handle(req, res)
   }
 )
+
+router.get(
+  '/:certification_id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findCertificationByIdController } =
+      makeFindCertificationByIdController()
+
+    await findCertificationByIdController.handle(req, res)
+  }
+)
+
 export { router as certificationRoutes }
