@@ -17,6 +17,19 @@ export interface IFindCertificationsDTO {
   }
 }
 
+export interface IFindByUserIdDTO {
+  userId: string
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    description?: string
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
 export interface IUpdateCertificationDTO {
   id: string
   title: string

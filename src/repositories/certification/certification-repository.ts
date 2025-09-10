@@ -1,6 +1,7 @@
 import type { Certification, Prisma, PrismaClient } from '@prisma/client'
 import type {
   ICountCertificationsDTO,
+  IFindByUserIdDTO,
   IFindCertificationsDTO,
   IRegisterCertificationDTO,
   IUpdateCertificationDTO,
@@ -82,6 +83,56 @@ export class CertificationRepository implements ICertificationRepository {
     return await this.prisma.certification.findFirst({
       where: {
         id,
+      },
+    })
+  }
+
+  async findByUserId({
+    pagination: { limit, offset },
+    filter: { description, orderBy, title },
+    userId,
+  }: IFindByUserIdDTO): Promise<Certification[]> {
+    const where: Prisma.CertificationWhereInput = {
+      userId,
+    }
+
+    const or: Prisma.CertificationWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.certification.findMany({
+      where,
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+      skip: offset,
+      take: limit,
+      orderBy: {
+        updatedAt: orderBy,
       },
     })
   }
