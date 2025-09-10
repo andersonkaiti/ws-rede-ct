@@ -1,3 +1,4 @@
+import { FindCertificationsController } from '../../controllers/certifications/find-certifications-controller.ts'
 import { RegisterCertificationController } from '../../controllers/certifications/register-certification-controller.ts'
 import { makeCertificationRepository } from '../repositories/certification.factory.ts'
 import { makeUserRepository } from '../repositories/user.factory.ts'
@@ -9,6 +10,14 @@ export function makeRegisterCertificationController() {
       makeUserRepository(),
       makeCertificationRepository(),
       makeFirebaseStorageService()
+    ),
+  }
+}
+
+export function makeFindCertificationsController() {
+  return {
+    findCertificationsController: new FindCertificationsController(
+      makeCertificationRepository()
     ),
   }
 }

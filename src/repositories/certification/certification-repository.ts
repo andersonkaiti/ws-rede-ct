@@ -1,6 +1,13 @@
-import type { PrismaClient } from '@prisma/client'
-import type { IRegisterCertificationDTO } from '../../dto/certification.ts'
-import type { ICertificationRepository } from './icertification-repository.ts'
+import type { Prisma, PrismaClient } from '@prisma/client'
+import type {
+  ICountCertificationsDTO,
+  IFindCertificationsDTO,
+  IRegisterCertificationDTO,
+} from '../../dto/certification.ts'
+import type {
+  CertificationWithUser,
+  ICertificationRepository,
+} from './icertification-repository.ts'
 
 export class CertificationRepository implements ICertificationRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -22,6 +29,89 @@ export class CertificationRepository implements ICertificationRepository {
           },
         },
       },
+    })
+  }
+
+  async find({
+    pagination: { limit, offset },
+    filter: { description, orderBy, title },
+  }: IFindCertificationsDTO): Promise<CertificationWithUser[]> {
+    const where: Prisma.CertificationWhereInput = {}
+
+    if (title) {
+      where.title = {
+        contains: title,
+        mode: 'insensitive',
+      }
+    }
+
+    const or: Prisma.CertificationWhereInput[] = []
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.certification.findMany({
+      where,
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+      skip: offset,
+      take: limit,
+      orderBy: {
+        updatedAt: orderBy,
+      },
+    })
+  }
+
+  async count({
+    filter: { description, title, userId },
+  }: ICountCertificationsDTO): Promise<number> {
+    const where: Prisma.CertificationWhereInput = {}
+
+    if (title) {
+      where.title = {
+        contains: title,
+        mode: 'insensitive',
+      }
+    }
+
+    const or: Prisma.CertificationWhereInput[] = []
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (userId) {
+      or.push({
+        userId,
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.certification.count({
+      where,
     })
   }
 }
