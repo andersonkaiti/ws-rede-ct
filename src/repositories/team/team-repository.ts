@@ -15,9 +15,8 @@ export class TeamRepository implements ITeamRepository {
         name,
         type,
         members: {
-          create: members.map(({ description, role, user }) => ({
+          create: members.map(({ role, user }) => ({
             role,
-            description,
             user: {
               connect: {
                 id: user.id,
