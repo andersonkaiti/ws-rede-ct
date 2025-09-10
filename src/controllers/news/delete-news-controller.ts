@@ -45,7 +45,7 @@ export class DeleteNewsController {
       await Promise.all([
         this.newsRepository.delete(id),
         this.firebaseStorageService.deleteFile({
-          imageUrl: news.imageUrl as string,
+          fileUrl: news.imageUrl as string,
         }),
       ])
 
