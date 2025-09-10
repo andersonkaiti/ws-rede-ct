@@ -1,5 +1,6 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
+  makeDeleteCertificationController,
   makeFindCertificationByIdController,
   makeFindCertificationsController,
   makeRegisterCertificationController,
@@ -62,6 +63,19 @@ router.put(
       makeUpdateCertificationController()
 
     await updateCertificationController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:certification_id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteCertificationController } =
+      makeDeleteCertificationController()
+
+    await deleteCertificationController.handle(req, res)
   }
 )
 
