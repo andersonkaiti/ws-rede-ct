@@ -17,6 +17,13 @@ export interface IFindCertificationsDTO {
   }
 }
 
+export interface IUpdateCertificationDTO {
+  id: string
+  title: string
+  description: string
+  certificationUrl: string
+}
+
 export interface ICountCertificationsDTO {
   filter: {
     title?: string

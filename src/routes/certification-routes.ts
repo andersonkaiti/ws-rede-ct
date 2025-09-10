@@ -3,6 +3,7 @@ import {
   makeFindCertificationByIdController,
   makeFindCertificationsController,
   makeRegisterCertificationController,
+  makeUpdateCertificationController,
 } from '../factories/controllers/certification.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -47,6 +48,20 @@ router.get(
       makeFindCertificationByIdController()
 
     await findCertificationByIdController.handle(req, res)
+  }
+)
+
+router.put(
+  '/:certification_id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  upload.single('certification'),
+  async (req: Request, res: Response) => {
+    const { updateCertificationController } =
+      makeUpdateCertificationController()
+
+    await updateCertificationController.handle(req, res)
   }
 )
 

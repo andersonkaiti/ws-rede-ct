@@ -3,6 +3,7 @@ import type {
   ICountCertificationsDTO,
   IFindCertificationsDTO,
   IRegisterCertificationDTO,
+  IUpdateCertificationDTO,
 } from '../../dto/certification.ts'
 import type {
   CertificationWithUser,
@@ -79,6 +80,23 @@ export class CertificationRepository implements ICertificationRepository {
 
   async findById(id: string): Promise<Certification | null> {
     return await this.prisma.certification.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
+  async update({ id, ...data }: IUpdateCertificationDTO): Promise<void> {
+    await this.prisma.certification.update({
+      where: {
+        id,
+      },
+      data,
+    })
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.certification.delete({
       where: {
         id,
       },
