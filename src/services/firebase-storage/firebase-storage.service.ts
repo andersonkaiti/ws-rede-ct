@@ -7,7 +7,7 @@ import type {
   IUploadFile,
 } from './ifirebase-storage.d.ts'
 
-const IMAGE_PATH_REGEX = /\/images\/.+$/
+const STORAGE_PATH_REGEX = /https:\/\/storage\.googleapis\.com\/[^/]+\/(.+)$/
 
 export class FirebaseStorageService implements IFirebaseStorageService {
   constructor(private readonly bucket: Bucket) {}
@@ -15,7 +15,7 @@ export class FirebaseStorageService implements IFirebaseStorageService {
   async uploadFile({ file, folder, id }: IUploadFile): Promise<string> {
     const fileName = `${randomUUID()}-${file?.originalname}`
 
-    const fileRef = this.bucket.file(`images/${folder}/${id}/${fileName}`)
+    const fileRef = this.bucket.file(`${folder}/${id}/${fileName}`)
 
     return await new Promise((resolve, reject) => {
       const fileStream = fileRef.createWriteStream({
@@ -47,11 +47,11 @@ export class FirebaseStorageService implements IFirebaseStorageService {
   async updateFile({
     file,
     id,
-    imageUrl,
+    fileUrl,
     folder,
   }: IUpdateFile): Promise<string> {
     try {
-      const filePath = this.getPath(imageUrl)
+      const filePath = this.getPath(fileUrl)
 
       if (!filePath) {
         throw new Error('Arquivo não encontrado.')
@@ -73,8 +73,8 @@ export class FirebaseStorageService implements IFirebaseStorageService {
     }
   }
 
-  async deleteFile({ imageUrl }: IDeleteFile): Promise<void> {
-    const filePath = this.getPath(imageUrl)
+  async deleteFile({ fileUrl }: IDeleteFile): Promise<void> {
+    const filePath = this.getPath(fileUrl)
 
     if (!filePath) {
       throw new Error('Arquivo não encontrado.')
@@ -88,8 +88,8 @@ export class FirebaseStorageService implements IFirebaseStorageService {
     }
   }
 
-  getPath(imageUrl: string): string | null {
-    const match = imageUrl.match(IMAGE_PATH_REGEX)
-    return match ? match[0].slice(1) : null
+  getPath(fileUrl: string): string | null {
+    const match = fileUrl.match(STORAGE_PATH_REGEX)
+    return match ? match[1] : null
   }
 }

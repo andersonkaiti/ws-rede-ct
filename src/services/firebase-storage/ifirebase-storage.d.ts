@@ -7,12 +7,12 @@ export interface IUploadFile {
 export interface IUpdateFile {
   file: Express.Multer.File
   id: string
-  imageUrl: string
+  fileUrl: string
   folder: File.USER
 }
 
 export interface IDeleteFile {
-  imageUrl: string
+  fileUrl: string
 }
 
 export interface IFirebaseStorageService {
