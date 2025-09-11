@@ -71,14 +71,14 @@ export class UpdateNewsController {
         })
       }
 
-      let newImageUrl: string | undefined
+      let imageUrl = news.imageUrl || ''
 
       if (image && news.imageUrl) {
-        newImageUrl = await this.firebaseStorageService.updateFile({
+        imageUrl = await this.firebaseStorageService.updateFile({
           file: image,
           folder: File.NEWS,
           id,
-          imageUrl: news.imageUrl,
+          fileUrl: news.imageUrl,
         })
       }
 
@@ -86,7 +86,7 @@ export class UpdateNewsController {
         id,
         title,
         content,
-        imageUrl: newImageUrl,
+        imageUrl,
       })
 
       res.status(HttpStatus.OK).json(updatedNews)

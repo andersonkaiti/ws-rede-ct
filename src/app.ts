@@ -1,6 +1,7 @@
 import cors, { type CorsOptions } from 'cors'
 import express, { type Application } from 'express'
 import { authRoutes } from './routes/auth-routes.ts'
+import { certificationRoutes } from './routes/certification-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
 import { teamMembersRoutes } from './routes/team-member-routes.ts'
@@ -25,5 +26,6 @@ app.use('/user', userRoutes)
 app.use('/news', newsRoutes)
 app.use('/team', teamRoutes)
 app.use('/team', teamMembersRoutes)
+app.use('/certification', certificationRoutes)
 
 export { app }

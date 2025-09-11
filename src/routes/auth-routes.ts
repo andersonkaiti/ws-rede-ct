@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import { HttpStatus } from '../@types/status-code.ts'
 import {
+  makeFindAuthenticatedUserCertificationsController,
   makeFindAuthenticatedUserController,
   makeFindAuthenticatedUserNewsController,
   makeSignInController,
@@ -58,6 +59,19 @@ router.get(
     res.status(HttpStatus.OK).json({
       success: true,
     })
+  }
+)
+
+router.get(
+  '/certifications',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findAuthenticatedUserCertificationsController } =
+      makeFindAuthenticatedUserCertificationsController()
+
+    await findAuthenticatedUserCertificationsController.handle(req, res)
   }
 )
 

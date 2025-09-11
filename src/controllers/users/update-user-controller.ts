@@ -33,22 +33,17 @@ const updateUserSchema = z.object({
     }),
   avatarImage: z
     .any()
-    .refine(
-      (value) => {
-        if (value === undefined || value === null) {
-          return true
-        }
-
-        if (typeof value !== 'object' || typeof value.size !== 'number') {
-          return false
-        }
-
-        return value.size <= MAX_AVATAR_SIZE_BYTES
-      },
-      {
-        message: `A imagem deve ter no máximo ${MAX_AVATAR_SIZE_MB}MB.`,
+    .refine((value) => {
+      if (value === undefined || value === null) {
+        return true
       }
-    )
+
+      if (typeof value !== 'object' || typeof value.size !== 'number') {
+        return false
+      }
+
+      return value.size <= MAX_AVATAR_SIZE_BYTES
+    }, `A imagem deve ter no máximo ${MAX_AVATAR_SIZE_MB}MB.`)
     .optional(),
 })
 
@@ -71,11 +66,9 @@ export class UpdateUserController {
         })
       }
 
-      const { name, lattesUrl, orcid, phone, avatarImage } = parseResult.data
+      const { avatarImage, ...rest } = parseResult.data
 
       const authenticatedUserId = req.user.id
-
-      let avatarUrl: undefined | string
 
       const user = await this.userRepository.findById(authenticatedUserId)
 
@@ -85,13 +78,15 @@ export class UpdateUserController {
         })
       }
 
+      let avatarUrl = user.avatarUrl
+
       if (avatarImage) {
         if (user.avatarUrl) {
           avatarUrl = await this.firebaseStorageService.updateFile({
             file: avatarImage,
             id: authenticatedUserId,
             folder: FileType.USER,
-            imageUrl: user.avatarUrl,
+            fileUrl: user.avatarUrl,
           })
         } else {
           avatarUrl = await this.firebaseStorageService.uploadFile({
@@ -103,12 +98,9 @@ export class UpdateUserController {
       }
 
       await this.userRepository.update({
+        ...rest,
         id: authenticatedUserId,
-        avatarUrl,
-        name,
-        orcid,
-        phone,
-        lattesUrl,
+        avatarUrl: avatarUrl || undefined,
       })
 
       return res.status(HttpStatus.OK).json({
