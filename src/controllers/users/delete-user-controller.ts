@@ -1,9 +1,12 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 
-const deleteUserSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const deleteUserSchema = z.object({
   id: z.string(),
 })
 
@@ -12,7 +15,9 @@ export class DeleteUserController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { id } = deleteUserSchema.parse(req.body)
+      const { id } = deleteUserSchema.parse({
+        id: req.params.id,
+      })
 
       const user = await this.userRepository.findById(id)
 
@@ -32,12 +37,10 @@ export class DeleteUserController {
 
       await this.userRepository.deleteById(user.id)
 
-      return res.status(HttpStatus.OK).json({
-        message: 'Usuário deletado com sucesso!',
-      })
+      return res.status(HttpStatus.NO_CONTENT).json()
     } catch (err) {
       if (err instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: err.message,
         })
       }

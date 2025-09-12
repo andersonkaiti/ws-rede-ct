@@ -1,10 +1,13 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
-const deleteNewsSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const deleteNewsSchema = z.object({
   id: z.string(),
 })
 
@@ -55,7 +58,9 @@ export class DeleteNewsController {
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: error.message,
+        })
       }
     }
   }

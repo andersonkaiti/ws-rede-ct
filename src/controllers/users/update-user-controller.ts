@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
@@ -15,7 +16,9 @@ const ORCID_REGEX = /^\d{4}-\d{4}-\d{4}-\d{4}$/
 const NO_NUMBER_REGEX = /^[^0-9]*$/
 const PHONE_REGEX = /^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$/
 
-const updateUserSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const updateUserSchema = z.object({
   name: z.string().optional(),
   lattesUrl: z.string().optional(),
   orcid: z
@@ -103,13 +106,11 @@ export class UpdateUserController {
         avatarUrl: avatarUrl || undefined,
       })
 
-      return res.status(HttpStatus.OK).json({
-        message: 'Usuário atualizado com sucesso.',
-      })
+      return res.status(HttpStatus.NO_CONTENT).json()
     } catch (err) {
       console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: err.message,
         })
       }

@@ -13,9 +13,9 @@ export class FindUsersController {
     } catch (err) {
       console.log(err)
       if (err instanceof Error) {
-        res
-          .status(HttpStatus.BAD_REQUEST)
-          .json({ message: 'Erro ao buscar usuários' })
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: 'Erro ao buscar usuários',
+        })
       }
     }
   }

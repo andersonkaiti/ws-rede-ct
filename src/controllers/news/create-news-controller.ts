@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
@@ -11,7 +12,9 @@ const MEGABYTE = KILOBYTE * KILOBYTE
 
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
 
-const createNewsSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const createNewsSchema = z.object({
   title: z.string().min(1),
   content: z.string().min(1),
   image: z
@@ -59,18 +62,20 @@ export class CreateNewsController {
         id: authenticatedUserId,
       })
 
-      const news = await this.newsRepository.create({
+      await this.newsRepository.create({
         title,
         content,
         authorId: authenticatedUserId,
         imageUrl,
       })
 
-      res.status(HttpStatus.CREATED).json(news)
+      res.status(HttpStatus.CREATED).json()
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: error.message,
+        })
       }
     }
   }

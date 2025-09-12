@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
@@ -5,6 +6,8 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
+
+extendZodWithOpenApi(z)
 
 export const registerCertificationSchema = z.object({
   userId: z.uuid(),
@@ -62,13 +65,11 @@ export class RegisterCertificationController {
         certificationUrl,
       })
 
-      return res.status(HttpStatus.CREATED).json({
-        message: 'Certificação cadastrada com sucesso.',
-      })
+      return res.status(HttpStatus.CREATED).json()
     } catch (err) {
       console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: err.message,
         })
       }

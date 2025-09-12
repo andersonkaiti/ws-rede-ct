@@ -1,9 +1,12 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
+
+extendZodWithOpenApi(z)
 
 export const updateCertificationSchema = z.object({
   id: z.uuid(),
@@ -12,7 +15,11 @@ export const updateCertificationSchema = z.object({
   certification: z
     .any()
     .refine(
-      (file) => file.size === 0 || file.size > 0,
+      (file) =>
+        file == null ||
+        (typeof file === 'object' &&
+          typeof file.size === 'number' &&
+          (file.size === 0 || file.size > 0)),
       'Arquivo do certificado é inválido'
     )
     .optional(),
@@ -51,7 +58,7 @@ export class UpdateCertificationController {
 
       let certificationUrl = certificationExists.certificationUrl
 
-      if (certification.size > 0) {
+      if (certification && certification.size > 0) {
         certificationUrl = await this.firebaseStorageService.updateFile({
           file: certification,
           id: certificationExists.userId,
@@ -66,13 +73,11 @@ export class UpdateCertificationController {
         certificationUrl,
       })
 
-      return res.status(HttpStatus.OK).json({
-        message: 'Certificação atualizada com sucesso.',
-      })
+      return res.status(HttpStatus.NO_CONTENT).json()
     } catch (err) {
       console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: err.message,
         })
       }

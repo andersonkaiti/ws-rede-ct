@@ -13,7 +13,7 @@ export class FindTeamsController {
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: error.message,
         })
       }

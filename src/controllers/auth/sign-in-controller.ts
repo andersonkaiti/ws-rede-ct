@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
@@ -5,7 +6,9 @@ import type { IUserRepository } from '../../repositories/user/iuser-repository.t
 import type { IBcryptService } from '../../services/auth/bcrypt/ibcryptjs.ts'
 import type { IJWTService } from '../../services/auth/jwt/ijwt.ts'
 
-const signInSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const signInSchema = z.object({
   password: z.string(),
   email: z.email(),
 })
@@ -56,11 +59,13 @@ export class SignInController {
         email,
       })
 
-      return res.status(HttpStatus.OK).json({ token })
+      return res.status(HttpStatus.OK).json({
+        token,
+      })
     } catch (err) {
       console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: err.message,
         })
       }

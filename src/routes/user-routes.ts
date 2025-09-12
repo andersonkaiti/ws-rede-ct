@@ -32,7 +32,7 @@ router.put(
 )
 
 router.delete(
-  '/',
+  '/:id',
   (req: Request, res: Response, next: NextFunction) => {
     authMiddleware.authenticated(req, res, next)
   },

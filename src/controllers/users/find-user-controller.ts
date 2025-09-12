@@ -1,9 +1,12 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { UserRepository } from '../../repositories/user/user-repository.ts'
 
-const paramsSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const paramsSchema = z.object({
   id: z.string().min(1, 'id do usuário não fornecido.'),
 })
 
@@ -34,7 +37,7 @@ export class FindUserController {
     } catch (err) {
       console.log(err)
       if (err instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: 'Erro ao buscar usuário',
         })
       }

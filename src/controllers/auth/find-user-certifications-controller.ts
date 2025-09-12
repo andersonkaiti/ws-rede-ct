@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
@@ -6,7 +7,9 @@ import type { ICertificationRepository } from '../../repositories/certification/
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 6
 
-const findAuthenticatedUserCertificationsSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const findAuthenticatedUserCertificationsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
 
@@ -85,13 +88,10 @@ export class FindAuthenticatedUserCertificationsController {
     } catch (err) {
       console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: err.message,
         })
       }
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'Erro ao buscar certificações.',
-      })
     }
   }
 }
