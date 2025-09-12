@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
@@ -5,7 +6,9 @@ import type { IIncomingMembers } from '../../dto/team.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 
-const updateTeamBodySchema = z.object({
+extendZodWithOpenApi(z)
+
+export const updateTeamBodySchema = z.object({
   id: z.uuid(),
   name: z.string().min(1),
   members: z.array(
@@ -58,16 +61,16 @@ export class UpdateTeamController {
         members,
       })
 
-      const team = await this.teamRepository.update({
+      await this.teamRepository.update({
         id: teamId,
         name,
       })
 
-      res.status(HttpStatus.OK).json(team)
+      res.status(HttpStatus.NO_CONTENT).json()
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: error.message,
         })
       }

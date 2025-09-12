@@ -1,9 +1,12 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 
-const findNewsByIdSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const findNewsByIdSchema = z.object({
   id: z.string(),
 })
 
@@ -28,7 +31,9 @@ export class FindNewsByIdController {
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: error.message,
+        })
       }
     }
   }

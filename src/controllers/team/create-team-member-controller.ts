@@ -1,10 +1,13 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.ts'
 
-const createTeamMemberSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const createTeamMemberSchema = z.object({
   teamId: z.uuid(),
   member: z.object({
     userId: z.uuid(),
@@ -55,7 +58,9 @@ export class CreateTeamMemberController {
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: error.message,
+        })
       }
     }
   }

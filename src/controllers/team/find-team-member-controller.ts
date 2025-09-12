@@ -1,9 +1,12 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 
-const findTeamMemberParamsSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const findTeamMemberParamsSchema = z.object({
   id: z.uuid(),
 })
 

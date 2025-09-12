@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
@@ -6,7 +7,9 @@ import type { INewsRepository } from '../../repositories/news/inews-repository.j
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 7
 
-const findByAuthorSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const findByAuthenticatedUserSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
   title: z.string().optional(),
@@ -22,7 +25,7 @@ export class FindAuthenticatedUserNewsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findByAuthorSchema.safeParse({
+      const parseResult = findByAuthenticatedUserSchema.safeParse({
         page: req.query.page,
         limit: req.query.limit,
         title: req.query.title,
@@ -77,7 +80,9 @@ export class FindAuthenticatedUserNewsController {
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: error.message,
+        })
       }
     }
   }

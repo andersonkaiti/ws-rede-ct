@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
@@ -6,7 +7,9 @@ import type { INewsRepository } from '../../repositories/news/inews-repository.t
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 9
 
-const findNewsSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const findNewsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
 
@@ -79,7 +82,9 @@ export class FindNewsController {
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({ message: error.message })
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: error.message,
+        })
       }
     }
   }

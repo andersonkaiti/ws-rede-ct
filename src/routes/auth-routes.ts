@@ -11,16 +11,17 @@ import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
 const router = Router()
 
-const { signUpController } = makeSignUpController()
-const { signInController } = makeSignInController()
-
 const { authMiddleware } = makeAuthMiddleware()
 
 router.post('/sign-up', async (req: Request, res: Response) => {
+  const { signUpController } = makeSignUpController()
+
   await signUpController.handle(req, res)
 })
 
 router.post('/sign-in', async (req: Request, res: Response) => {
+  const { signInController } = makeSignInController()
+
   await signInController.handle(req, res)
 })
 
@@ -56,9 +57,17 @@ router.get(
     authMiddleware.isAdmin(req, res, next)
   },
   (_req: Request, res: Response) => {
-    res.status(HttpStatus.OK).json({
-      success: true,
-    })
+    try {
+      res.status(HttpStatus.OK).json({
+        success: true,
+      })
+    } catch (err) {
+      if (err instanceof Error) {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: err.message,
+        })
+      }
+    }
   }
 )
 

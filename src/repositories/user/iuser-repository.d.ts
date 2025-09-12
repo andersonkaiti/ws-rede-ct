@@ -7,5 +7,5 @@ export interface IUserRepository {
   deleteById(user: string): Promise<void>
   find(): Promise<Omit<User, 'passwordHash'>[]>
   findByEmail(emailAddress: string): Promise<User | null>
-  findById(id: string): Promise<User | null>
+  findById(id: string): Promise<Omit<User, 'passwordHash'> | null>
 }

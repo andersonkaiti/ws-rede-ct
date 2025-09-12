@@ -47,6 +47,9 @@ export class UserRepository implements IUserRepository {
       where: {
         id,
       },
+      omit: {
+        passwordHash: true,
+      },
     })
   }
 }

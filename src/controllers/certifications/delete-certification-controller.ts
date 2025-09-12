@@ -1,10 +1,13 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
-const deleteCertificationSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const deleteCertificationSchema = z.object({
   id: z.string(),
 })
 
@@ -44,12 +47,10 @@ export class DeleteCertificationController {
         }),
       ])
 
-      return res.status(HttpStatus.OK).json({
-        message: 'Certificação deletada com sucesso!',
-      })
+      return res.status(HttpStatus.NO_CONTENT).json()
     } catch (err) {
       if (err instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: err.message,
         })
       }

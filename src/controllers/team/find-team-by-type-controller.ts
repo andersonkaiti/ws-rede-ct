@@ -1,9 +1,12 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.ts'
 
-const findTeamsByTypeSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const findTeamsByTypeSchema = z.object({
   type: z.string(),
   name: z.string().optional(),
 })
@@ -37,7 +40,7 @@ export class FindTeamByTypeController {
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: error.message,
         })
       }

@@ -1,3 +1,4 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
@@ -6,7 +7,9 @@ import type { IBcryptService } from '../../services/auth/bcrypt/ibcryptjs.ts'
 
 const PASSWORD_MIN_LENGTH = 8
 
-const createUserSchema = z
+extendZodWithOpenApi(z)
+
+export const createUserSchema = z
   .object({
     name: z.string('Nome é obrigatório.').min(1, 'Nome é obrigatório.'),
     email: z.email('E-mail inválido.').min(1, 'E-mail é obrigatório.'),
@@ -50,7 +53,7 @@ export class SignUpController {
         await this.userRepository.findByEmail(emailAddress)
 
       if (userAlreadyExists) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
+        return res.status(HttpStatus.CONFLICT).json({
           message: 'Usuário já existe.',
         })
       }
@@ -63,12 +66,10 @@ export class SignUpController {
         passwordHash,
       })
 
-      return res.status(HttpStatus.CREATED).json({
-        message: 'Usuário criado com sucesso.',
-      })
+      return res.status(HttpStatus.CREATED).json()
     } catch (err) {
       if (err instanceof Error) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: err.message,
         })
       }

@@ -1,9 +1,12 @@
+import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.d.ts'
 
-const deleteTeamSchema = z.object({
+extendZodWithOpenApi(z)
+
+export const deleteTeamSchema = z.object({
   id: z.uuid(),
 })
 
@@ -30,7 +33,7 @@ export class DeleteTeamController {
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.BAD_REQUEST).json({
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
           message: error.message,
         })
       }
