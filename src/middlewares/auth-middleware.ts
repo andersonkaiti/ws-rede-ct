@@ -6,7 +6,15 @@ export class AuthMiddleware {
   constructor(private readonly jwtService: IJWTService) {}
 
   authenticated(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers.authorization
+    const authorizationHeader = req.headers.authorization
+
+    if (!(authorizationHeader || authorizationHeader?.startsWith('Bearer '))) {
+      return res.status(HttpStatus.UNAUTHORIZED).json({
+        message: 'Token inválido.',
+      })
+    }
+
+    const token = authorizationHeader.split(' ')[1]
 
     if (!token) {
       return res.status(HttpStatus.UNAUTHORIZED).json({
@@ -37,7 +45,15 @@ export class AuthMiddleware {
   }
 
   isAdmin(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers.authorization
+    const authorizationHeader = req.headers.authorization
+
+    if (!(authorizationHeader || authorizationHeader?.startsWith('Bearer '))) {
+      return res.status(HttpStatus.UNAUTHORIZED).json({
+        message: 'Token inválido.',
+      })
+    }
+
+    const token = authorizationHeader.split(' ')[1]
 
     if (!token) {
       return res.status(HttpStatus.UNAUTHORIZED).json({
