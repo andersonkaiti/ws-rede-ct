@@ -1,5 +1,7 @@
+import { apiReference } from '@scalar/express-api-reference'
 import cors, { type CorsOptions } from 'cors'
 import express, { type Application } from 'express'
+import { swaggerDocument } from './openapi/index.ts'
 import { authRoutes } from './routes/auth-routes.ts'
 import { certificationRoutes } from './routes/certification-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
@@ -19,6 +21,14 @@ const corsOptions: CorsOptions = {
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.use(
+  '/docs',
+  apiReference({
+    content: swaggerDocument,
+    theme: 'kepler',
+  })
+)
 
 app.use('/', indexRoutes)
 app.use('/auth', authRoutes)
