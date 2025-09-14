@@ -15,10 +15,8 @@ export const findCertificationsControllerSchema = z.object({
 
   title: z.string().optional(),
   description: z.string().optional(),
-  orderBy: z
-    .union([z.enum(['asc', 'desc']), z.literal('')])
-    .optional()
-    .transform((value) => (value === '' ? undefined : value)),
+  userId: z.uuid().optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindCertificationsController {
@@ -28,14 +26,9 @@ export class FindCertificationsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findCertificationsControllerSchema.safeParse({
-        page: req.query.page,
-        limit: req.query.limit,
-        title: req.query.title,
-        description: req.query.description,
-        authorId: req.query.author_id,
-        orderBy: req.query.order_by,
-      })
+      const parseResult = findCertificationsControllerSchema.safeParse(
+        req.query
+      )
 
       if (!parseResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
@@ -43,13 +36,8 @@ export class FindCertificationsController {
         })
       }
 
-      const {
-        description,
-        limit,
-        orderBy = 'desc',
-        page,
-        title,
-      } = parseResult.data
+      const { description, limit, orderBy, page, title, userId } =
+        parseResult.data
 
       const offset = page * limit - limit
 
@@ -63,6 +51,7 @@ export class FindCertificationsController {
             title,
             description,
             orderBy,
+            userId,
           },
         }),
 

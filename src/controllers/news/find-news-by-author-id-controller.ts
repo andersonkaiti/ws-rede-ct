@@ -15,10 +15,7 @@ export const findNewsByAuthorSchema = z.object({
   authorId: z.string(),
   title: z.string().optional(),
   content: z.string().optional(),
-  orderBy: z
-    .union([z.enum(['asc', 'desc']), z.literal('')])
-    .optional()
-    .transform((value) => (value === '' ? undefined : value)),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindNewsByAuthorController {
