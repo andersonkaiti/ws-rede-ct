@@ -12,5 +12,6 @@ export interface IPendencyWithUser extends Pendency {
 export interface IPendencyRepository {
   create(data: ICreatePendencyDTO): Promise<void>
   find(data: IFindPendenciesDTO): Promise<IPendencyWithUser[]>
+  findById(id: string): Promise<IPendencyWithUser | null>
   count(data: ICountPendenciesDTO): Promise<number>
 }

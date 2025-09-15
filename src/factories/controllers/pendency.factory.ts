@@ -1,5 +1,6 @@
 import { CreatePendencyController } from '../../controllers/pendencies/create-pendency-controller.ts'
 import { FindPendenciesController } from '../../controllers/pendencies/find-pendencies-controller.ts'
+import { FindPendencyByIdController } from '../../controllers/pendencies/find-pendency-by-id-controller.ts'
 import { makePendencyRepository } from '../repositories/pendency.factory.ts'
 import { makeUserRepository } from '../repositories/user.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
@@ -17,6 +18,14 @@ export function makeCreatePendencyController() {
 export function makeFindPendenciesController() {
   return {
     findPendenciesController: new FindPendenciesController(
+      makePendencyRepository()
+    ),
+  }
+}
+
+export function makeFindPendencyByIdController() {
+  return {
+    findPendencyByIdController: new FindPendencyByIdController(
       makePendencyRepository()
     ),
   }

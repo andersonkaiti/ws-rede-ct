@@ -70,6 +70,21 @@ export class PendencyRepository implements IPendencyRepository {
     })
   }
 
+  async findById(id: string): Promise<IPendencyWithUser | null> {
+    return await this.prisma.pendency.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+    })
+  }
+
   async count({
     filter: { description, title, userId },
   }: ICountPendenciesDTO): Promise<number> {
