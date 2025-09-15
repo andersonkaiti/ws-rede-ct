@@ -1,7 +1,8 @@
-import type { Prisma, PrismaClient } from '@prisma/client'
+import type { Pendency, Prisma, PrismaClient } from '@prisma/client'
 import type {
   ICountPendenciesDTO,
   ICreatePendencyDTO,
+  IFindByUserIdDTO,
   IFindPendenciesDTO,
   IUpdatePendencyDTO,
 } from '../../dto/pendency.ts'
@@ -86,12 +87,68 @@ export class PendencyRepository implements IPendencyRepository {
     })
   }
 
+  async findByUserId({
+    filter: { description, orderBy, title, status },
+    pagination: { limit, offset },
+    userId,
+  }: IFindByUserIdDTO): Promise<Pendency[]> {
+    const where: Prisma.PendencyWhereInput = {
+      userId,
+      AND: {
+        status: {
+          equals: status,
+        },
+      },
+    }
+
+    const or: Prisma.PendencyWhereInput[] = []
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.pendency.findMany({
+      where,
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
+    })
+  }
+
   async update({ id, ...data }: IUpdatePendencyDTO): Promise<void> {
     await this.prisma.pendency.update({
       where: {
         id,
       },
       data,
+    })
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.pendency.delete({
+      where: {
+        id,
+      },
     })
   }
 

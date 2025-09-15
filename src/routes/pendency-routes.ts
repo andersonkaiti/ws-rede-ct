@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreatePendencyController,
+  makeDeletePendencyController,
   makeFindPendenciesController,
   makeFindPendencyByIdController,
   makeUpdatePendencyController,
@@ -59,6 +60,18 @@ router.put(
     const { updatePendencyController } = makeUpdatePendencyController()
 
     await updatePendencyController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:pendency_id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deletePendencyController } = makeDeletePendencyController()
+
+    await deletePendencyController.handle(req, res)
   }
 )
 

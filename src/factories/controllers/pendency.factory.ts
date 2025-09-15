@@ -1,4 +1,5 @@
 import { CreatePendencyController } from '../../controllers/pendencies/create-pendency-controller.ts'
+import { DeletePendencyController } from '../../controllers/pendencies/delete-pendency-controller.ts'
 import { FindPendenciesController } from '../../controllers/pendencies/find-pendencies-controller.ts'
 import { FindPendencyByIdController } from '../../controllers/pendencies/find-pendency-by-id-controller.ts'
 import { UpdatePendencyController } from '../../controllers/pendencies/update-pendency-controller.ts'
@@ -35,6 +36,15 @@ export function makeFindPendencyByIdController() {
 export function makeUpdatePendencyController() {
   return {
     updatePendencyController: new UpdatePendencyController(
+      makePendencyRepository(),
+      makeFirebaseStorageService()
+    ),
+  }
+}
+
+export function makeDeletePendencyController() {
+  return {
+    deletePendencyController: new DeletePendencyController(
       makePendencyRepository(),
       makeFirebaseStorageService()
     ),
