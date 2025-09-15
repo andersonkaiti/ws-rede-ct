@@ -26,7 +26,7 @@ export class NewsRepository implements INewsRepository {
 
   async find({
     pagination: { offset, limit },
-    filter: { authorId, content, title, orderBy = 'desc' },
+    filter: { authorId, content, title, orderBy },
   }: IFindAllDTO) {
     const where: Prisma.NewsWhereInput = {}
 

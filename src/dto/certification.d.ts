@@ -13,6 +13,7 @@ export interface IFindCertificationsDTO {
   filter: {
     title?: string
     description?: string
+    userId?: string
     orderBy?: 'asc' | 'desc'
   }
 }
