@@ -21,6 +21,14 @@ export interface IFindPendenciesDTO {
   }
 }
 
+export interface IUpdatePendencyDTO {
+  id: string
+  title: string
+  description?: string
+  dueDate?: Date
+  documentUrl: string
+}
+
 export interface ICountPendenciesDTO {
   filter: {
     title?: string

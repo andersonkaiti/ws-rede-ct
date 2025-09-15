@@ -3,6 +3,7 @@ import type {
   ICountPendenciesDTO,
   ICreatePendencyDTO,
   IFindPendenciesDTO,
+  IUpdatePendencyDTO,
 } from '../../dto/pendency.ts'
 import type {
   IPendencyRepository,
@@ -82,6 +83,15 @@ export class PendencyRepository implements IPendencyRepository {
           },
         },
       },
+    })
+  }
+
+  async update({ id, ...data }: IUpdatePendencyDTO): Promise<void> {
+    await this.prisma.pendency.update({
+      where: {
+        id,
+      },
+      data,
     })
   }
 
