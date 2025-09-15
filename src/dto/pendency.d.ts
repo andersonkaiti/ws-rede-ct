@@ -21,6 +21,20 @@ export interface IFindPendenciesDTO {
   }
 }
 
+export interface IFindByUserIdDTO {
+  userId: string
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    description?: string
+    status?: 'PENDING' | 'PAID'
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
 export interface IUpdatePendencyDTO {
   id: string
   title: string
