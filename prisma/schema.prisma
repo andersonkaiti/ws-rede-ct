@@ -26,8 +26,9 @@ model User {
   role         UserRole @default(USER)
 
   news          News[]
-  TeamMember    TeamMember[]
-  Certification Certification[]
+  teamMember    TeamMember[]
+  certification Certification[]
+  pendencies    Pendency[]
 
   @@map("users")
 }
@@ -77,11 +78,33 @@ model Certification {
   description      String
   certificationUrl String @map("certification_url")
 
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
   @@map("certifications")
+}
+
+enum PendencyStatus {
+  PENDING
+  PAID
+}
+
+model Pendency {
+  id          String         @id @default(uuid())
+  title       String
+  description String?
+  status      PendencyStatus @default(PENDING)
+  dueDate     DateTime?      @map("due_date")
+  documentUrl String         @map("document_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("pendencies")
 }
