@@ -4,6 +4,7 @@ import {
   makeFindAuthenticatedUserCertificationsController,
   makeFindAuthenticatedUserController,
   makeFindAuthenticatedUserNewsController,
+  makeFindAuthenticatedUserPendenciesController,
   makeSignInController,
   makeSignUpController,
 } from '../factories/controllers/auth.factory.ts'
@@ -81,6 +82,19 @@ router.get(
       makeFindAuthenticatedUserCertificationsController()
 
     await findAuthenticatedUserCertificationsController.handle(req, res)
+  }
+)
+
+router.get(
+  '/pendencies',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findAuthenticatedUserPendenciesController } =
+      makeFindAuthenticatedUserPendenciesController()
+
+    await findAuthenticatedUserPendenciesController.handle(req, res)
   }
 )
 

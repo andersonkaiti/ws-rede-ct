@@ -36,18 +36,22 @@ export class CertificationRepository implements ICertificationRepository {
 
   async find({
     pagination: { limit, offset },
-    filter: { description, orderBy, title },
+    filter: { description, orderBy, title, userId },
   }: IFindCertificationsDTO): Promise<CertificationWithUser[]> {
-    const where: Prisma.CertificationWhereInput = {}
-
-    if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
+    const where: Prisma.CertificationWhereInput = {
+      userId,
     }
 
     const or: Prisma.CertificationWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
 
     if (description) {
       or.push({

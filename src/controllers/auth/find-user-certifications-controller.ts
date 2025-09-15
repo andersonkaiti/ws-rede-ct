@@ -15,10 +15,7 @@ export const findAuthenticatedUserCertificationsSchema = z.object({
 
   title: z.string(),
   description: z.string(),
-  orderBy: z
-    .union([z.enum(['asc', 'desc']), z.literal('')])
-    .optional()
-    .transform((value) => (value === '' ? undefined : value)),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindAuthenticatedUserCertificationsController {
@@ -42,13 +39,7 @@ export class FindAuthenticatedUserCertificationsController {
         })
       }
 
-      const {
-        title,
-        description,
-        limit,
-        orderBy = 'desc',
-        page,
-      } = parseResult.data
+      const { title, description, limit, orderBy, page } = parseResult.data
 
       const offset = page * limit - limit
 

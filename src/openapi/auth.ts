@@ -3,6 +3,7 @@ import { $Enums } from '@prisma/client'
 import z from 'zod'
 import { findAuthenticatedUserCertificationsSchema } from '../controllers/auth/find-user-certifications-controller.ts'
 import { findByAuthenticatedUserSchema } from '../controllers/auth/find-user-news-controller.ts'
+import { findAuthenticatedUserPendenciesSchema } from '../controllers/auth/find-user-pendencies-controller.ts'
 import { signInSchema } from '../controllers/auth/sign-in-controller.ts'
 import { createUserSchema } from '../controllers/auth/sign-up-controller.ts'
 
@@ -311,6 +312,65 @@ export const authUserCertificationsRegistry: RouteConfig = {
               id: z.string(),
               title: z.string(),
               certificationUrl: z.string(),
+              createdAt: z.date(),
+              updatedAt: z.date(),
+              userId: z.string(),
+            }),
+          }),
+        },
+      },
+    },
+    400: {
+      description: 'Invalid query parameters provided',
+      summary: 'Validation Error',
+      content: {
+        'application/json': {
+          schema: z.object({
+            errors: z.record(z.string(), z.string()),
+          }),
+        },
+      },
+    },
+    500: {
+      description: 'Internal server error occurred',
+      summary: 'Server Error',
+      content: {
+        'application/json': {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+  },
+}
+
+export const authUserPendenciesRegistry: RouteConfig = {
+  method: 'get',
+  path: '/auth/pendencies',
+  tags: ['Authentication'],
+  summary: "List all authenticated user's pendencies",
+  security: [{ bearerAuth: [] }],
+  request: {
+    query: findAuthenticatedUserPendenciesSchema,
+  },
+  responses: {
+    200: {
+      description:
+        'Paginated list of authenticated user pendencies retrieved successfully',
+      summary: 'User Pendencies Retrieved',
+      content: {
+        'application/json': {
+          schema: z.object({
+            page: z.number(),
+            totalPages: z.number(),
+            offset: z.number(),
+            limit: z.number(),
+            pendencies: z.object({
+              id: z.string(),
+              title: z.string(),
+              description: z.string(),
+              status: z.enum($Enums.PendencyStatus),
               createdAt: z.date(),
               updatedAt: z.date(),
               userId: z.string(),

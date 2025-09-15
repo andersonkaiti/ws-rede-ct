@@ -6,6 +6,7 @@ import {
   adminPingRegistry,
   authUserCertificationsRegistry,
   authUserNewsRegistry,
+  authUserPendenciesRegistry,
   authUserRegistry,
   signInRegistry,
   signUpRegistry,
@@ -23,6 +24,13 @@ import {
   findNewsByAuthorIdRegistry,
   findNewsByIdRegistry,
 } from './news.ts'
+import {
+  createPendencyRegistry,
+  deletePendencyRegistry,
+  findPendenciesRegistry,
+  findPendencyByIdRegistry,
+  updatePendencyRegistry,
+} from './pendencies.ts'
 import {
   createTeamRegistry,
   deleteTeamRegistry,
@@ -52,6 +60,7 @@ registry.registerPath(signInRegistry)
 registry.registerPath(authUserRegistry)
 registry.registerPath(authUserNewsRegistry)
 registry.registerPath(authUserCertificationsRegistry)
+registry.registerPath(authUserPendenciesRegistry)
 registry.registerPath(adminPingRegistry)
 
 // Users
@@ -80,6 +89,13 @@ registry.registerPath(findCertificationsRegistry)
 registry.registerPath(findCertificationByIdRegistry)
 registry.registerPath(updateCertificationRegistry)
 registry.registerPath(deleteCertificationRegistry)
+
+// Pendencies
+registry.registerPath(createPendencyRegistry)
+registry.registerPath(findPendenciesRegistry)
+registry.registerPath(findPendencyByIdRegistry)
+registry.registerPath(updatePendencyRegistry)
+registry.registerPath(deletePendencyRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 

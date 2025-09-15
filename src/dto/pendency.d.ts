@@ -1,11 +1,13 @@
-export interface IRegisterCertificationDTO {
-  userId: string
+export interface ICreatePendencyDTO {
   title: string
-  description: string
-  certificationUrl: string
+  description?: string
+  status: 'PENDING' | 'PAID'
+  dueDate?: Date
+  documentUrl: string
+  userId: string
 }
 
-export interface IFindCertificationsDTO {
+export interface IFindPendenciesDTO {
   pagination: {
     offset: number
     limit: number
@@ -13,8 +15,9 @@ export interface IFindCertificationsDTO {
   filter: {
     title?: string
     description?: string
-    userId?: string
+    status?: 'PENDING' | 'PAID'
     orderBy?: 'asc' | 'desc'
+    userId?: string
   }
 }
 
@@ -27,21 +30,24 @@ export interface IFindByUserIdDTO {
   filter: {
     title?: string
     description?: string
+    status?: 'PENDING' | 'PAID'
     orderBy?: 'asc' | 'desc'
   }
 }
 
-export interface IUpdateCertificationDTO {
+export interface IUpdatePendencyDTO {
   id: string
   title: string
-  description: string
-  certificationUrl: string
+  description?: string
+  dueDate?: Date
+  documentUrl: string
 }
 
-export interface ICountCertificationsDTO {
+export interface ICountPendenciesDTO {
   filter: {
     title?: string
     description?: string
+    status?: 'PENDING' | 'PAID'
     userId?: string
   }
 }
