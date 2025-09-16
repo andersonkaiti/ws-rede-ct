@@ -24,14 +24,7 @@ export class FindNewsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findNewsSchema.safeParse({
-        page: req.query.page,
-        limit: req.query.limit,
-        title: req.query.title,
-        content: req.query.content,
-        authorId: req.query.author_id,
-        orderBy: req.query.order_by,
-      })
+      const parseResult = findNewsSchema.safeParse(req.query)
 
       if (!parseResult.success) {
         return res.status(HttpStatus.BAD_REQUEST).json({
