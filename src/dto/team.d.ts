@@ -10,7 +10,7 @@ export interface ICreateTeamDTO {
 }
 
 export interface IIncomingMembers {
-  id: string
+  id?: string
   role: string
   user: {
     id: string

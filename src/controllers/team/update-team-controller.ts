@@ -14,7 +14,7 @@ export const updateTeamBodySchema = z.object({
   members: z.array(
     z.object({
       role: z.string(),
-      id: z.uuid(),
+      id: z.uuid().optional(),
       user: z.object({
         id: z.uuid(),
       }),
