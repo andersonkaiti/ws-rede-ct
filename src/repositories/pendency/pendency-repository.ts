@@ -153,7 +153,7 @@ export class PendencyRepository implements IPendencyRepository {
   }
 
   async count({
-    filter: { description, title, userId },
+    filter: { description, title, status, userId },
   }: ICountPendenciesDTO): Promise<number> {
     const where: Prisma.PendencyWhereInput = {
       userId,
@@ -170,11 +170,19 @@ export class PendencyRepository implements IPendencyRepository {
       })
     }
 
-    if (description) {
+    if (title) {
       or.push({
         title: {
           contains: title,
           mode: 'insensitive',
+        },
+      })
+    }
+
+    if (status) {
+      or.push({
+        status: {
+          equals: status,
         },
       })
     }

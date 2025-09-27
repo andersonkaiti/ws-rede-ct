@@ -61,6 +61,7 @@ export class FindAuthenticatedUserPendenciesController {
             title,
             description,
             userId: authenticatedUserId,
+            status,
           },
         }),
       ])
