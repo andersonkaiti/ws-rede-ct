@@ -163,30 +163,6 @@ A documentação está em: https://ws-rede-ct.vercel.app/docs
 
 Armazenamento no Firebase Storage (`src/services/firebase-storage`).
 
-## 🧭 Rotas Principais
-
-Resumo rápido:
-
-Consulte todas as rotas na documentação: [ws-rede-ct.vercel.app/docs](https://ws-rede-ct.vercel.app/docs)
-
-## 🧰 Scripts Úteis
-
-- `npm run dev` — servidor dev (watch)
-- `npm run build` — build com tsup
-- `npm start` — inicia `dist/server.js`
-- `npm run db:studio` — Prisma Studio
-- `npm run db:seed` — seed (se aplicável)
-
-## 🙌 Contribuições
-
-Contribuições são muito bem-vindas! Sinta-se à vontade para abrir issues e enviar PRs com melhorias, correções ou documentação adicional.
-
-## 📄 Licença
-
-Este projeto está licenciado sob a licença ISC (ver `package.json`).
-
----
-
 <div align="center">
 
 Construído com ❤️ para a Rede de Ciência e Tecnologia
