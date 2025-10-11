@@ -8,7 +8,7 @@ export class AuthMiddleware {
   authenticated(req: Request, res: Response, next: NextFunction) {
     const authorizationHeader = req.headers.authorization
 
-    if (!authorizationHeader || authorizationHeader?.startsWith('Bearer ')) {
+    if (!authorizationHeader?.startsWith('Bearer ')) {
       return res.status(HttpStatus.UNAUTHORIZED).json({
         message: 'Token inválido.',
         invalid: true,
@@ -49,7 +49,7 @@ export class AuthMiddleware {
   isAdmin(req: Request, res: Response, next: NextFunction) {
     const authorizationHeader = req.headers.authorization
 
-    if (!authorizationHeader || authorizationHeader?.startsWith('Bearer ')) {
+    if (!authorizationHeader?.startsWith('Bearer ')) {
       return res.status(HttpStatus.UNAUTHORIZED).json({
         message: 'Token inválido.',
         invalid: true,
