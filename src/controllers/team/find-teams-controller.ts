@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.js'
 
 export class FindTeamsController {
@@ -11,11 +12,8 @@ export class FindTeamsController {
 
       return res.status(HttpStatus.OK).json(teams)
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }

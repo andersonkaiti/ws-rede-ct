@@ -3,6 +3,8 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { BadRequestError } from '../../errrors/bad-request-error.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -58,27 +60,17 @@ export class UpdateUserController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = updateUserSchema.safeParse({
+      const { avatarImage, ...rest } = updateUserSchema.parse({
         ...req.body,
         avatarImage: req.file,
       })
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { avatarImage, ...rest } = parseResult.data
 
       const authenticatedUserId = req.user.id
 
       const user = await this.userRepository.findById(authenticatedUserId)
 
       if (!user) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          message: 'O usuário não existe',
-        })
+        throw new BadRequestError('O usuário não existe')
       }
 
       let avatarUrl = user.avatarUrl
@@ -106,13 +98,10 @@ export class UpdateUserController {
         avatarUrl: avatarUrl || undefined,
       })
 
-      return res.status(HttpStatus.NO_CONTENT).json()
+      return res.sendStatus(HttpStatus.NO_CONTENT)
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

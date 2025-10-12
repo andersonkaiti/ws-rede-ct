@@ -2,6 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { ConflictError } from '../../errrors/conflict-error.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.ts'
 import type { IBcryptService } from '../../services/auth/bcrypt/ibcryptjs.ts'
 
@@ -12,7 +14,7 @@ extendZodWithOpenApi(z)
 export const createUserSchema = z
   .object({
     name: z.string('Nome é obrigatório.').min(1, 'Nome é obrigatório.'),
-    email: z.email('E-mail inválido.').min(1, 'E-mail é obrigatório.'),
+    emailAddress: z.email('E-mail inválido.').min(1, 'E-mail é obrigatório.'),
     password: z
       .string('A senha é obrigatória.')
       .min(
@@ -39,23 +41,13 @@ export class SignUpController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = createUserSchema.safeParse(req.body)
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { email: emailAddress, name, password } = parseResult.data
+      const { emailAddress, name, password } = createUserSchema.parse(req.body)
 
       const userAlreadyExists =
         await this.userRepository.findByEmail(emailAddress)
 
       if (userAlreadyExists) {
-        return res.status(HttpStatus.CONFLICT).json({
-          message: 'Usuário já existe.',
-        })
+        throw new ConflictError('Usuário já existe.')
       }
 
       const passwordHash = await this.bcrypt.hash(password)
@@ -69,9 +61,7 @@ export class SignUpController {
       return res.status(HttpStatus.CREATED).json()
     } catch (err) {
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

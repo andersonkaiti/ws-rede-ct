@@ -2,6 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -25,21 +26,8 @@ export class FindAuthenticatedUserCertificationsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findAuthenticatedUserCertificationsSchema.safeParse({
-        page: req.query.page,
-        limit: req.query.limit,
-        title: req.query.title,
-        description: req.query.description,
-        orderBy: req.query.order_by,
-      })
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { title, description, limit, orderBy, page } = parseResult.data
+      const { title, description, limit, orderBy, page } =
+        findAuthenticatedUserCertificationsSchema.parse(req.query)
 
       const offset = page * limit - limit
 
@@ -77,11 +65,8 @@ export class FindAuthenticatedUserCertificationsController {
         certifications,
       })
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

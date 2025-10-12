@@ -2,6 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { NotFoundError } from '../../errrors/not-found-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
@@ -19,24 +21,14 @@ export class DeleteCertificationController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = deleteCertificationSchema.safeParse({
+      const { id } = deleteCertificationSchema.parse({
         id: req.params.certification_id,
       })
 
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          message: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const certification = await this.certificationRepository.findById(
-        parseResult.data.id
-      )
+      const certification = await this.certificationRepository.findById(id)
 
       if (!certification) {
-        return res.status(HttpStatus.NOT_FOUND).json({
-          message: 'A certificação não existe.',
-        })
+        throw new NotFoundError('A certificação não existe.')
       }
 
       await Promise.all([
@@ -47,12 +39,10 @@ export class DeleteCertificationController {
         }),
       ])
 
-      return res.status(HttpStatus.NO_CONTENT).json()
+      return res.sendStatus(HttpStatus.NO_CONTENT)
     } catch (err) {
       if (err instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

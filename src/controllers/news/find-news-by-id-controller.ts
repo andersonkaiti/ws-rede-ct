@@ -2,6 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { NotFoundError } from '../../errrors/not-found-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -15,25 +17,18 @@ export class FindNewsByIdController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findNewsByIdSchema.safeParse(req.params)
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { id } = parseResult.data
+      const { id } = findNewsByIdSchema.parse(req.params)
 
       const news = await this.newsRepository.findById(id)
 
+      if (!news) {
+        throw new NotFoundError('Notícia não encontrada.')
+      }
+
       res.status(HttpStatus.OK).json(news)
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }

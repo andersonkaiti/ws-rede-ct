@@ -2,6 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 
 extendZodWithOpenApi(z)
@@ -18,25 +19,14 @@ export class UpdateTeamMemberController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = updateTeamMemberBodySchema.safeParse(req.body)
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const member = parseResult.data
+      const member = updateTeamMemberBodySchema.parse(req.body)
 
       const teamMember = await this.teamMemberRepository.update(member)
 
       res.status(HttpStatus.OK).json(teamMember)
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }
