@@ -2,6 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { NotFoundError } from '../../errrors/not-found-error.ts'
 import type { ITeamMemberRepository } from '../../repositories/team-member/iteam-member-repository.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.ts'
 
@@ -24,28 +26,18 @@ export class CreateTeamMemberController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = createTeamMemberSchema.safeParse({
+      const {
+        teamId,
+        member: { userId, ...rest },
+      } = createTeamMemberSchema.parse({
         ...req.body,
         teamId: req.params.teamId,
       })
 
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const {
-        teamId,
-        member: { userId, ...rest },
-      } = parseResult.data
-
       const user = await this.userRepository.findById(userId)
 
       if (!user) {
-        return res.status(HttpStatus.NOT_FOUND).json({
-          message: 'O usuário não existe.',
-        })
+        throw new NotFoundError('O usuário não existe.')
       }
 
       const teamMember = await this.teamMemberRepository.create({
@@ -56,11 +48,8 @@ export class CreateTeamMemberController {
 
       res.status(HttpStatus.CREATED).json(teamMember)
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }

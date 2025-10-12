@@ -2,6 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { NotFoundError } from '../../errrors/not-found-error.ts'
 import type { UserRepository } from '../../repositories/user/user-repository.ts'
 
 extendZodWithOpenApi(z)
@@ -15,31 +17,19 @@ export class FindUserController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = paramsSchema.safeParse(req.params)
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.treeifyError(parseResult.error),
-        })
-      }
-
-      const { id } = parseResult.data
+      const { id } = paramsSchema.parse(req.params)
 
       const user = await this.userRepository.findById(id)
 
       if (!user) {
-        return res.status(HttpStatus.NOT_FOUND).json({
-          message: 'Usuário não encontrado',
-        })
+        throw new NotFoundError('Usuário não encontrado')
       }
 
       res.status(HttpStatus.OK).json(user)
     } catch (err) {
       console.log(err)
       if (err instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: 'Erro ao buscar usuário',
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

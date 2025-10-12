@@ -3,6 +3,8 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { BadRequestError } from '../../errrors/bad-request-error.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -30,26 +32,17 @@ export class RegisterCertificationController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = registerCertificationSchema.safeParse({
-        ...req.body,
-        userId: req.params.user_id,
-        certification: req.file,
-      })
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
+      const { userId, title, description, certification } =
+        registerCertificationSchema.parse({
+          ...req.body,
+          userId: req.params.user_id,
+          certification: req.file,
         })
-      }
-
-      const { userId, title, description, certification } = parseResult.data
 
       const user = await this.userRepository.findById(userId)
 
       if (!user) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          message: 'O usuário não existe.',
-        })
+        throw new BadRequestError('O usuário não existe.')
       }
 
       const certificationUrl = await this.firebaseStorageService.uploadFile({
@@ -65,13 +58,10 @@ export class RegisterCertificationController {
         certificationUrl,
       })
 
-      return res.status(HttpStatus.CREATED).json()
+      return res.sendStatus(HttpStatus.CREATED)
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

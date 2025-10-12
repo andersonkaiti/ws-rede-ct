@@ -4,6 +4,8 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { BadRequestError } from '../../errrors/bad-request-error.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { IPendencyRepository } from '../../repositories/pendency/ipendency-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -36,26 +38,16 @@ export class UpdatePendencyController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = updatePendencySchema.safeParse({
+      const { document, id, ...rest } = updatePendencySchema.parse({
         ...req.body,
         id: req.params.pendency_id,
         document: req.file,
       })
 
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { document, id, ...rest } = parseResult.data
-
       const pendencyExists = await this.pendencyRepository.findById(id)
 
       if (!pendencyExists) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          message: 'A pendência não existe',
-        })
+        throw new BadRequestError('A pendência não existe')
       }
 
       let documentUrl = pendencyExists.documentUrl
@@ -75,13 +67,10 @@ export class UpdatePendencyController {
         documentUrl,
       })
 
-      return res.status(HttpStatus.NO_CONTENT).json()
+      return res.sendStatus(HttpStatus.NO_CONTENT)
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

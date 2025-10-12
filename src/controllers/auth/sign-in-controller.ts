@@ -2,6 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { UnauthorizedError } from '../../errrors/unauthorized-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.ts'
 import type { IBcryptService } from '../../services/auth/bcrypt/ibcryptjs.ts'
 import type { IJWTService } from '../../services/auth/jwt/ijwt.ts'
@@ -22,15 +24,7 @@ export class SignInController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = signInSchema.safeParse(req.body)
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { email, password } = parseResult.data
+      const { email, password } = signInSchema.parse(req.body)
 
       const user = await this.userRepository.findByEmail(email)
 
@@ -46,9 +40,7 @@ export class SignInController {
       })
 
       if (!isPasswordValid) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: 'Senha inválida.',
-        })
+        throw new UnauthorizedError('Senha inválida.')
       }
 
       const { id, role } = user
@@ -63,11 +55,8 @@ export class SignInController {
         token,
       })
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

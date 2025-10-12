@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { UserRepository } from '../../repositories/user/user-repository.ts'
 
 export class FindUsersController {
@@ -11,11 +12,8 @@ export class FindUsersController {
 
       res.status(HttpStatus.OK).json(users)
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: 'Erro ao buscar usuários',
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

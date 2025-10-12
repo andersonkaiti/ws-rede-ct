@@ -3,6 +3,8 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { BadRequestError } from '../../errrors/bad-request-error.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -33,27 +35,17 @@ export class UpdateCertificationController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = updateCertificationSchema.safeParse({
+      const { certification, id, ...rest } = updateCertificationSchema.parse({
         ...req.body,
         id: req.params.certification_id,
         certification: req.file,
       })
 
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { certification, id, ...rest } = parseResult.data
-
       const certificationExists =
         await this.certificationRepository.findById(id)
 
       if (!certificationExists) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          message: 'A certificação não existe',
-        })
+        throw new BadRequestError('A certificação não existe')
       }
 
       let certificationUrl = certificationExists.certificationUrl
@@ -73,13 +65,10 @@ export class UpdateCertificationController {
         certificationUrl,
       })
 
-      return res.status(HttpStatus.NO_CONTENT).json()
+      return res.sendStatus(HttpStatus.NO_CONTENT)
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

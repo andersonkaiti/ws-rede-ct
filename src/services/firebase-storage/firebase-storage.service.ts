@@ -25,7 +25,6 @@ export class FirebaseStorageService implements IFirebaseStorageService {
       })
 
       fileStream.on('error', (error) => {
-        console.log(error)
         reject(error)
       })
 
@@ -35,7 +34,6 @@ export class FirebaseStorageService implements IFirebaseStorageService {
           const downloadUrl = `https://storage.googleapis.com/${this.bucket.name}/${fileRef.name}`
           resolve(downloadUrl)
         } catch (error) {
-          console.error(error)
           reject(error)
         }
       })
@@ -67,8 +65,7 @@ export class FirebaseStorageService implements IFirebaseStorageService {
       ])
 
       return newImageUrl
-    } catch (error) {
-      console.error(error)
+    } catch {
       throw new Error('Erro ao atualizar o arquivo.')
     }
   }
@@ -82,8 +79,7 @@ export class FirebaseStorageService implements IFirebaseStorageService {
 
     try {
       await this.bucket.file(filePath).delete()
-    } catch (error) {
-      console.error(error)
+    } catch {
       throw new Error('Erro ao deletar o arquivo.')
     }
   }

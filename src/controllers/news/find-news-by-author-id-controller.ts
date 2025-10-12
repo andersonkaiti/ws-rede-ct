@@ -2,6 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -23,23 +24,8 @@ export class FindNewsByAuthorController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findNewsByAuthorSchema.safeParse({
-        page: req.query.page,
-        limit: req.query.limit,
-        author_id: req.params.author_id,
-        title: req.query.title,
-        content: req.query.content,
-        orderBy: req.query.order_by,
-      })
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
       const { page, limit, authorId, content, orderBy, title } =
-        parseResult.data
+        findNewsByAuthorSchema.parse(req.query)
 
       const offset = limit * page - limit
 
@@ -76,11 +62,8 @@ export class FindNewsByAuthorController {
         news,
       })
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }

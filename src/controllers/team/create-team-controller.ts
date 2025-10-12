@@ -2,6 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -24,15 +25,7 @@ export class CreateTeamController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = createTeamSchema.safeParse(req.body)
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { name, type, members } = parseResult.data
+      const { name, type, members } = createTeamSchema.parse(req.body)
 
       await this.teamRepository.create({
         name,
@@ -42,11 +35,8 @@ export class CreateTeamController {
 
       res.status(HttpStatus.CREATED).json()
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }

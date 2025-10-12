@@ -2,6 +2,9 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { UnauthorizedError } from '../../errrors/unauthorized-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -22,27 +25,24 @@ export class DeleteUserController {
       const user = await this.userRepository.findById(id)
 
       if (!user) {
-        return res.status(HttpStatus.NOT_FOUND).json({
-          message: 'O usuário não existe.',
-        })
+        throw new NotFoundError('O usuário não existe.')
       }
 
       const authenticatedUserId = req.user.id
 
       if (user.id !== authenticatedUserId) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: 'Você não tem permissão para deletar o usuário',
-        })
+        throw new UnauthorizedError(
+          'Você não tem permissão para deletar o usuário'
+        )
       }
 
       await this.userRepository.deleteById(user.id)
 
-      return res.status(HttpStatus.NO_CONTENT).json()
+      return res.sendStatus(HttpStatus.NO_CONTENT)
     } catch (err) {
+      console.log(err)
       if (err instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

@@ -3,6 +3,9 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { UnauthorizedError } from '../../errrors/unauthorized-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -29,9 +32,7 @@ const updateNewsSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      {
-        message: 'A imagem deve ser uma imagem válida de no máximo 5MB.',
-      }
+      'A imagem deve ser uma imagem válida de no máximo 5MB.'
     ),
 })
 
@@ -43,35 +44,22 @@ export class UpdateNewsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = updateNewsSchema.safeParse({
+      const { id, title, content, image } = updateNewsSchema.parse({
         id: req.params.id,
-        title: req.body.title,
-        content: req.body.content,
         image: req.file,
+        ...req.body,
       })
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { id, title, content, image } = parseResult.data
 
       const news = await this.newsRepository.findById(id)
 
       if (!news) {
-        return res.status(HttpStatus.NOT_FOUND).json({
-          message: 'Notícia não encontrada.',
-        })
+        throw new NotFoundError('Notícia não encontrada.')
       }
 
       const authenticatedUserId = req.user.id
 
       if (news.author.id !== authenticatedUserId) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: 'Sem permissão.',
-        })
+        throw new UnauthorizedError('Sem permissão.')
       }
 
       let imageUrl = news.imageUrl || ''
@@ -94,11 +82,8 @@ export class UpdateNewsController {
 
       res.status(HttpStatus.OK).json(updatedNews)
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }

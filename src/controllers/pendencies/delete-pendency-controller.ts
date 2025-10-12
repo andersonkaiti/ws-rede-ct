@@ -2,6 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { NotFoundError } from '../../errrors/not-found-error.ts'
 import type { IPendencyRepository } from '../../repositories/pendency/ipendency-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -19,24 +21,14 @@ export class DeletePendencyController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = deletePendencySchema.safeParse({
+      const { id } = deletePendencySchema.parse({
         id: req.params.pendency_id,
       })
 
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const pendency = await this.pendencyRepository.findById(
-        parseResult.data.id
-      )
+      const pendency = await this.pendencyRepository.findById(id)
 
       if (!pendency) {
-        return res.status(HttpStatus.NOT_FOUND).json({
-          message: 'A pendência não existe.',
-        })
+        throw new NotFoundError('A pendência não existe.')
       }
 
       await Promise.all([
@@ -46,12 +38,10 @@ export class DeletePendencyController {
         }),
       ])
 
-      return res.status(HttpStatus.NO_CONTENT).json()
+      return res.sendStatus(HttpStatus.NO_CONTENT)
     } catch (err) {
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

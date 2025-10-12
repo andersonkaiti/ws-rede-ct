@@ -3,6 +3,7 @@ import { PendencyStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { IPendencyRepository } from '../../repositories/pendency/ipendency-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -25,18 +26,8 @@ export class FindAuthenticatedUserPendenciesController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = findAuthenticatedUserPendenciesSchema.safeParse(
-        req.query
-      )
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
       const { title, description, limit, orderBy, page, status } =
-        parseResult.data
+        findAuthenticatedUserPendenciesSchema.parse(req.query)
 
       const offset = page * limit - limit
 
@@ -76,11 +67,8 @@ export class FindAuthenticatedUserPendenciesController {
         pendencies,
       })
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
+        throw new InternalServerError(err.message)
       }
     }
   }

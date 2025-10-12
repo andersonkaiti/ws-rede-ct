@@ -3,6 +3,7 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -41,18 +42,10 @@ export class CreateNewsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = createNewsSchema.safeParse({
+      const { title, content, image } = createNewsSchema.parse({
         ...req.body,
         image: req.file,
       })
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { title, content, image } = parseResult.data
 
       const authenticatedUserId = req.user.id
 
@@ -69,13 +62,10 @@ export class CreateNewsController {
         imageUrl,
       })
 
-      res.status(HttpStatus.CREATED).json()
+      res.sendStatus(HttpStatus.CREATED)
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }

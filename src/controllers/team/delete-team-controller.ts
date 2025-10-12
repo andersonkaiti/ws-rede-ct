@@ -2,6 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import { z } from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { ITeamRepository } from '../../repositories/team/iteam-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -15,27 +16,14 @@ export class DeleteTeamController {
 
   async handle(req: Request, res: Response) {
     try {
-      const parseResult = deleteTeamSchema.safeParse(req.params)
-
-      if (!parseResult.success) {
-        return res.status(HttpStatus.BAD_REQUEST).json({
-          errors: z.prettifyError(parseResult.error),
-        })
-      }
-
-      const { id } = parseResult.data
+      const { id } = deleteTeamSchema.parse(req.params)
 
       await this.teamRepository.delete(id)
 
-      res.status(HttpStatus.OK).json({
-        message: 'Equipe deletada com sucesso',
-      })
+      res.sendStatus(HttpStatus.OK)
     } catch (error) {
-      console.error(error)
       if (error instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: error.message,
-        })
+        throw new InternalServerError(error.message)
       }
     }
   }
