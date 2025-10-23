@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateResearcherController } from '../factories/controllers/researcher.factory.ts'
+import {
+  makeCreateResearcherController,
+  makeFindResearchersController,
+} from '../factories/controllers/researcher.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
 const router = Router()
@@ -17,5 +20,11 @@ router.post(
     await createResearcherController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findResearchersController } = makeFindResearchersController()
+
+  await findResearchersController.handle(req, res)
+})
 
 export { router as researcherRoutes }
