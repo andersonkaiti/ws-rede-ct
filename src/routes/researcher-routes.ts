@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateResearcherController,
+  makeDeleteResearcherController,
   makeFindResearcherByIdController,
   makeFindResearcherByUserIdController,
   makeFindResearchersController,
@@ -52,6 +53,18 @@ router.put(
     const { updateResearcherController } = makeUpdateResearcherController()
 
     await updateResearcherController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteResearcherController } = makeDeleteResearcherController()
+
+    await deleteResearcherController.handle(req, res)
   }
 )
 

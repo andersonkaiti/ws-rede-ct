@@ -25,6 +25,12 @@ export class ResearcherRepository implements IResearcherRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.researcher.delete({
+      where: { id },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: {
