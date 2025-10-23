@@ -3,6 +3,7 @@ import type {
   ICountResearchersDTO,
   ICreateResearcherDTO,
   IFindAllResearchersDTO,
+  IUpdateResearcherDTO,
 } from '../../dto/researcher.d.ts'
 import type { IResearcherRepository } from './iresearcher-repository.d.ts'
 
@@ -11,6 +12,15 @@ export class ResearcherRepository implements IResearcherRepository {
 
   async create(researcher: ICreateResearcherDTO) {
     return await this.prisma.researcher.create({
+      data: researcher,
+    })
+  }
+
+  async update(researcher: IUpdateResearcherDTO) {
+    return await this.prisma.researcher.update({
+      where: {
+        id: researcher.id,
+      },
       data: researcher,
     })
   }

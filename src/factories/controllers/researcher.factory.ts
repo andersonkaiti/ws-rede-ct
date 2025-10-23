@@ -2,6 +2,7 @@ import { CreateResearcherController } from '../../controllers/researchers/create
 import { FindResearcherByIdController } from '../../controllers/researchers/find-researcher-by-id-controller.ts'
 import { FindResearcherByUserIdController } from '../../controllers/researchers/find-researcher-by-user-id-controller.ts'
 import { FindResearchersController } from '../../controllers/researchers/find-researchers-controller.ts'
+import { UpdateResearcherController } from '../../controllers/researchers/update-researcher-controller.ts'
 import { makeResearcherRepository } from '../repositories/researcher.factory.ts'
 
 export function makeCreateResearcherController() {
@@ -31,6 +32,14 @@ export function makeFindResearcherByIdController() {
 export function makeFindResearcherByUserIdController() {
   return {
     findResearcherByUserIdController: new FindResearcherByUserIdController(
+      makeResearcherRepository()
+    ),
+  }
+}
+
+export function makeUpdateResearcherController() {
+  return {
+    updateResearcherController: new UpdateResearcherController(
       makeResearcherRepository()
     ),
   }

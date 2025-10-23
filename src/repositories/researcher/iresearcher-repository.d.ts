@@ -3,6 +3,7 @@ import type {
   ICountResearchersDTO,
   ICreateResearcherDTO,
   IFindAllResearchersDTO,
+  IUpdateResearcherDTO,
 } from '../../dto/researcher.d.ts'
 
 type ReturnedResearcher = Omit<Researcher, 'userId'>
@@ -13,6 +14,7 @@ type ReturnedResearcherWithUser = ReturnedResearcher & {
 
 export interface IResearcherRepository {
   create(researcher: ICreateResearcherDTO): Promise<Researcher>
+  update(researcher: IUpdateResearcherDTO): Promise<Researcher>
   find(
     data: IFindAllResearchersDTO
   ): Promise<ReturnedResearcherWithUser[] | null>

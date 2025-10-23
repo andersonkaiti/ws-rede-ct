@@ -32,6 +32,18 @@ export interface IFindAllResearchersDTO {
   }
 }
 
+export interface IUpdateResearcherDTO {
+  id: string
+  registrationNumber?: string
+  mainEtps?: string
+  formations?: string
+  degrees?: Degree[]
+  occupations?: string
+  seniority?: Seniority
+  institutions?: string
+  biography?: string
+}
+
 export interface ICountResearchersDTO {
   filter: {
     registrationNumber?: string

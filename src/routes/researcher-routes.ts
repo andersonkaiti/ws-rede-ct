@@ -4,6 +4,7 @@ import {
   makeFindResearcherByIdController,
   makeFindResearcherByUserIdController,
   makeFindResearchersController,
+  makeUpdateResearcherController,
 } from '../factories/controllers/researcher.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
@@ -41,5 +42,17 @@ router.get('/user/:userId', async (req: Request, res: Response) => {
 
   await findResearcherByUserIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateResearcherController } = makeUpdateResearcherController()
+
+    await updateResearcherController.handle(req, res)
+  }
+)
 
 export { router as researcherRoutes }
