@@ -2,6 +2,7 @@ import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateResearcherController,
   makeFindResearcherByIdController,
+  makeFindResearcherByUserIdController,
   makeFindResearchersController,
 } from '../factories/controllers/researcher.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -32,6 +33,13 @@ router.get('/:id', async (req: Request, res: Response) => {
   const { findResearcherByIdController } = makeFindResearcherByIdController()
 
   await findResearcherByIdController.handle(req, res)
+})
+
+router.get('/user/:userId', async (req: Request, res: Response) => {
+  const { findResearcherByUserIdController } =
+    makeFindResearcherByUserIdController()
+
+  await findResearcherByUserIdController.handle(req, res)
 })
 
 export { router as researcherRoutes }
