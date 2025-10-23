@@ -16,6 +16,7 @@ export interface IResearcherRepository {
   find(
     data: IFindAllResearchersDTO
   ): Promise<ReturnedResearcherWithUser[] | null>
+  findById(id: string): Promise<ReturnedResearcherWithUser | null>
   findByUserId(userId: string): Promise<ReturnedResearcherWithUser | null>
   findByRegistrationNumber(
     registrationNumber: string

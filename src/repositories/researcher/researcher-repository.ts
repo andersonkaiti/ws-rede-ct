@@ -124,6 +124,21 @@ export class ResearcherRepository implements IResearcherRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.researcher.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+    })
+  }
+
   async findByUserId(userId: string) {
     return await this.prisma.researcher.findFirst({
       where: {
