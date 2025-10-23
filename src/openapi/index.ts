@@ -32,6 +32,14 @@ import {
   updatePendencyRegistry,
 } from './pendencies.ts'
 import {
+  createResearcherRegistry,
+  deleteResearcherRegistry,
+  findResearcherByIdRegistry,
+  findResearcherByUserIdRegistry,
+  findResearchersRegistry,
+  updateResearcherRegistry,
+} from './researchers.ts'
+import {
   createTeamRegistry,
   deleteTeamRegistry,
   findTeamByIdRegistry,
@@ -96,6 +104,14 @@ registry.registerPath(findPendenciesRegistry)
 registry.registerPath(findPendencyByIdRegistry)
 registry.registerPath(updatePendencyRegistry)
 registry.registerPath(deletePendencyRegistry)
+
+// Researchers
+registry.registerPath(createResearcherRegistry)
+registry.registerPath(findResearchersRegistry)
+registry.registerPath(findResearcherByIdRegistry)
+registry.registerPath(findResearcherByUserIdRegistry)
+registry.registerPath(updateResearcherRegistry)
+registry.registerPath(deleteResearcherRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
