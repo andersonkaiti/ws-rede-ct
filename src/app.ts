@@ -13,6 +13,7 @@ import { certificationRoutes } from './routes/certification-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
+import { researcherRoutes } from './routes/researcher-routes.ts'
 import { teamMembersRoutes } from './routes/team-member-routes.ts'
 import { teamRoutes } from './routes/team-routes.ts'
 import { userRoutes } from './routes/user-routes.ts'
@@ -45,6 +46,7 @@ app.use('/team', teamRoutes)
 app.use('/team', teamMembersRoutes)
 app.use('/certification', certificationRoutes)
 app.use('/pendency', pendencyRoutes)
+app.use('/researcher', researcherRoutes)
 
 app.use(
   (
