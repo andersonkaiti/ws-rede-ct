@@ -1,6 +1,7 @@
 import { CreateInMemoriamController } from '../../controllers/in-memoriam/create-in-memoriam-controller.ts'
 import { DeleteInMemoriamController } from '../../controllers/in-memoriam/delete-in-memoriam-controller.ts'
 import { FindInMemoriamByIdController } from '../../controllers/in-memoriam/find-in-memoriam-by-id-controller.ts'
+import { FindInMemoriamByRoleController } from '../../controllers/in-memoriam/find-in-memoriam-by-role-controller.ts'
 import { FindInMemoriamController } from '../../controllers/in-memoriam/find-in-memoriam-controller.ts'
 import { UpdateInMemoriamController } from '../../controllers/in-memoriam/update-in-memoriam-controller.ts'
 import { makeInMemoriamRepository } from '../repositories/in-memoriam.factory.ts'
@@ -26,6 +27,14 @@ export function makeFindInMemoriamController() {
 export function makeFindInMemoriamByIdController() {
   return {
     findInMemoriamByIdController: new FindInMemoriamByIdController(
+      makeInMemoriamRepository()
+    ),
+  }
+}
+
+export function makeFindInMemoriamByRoleController() {
+  return {
+    findInMemoriamByRoleController: new FindInMemoriamByRoleController(
       makeInMemoriamRepository()
     ),
   }

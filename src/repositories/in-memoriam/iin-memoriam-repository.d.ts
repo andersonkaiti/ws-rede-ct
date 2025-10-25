@@ -1,4 +1,4 @@
-import type { InMemoriam } from '@prisma/client'
+import type { InMemoriam, InMemoriamRole } from '@prisma/client'
 import type {
   ICountInMemoriamDTO,
   ICreateInMemoriamDTO,
@@ -12,5 +12,6 @@ export interface IInMemoriamRepository {
   deleteById(id: string): Promise<void>
   find(data: IFindAllInMemoriamDTO): Promise<InMemoriam[] | null>
   findById(id: string): Promise<InMemoriam | null>
+  findByRole(role: InMemoriamRole): Promise<InMemoriam[] | null>
   count(data: ICountInMemoriamDTO): Promise<number>
 }
