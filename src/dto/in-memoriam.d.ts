@@ -9,6 +9,19 @@ export interface ICreateInMemoriamDTO {
   role: InMemoriamRole
 }
 
+export interface IFindAllInMemoriamDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    name?: string
+    biography?: string
+    role?: InMemoriamRole
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
 export interface IUpdateInMemoriamDTO {
   id: string
   name?: string
@@ -17,4 +30,12 @@ export interface IUpdateInMemoriamDTO {
   biography?: string
   photoUrl?: string
   role?: InMemoriamRole
+}
+
+export interface ICountInMemoriamDTO {
+  filter: {
+    name?: string
+    biography?: string
+    role?: InMemoriamRole
+  }
 }

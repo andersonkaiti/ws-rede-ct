@@ -1,6 +1,8 @@
-import type { PrismaClient } from '@prisma/client'
+import type { Prisma, PrismaClient } from '@prisma/client'
 import type {
+  ICountInMemoriamDTO,
   ICreateInMemoriamDTO,
+  IFindAllInMemoriamDTO,
   IUpdateInMemoriamDTO,
 } from '../../dto/in-memoriam.d.ts'
 import type { IInMemoriamRepository } from './iin-memoriam-repository.d.ts'
@@ -20,6 +22,64 @@ export class InMemoriamRepository implements IInMemoriamRepository {
         id: inMemoriam.id,
       },
       data: inMemoriam,
+    })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { name, biography, role, orderBy },
+  }: IFindAllInMemoriamDTO) {
+    const where: Prisma.InMemoriamWhereInput = {}
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
+    if (biography) {
+      where.biography = {
+        contains: biography,
+        mode: 'insensitive',
+      }
+    }
+
+    if (role) {
+      where.role = role
+    }
+
+    return await this.prisma.inMemoriam.findMany({
+      where,
+      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
+      skip: offset,
+      take: limit,
+    })
+  }
+
+  async count({ filter: { name, biography, role } }: ICountInMemoriamDTO) {
+    const where: Prisma.InMemoriamWhereInput = {}
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
+    if (biography) {
+      where.biography = {
+        contains: biography,
+        mode: 'insensitive',
+      }
+    }
+
+    if (role) {
+      where.role = role
+    }
+
+    return await this.prisma.inMemoriam.count({
+      where,
     })
   }
 }
