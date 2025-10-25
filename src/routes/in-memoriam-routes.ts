@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateInMemoriamController,
+  makeDeleteInMemoriamController,
   makeFindInMemoriamByIdController,
   makeFindInMemoriamController,
   makeUpdateInMemoriamController,
@@ -47,6 +48,18 @@ router.put(
     const { updateInMemoriamController } = makeUpdateInMemoriamController()
 
     await updateInMemoriamController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteInMemoriamController } = makeDeleteInMemoriamController()
+
+    await deleteInMemoriamController.handle(req, res)
   }
 )
 

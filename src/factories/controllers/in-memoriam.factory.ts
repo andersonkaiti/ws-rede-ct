@@ -1,4 +1,5 @@
 import { CreateInMemoriamController } from '../../controllers/in-memoriam/create-in-memoriam-controller.ts'
+import { DeleteInMemoriamController } from '../../controllers/in-memoriam/delete-in-memoriam-controller.ts'
 import { FindInMemoriamByIdController } from '../../controllers/in-memoriam/find-in-memoriam-by-id-controller.ts'
 import { FindInMemoriamController } from '../../controllers/in-memoriam/find-in-memoriam-controller.ts'
 import { UpdateInMemoriamController } from '../../controllers/in-memoriam/update-in-memoriam-controller.ts'
@@ -33,6 +34,15 @@ export function makeFindInMemoriamByIdController() {
 export function makeUpdateInMemoriamController() {
   return {
     updateInMemoriamController: new UpdateInMemoriamController(
+      makeInMemoriamRepository(),
+      makeFirebaseStorageService()
+    ),
+  }
+}
+
+export function makeDeleteInMemoriamController() {
+  return {
+    deleteInMemoriamController: new DeleteInMemoriamController(
       makeInMemoriamRepository(),
       makeFirebaseStorageService()
     ),

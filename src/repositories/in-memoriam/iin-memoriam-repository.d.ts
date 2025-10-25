@@ -9,6 +9,7 @@ import type {
 export interface IInMemoriamRepository {
   create(inMemoriam: ICreateInMemoriamDTO): Promise<InMemoriam>
   update(inMemoriam: IUpdateInMemoriamDTO): Promise<InMemoriam>
+  deleteById(id: string): Promise<void>
   find(data: IFindAllInMemoriamDTO): Promise<InMemoriam[] | null>
   findById(id: string): Promise<InMemoriam | null>
   count(data: ICountInMemoriamDTO): Promise<number>

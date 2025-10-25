@@ -25,6 +25,12 @@ export class InMemoriamRepository implements IInMemoriamRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.inMemoriam.delete({
+      where: { id },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { name, biography, role, orderBy },
