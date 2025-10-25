@@ -3,6 +3,7 @@ import {
   makeCreateInMemoriamController,
   makeFindInMemoriamByIdController,
   makeFindInMemoriamController,
+  makeUpdateInMemoriamController,
 } from '../factories/controllers/in-memoriam.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -35,5 +36,18 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   await findInMemoriamByIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('photo'),
+  async (req: Request, res: Response) => {
+    const { updateInMemoriamController } = makeUpdateInMemoriamController()
+
+    await updateInMemoriamController.handle(req, res)
+  }
+)
 
 export { router as inMemoriamRoutes }
