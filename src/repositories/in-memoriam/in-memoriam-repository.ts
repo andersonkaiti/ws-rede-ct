@@ -57,6 +57,14 @@ export class InMemoriamRepository implements IInMemoriamRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.inMemoriam.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({ filter: { name, biography, role } }: ICountInMemoriamDTO) {
     const where: Prisma.InMemoriamWhereInput = {}
 

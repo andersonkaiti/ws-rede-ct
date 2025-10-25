@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateInMemoriamController,
+  makeFindInMemoriamByIdController,
   makeFindInMemoriamController,
 } from '../factories/controllers/in-memoriam.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -27,6 +28,12 @@ router.get('/', async (req: Request, res: Response) => {
   const { findInMemoriamsController } = makeFindInMemoriamController()
 
   await findInMemoriamsController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findInMemoriamByIdController } = makeFindInMemoriamByIdController()
+
+  await findInMemoriamByIdController.handle(req, res)
 })
 
 export { router as inMemoriamRoutes }
