@@ -143,3 +143,23 @@ model Researcher {
 
   @@map("researchers")
 }
+
+enum InMemoriamRole {
+  RESEARCHER
+  LEADER
+}
+
+model InMemoriam {
+  id        String         @id @default(uuid())
+  name      String
+  birthDate DateTime       @map("birth_date")
+  deathDate DateTime       @map("death_date")
+  biography String?
+  photoUrl  String?        @map("photo_url")
+  role      InMemoriamRole
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("in_memoriam")
+}
