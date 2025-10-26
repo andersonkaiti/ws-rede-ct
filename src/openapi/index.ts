@@ -19,6 +19,13 @@ import {
   updateCertificationRegistry,
 } from './certifications.ts'
 import {
+  createETPRegistry,
+  deleteETPRegistry,
+  findETPByIdRegistry,
+  findETPsRegistry,
+  updateETPRegistry,
+} from './etps.ts'
+import {
   createInMemoriamRegistry,
   deleteInMemoriamRegistry,
   findInMemoriamByIdRegistry,
@@ -126,6 +133,13 @@ registry.registerPath(findResearcherByIdRegistry)
 registry.registerPath(findResearcherByUserIdRegistry)
 registry.registerPath(updateResearcherRegistry)
 registry.registerPath(deleteResearcherRegistry)
+
+// ETPs
+registry.registerPath(createETPRegistry)
+registry.registerPath(findETPsRegistry)
+registry.registerPath(findETPByIdRegistry)
+registry.registerPath(updateETPRegistry)
+registry.registerPath(deleteETPRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
