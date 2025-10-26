@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateETPController } from '../factories/controllers/etp.factory.ts'
+import {
+  makeCreateETPController,
+  makeFindETPsController,
+} from '../factories/controllers/etp.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
 const router = Router()
@@ -17,5 +20,11 @@ router.post(
     await createETPController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findETPsController } = makeFindETPsController()
+
+  await findETPsController.handle(req, res)
+})
 
 export { router as etpRoutes }

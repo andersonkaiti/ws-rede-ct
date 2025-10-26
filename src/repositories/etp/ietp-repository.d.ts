@@ -1,5 +1,9 @@
 import type { ETP, Researcher, User } from '@prisma/client'
-import type { ICreateETPDTO } from '../../dto/etp.d.ts'
+import type {
+  ICountETPsDTO,
+  ICreateETPDTO,
+  IFindAllETPsDTO,
+} from '../../dto/etp.d.ts'
 
 type ReturnedETP = Omit<ETP, 'userId'>
 
@@ -29,5 +33,7 @@ type ReturnedETPWithResearcher = ReturnedETP & {
 
 export interface IETPRepository {
   create(etp: ICreateETPDTO): Promise<ETP>
+  find(data: IFindAllETPsDTO): Promise<ReturnedETPWithResearcher[] | null>
   findByCode(code: string): Promise<ReturnedETPWithResearcher | null>
+  count(data: ICountETPsDTO): Promise<number>
 }
