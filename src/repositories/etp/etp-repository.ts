@@ -153,6 +153,64 @@ export class ETPRepository implements IETPRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.eTP.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        leader: {
+          include: {
+            researcher: {
+              include: {
+                user: {
+                  omit: {
+                    passwordHash: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        deputyLeader: {
+          include: {
+            researcher: {
+              include: {
+                user: {
+                  omit: {
+                    passwordHash: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        secretary: {
+          include: {
+            researcher: {
+              include: {
+                user: {
+                  omit: {
+                    passwordHash: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        members: {
+          include: {
+            user: {
+              omit: {
+                passwordHash: true,
+              },
+            },
+          },
+        },
+      },
+    })
+  }
+
   async findByCode(code: string) {
     return await this.prisma.eTP.findFirst({
       where: {

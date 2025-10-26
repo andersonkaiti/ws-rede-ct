@@ -34,6 +34,7 @@ type ReturnedETPWithResearcher = ReturnedETP & {
 export interface IETPRepository {
   create(etp: ICreateETPDTO): Promise<ETP>
   find(data: IFindAllETPsDTO): Promise<ReturnedETPWithResearcher[] | null>
+  findById(id: string): Promise<ReturnedETPWithResearcher | null>
   findByCode(code: string): Promise<ReturnedETPWithResearcher | null>
   count(data: ICountETPsDTO): Promise<number>
 }
