@@ -141,6 +141,12 @@ model Researcher {
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
 
+  // ETP relationships
+  etpLeader    ETPLeader[]
+  etpDeputy    ETPDeputy[]
+  etpSecretary ETPSecretary[]
+  etpMembers   ETP[]          @relation("etp_members")
+
   @@map("researchers")
 }
 
@@ -162,4 +168,56 @@ model InMemoriam {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("in_memoriam")
+}
+
+model ETPLeader {
+  id           String     @id @default(uuid())
+  etpId        String     @map("etp_id")
+  etp          ETP        @relation(fields: [etpId], references: [id], onDelete: Cascade)
+  researcherId String     @map("researcher_id")
+  researcher   Researcher @relation(fields: [researcherId], references: [id], onDelete: Cascade)
+
+  @@unique([etpId])
+  @@map("etp_leader")
+}
+
+model ETPDeputy {
+  id           String     @id @default(uuid())
+  etpId        String     @map("etp_id")
+  etp          ETP        @relation(fields: [etpId], references: [id], onDelete: Cascade)
+  researcherId String     @map("researcher_id")
+  researcher   Researcher @relation(fields: [researcherId], references: [id], onDelete: Cascade)
+
+  @@unique([etpId])
+  @@map("etp_deputy")
+}
+
+model ETPSecretary {
+  id           String     @id @default(uuid())
+  etpId        String     @map("etp_id")
+  etp          ETP        @relation(fields: [etpId], references: [id], onDelete: Cascade)
+  researcherId String     @map("researcher_id")
+  researcher   Researcher @relation(fields: [researcherId], references: [id], onDelete: Cascade)
+
+  @@unique([etpId])
+  @@map("etp_secretary")
+}
+
+model ETP {
+  id          String  @id @default(uuid())
+  code        String  @unique
+  title       String
+  description String?
+  notes       String?
+
+  leader       ETPLeader?
+  deputyLeader ETPDeputy?
+  secretary    ETPSecretary?
+  members      Researcher[]  @relation("etp_members")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([code])
+  @@map("etps")
 }
