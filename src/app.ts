@@ -10,6 +10,7 @@ import { makeErrorHandler } from './factories/error-handler.ts'
 import { swaggerDocument } from './openapi/index.ts'
 import { authRoutes } from './routes/auth-routes.ts'
 import { certificationRoutes } from './routes/certification-routes.ts'
+import { etpRoutes } from './routes/etp-routes.ts'
 import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
@@ -49,6 +50,7 @@ app.use('/certification', certificationRoutes)
 app.use('/pendency', pendencyRoutes)
 app.use('/researcher', researcherRoutes)
 app.use('/in-memoriam', inMemoriamRoutes)
+app.use('/etp', etpRoutes)
 
 app.use(
   (
