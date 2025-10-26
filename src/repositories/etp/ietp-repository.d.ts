@@ -3,6 +3,7 @@ import type {
   ICountETPsDTO,
   ICreateETPDTO,
   IFindAllETPsDTO,
+  IUpdateETPDTO,
 } from '../../dto/etp.d.ts'
 
 type ReturnedETP = Omit<ETP, 'userId'>
@@ -33,6 +34,7 @@ type ReturnedETPWithResearcher = ReturnedETP & {
 
 export interface IETPRepository {
   create(etp: ICreateETPDTO): Promise<ETP>
+  update(etp: IUpdateETPDTO): Promise<ETP>
   find(data: IFindAllETPsDTO): Promise<ReturnedETPWithResearcher[] | null>
   findById(id: string): Promise<ReturnedETPWithResearcher | null>
   findByCode(code: string): Promise<ReturnedETPWithResearcher | null>

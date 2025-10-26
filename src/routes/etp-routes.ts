@@ -3,6 +3,7 @@ import {
   makeCreateETPController,
   makeFindETPByIdController,
   makeFindETPsController,
+  makeUpdateETPController,
 } from '../factories/controllers/etp.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
@@ -33,5 +34,17 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   await findETPByIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateETPController } = makeUpdateETPController()
+
+    await updateETPController.handle(req, res)
+  }
+)
 
 export { router as etpRoutes }

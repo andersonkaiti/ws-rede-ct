@@ -23,6 +23,18 @@ export interface IFindAllETPsDTO {
   }
 }
 
+export interface IUpdateETPDTO {
+  id: string
+  code?: string
+  title?: string
+  description?: string
+  notes?: string
+  leaderId?: string
+  deputyLeaderId?: string
+  secretaryId?: string
+  memberIds?: string[]
+}
+
 export interface ICountETPsDTO {
   filter: {
     code?: string

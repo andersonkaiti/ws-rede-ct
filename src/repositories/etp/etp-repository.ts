@@ -3,6 +3,7 @@ import type {
   ICountETPsDTO,
   ICreateETPDTO,
   IFindAllETPsDTO,
+  IUpdateETPDTO,
 } from '../../dto/etp.d.ts'
 import type { IETPRepository } from './ietp-repository.d.ts'
 
@@ -52,6 +53,122 @@ export class ETPRepository implements IETPRepository {
       })
 
       return createdETP
+    })
+  }
+
+  async update(etp: IUpdateETPDTO) {
+    const { leaderId, deputyLeaderId, secretaryId, memberIds, ...etpData } = etp
+
+    return await this.prisma.$transaction(async (tx) => {
+      const updatedETP = await tx.eTP.update({
+        where: {
+          id: etp.id,
+        },
+        data: etpData,
+      })
+
+      await this.updateLeader(tx, etp.id, leaderId)
+      await this.updateDeputyLeader(tx, etp.id, deputyLeaderId)
+      await this.updateSecretary(tx, etp.id, secretaryId)
+      await this.updateMembers(tx, etp.id, memberIds)
+
+      return updatedETP
+    })
+  }
+
+  private async updateLeader(
+    tx: Prisma.TransactionClient,
+    etpId: string,
+    leaderId?: string
+  ) {
+    if (leaderId === undefined) {
+      return
+    }
+
+    await tx.eTPLeader.deleteMany({
+      where: {
+        etpId,
+      },
+    })
+
+    if (leaderId) {
+      await tx.eTPLeader.create({
+        data: {
+          etpId,
+          researcherId: leaderId,
+        },
+      })
+    }
+  }
+
+  private async updateDeputyLeader(
+    tx: Prisma.TransactionClient,
+    etpId: string,
+    deputyLeaderId?: string
+  ) {
+    if (deputyLeaderId === undefined) {
+      return
+    }
+
+    await tx.eTPDeputy.deleteMany({
+      where: {
+        etpId,
+      },
+    })
+    if (deputyLeaderId) {
+      await tx.eTPDeputy.create({
+        data: {
+          etpId,
+          researcherId: deputyLeaderId,
+        },
+      })
+    }
+  }
+
+  private async updateSecretary(
+    tx: Prisma.TransactionClient,
+    etpId: string,
+    secretaryId?: string
+  ) {
+    if (secretaryId === undefined) {
+      return
+    }
+
+    await tx.eTPSecretary.deleteMany({
+      where: {
+        etpId,
+      },
+    })
+    if (secretaryId) {
+      await tx.eTPSecretary.create({
+        data: {
+          etpId,
+          researcherId: secretaryId,
+        },
+      })
+    }
+  }
+
+  private async updateMembers(
+    tx: Prisma.TransactionClient,
+    etpId: string,
+    memberIds?: string[]
+  ) {
+    if (memberIds === undefined) {
+      return
+    }
+
+    await tx.eTP.update({
+      where: {
+        id: etpId,
+      },
+      data: {
+        members: {
+          set: memberIds.map((id) => ({
+            id,
+          })),
+        },
+      },
     })
   }
 
