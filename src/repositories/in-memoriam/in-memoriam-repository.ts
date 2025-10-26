@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient } from '@prisma/client'
+import type { InMemoriamRole, Prisma, PrismaClient } from '@prisma/client'
 import type {
   ICountInMemoriamDTO,
   ICreateInMemoriamDTO,
@@ -67,6 +67,14 @@ export class InMemoriamRepository implements IInMemoriamRepository {
     return await this.prisma.inMemoriam.findFirst({
       where: {
         id,
+      },
+    })
+  }
+
+  async findByRole(role: InMemoriamRole) {
+    return await this.prisma.inMemoriam.findMany({
+      where: {
+        role,
       },
     })
   }

@@ -3,6 +3,7 @@ import {
   makeCreateInMemoriamController,
   makeDeleteInMemoriamController,
   makeFindInMemoriamByIdController,
+  makeFindInMemoriamByRoleController,
   makeFindInMemoriamController,
   makeUpdateInMemoriamController,
 } from '../factories/controllers/in-memoriam.factory.ts'
@@ -36,6 +37,13 @@ router.get('/:id', async (req: Request, res: Response) => {
   const { findInMemoriamByIdController } = makeFindInMemoriamByIdController()
 
   await findInMemoriamByIdController.handle(req, res)
+})
+
+router.get('/role/:role', async (req: Request, res: Response) => {
+  const { findInMemoriamByRoleController } =
+    makeFindInMemoriamByRoleController()
+
+  await findInMemoriamByRoleController.handle(req, res)
 })
 
 router.put(

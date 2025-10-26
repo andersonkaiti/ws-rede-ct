@@ -19,6 +19,13 @@ import {
   updateCertificationRegistry,
 } from './certifications.ts'
 import {
+  createInMemoriamRegistry,
+  deleteInMemoriamRegistry,
+  findInMemoriamByIdRegistry,
+  findInMemoriamsRegistry,
+  updateInMemoriamRegistry,
+} from './in-memoriam.ts'
+import {
   createNewsRegistry,
   findAllNewsRegistry,
   findNewsByAuthorIdRegistry,
@@ -104,6 +111,13 @@ registry.registerPath(findPendenciesRegistry)
 registry.registerPath(findPendencyByIdRegistry)
 registry.registerPath(updatePendencyRegistry)
 registry.registerPath(deletePendencyRegistry)
+
+// In Memoriam
+registry.registerPath(createInMemoriamRegistry)
+registry.registerPath(findInMemoriamsRegistry)
+registry.registerPath(findInMemoriamByIdRegistry)
+registry.registerPath(updateInMemoriamRegistry)
+registry.registerPath(deleteInMemoriamRegistry)
 
 // Researchers
 registry.registerPath(createResearcherRegistry)
