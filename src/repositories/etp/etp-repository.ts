@@ -172,6 +172,14 @@ export class ETPRepository implements IETPRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.eTP.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { code, title, description, notes, orderBy },

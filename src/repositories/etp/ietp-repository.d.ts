@@ -35,6 +35,7 @@ type ReturnedETPWithResearcher = ReturnedETP & {
 export interface IETPRepository {
   create(etp: ICreateETPDTO): Promise<ETP>
   update(etp: IUpdateETPDTO): Promise<ETP>
+  deleteById(id: string): Promise<void>
   find(data: IFindAllETPsDTO): Promise<ReturnedETPWithResearcher[] | null>
   findById(id: string): Promise<ReturnedETPWithResearcher | null>
   findByCode(code: string): Promise<ReturnedETPWithResearcher | null>

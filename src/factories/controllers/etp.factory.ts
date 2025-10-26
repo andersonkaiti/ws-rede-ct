@@ -1,4 +1,5 @@
 import { CreateETPController } from '../../controllers/etps/create-etp-controller.ts'
+import { DeleteETPController } from '../../controllers/etps/delete-etp-controller.ts'
 import { FindETPByIdController } from '../../controllers/etps/find-etp-by-id-controller.ts'
 import { FindETPsController } from '../../controllers/etps/find-etps-controller.ts'
 import { UpdateETPController } from '../../controllers/etps/update-etp-controller.ts'
@@ -25,5 +26,11 @@ export function makeFindETPByIdController() {
 export function makeUpdateETPController() {
   return {
     updateETPController: new UpdateETPController(makeETPRepository()),
+  }
+}
+
+export function makeDeleteETPController() {
+  return {
+    deleteETPController: new DeleteETPController(makeETPRepository()),
   }
 }

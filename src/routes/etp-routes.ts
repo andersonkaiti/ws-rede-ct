@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateETPController,
+  makeDeleteETPController,
   makeFindETPByIdController,
   makeFindETPsController,
   makeUpdateETPController,
@@ -44,6 +45,18 @@ router.put(
     const { updateETPController } = makeUpdateETPController()
 
     await updateETPController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteETPController } = makeDeleteETPController()
+
+    await deleteETPController.handle(req, res)
   }
 )
 
