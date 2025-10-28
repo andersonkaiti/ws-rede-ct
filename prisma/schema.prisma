@@ -221,3 +221,18 @@ model ETP {
   @@index([code])
   @@map("etps")
 }
+
+model Partner {
+  id          String   @id @default(uuid())
+  name        String
+  logoUrl     String?
+  websiteUrl  String?
+  description String?
+  category    String?
+  since       DateTime
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("partners")
+}
