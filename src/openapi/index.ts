@@ -39,6 +39,13 @@ import {
   findNewsByIdRegistry,
 } from './news.ts'
 import {
+  createPartnerRegistry,
+  deletePartnerRegistry,
+  findPartnerByIdRegistry,
+  findPartnersRegistry,
+  updatePartnerRegistry,
+} from './partners.ts'
+import {
   createPendencyRegistry,
   deletePendencyRegistry,
   findPendenciesRegistry,
@@ -140,6 +147,13 @@ registry.registerPath(findETPsRegistry)
 registry.registerPath(findETPByIdRegistry)
 registry.registerPath(updateETPRegistry)
 registry.registerPath(deleteETPRegistry)
+
+// Partners
+registry.registerPath(createPartnerRegistry)
+registry.registerPath(findPartnersRegistry)
+registry.registerPath(findPartnerByIdRegistry)
+registry.registerPath(updatePartnerRegistry)
+registry.registerPath(deletePartnerRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
