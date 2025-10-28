@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreatePartnerController } from '../factories/controllers/partner.factory.ts'
+import {
+  makeCreatePartnerController,
+  makeFindPartnersController,
+} from '../factories/controllers/partner.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -19,5 +22,11 @@ router.post(
     await createPartnerController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findPartnersController } = makeFindPartnersController()
+
+  await findPartnersController.handle(req, res)
+})
 
 export { router as partnerRoutes }

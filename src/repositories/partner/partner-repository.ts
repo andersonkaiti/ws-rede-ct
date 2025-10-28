@@ -1,6 +1,8 @@
-import type { PrismaClient } from '@prisma/client'
+import type { Prisma, PrismaClient } from '@prisma/client'
 import type {
+  ICountPartnerDTO,
   ICreatePartnerDTO,
+  IFindAllPartnerDTO,
   IUpdatePartnerDTO,
 } from '../../dto/partner.d.ts'
 import type { IPartnerRepository } from './ipartner-repository.d.ts'
@@ -20,6 +22,80 @@ export class PartnerRepository implements IPartnerRepository {
         id: partner.id,
       },
       data: partner,
+    })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { name, description, category, isActive, orderBy },
+  }: IFindAllPartnerDTO) {
+    const where: Prisma.PartnerWhereInput = {}
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
+    if (description) {
+      where.description = {
+        contains: description,
+        mode: 'insensitive',
+      }
+    }
+
+    if (category) {
+      where.category = {
+        contains: category,
+        mode: 'insensitive',
+      }
+    }
+
+    if (isActive !== undefined) {
+      where.isActive = isActive
+    }
+
+    return await this.prisma.partner.findMany({
+      where,
+      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
+      skip: offset,
+      take: limit,
+    })
+  }
+
+  async count({
+    filter: { name, description, category, isActive },
+  }: ICountPartnerDTO) {
+    const where: Prisma.PartnerWhereInput = {}
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
+    if (description) {
+      where.description = {
+        contains: description,
+        mode: 'insensitive',
+      }
+    }
+
+    if (category) {
+      where.category = {
+        contains: category,
+        mode: 'insensitive',
+      }
+    }
+
+    if (isActive !== undefined) {
+      where.isActive = isActive
+    }
+
+    return await this.prisma.partner.count({
+      where,
     })
   }
 }
