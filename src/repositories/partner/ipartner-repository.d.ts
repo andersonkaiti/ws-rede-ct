@@ -10,5 +10,6 @@ export interface IPartnerRepository {
   create(partner: ICreatePartnerDTO): Promise<Partner>
   update(partner: IUpdatePartnerDTO): Promise<Partner>
   find(data: IFindAllPartnerDTO): Promise<Partner[] | null>
+  findById(id: string): Promise<Partner | null>
   count(data: ICountPartnerDTO): Promise<number>
 }

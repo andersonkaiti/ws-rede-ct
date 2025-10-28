@@ -64,6 +64,14 @@ export class PartnerRepository implements IPartnerRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.partner.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { name, description, category, isActive },
   }: ICountPartnerDTO) {

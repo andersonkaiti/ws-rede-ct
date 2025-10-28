@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreatePartnerController,
+  makeFindPartnerByIdController,
   makeFindPartnersController,
 } from '../factories/controllers/partner.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -27,6 +28,12 @@ router.get('/', async (req: Request, res: Response) => {
   const { findPartnersController } = makeFindPartnersController()
 
   await findPartnersController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findPartnerByIdController } = makeFindPartnerByIdController()
+
+  await findPartnerByIdController.handle(req, res)
 })
 
 export { router as partnerRoutes }
