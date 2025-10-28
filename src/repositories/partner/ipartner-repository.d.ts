@@ -9,6 +9,7 @@ import type {
 export interface IPartnerRepository {
   create(partner: ICreatePartnerDTO): Promise<Partner>
   update(partner: IUpdatePartnerDTO): Promise<Partner>
+  deleteById(id: string): Promise<void>
   find(data: IFindAllPartnerDTO): Promise<Partner[] | null>
   findById(id: string): Promise<Partner | null>
   count(data: ICountPartnerDTO): Promise<number>

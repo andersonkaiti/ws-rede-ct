@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreatePartnerController,
+  makeDeletePartnerController,
   makeFindPartnerByIdController,
   makeFindPartnersController,
   makeUpdatePartnerController,
@@ -47,6 +48,18 @@ router.put(
     const { updatePartnerController } = makeUpdatePartnerController()
 
     await updatePartnerController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deletePartnerController } = makeDeletePartnerController()
+
+    await deletePartnerController.handle(req, res)
   }
 )
 

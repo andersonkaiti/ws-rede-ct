@@ -25,6 +25,12 @@ export class PartnerRepository implements IPartnerRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.partner.delete({
+      where: { id },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { name, description, category, isActive, orderBy },
