@@ -14,6 +14,7 @@ import { etpRoutes } from './routes/etp-routes.ts'
 import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
+import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
 import { teamMembersRoutes } from './routes/team-member-routes.ts'
@@ -51,6 +52,7 @@ app.use('/pendency', pendencyRoutes)
 app.use('/researcher', researcherRoutes)
 app.use('/in-memoriam', inMemoriamRoutes)
 app.use('/etp', etpRoutes)
+app.use('/partner', partnerRoutes)
 
 app.use(
   (
@@ -66,3 +68,4 @@ app.use(
 )
 
 export { app }
+
