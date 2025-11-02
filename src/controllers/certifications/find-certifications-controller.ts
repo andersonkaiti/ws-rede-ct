@@ -27,7 +27,7 @@ export class FindCertificationsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { description, limit, orderBy, page, title, userId } =
+      const { limit, page, ...filter } =
         findCertificationsControllerSchema.parse(req.query)
 
       const offset = page * limit - limit
@@ -38,19 +38,11 @@ export class FindCertificationsController {
             offset,
             limit,
           },
-          filter: {
-            title,
-            description,
-            orderBy,
-            userId,
-          },
+          filter,
         }),
 
         this.certificationRepository.count({
-          filter: {
-            title,
-            description,
-          },
+          filter,
         }),
       ])
 
