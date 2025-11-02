@@ -3,3 +3,20 @@ export interface ICreateLegitimatorCommitteeMemberDTO {
   description?: string
   userId: string
 }
+
+export interface IFindAllLegitimatorCommitteeMembersDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    role?: string
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
+export interface ICountLegitimatorCommitteeMembersDTO {
+  filter: {
+    role?: string
+  }
+}
