@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateSDHCTeamMemberController } from '../factories/controllers/sdhc-team-member.factory.ts'
+import {
+  makeCreateSDHCTeamMemberController,
+  makeFindSDHCTeamMembersController,
+} from '../factories/controllers/sdhc-team-member.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
 const router = Router()
@@ -18,5 +21,11 @@ router.post(
     await createSDHCTeamMemberController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findSDHCTeamMembersController } = makeFindSDHCTeamMembersController()
+
+  await findSDHCTeamMembersController.handle(req, res)
+})
 
 export { router as sdhcTeamMemberRoutes }
