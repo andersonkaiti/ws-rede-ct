@@ -16,7 +16,12 @@ export class UserRepository implements IUserRepository {
       where: {
         id: user.id,
       },
-      data: user,
+      data: {
+        lattesUrl: user.lattesUrl ?? null,
+        orcid: user.orcid ?? null,
+        phone: user.phone ?? null,
+        avatarUrl: user.avatarUrl ?? null,
+      },
     })
   }
 
