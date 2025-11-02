@@ -1,4 +1,5 @@
 import { CreateLegitimatorCommitteeMemberController } from '../../controllers/legitimator-committee-member/create-legitimator-committee-member-controller.ts'
+import { DeleteLegitimatorCommitteeMemberController } from '../../controllers/legitimator-committee-member/delete-legitimator-committee-member-controller.ts'
 import { FindLegitimatorCommitteeMemberByIdController } from '../../controllers/legitimator-committee-member/find-legitimator-committee-member-by-id-controller.ts'
 import { FindLegitimatorCommitteeMembersController } from '../../controllers/legitimator-committee-member/find-legitimator-committee-members-controller.ts'
 import { UpdateLegitimatorCommitteeMemberController } from '../../controllers/legitimator-committee-member/update-legitimator-committee-member-controller.ts'
@@ -39,3 +40,13 @@ export function makeUpdateLegitimatorCommitteeMemberController() {
       ),
   }
 }
+
+export function makeDeleteLegitimatorCommitteeMemberController() {
+  return {
+    deleteLegitimatorCommitteeMemberController:
+      new DeleteLegitimatorCommitteeMemberController(
+        makeLegitimatorCommitteeMemberRepository()
+      ),
+  }
+}
+

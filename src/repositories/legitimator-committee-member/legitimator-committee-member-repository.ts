@@ -7,9 +7,7 @@ import type {
 } from '../../dto/legitimator-committee-member.d.ts'
 import type { ILegitimatorCommitteeMemberRepository } from './ilegitimator-committee-member-repository.d.ts'
 
-export class LegitimatorCommitteeMemberRepository
-  implements ILegitimatorCommitteeMemberRepository
-{
+export class LegitimatorCommitteeMemberRepository implements ILegitimatorCommitteeMemberRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(member: ICreateLegitimatorCommitteeMemberDTO) {
@@ -26,6 +24,14 @@ export class LegitimatorCommitteeMemberRepository
         id,
       },
       data: memberData,
+    })
+  }
+
+  async deleteById(id: string) {
+    await this.prisma.legitimatorCommitteeMember.delete({
+      where: {
+        id,
+      },
     })
   }
 
@@ -93,3 +99,4 @@ export class LegitimatorCommitteeMemberRepository
     })
   }
 }
+

@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateLegitimatorCommitteeMemberController,
+  makeDeleteLegitimatorCommitteeMemberController,
   makeFindLegitimatorCommitteeMemberByIdController,
   makeFindLegitimatorCommitteeMembersController,
   makeUpdateLegitimatorCommitteeMemberController,
@@ -48,6 +49,19 @@ router.put(
       makeUpdateLegitimatorCommitteeMemberController()
 
     await updateLegitimatorCommitteeMemberController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteLegitimatorCommitteeMemberController } =
+      makeDeleteLegitimatorCommitteeMemberController()
+
+    await deleteLegitimatorCommitteeMemberController.handle(req, res)
   }
 )
 
