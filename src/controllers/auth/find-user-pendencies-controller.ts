@@ -26,7 +26,7 @@ export class FindAuthenticatedUserPendenciesController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { title, description, limit, orderBy, page, status } =
+      const { limit, page, ...filter } =
         findAuthenticatedUserPendenciesSchema.parse(req.query)
 
       const offset = page * limit - limit
@@ -40,19 +40,12 @@ export class FindAuthenticatedUserPendenciesController {
             offset,
             limit,
           },
-          filter: {
-            title,
-            description,
-            orderBy,
-            status,
-          },
+          filter,
         }),
         this.pendencyRepository.count({
           filter: {
-            title,
-            description,
+            ...filter,
             userId: authenticatedUserId,
-            status,
           },
         }),
       ])

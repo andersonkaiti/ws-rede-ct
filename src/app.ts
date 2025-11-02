@@ -13,12 +13,13 @@ import { certificationRoutes } from './routes/certification-routes.ts'
 import { etpRoutes } from './routes/etp-routes.ts'
 import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
+import { legitimatorCommitteeMemberRoutes } from './routes/legitimator-committee-member-routes.ts'
+import { managementTeamRoutes } from './routes/management-team-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
-import { teamMembersRoutes } from './routes/team-member-routes.ts'
-import { teamRoutes } from './routes/team-routes.ts'
+import { sdhcTeamMemberRoutes } from './routes/sdhc-team-member-routes.ts'
 import { userRoutes } from './routes/user-routes.ts'
 
 const app: Application = express()
@@ -45,14 +46,15 @@ app.use('/', indexRoutes)
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 app.use('/news', newsRoutes)
-app.use('/team', teamRoutes)
-app.use('/team', teamMembersRoutes)
 app.use('/certification', certificationRoutes)
 app.use('/pendency', pendencyRoutes)
 app.use('/researcher', researcherRoutes)
 app.use('/in-memoriam', inMemoriamRoutes)
 app.use('/etp', etpRoutes)
 app.use('/partner', partnerRoutes)
+app.use('/management-team', managementTeamRoutes)
+app.use('/sdhc-team-member', sdhcTeamMemberRoutes)
+app.use('/legitimator-committee-member', legitimatorCommitteeMemberRoutes)
 
 app.use(
   (
@@ -68,4 +70,3 @@ app.use(
 )
 
 export { app }
-

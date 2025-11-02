@@ -15,7 +15,6 @@ const MAX_AVATAR_SIZE_BYTES = MAX_AVATAR_SIZE_MB * MEGABYTE
 
 const ORCID_REGEX = /^\d{4}-\d{4}-\d{4}-\d{4}$/
 
-const NO_NUMBER_REGEX = /^[^0-9]*$/
 const PHONE_REGEX = /^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$/
 
 extendZodWithOpenApi(z)
@@ -25,15 +24,15 @@ export const updateUserSchema = z.object({
   lattesUrl: z.string().optional(),
   orcid: z
     .string()
-    .transform((val) => val.trim())
-    .transform((val) => (NO_NUMBER_REGEX.test(val) ? '' : val))
-    .refine((val) => NO_NUMBER_REGEX.test(val) || ORCID_REGEX.test(val), {
+    .optional()
+    .transform((val) => (val === undefined ? undefined : val.trim()))
+    .refine((val) => val === undefined || val === '' || ORCID_REGEX.test(val), {
       message: 'ORCID inválido. Deve estar no formato 0000-0000-0000-0000',
     }),
   phone: z
     .string()
-    .transform((val) => (NO_NUMBER_REGEX.test(val) ? '' : val))
-    .refine((val) => NO_NUMBER_REGEX.test(val) || PHONE_REGEX.test(val), {
+    .optional()
+    .refine((val) => val === undefined || val === '' || PHONE_REGEX.test(val), {
       message: 'Telefone inválido. Deve estar no formato (99) 99999-9999',
     }),
   avatarImage: z
