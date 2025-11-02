@@ -19,6 +19,16 @@ export interface IFindAllManagementTeamsDTO {
   }
 }
 
+export interface IUpdateManagementTeamDTO {
+  id: string
+  name?: string
+  description?: string
+  members?: {
+    userId: string
+    role: string
+  }[]
+}
+
 export interface ICountManagementTeamsDTO {
   filter: {
     name?: string

@@ -1,6 +1,7 @@
 import { CreateManagementTeamController } from '../../controllers/management-team/create-management-team-controller.ts'
 import { FindManagementTeamByIdController } from '../../controllers/management-team/find-management-team-by-id-controller.ts'
 import { FindManagementTeamsController } from '../../controllers/management-team/find-management-teams-controller.ts'
+import { UpdateManagementTeamController } from '../../controllers/management-team/update-management-team-controller.ts'
 import { makeManagementTeamRepository } from '../repositories/management-team.factory.ts'
 
 export function makeCreateManagementTeamController() {
@@ -22,6 +23,14 @@ export function makeFindManagementTeamsController() {
 export function makeFindManagementTeamByIdController() {
   return {
     findManagementTeamByIdController: new FindManagementTeamByIdController(
+      makeManagementTeamRepository()
+    ),
+  }
+}
+
+export function makeUpdateManagementTeamController() {
+  return {
+    updateManagementTeamController: new UpdateManagementTeamController(
       makeManagementTeamRepository()
     ),
   }

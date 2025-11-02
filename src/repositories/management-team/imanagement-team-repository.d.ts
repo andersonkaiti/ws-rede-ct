@@ -3,6 +3,7 @@ import type {
   ICountManagementTeamsDTO,
   ICreateManagementTeamDTO,
   IFindAllManagementTeamsDTO,
+  IUpdateManagementTeamDTO,
 } from '../../dto/management-team.d.ts'
 
 type ReturnedManagementTeam = {
@@ -18,6 +19,7 @@ type ReturnedManagementTeam = {
 
 export interface IManagementTeamRepository {
   create(team: ICreateManagementTeamDTO): Promise<void>
+  update(team: IUpdateManagementTeamDTO): Promise<void>
   find(
     data: IFindAllManagementTeamsDTO
   ): Promise<ReturnedManagementTeam[] | null>

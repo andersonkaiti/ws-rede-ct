@@ -3,6 +3,7 @@ import type {
   ICountManagementTeamsDTO,
   ICreateManagementTeamDTO,
   IFindAllManagementTeamsDTO,
+  IUpdateManagementTeamDTO,
 } from '../../dto/management-team.d.ts'
 import type { IManagementTeamRepository } from './imanagement-team-repository.d.ts'
 
@@ -26,6 +27,39 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
       })
 
       return createdTeam
+    })
+  }
+
+  async update(team: IUpdateManagementTeamDTO) {
+    const { members, ...teamData } = team
+
+    await this.prisma.$transaction(async (tx) => {
+      const updatedTeam = await tx.managementTeam.update({
+        where: {
+          id: team.id,
+        },
+        data: teamData,
+      })
+
+      if (members !== undefined) {
+        await tx.managementTeamMember.deleteMany({
+          where: {
+            teamId: team.id,
+          },
+        })
+
+        if (members.length > 0) {
+          await tx.managementTeamMember.createMany({
+            data: members.map(({ userId, role }) => ({
+              teamId: team.id,
+              userId,
+              role,
+            })),
+          })
+        }
+      }
+
+      return updatedTeam
     })
   }
 

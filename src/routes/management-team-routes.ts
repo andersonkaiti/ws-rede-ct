@@ -3,6 +3,7 @@ import {
   makeCreateManagementTeamController,
   makeFindManagementTeamByIdController,
   makeFindManagementTeamsController,
+  makeUpdateManagementTeamController,
 } from '../factories/controllers/management-team.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
@@ -35,5 +36,18 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   await findManagementTeamByIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateManagementTeamController } =
+      makeUpdateManagementTeamController()
+
+    await updateManagementTeamController.handle(req, res)
+  }
+)
 
 export { router as managementTeamRoutes }
