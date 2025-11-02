@@ -74,6 +74,25 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.managementTeam.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        members: {
+          include: {
+            user: {
+              omit: {
+                passwordHash: true,
+              },
+            },
+          },
+        },
+      },
+    })
+  }
+
   async findByName(name: string) {
     return await this.prisma.managementTeam.findFirst({
       where: {

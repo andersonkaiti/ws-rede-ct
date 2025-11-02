@@ -21,6 +21,7 @@ export interface IManagementTeamRepository {
   find(
     data: IFindAllManagementTeamsDTO
   ): Promise<ReturnedManagementTeam[] | null>
+  findById(id: string): Promise<ReturnedManagementTeam | null>
   findByName(name: string): Promise<ReturnedManagementTeam | null>
   count(data: ICountManagementTeamsDTO): Promise<number>
 }
