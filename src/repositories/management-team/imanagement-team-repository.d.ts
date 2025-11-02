@@ -1,5 +1,9 @@
 import type { ManagementTeamMember, User } from '@prisma/client'
-import type { ICreateManagementTeamDTO } from '../../dto/management-team.d.ts'
+import type {
+  ICountManagementTeamsDTO,
+  ICreateManagementTeamDTO,
+  IFindAllManagementTeamsDTO,
+} from '../../dto/management-team.d.ts'
 
 type ReturnedManagementTeam = {
   id: string
@@ -14,5 +18,9 @@ type ReturnedManagementTeam = {
 
 export interface IManagementTeamRepository {
   create(team: ICreateManagementTeamDTO): Promise<void>
+  find(
+    data: IFindAllManagementTeamsDTO
+  ): Promise<ReturnedManagementTeam[] | null>
   findByName(name: string): Promise<ReturnedManagementTeam | null>
+  count(data: ICountManagementTeamsDTO): Promise<number>
 }
