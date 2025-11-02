@@ -1,4 +1,5 @@
 import { CreateManagementTeamController } from '../../controllers/management-team/create-management-team-controller.ts'
+import { DeleteManagementTeamController } from '../../controllers/management-team/delete-management-team-controller.ts'
 import { FindManagementTeamByIdController } from '../../controllers/management-team/find-management-team-by-id-controller.ts'
 import { FindManagementTeamsController } from '../../controllers/management-team/find-management-teams-controller.ts'
 import { UpdateManagementTeamController } from '../../controllers/management-team/update-management-team-controller.ts'
@@ -35,3 +36,12 @@ export function makeUpdateManagementTeamController() {
     ),
   }
 }
+
+export function makeDeleteManagementTeamController() {
+  return {
+    deleteManagementTeamController: new DeleteManagementTeamController(
+      makeManagementTeamRepository()
+    ),
+  }
+}
+

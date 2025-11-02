@@ -63,6 +63,14 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.managementTeam.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { name, description, orderBy },

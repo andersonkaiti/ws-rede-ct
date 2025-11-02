@@ -20,6 +20,7 @@ type ReturnedManagementTeam = {
 export interface IManagementTeamRepository {
   create(team: ICreateManagementTeamDTO): Promise<void>
   update(team: IUpdateManagementTeamDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(
     data: IFindAllManagementTeamsDTO
   ): Promise<ReturnedManagementTeam[] | null>
