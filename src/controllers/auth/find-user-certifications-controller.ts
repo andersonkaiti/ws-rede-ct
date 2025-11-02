@@ -14,8 +14,8 @@ export const findAuthenticatedUserCertificationsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
 
-  title: z.string(),
-  description: z.string(),
+  title: z.string().optional(),
+  description: z.string().optional(),
   orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
@@ -62,6 +62,7 @@ export class FindAuthenticatedUserCertificationsController {
         totalPages,
         offset,
         limit,
+        totalCertifications: count,
         certifications,
       })
     } catch (err) {
