@@ -51,6 +51,21 @@ export class LegitimatorCommitteeMemberRepository
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.legitimatorCommitteeMember.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+    })
+  }
+
   async count({ filter: { role } }: ICountLegitimatorCommitteeMembersDTO) {
     const where: Prisma.LegitimatorCommitteeMemberWhereInput = {}
 

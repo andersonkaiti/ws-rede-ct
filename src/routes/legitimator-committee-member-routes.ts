@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateLegitimatorCommitteeMemberController,
+  makeFindLegitimatorCommitteeMemberByIdController,
   makeFindLegitimatorCommitteeMembersController,
 } from '../factories/controllers/legitimator-committee-member.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -27,6 +28,13 @@ router.get('/', async (req: Request, res: Response) => {
     makeFindLegitimatorCommitteeMembersController()
 
   await findLegitimatorCommitteeMembersController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findLegitimatorCommitteeMemberByIdController } =
+    makeFindLegitimatorCommitteeMemberByIdController()
+
+  await findLegitimatorCommitteeMemberByIdController.handle(req, res)
 })
 
 export { router as legitimatorCommitteeMemberRoutes }

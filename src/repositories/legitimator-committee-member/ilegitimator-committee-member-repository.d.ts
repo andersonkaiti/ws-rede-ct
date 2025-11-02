@@ -14,5 +14,6 @@ export interface ILegitimatorCommitteeMemberRepository {
   find(
     data: IFindAllLegitimatorCommitteeMembersDTO
   ): Promise<IReturnedLegitimatorCommitteeMember[] | null>
+  findById(id: string): Promise<IReturnedLegitimatorCommitteeMember | null>
   count(data: ICountLegitimatorCommitteeMembersDTO): Promise<number>
 }
