@@ -3,6 +3,7 @@ import {
   makeCreateSDHCTeamMemberController,
   makeFindSDHCTeamMemberByIdController,
   makeFindSDHCTeamMembersController,
+  makeUpdateSDHCTeamMemberController,
 } from '../factories/controllers/sdhc-team-member.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
@@ -35,4 +36,18 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   await findSDHCTeamMemberByIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateSDHCTeamMemberController } =
+      makeUpdateSDHCTeamMemberController()
+
+    await updateSDHCTeamMemberController.handle(req, res)
+  }
+)
+
 export { router as sdhcTeamMemberRoutes }

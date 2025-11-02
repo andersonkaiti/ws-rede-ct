@@ -15,6 +15,13 @@ export interface IFindAllSDHCTeamMembersDTO {
   }
 }
 
+export interface IUpdateSDHCTeamMemberDTO {
+  id: string
+  role?: string
+  description?: string
+  userId?: string
+}
+
 export interface ICountSDHCTeamMembersDTO {
   filter: {
     role?: string

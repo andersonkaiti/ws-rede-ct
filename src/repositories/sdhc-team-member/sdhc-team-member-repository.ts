@@ -3,6 +3,7 @@ import type {
   ICountSDHCTeamMembersDTO,
   ICreateSDHCTeamMemberDTO,
   IFindAllSDHCTeamMembersDTO,
+  IUpdateSDHCTeamMemberDTO,
 } from '../../dto/sdhc-team-member.d.ts'
 import type { ISDHCTeamMemberRepository } from './isdhc-team-member-repository.d.ts'
 
@@ -12,6 +13,17 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
   async create(member: ICreateSDHCTeamMemberDTO) {
     await this.prisma.sDHCTeamMember.create({
       data: member,
+    })
+  }
+
+  async update(member: IUpdateSDHCTeamMemberDTO) {
+    const { id, ...memberData } = member
+
+    await this.prisma.sDHCTeamMember.update({
+      where: {
+        id,
+      },
+      data: memberData,
     })
   }
 

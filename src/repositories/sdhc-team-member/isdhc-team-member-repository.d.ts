@@ -3,6 +3,7 @@ import type {
   ICountSDHCTeamMembersDTO,
   ICreateSDHCTeamMemberDTO,
   IFindAllSDHCTeamMembersDTO,
+  IUpdateSDHCTeamMemberDTO,
 } from '../../dto/sdhc-team-member.d.ts'
 
 interface IReturnedSDHCTeamMember extends SDHCTeamMember {
@@ -11,6 +12,7 @@ interface IReturnedSDHCTeamMember extends SDHCTeamMember {
 
 export interface ISDHCTeamMemberRepository {
   create(member: ICreateSDHCTeamMemberDTO): Promise<void>
+  update(member: IUpdateSDHCTeamMemberDTO): Promise<void>
   find(
     data: IFindAllSDHCTeamMembersDTO
   ): Promise<IReturnedSDHCTeamMember[] | null>
