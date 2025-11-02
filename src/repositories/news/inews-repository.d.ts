@@ -14,11 +14,11 @@ type ReturnedNewsWithAuthor = ReturnedNews & {
 }
 
 export interface INewsRepository {
-  create(news: INewsDTO): Promise<News>
+  create(news: INewsDTO): Promise<void>
   find(data: IFindAllDTO): Promise<ReturnedNewsWithAuthor[] | null>
   findById(id: string): Promise<ReturnedNewsWithAuthor | null>
   findByAuthorId(data: IFindNewsByAuthorIdDTO): Promise<ReturnedNews[] | null>
-  update(news: IUpdateNewsDTO): Promise<News>
+  update(news: IUpdateNewsDTO): Promise<void>
   delete(id: string): Promise<void>
   count(data: ICountNewsDTO): Promise<number>
 }

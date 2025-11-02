@@ -11,13 +11,13 @@ export class ResearcherRepository implements IResearcherRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(researcher: ICreateResearcherDTO) {
-    return await this.prisma.researcher.create({
+    await this.prisma.researcher.create({
       data: researcher,
     })
   }
 
   async update(researcher: IUpdateResearcherDTO) {
-    return await this.prisma.researcher.update({
+    await this.prisma.researcher.update({
       where: {
         id: researcher.id,
       },

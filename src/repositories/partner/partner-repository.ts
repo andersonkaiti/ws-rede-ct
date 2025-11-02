@@ -11,13 +11,13 @@ export class PartnerRepository implements IPartnerRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(partner: ICreatePartnerDTO) {
-    return await this.prisma.partner.create({
+    await this.prisma.partner.create({
       data: partner,
     })
   }
 
   async update(partner: IUpdatePartnerDTO) {
-    return await this.prisma.partner.update({
+    await this.prisma.partner.update({
       where: {
         id: partner.id,
       },

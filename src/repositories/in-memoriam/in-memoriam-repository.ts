@@ -11,13 +11,13 @@ export class InMemoriamRepository implements IInMemoriamRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(inMemoriam: ICreateInMemoriamDTO) {
-    return await this.prisma.inMemoriam.create({
+    await this.prisma.inMemoriam.create({
       data: inMemoriam,
     })
   }
 
   async update(inMemoriam: IUpdateInMemoriamDTO) {
-    return await this.prisma.inMemoriam.update({
+    await this.prisma.inMemoriam.update({
       where: {
         id: inMemoriam.id,
       },

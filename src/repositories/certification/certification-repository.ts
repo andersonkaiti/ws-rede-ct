@@ -35,35 +35,27 @@ export class CertificationRepository implements ICertificationRepository {
   }
 
   async find({
-    pagination: { limit, offset },
+    pagination: { offset, limit },
     filter: { description, orderBy, title, userId },
   }: IFindCertificationsDTO): Promise<CertificationWithUser[]> {
-    const where: Prisma.CertificationWhereInput = {
-      userId,
+    const where: Prisma.CertificationWhereInput = {}
+
+    if (userId) {
+      where.userId = userId
     }
 
-    const or: Prisma.CertificationWhereInput[] = []
-
     if (title) {
-      or.push({
-        title: {
-          contains: title,
-          mode: 'insensitive',
-        },
-      })
+      where.title = {
+        contains: title,
+        mode: 'insensitive',
+      }
     }
 
     if (description) {
-      or.push({
-        description: {
-          contains: description,
-          mode: 'insensitive',
-        },
-      })
-    }
-
-    if (or.length > 0) {
-      where.OR = or
+      where.description = {
+        contains: description,
+        mode: 'insensitive',
+      }
     }
 
     return await this.prisma.certification.findMany({
@@ -75,11 +67,9 @@ export class CertificationRepository implements ICertificationRepository {
           },
         },
       },
+      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
       skip: offset,
       take: limit,
-      orderBy: {
-        updatedAt: orderBy,
-      },
     })
   }
 
@@ -100,28 +90,18 @@ export class CertificationRepository implements ICertificationRepository {
       userId,
     }
 
-    const or: Prisma.CertificationWhereInput[] = []
-
     if (title) {
-      or.push({
-        title: {
-          contains: title,
-          mode: 'insensitive',
-        },
-      })
+      where.title = {
+        contains: title,
+        mode: 'insensitive',
+      }
     }
 
     if (description) {
-      or.push({
-        description: {
-          contains: description,
-          mode: 'insensitive',
-        },
-      })
-    }
-
-    if (or.length > 0) {
-      where.OR = or
+      where.description = {
+        contains: description,
+        mode: 'insensitive',
+      }
     }
 
     return await this.prisma.certification.findMany({
@@ -135,9 +115,7 @@ export class CertificationRepository implements ICertificationRepository {
       },
       skip: offset,
       take: limit,
-      orderBy: {
-        updatedAt: orderBy,
-      },
+      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
     })
   }
 

@@ -7,8 +7,8 @@ import type {
 } from '../../dto/partner.d.ts'
 
 export interface IPartnerRepository {
-  create(partner: ICreatePartnerDTO): Promise<Partner>
-  update(partner: IUpdatePartnerDTO): Promise<Partner>
+  create(partner: ICreatePartnerDTO): Promise<void>
+  update(partner: IUpdatePartnerDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(data: IFindAllPartnerDTO): Promise<Partner[] | null>
   findById(id: string): Promise<Partner | null>

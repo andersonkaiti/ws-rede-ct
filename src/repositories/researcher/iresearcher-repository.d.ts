@@ -13,8 +13,8 @@ type ReturnedResearcherWithUser = ReturnedResearcher & {
 }
 
 export interface IResearcherRepository {
-  create(researcher: ICreateResearcherDTO): Promise<Researcher>
-  update(researcher: IUpdateResearcherDTO): Promise<Researcher>
+  create(researcher: ICreateResearcherDTO): Promise<void>
+  update(researcher: IUpdateResearcherDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
     data: IFindAllResearchersDTO
