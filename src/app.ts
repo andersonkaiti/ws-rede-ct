@@ -18,6 +18,7 @@ import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
+import { sdhcTeamMemberRoutes } from './routes/sdhc-team-member-routes.ts'
 import { userRoutes } from './routes/user-routes.ts'
 
 const app: Application = express()
@@ -51,6 +52,7 @@ app.use('/in-memoriam', inMemoriamRoutes)
 app.use('/etp', etpRoutes)
 app.use('/partner', partnerRoutes)
 app.use('/management-team', managementTeamRoutes)
+app.use('/sdhc-team-member', sdhcTeamMemberRoutes)
 
 app.use(
   (
