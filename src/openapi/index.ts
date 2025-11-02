@@ -33,6 +33,27 @@ import {
   updateInMemoriamRegistry,
 } from './in-memoriam.ts'
 import {
+  createLegitimatorCommitteeMemberRegistry,
+  deleteLegitimatorCommitteeMemberRegistry,
+  findLegitimatorCommitteeMemberByIdRegistry,
+  findLegitimatorCommitteeMembersRegistry,
+  updateLegitimatorCommitteeMemberRegistry,
+} from './legitimator-committee-members.ts'
+import {
+  createManagementTeamRegistry,
+  deleteManagementTeamRegistry,
+  findManagementTeamByIdRegistry,
+  findManagementTeamsRegistry,
+  updateManagementTeamRegistry,
+} from './management-teams.ts'
+import {
+  createSDHCTeamMemberRegistry,
+  deleteSDHCTeamMemberRegistry,
+  findSDHCTeamMemberByIdRegistry,
+  findSDHCTeamMembersRegistry,
+  updateSDHCTeamMemberRegistry,
+} from './sdhc-team-members.ts'
+import {
   createNewsRegistry,
   findAllNewsRegistry,
   findNewsByAuthorIdRegistry,
@@ -138,6 +159,27 @@ registry.registerPath(findPartnersRegistry)
 registry.registerPath(findPartnerByIdRegistry)
 registry.registerPath(updatePartnerRegistry)
 registry.registerPath(deletePartnerRegistry)
+
+// Management Teams
+registry.registerPath(createManagementTeamRegistry)
+registry.registerPath(findManagementTeamsRegistry)
+registry.registerPath(findManagementTeamByIdRegistry)
+registry.registerPath(updateManagementTeamRegistry)
+registry.registerPath(deleteManagementTeamRegistry)
+
+// SDHC Team Members
+registry.registerPath(createSDHCTeamMemberRegistry)
+registry.registerPath(findSDHCTeamMembersRegistry)
+registry.registerPath(findSDHCTeamMemberByIdRegistry)
+registry.registerPath(updateSDHCTeamMemberRegistry)
+registry.registerPath(deleteSDHCTeamMemberRegistry)
+
+// Legitimator Committee Members
+registry.registerPath(createLegitimatorCommitteeMemberRegistry)
+registry.registerPath(findLegitimatorCommitteeMembersRegistry)
+registry.registerPath(findLegitimatorCommitteeMemberByIdRegistry)
+registry.registerPath(updateLegitimatorCommitteeMemberRegistry)
+registry.registerPath(deleteLegitimatorCommitteeMemberRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
