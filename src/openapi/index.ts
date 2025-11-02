@@ -61,14 +61,6 @@ import {
   updateResearcherRegistry,
 } from './researchers.ts'
 import {
-  createTeamRegistry,
-  deleteTeamRegistry,
-  findTeamByIdRegistry,
-  findTeamByTypeRegistry,
-  findTeamsRegistry,
-  updateTeamRegistry,
-} from './team.ts'
-import {
   deleteUserRegistry,
   findUserRegistry,
   findUsersRegistry,
@@ -97,14 +89,6 @@ registry.registerPath(findUserRegistry)
 registry.registerPath(updateUserRegistry)
 registry.registerPath(deleteUserRegistry)
 registry.registerPath(findUsersRegistry)
-
-// Team
-registry.registerPath(createTeamRegistry)
-registry.registerPath(updateTeamRegistry)
-registry.registerPath(deleteTeamRegistry)
-registry.registerPath(findTeamByIdRegistry)
-registry.registerPath(findTeamByTypeRegistry)
-registry.registerPath(findTeamsRegistry)
 
 // News
 registry.registerPath(createNewsRegistry)
