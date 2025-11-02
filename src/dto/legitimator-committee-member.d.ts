@@ -15,6 +15,13 @@ export interface IFindAllLegitimatorCommitteeMembersDTO {
   }
 }
 
+export interface IUpdateLegitimatorCommitteeMemberDTO {
+  id: string
+  role?: string
+  description?: string
+  userId?: string
+}
+
 export interface ICountLegitimatorCommitteeMembersDTO {
   filter: {
     role?: string

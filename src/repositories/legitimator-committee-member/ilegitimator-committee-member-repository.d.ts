@@ -3,6 +3,7 @@ import type {
   ICountLegitimatorCommitteeMembersDTO,
   ICreateLegitimatorCommitteeMemberDTO,
   IFindAllLegitimatorCommitteeMembersDTO,
+  IUpdateLegitimatorCommitteeMemberDTO,
 } from '../../dto/legitimator-committee-member.d.ts'
 
 interface IReturnedLegitimatorCommitteeMember extends SDHCTeamMember {
@@ -11,6 +12,7 @@ interface IReturnedLegitimatorCommitteeMember extends SDHCTeamMember {
 
 export interface ILegitimatorCommitteeMemberRepository {
   create(member: ICreateLegitimatorCommitteeMemberDTO): Promise<void>
+  update(member: IUpdateLegitimatorCommitteeMemberDTO): Promise<void>
   find(
     data: IFindAllLegitimatorCommitteeMembersDTO
   ): Promise<IReturnedLegitimatorCommitteeMember[] | null>

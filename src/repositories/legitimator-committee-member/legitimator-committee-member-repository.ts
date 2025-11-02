@@ -3,6 +3,7 @@ import type {
   ICountLegitimatorCommitteeMembersDTO,
   ICreateLegitimatorCommitteeMemberDTO,
   IFindAllLegitimatorCommitteeMembersDTO,
+  IUpdateLegitimatorCommitteeMemberDTO,
 } from '../../dto/legitimator-committee-member.d.ts'
 import type { ILegitimatorCommitteeMemberRepository } from './ilegitimator-committee-member-repository.d.ts'
 
@@ -14,6 +15,17 @@ export class LegitimatorCommitteeMemberRepository
   async create(member: ICreateLegitimatorCommitteeMemberDTO) {
     await this.prisma.legitimatorCommitteeMember.create({
       data: member,
+    })
+  }
+
+  async update(member: IUpdateLegitimatorCommitteeMemberDTO) {
+    const { id, ...memberData } = member
+
+    await this.prisma.legitimatorCommitteeMember.update({
+      where: {
+        id,
+      },
+      data: memberData,
     })
   }
 
