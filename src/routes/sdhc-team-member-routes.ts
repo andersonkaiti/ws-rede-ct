@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateSDHCTeamMemberController,
+  makeDeleteSDHCTeamMemberController,
   makeFindSDHCTeamMemberByIdController,
   makeFindSDHCTeamMembersController,
   makeUpdateSDHCTeamMemberController,
@@ -47,6 +48,19 @@ router.put(
       makeUpdateSDHCTeamMemberController()
 
     await updateSDHCTeamMemberController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteSDHCTeamMemberController } =
+      makeDeleteSDHCTeamMemberController()
+
+    await deleteSDHCTeamMemberController.handle(req, res)
   }
 )
 

@@ -27,6 +27,14 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.sDHCTeamMember.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { role, orderBy },
@@ -91,3 +99,4 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
     })
   }
 }
+

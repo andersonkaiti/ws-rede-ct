@@ -13,6 +13,7 @@ interface IReturnedSDHCTeamMember extends SDHCTeamMember {
 export interface ISDHCTeamMemberRepository {
   create(member: ICreateSDHCTeamMemberDTO): Promise<void>
   update(member: IUpdateSDHCTeamMemberDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(
     data: IFindAllSDHCTeamMembersDTO
   ): Promise<IReturnedSDHCTeamMember[] | null>
