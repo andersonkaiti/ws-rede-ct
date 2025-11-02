@@ -13,6 +13,7 @@ import { certificationRoutes } from './routes/certification-routes.ts'
 import { etpRoutes } from './routes/etp-routes.ts'
 import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
+import { legitimatorCommitteeMemberRoutes } from './routes/legitimator-committee-member-routes.ts'
 import { managementTeamRoutes } from './routes/management-team-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
@@ -53,6 +54,7 @@ app.use('/etp', etpRoutes)
 app.use('/partner', partnerRoutes)
 app.use('/management-team', managementTeamRoutes)
 app.use('/sdhc-team-member', sdhcTeamMemberRoutes)
+app.use('/legitimator-committee-member', legitimatorCommitteeMemberRoutes)
 
 app.use(
   (
