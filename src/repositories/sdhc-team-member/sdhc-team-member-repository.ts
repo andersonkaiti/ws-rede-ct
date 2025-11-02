@@ -49,6 +49,21 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.sDHCTeamMember.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+    })
+  }
+
   async count({ filter: { role } }: ICountSDHCTeamMembersDTO) {
     const where: Prisma.SDHCTeamMemberWhereInput = {}
 

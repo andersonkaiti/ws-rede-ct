@@ -14,5 +14,6 @@ export interface ISDHCTeamMemberRepository {
   find(
     data: IFindAllSDHCTeamMembersDTO
   ): Promise<IReturnedSDHCTeamMember[] | null>
+  findById(id: string): Promise<IReturnedSDHCTeamMember | null>
   count(data: ICountSDHCTeamMembersDTO): Promise<number>
 }
