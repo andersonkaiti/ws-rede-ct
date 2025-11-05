@@ -7,12 +7,17 @@ import type {
 } from '../../dto/legitimator-committee-member.d.ts'
 import type { ILegitimatorCommitteeMemberRepository } from './ilegitimator-committee-member-repository.d.ts'
 
-export class LegitimatorCommitteeMemberRepository implements ILegitimatorCommitteeMemberRepository {
+export class LegitimatorCommitteeMemberRepository
+  implements ILegitimatorCommitteeMemberRepository
+{
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(member: ICreateLegitimatorCommitteeMemberDTO) {
     await this.prisma.legitimatorCommitteeMember.create({
-      data: member,
+      data: {
+        ...member,
+        order: member.order ?? 0,
+      },
     })
   }
 
@@ -36,7 +41,6 @@ export class LegitimatorCommitteeMemberRepository implements ILegitimatorCommitt
   }
 
   async find({
-    pagination: { offset, limit },
     filter: { role, orderBy },
   }: IFindAllLegitimatorCommitteeMembersDTO) {
     const where: Prisma.LegitimatorCommitteeMemberWhereInput = {}
@@ -58,14 +62,22 @@ export class LegitimatorCommitteeMemberRepository implements ILegitimatorCommitt
         },
       },
       orderBy: orderBy
-        ? {
-            updatedAt: orderBy,
-          }
-        : {
-            updatedAt: 'desc',
-          },
-      skip: offset,
-      take: limit,
+        ? [
+            {
+              order: 'asc',
+            },
+            {
+              updatedAt: orderBy,
+            },
+          ]
+        : [
+            {
+              order: 'asc',
+            },
+            {
+              updatedAt: 'desc',
+            },
+          ],
     })
   }
 
@@ -99,4 +111,3 @@ export class LegitimatorCommitteeMemberRepository implements ILegitimatorCommitt
     })
   }
 }
-
