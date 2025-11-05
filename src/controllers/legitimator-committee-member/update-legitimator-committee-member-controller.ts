@@ -13,6 +13,7 @@ export const updateLegitimatorCommitteeMemberSchema = z.object({
   role: z.string().min(1).optional(),
   description: z.string().optional(),
   userId: z.uuid().optional(),
+  order: z.number().optional(),
 })
 
 export class UpdateLegitimatorCommitteeMemberController {
@@ -22,7 +23,7 @@ export class UpdateLegitimatorCommitteeMemberController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { id, role, description, userId } =
+      const { id, role, description, userId, order } =
         updateLegitimatorCommitteeMemberSchema.parse({
           id: req.params.id,
           ...req.body,
@@ -40,6 +41,7 @@ export class UpdateLegitimatorCommitteeMemberController {
         role,
         description,
         userId,
+        order,
       })
 
       return res.sendStatus(HttpStatus.OK)

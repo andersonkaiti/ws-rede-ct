@@ -19,10 +19,11 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
       })
 
       await tx.managementTeamMember.createMany({
-        data: members.map(({ userId, role }) => ({
+        data: members.map(({ userId, role, order }) => ({
           teamId: createdTeam.id,
           userId,
           role,
+          order: order ?? 0,
         })),
       })
 
@@ -50,10 +51,11 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
 
         if (members.length > 0) {
           await tx.managementTeamMember.createMany({
-            data: members.map(({ userId, role }) => ({
+            data: members.map(({ userId, role, order }) => ({
               teamId: team.id,
               userId,
               role,
+              order: order ?? 0,
             })),
           })
         }
@@ -72,7 +74,6 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
   }
 
   async find({
-    pagination: { offset, limit },
     filter: { name, description, orderBy },
   }: IFindAllManagementTeamsDTO) {
     const where: Prisma.ManagementTeamWhereInput = {}
@@ -102,6 +103,9 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
               },
             },
           },
+          orderBy: {
+            order: 'asc',
+          },
         },
       },
       orderBy: orderBy
@@ -111,8 +115,6 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
         : {
             updatedAt: 'desc',
           },
-      skip: offset,
-      take: limit,
     })
   }
 
@@ -129,6 +131,9 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
                 passwordHash: true,
               },
             },
+          },
+          orderBy: {
+            order: 'asc',
           },
         },
       },
@@ -148,6 +153,9 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
                 passwordHash: true,
               },
             },
+          },
+          orderBy: {
+            order: 'asc',
           },
         },
       },

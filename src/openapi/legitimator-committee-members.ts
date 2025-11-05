@@ -6,9 +6,6 @@ import { deleteLegitimatorCommitteeMemberSchema } from '../controllers/legitimat
 import { findLegitimatorCommitteeMemberByIdSchema } from '../controllers/legitimator-committee-member/find-legitimator-committee-member-by-id-controller.ts'
 import { updateLegitimatorCommitteeMemberSchema } from '../controllers/legitimator-committee-member/update-legitimator-committee-member-controller.ts'
 
-const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
-
 const userSchema = z.object({
   id: z.uuid(),
   name: z.string(),
@@ -24,6 +21,7 @@ const legitimatorCommitteeMemberSchema = z.object({
   id: z.uuid(),
   role: z.string(),
   description: z.string().nullable(),
+  order: z.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
   userId: z.uuid(),
@@ -90,26 +88,20 @@ export const findLegitimatorCommitteeMembersRegistry: RouteConfig = {
   method: 'get',
   path: '/legitimator-committee-member',
   tags: ['Legitimator Committee Members'],
-  summary: 'List all Legitimator Committee Members with pagination and filters',
+  summary: 'List all Legitimator Committee Members with filters',
   request: {
     query: z.object({
-      page: z.coerce.number().min(1).default(DEFAULT_PAGE).optional(),
-      limit: z.coerce.number().min(1).default(DEFAULT_LIMIT).optional(),
       role: z.string().optional(),
       orderBy: z.enum(['asc', 'desc']).optional(),
     }),
   },
   responses: {
     200: {
-      description: 'List of Legitimator Committee Members retrieved successfully with pagination',
+      description: 'List of Legitimator Committee Members retrieved successfully',
       summary: 'Legitimator Committee Members Retrieved',
       content: {
         'application/json': {
           schema: z.object({
-            page: z.number(),
-            totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
             members: z.array(legitimatorCommitteeMemberSchema),
           }),
         },
