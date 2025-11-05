@@ -11,7 +11,7 @@ export class InMemoriamRepository implements IInMemoriamRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(inMemoriam: ICreateInMemoriamDTO) {
-    await this.prisma.inMemoriam.create({
+    return await this.prisma.inMemoriam.create({
       data: inMemoriam,
     })
   }

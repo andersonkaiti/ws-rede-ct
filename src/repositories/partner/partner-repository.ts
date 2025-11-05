@@ -11,7 +11,7 @@ export class PartnerRepository implements IPartnerRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(partner: ICreatePartnerDTO) {
-    await this.prisma.partner.create({
+    return await this.prisma.partner.create({
       data: partner,
     })
   }

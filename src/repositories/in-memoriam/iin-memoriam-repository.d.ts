@@ -7,7 +7,7 @@ import type {
 } from '../../dto/in-memoriam.d.ts'
 
 export interface IInMemoriamRepository {
-  create(inMemoriam: ICreateInMemoriamDTO): Promise<void>
+  create(inMemoriam: ICreateInMemoriamDTO): Promise<InMemoriam>
   update(inMemoriam: IUpdateInMemoriamDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(data: IFindAllInMemoriamDTO): Promise<InMemoriam[] | null>
