@@ -6,9 +6,6 @@ import { deleteManagementTeamSchema } from '../controllers/management-team/delet
 import { findManagementTeamByIdSchema } from '../controllers/management-team/find-management-team-by-id-controller.ts'
 import { updateManagementTeamSchema } from '../controllers/management-team/update-management-team-controller.ts'
 
-const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
-
 const userSchema = z.object({
   id: z.uuid(),
   name: z.string(),
@@ -24,6 +21,7 @@ const memberSchema = z.object({
   id: z.uuid(),
   role: z.string(),
   description: z.string().nullable(),
+  order: z.number(),
   teamId: z.uuid(),
   userId: z.uuid(),
   createdAt: z.date(),
@@ -111,11 +109,9 @@ export const findManagementTeamsRegistry: RouteConfig = {
   method: 'get',
   path: '/management-team',
   tags: ['Management Teams'],
-  summary: 'List all Management Teams with pagination and filters',
+  summary: 'List all Management Teams with filters',
   request: {
     query: z.object({
-      page: z.coerce.number().min(1).default(DEFAULT_PAGE).optional(),
-      limit: z.coerce.number().min(1).default(DEFAULT_LIMIT).optional(),
       name: z.string().optional(),
       description: z.string().optional(),
       orderBy: z.enum(['asc', 'desc']).optional(),
@@ -123,15 +119,11 @@ export const findManagementTeamsRegistry: RouteConfig = {
   },
   responses: {
     200: {
-      description: 'List of Management Teams retrieved successfully with pagination',
+      description: 'List of Management Teams retrieved successfully',
       summary: 'Management Teams Retrieved',
       content: {
         'application/json': {
           schema: z.object({
-            page: z.number(),
-            totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
             teams: z.array(managementTeamSchema),
           }),
         },

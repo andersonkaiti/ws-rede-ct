@@ -4,14 +4,11 @@ export interface ICreateManagementTeamDTO {
   members: {
     userId: string
     role: string
+    order?: number
   }[]
 }
 
 export interface IFindAllManagementTeamsDTO {
-  pagination: {
-    offset: number
-    limit: number
-  }
   filter: {
     name?: string
     description?: string
@@ -26,6 +23,7 @@ export interface IUpdateManagementTeamDTO {
   members?: {
     userId: string
     role: string
+    order?: number
   }[]
 }
 

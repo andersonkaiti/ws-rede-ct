@@ -15,6 +15,7 @@ export const createManagementTeamSchema = z.object({
     z.object({
       userId: z.uuid(),
       role: z.string().min(1),
+      order: z.number().optional(),
     })
   ),
 })
@@ -41,7 +42,11 @@ export class CreateManagementTeamController {
       await this.managementTeamRepository.create({
         name,
         description,
-        members,
+        members: members.map((member) => ({
+          userId: member.userId,
+          role: member.role,
+          order: member.order ?? 0,
+        })),
       })
 
       return res.sendStatus(HttpStatus.CREATED)
