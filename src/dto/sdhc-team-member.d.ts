@@ -2,13 +2,10 @@ export interface ICreateSDHCTeamMemberDTO {
   role: string
   description?: string
   userId: string
+  order?: number
 }
 
 export interface IFindAllSDHCTeamMembersDTO {
-  pagination: {
-    offset: number
-    limit: number
-  }
   filter: {
     role?: string
     orderBy?: 'asc' | 'desc'
@@ -20,6 +17,7 @@ export interface IUpdateSDHCTeamMemberDTO {
   role?: string
   description?: string
   userId?: string
+  order?: number
 }
 
 export interface ICountSDHCTeamMembersDTO {

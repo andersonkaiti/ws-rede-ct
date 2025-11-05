@@ -12,7 +12,10 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
 
   async create(member: ICreateSDHCTeamMemberDTO) {
     await this.prisma.sDHCTeamMember.create({
-      data: member,
+      data: {
+        ...member,
+        order: member.order ?? 0,
+      },
     })
   }
 
@@ -35,10 +38,7 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
     })
   }
 
-  async find({
-    pagination: { offset, limit },
-    filter: { role, orderBy },
-  }: IFindAllSDHCTeamMembersDTO) {
+  async find({ filter: { role, orderBy } }: IFindAllSDHCTeamMembersDTO) {
     const where: Prisma.SDHCTeamMemberWhereInput = {}
 
     if (role) {
@@ -58,14 +58,22 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
         },
       },
       orderBy: orderBy
-        ? {
-            updatedAt: orderBy,
-          }
-        : {
-            updatedAt: 'desc',
-          },
-      skip: offset,
-      take: limit,
+        ? [
+            {
+              order: 'asc',
+            },
+            {
+              updatedAt: orderBy,
+            },
+          ]
+        : [
+            {
+              order: 'asc',
+            },
+            {
+              updatedAt: 'desc',
+            },
+          ],
     })
   }
 
@@ -99,4 +107,3 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
     })
   }
 }
-
