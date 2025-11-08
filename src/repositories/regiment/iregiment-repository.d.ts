@@ -1,4 +1,4 @@
-import type { Regiment } from '@prisma/client'
+import type { Regiment, RegimentStatus } from '@prisma/client'
 import type {
   ICountRegimentDTO,
   ICreateRegimentDTO,
@@ -11,5 +11,6 @@ export interface IRegimentRepository {
   update(regiment: IUpdateRegimentDTO): Promise<void>
   find(data: IFindAllRegimentDTO): Promise<Regiment[] | null>
   findById(id: string): Promise<Regiment | null>
+  findByStatus(status: RegimentStatus): Promise<Regiment[] | null>
   count(data: ICountRegimentDTO): Promise<number>
 }

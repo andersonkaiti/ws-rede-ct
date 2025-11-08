@@ -1,5 +1,6 @@
 import { CreateRegimentController } from '../../controllers/regiment/create-regiment-controller.ts'
 import { FindRegimentByIdController } from '../../controllers/regiment/find-regiment-by-id-controller.ts'
+import { FindRegimentByStatusController } from '../../controllers/regiment/find-regiment-by-status-controller.ts'
 import { FindRegimentsController } from '../../controllers/regiment/find-regiments-controller.ts'
 import { makeRegimentRepository } from '../repositories/regiment.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
@@ -24,6 +25,14 @@ export function makeFindRegimentsController() {
 export function makeFindRegimentByIdController() {
   return {
     findRegimentByIdController: new FindRegimentByIdController(
+      makeRegimentRepository()
+    ),
+  }
+}
+
+export function makeFindRegimentByStatusController() {
+  return {
+    findRegimentByStatusController: new FindRegimentByStatusController(
       makeRegimentRepository()
     ),
   }

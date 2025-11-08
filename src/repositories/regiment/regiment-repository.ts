@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient } from '@prisma/client'
+import type { Prisma, PrismaClient, RegimentStatus } from '@prisma/client'
 import type {
   ICountRegimentDTO,
   ICreateRegimentDTO,
@@ -54,6 +54,14 @@ export class RegimentRepository implements IRegimentRepository {
     return await this.prisma.regiment.findFirst({
       where: {
         id,
+      },
+    })
+  }
+
+  async findByStatus(status: RegimentStatus) {
+    return await this.prisma.regiment.findMany({
+      where: {
+        status,
       },
     })
   }

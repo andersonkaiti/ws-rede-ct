@@ -2,6 +2,7 @@ import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateRegimentController,
   makeFindRegimentByIdController,
+  makeFindRegimentByStatusController,
   makeFindRegimentsController,
 } from '../factories/controllers/regiment.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -34,6 +35,13 @@ router.get('/:id', async (req: Request, res: Response) => {
   const { findRegimentByIdController } = makeFindRegimentByIdController()
 
   await findRegimentByIdController.handle(req, res)
+})
+
+router.get('/status/:status', async (req: Request, res: Response) => {
+  const { findRegimentByStatusController } =
+    makeFindRegimentByStatusController()
+
+  await findRegimentByStatusController.handle(req, res)
 })
 
 export { router as regimentRoutes }
