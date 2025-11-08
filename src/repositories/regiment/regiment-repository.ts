@@ -1,6 +1,8 @@
-import type { PrismaClient } from '@prisma/client'
+import type { Prisma, PrismaClient } from '@prisma/client'
 import type {
+  ICountRegimentDTO,
   ICreateRegimentDTO,
+  IFindAllRegimentDTO,
   IUpdateRegimentDTO,
 } from '../../dto/regiment.d.ts'
 import type { IRegimentRepository } from './iregiment-repository.d.ts'
@@ -20,6 +22,50 @@ export class RegimentRepository implements IRegimentRepository {
         id: regiment.id,
       },
       data: regiment,
+    })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { title, status, orderBy },
+  }: IFindAllRegimentDTO) {
+    const where: Prisma.RegimentWhereInput = {}
+
+    if (title) {
+      where.title = {
+        contains: title,
+        mode: 'insensitive',
+      }
+    }
+
+    if (status) {
+      where.status = status
+    }
+
+    return await this.prisma.regiment.findMany({
+      where,
+      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
+      skip: offset,
+      take: limit,
+    })
+  }
+
+  async count({ filter: { title, status } }: ICountRegimentDTO) {
+    const where: Prisma.RegimentWhereInput = {}
+
+    if (title) {
+      where.title = {
+        contains: title,
+        mode: 'insensitive',
+      }
+    }
+
+    if (status) {
+      where.status = status
+    }
+
+    return await this.prisma.regiment.count({
+      where,
     })
   }
 }

@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateRegimentController } from '../factories/controllers/regiment.factory.ts'
+import {
+  makeCreateRegimentController,
+  makeFindRegimentsController,
+} from '../factories/controllers/regiment.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -19,5 +22,11 @@ router.post(
     await createRegimentController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findRegimentsController } = makeFindRegimentsController()
+
+  await findRegimentsController.handle(req, res)
+})
 
 export { router as regimentRoutes }

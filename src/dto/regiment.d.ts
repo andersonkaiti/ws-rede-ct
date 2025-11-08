@@ -8,7 +8,26 @@ export interface ICreateRegimentDTO {
   status?: RegimentStatus
 }
 
+export interface IFindAllRegimentDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    status?: RegimentStatus
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
 export interface IUpdateRegimentDTO
   extends Partial<Omit<Regiment, 'createdAt' | 'updatedAt'>> {
   id: string
+}
+
+export interface ICountRegimentDTO {
+  filter: {
+    title?: string
+    status?: RegimentStatus
+  }
 }
