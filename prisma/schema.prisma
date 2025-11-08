@@ -263,3 +263,65 @@ model Partner {
 
   @@map("partners")
 }
+
+enum RegimentStatus {
+  DRAFT
+  IN_FORCE
+  REVOKED
+}
+
+model Regiment {
+  id          String         @id @default(uuid())
+  title       String
+  version     String
+  publishedAt DateTime       @map("published_at")
+  documentUrl String         @map("document_url")
+  status      RegimentStatus @default(IN_FORCE)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("regiments")
+}
+
+enum MeetingFormat {
+  ONLINE
+  IN_PERSON
+}
+
+enum MeetingStatus {
+  PENDING
+  CANCELLED
+  FINISHED
+}
+
+model Meeting {
+  id          String         @id @default(uuid())
+  title       String
+  scheduledAt DateTime       @map("scheduled_at")
+  format      MeetingFormat  @default(ONLINE)
+  agenda      String
+  minutes     MeetingMinute?
+  meetingLink String?        @map("meeting_link")
+  location    String?        @map("location")
+  status      MeetingStatus  @default(PENDING)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("meetings")
+}
+
+model MeetingMinute {
+  id          String   @id @default(uuid())
+  title       String
+  publishedAt DateTime @map("published_at")
+  documentUrl String   @map("document_url")
+  meetingId   String   @unique @map("meeting_id")
+  meeting     Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("meeting_minutes")
+}
