@@ -1,3 +1,5 @@
+import type { Pendency } from '@prisma/client'
+
 export interface ICreatePendencyDTO {
   title: string
   description?: string
@@ -35,12 +37,9 @@ export interface IFindByUserIdDTO {
   }
 }
 
-export interface IUpdatePendencyDTO {
+export interface IUpdatePendencyDTO
+  extends Partial<Omit<Pendency, 'createdAt' | 'updatedAt'>> {
   id: string
-  title: string
-  description?: string
-  dueDate?: Date
-  documentUrl: string
 }
 
 export interface ICountPendenciesDTO {

@@ -1,3 +1,5 @@
+import type { ManagementTeam } from '@prisma/client'
+
 export interface ICreateManagementTeamDTO {
   name: string
   description?: string
@@ -16,15 +18,9 @@ export interface IFindAllManagementTeamsDTO {
   }
 }
 
-export interface IUpdateManagementTeamDTO {
+export interface IUpdateManagementTeamDTO
+  extends Partial<Omit<ManagementTeam, 'createdAt' | 'updatedAt'>> {
   id: string
-  name?: string
-  description?: string
-  members?: {
-    userId: string
-    role: string
-    order?: number
-  }[]
 }
 
 export interface ICountManagementTeamsDTO {

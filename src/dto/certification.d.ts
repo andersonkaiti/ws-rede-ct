@@ -31,11 +31,9 @@ export interface IFindByUserIdDTO {
   }
 }
 
-export interface IUpdateCertificationDTO {
+export interface IUpdateCertificationDTO
+  extends Partial<Omit<Certification, 'createdAt' | 'updatedAt'>> {
   id: string
-  title: string
-  description: string
-  certificationUrl: string
 }
 
 export interface ICountCertificationsDTO {

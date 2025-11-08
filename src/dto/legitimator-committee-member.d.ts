@@ -1,3 +1,5 @@
+import type { LegitimatorCommitteeMember } from '@prisma/client'
+
 export interface ICreateLegitimatorCommitteeMemberDTO {
   role: string
   description?: string
@@ -12,12 +14,9 @@ export interface IFindAllLegitimatorCommitteeMembersDTO {
   }
 }
 
-export interface IUpdateLegitimatorCommitteeMemberDTO {
+export interface IUpdateLegitimatorCommitteeMemberDTO
+  extends Partial<Omit<LegitimatorCommitteeMember, 'createdAt' | 'updatedAt'>> {
   id: string
-  role?: string
-  description?: string
-  userId?: string
-  order?: number
 }
 
 export interface ICountLegitimatorCommitteeMembersDTO {

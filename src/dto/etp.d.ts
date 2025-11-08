@@ -1,3 +1,5 @@
+import type { ETP } from '@prisma/client'
+
 export interface ICreateETPDTO {
   code: string
   title: string
@@ -23,12 +25,9 @@ export interface IFindAllETPsDTO {
   }
 }
 
-export interface IUpdateETPDTO {
+export interface IUpdateETPDTO
+  extends Partial<Omit<ETP, 'createdAt' | 'updatedAt'>> {
   id: string
-  code?: string
-  title?: string
-  description?: string
-  notes?: string
   leaderId?: string
   deputyLeaderId?: string
   secretaryId?: string

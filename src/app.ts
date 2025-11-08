@@ -18,6 +18,7 @@ import { managementTeamRoutes } from './routes/management-team-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
+import { regimentRoutes } from './routes/regiment-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
 import { sdhcTeamMemberRoutes } from './routes/sdhc-team-member-routes.ts'
 import { userRoutes } from './routes/user-routes.ts'
@@ -55,6 +56,7 @@ app.use('/partner', partnerRoutes)
 app.use('/management-team', managementTeamRoutes)
 app.use('/sdhc-team-member', sdhcTeamMemberRoutes)
 app.use('/legitimator-committee-member', legitimatorCommitteeMemberRoutes)
+app.use('/regiment', regimentRoutes)
 
 app.use(
   (
