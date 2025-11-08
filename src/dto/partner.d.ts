@@ -1,3 +1,5 @@
+import type { Partner } from '@prisma/client'
+
 export interface ICreatePartnerDTO {
   name: string
   logoUrl?: string
@@ -22,15 +24,9 @@ export interface IFindAllPartnerDTO {
   }
 }
 
-export interface IUpdatePartnerDTO {
+export interface IUpdatePartnerDTO
+  extends Partial<Omit<Partner, 'createdAt' | 'updatedAt'>> {
   id: string
-  name?: string
-  logoUrl?: string
-  websiteUrl?: string
-  description?: string
-  category?: string
-  since?: Date
-  isActive?: boolean
 }
 
 export interface ICountPartnerDTO {

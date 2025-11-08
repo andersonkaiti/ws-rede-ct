@@ -1,4 +1,4 @@
-import type { InMemoriamRole } from '@prisma/client'
+import type { InMemoriam, InMemoriamRole } from '@prisma/client'
 
 export interface ICreateInMemoriamDTO {
   name: string
@@ -22,14 +22,9 @@ export interface IFindAllInMemoriamDTO {
   }
 }
 
-export interface IUpdateInMemoriamDTO {
+export interface IUpdateInMemoriamDTO
+  extends Partial<Omit<InMemoriam, 'createdAt' | 'updatedAt'>> {
   id: string
-  name?: string
-  birthDate?: Date
-  deathDate?: Date
-  biography?: string
-  photoUrl?: string
-  role?: InMemoriamRole
 }
 
 export interface ICountInMemoriamDTO {

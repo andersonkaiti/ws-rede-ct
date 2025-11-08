@@ -1,14 +1,12 @@
+import type { User } from '@prisma/client'
+
 export interface ICreateUserDTO {
   name: string
   emailAddress: string
   passwordHash: string
 }
 
-export interface IUpdateUserDTO {
+export interface IUpdateUserDTO
+  extends Partial<Omit<User, 'createdAt' | 'updatedAt'>> {
   id: string
-  name?: string
-  lattesUrl?: string
-  orcid?: string
-  phone?: string
-  avatarUrl?: string
 }

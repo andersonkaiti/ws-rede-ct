@@ -1,3 +1,5 @@
+import type { SDHCTeamMember } from '@prisma/client'
+
 export interface ICreateSDHCTeamMemberDTO {
   role: string
   description?: string
@@ -12,12 +14,9 @@ export interface IFindAllSDHCTeamMembersDTO {
   }
 }
 
-export interface IUpdateSDHCTeamMemberDTO {
+export interface IUpdateSDHCTeamMemberDTO
+  extends Partial<Omit<SDHCTeamMember, 'createdAt' | 'updatedAt'>> {
   id: string
-  role?: string
-  description?: string
-  userId?: string
-  order?: number
 }
 
 export interface ICountSDHCTeamMembersDTO {

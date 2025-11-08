@@ -1,3 +1,5 @@
+import type { News } from '@prisma/client'
+
 export interface INewsDTO {
   title: string
   content: string
@@ -5,11 +7,9 @@ export interface INewsDTO {
   imageUrl: string
 }
 
-export interface IUpdateNewsDTO {
+export interface IUpdateNewsDTO
+  extends Partial<Omit<News, 'createdAt' | 'updatedAt'>> {
   id: string
-  title: string
-  content: string
-  imageUrl?: string
 }
 
 export interface IFindAllDTO {

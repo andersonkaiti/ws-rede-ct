@@ -1,4 +1,4 @@
-import type { Degree, Seniority } from '@prisma/client'
+import type { Degree, Researcher, Seniority } from '@prisma/client'
 
 export interface ICreateResearcherDTO {
   registrationNumber: string
@@ -32,16 +32,9 @@ export interface IFindAllResearchersDTO {
   }
 }
 
-export interface IUpdateResearcherDTO {
+export interface IUpdateResearcherDTO
+  extends Partial<Omit<Researcher, 'createdAt' | 'updatedAt'>> {
   id: string
-  registrationNumber?: string
-  mainEtps?: string
-  formations?: string
-  degrees?: Degree[]
-  occupations?: string
-  seniority?: Seniority
-  institutions?: string
-  biography?: string
 }
 
 export interface ICountResearchersDTO {
