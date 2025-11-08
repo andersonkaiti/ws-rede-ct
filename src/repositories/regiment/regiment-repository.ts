@@ -50,6 +50,14 @@ export class RegimentRepository implements IRegimentRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.regiment.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({ filter: { title, status } }: ICountRegimentDTO) {
     const where: Prisma.RegimentWhereInput = {}
 

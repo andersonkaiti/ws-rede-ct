@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateRegimentController,
+  makeFindRegimentByIdController,
   makeFindRegimentsController,
 } from '../factories/controllers/regiment.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -27,6 +28,12 @@ router.get('/', async (req: Request, res: Response) => {
   const { findRegimentsController } = makeFindRegimentsController()
 
   await findRegimentsController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findRegimentByIdController } = makeFindRegimentByIdController()
+
+  await findRegimentByIdController.handle(req, res)
 })
 
 export { router as regimentRoutes }
