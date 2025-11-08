@@ -1,4 +1,5 @@
 import { CreateRegimentController } from '../../controllers/regiment/create-regiment-controller.ts'
+import { DeleteRegimentController } from '../../controllers/regiment/delete-regiment-controller.ts'
 import { FindRegimentByIdController } from '../../controllers/regiment/find-regiment-by-id-controller.ts'
 import { FindRegimentByStatusController } from '../../controllers/regiment/find-regiment-by-status-controller.ts'
 import { FindRegimentsController } from '../../controllers/regiment/find-regiments-controller.ts'
@@ -42,6 +43,15 @@ export function makeFindRegimentByStatusController() {
 export function makeUpdateRegimentController() {
   return {
     updateRegimentController: new UpdateRegimentController(
+      makeRegimentRepository(),
+      makeFirebaseStorageService()
+    ),
+  }
+}
+
+export function makeDeleteRegimentController() {
+  return {
+    deleteRegimentController: new DeleteRegimentController(
       makeRegimentRepository(),
       makeFirebaseStorageService()
     ),

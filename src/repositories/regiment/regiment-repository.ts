@@ -25,6 +25,12 @@ export class RegimentRepository implements IRegimentRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.regiment.delete({
+      where: { id },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { title, status, orderBy },

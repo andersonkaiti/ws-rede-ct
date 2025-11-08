@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateRegimentController,
+  makeDeleteRegimentController,
   makeFindRegimentByIdController,
   makeFindRegimentByStatusController,
   makeFindRegimentsController,
@@ -55,6 +56,18 @@ router.put(
     const { updateRegimentController } = makeUpdateRegimentController()
 
     await updateRegimentController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteRegimentController } = makeDeleteRegimentController()
+
+    await deleteRegimentController.handle(req, res)
   }
 )
 
