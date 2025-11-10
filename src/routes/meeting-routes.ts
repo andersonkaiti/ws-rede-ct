@@ -7,7 +7,9 @@ import {
   makeFindMeetingsController,
   makeUpdateMeetingController,
 } from '../factories/controllers/meeting.factory.ts'
+import { makeCreateMeetingMinuteController } from '../factories/controllers/meeting-minute.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
+import { upload } from '../middlewares/multer.ts'
 
 const router = Router()
 
@@ -64,6 +66,20 @@ router.delete(
     const { deleteMeetingController } = makeDeleteMeetingController()
 
     await deleteMeetingController.handle(req, res)
+  }
+)
+
+router.post(
+  '/:meetingId/minute',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('document'),
+  async (req: Request, res: Response) => {
+    const { createMeetingMinuteController } =
+      makeCreateMeetingMinuteController()
+
+    await createMeetingMinuteController.handle(req, res)
   }
 )
 
