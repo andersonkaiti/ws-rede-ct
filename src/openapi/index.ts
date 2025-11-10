@@ -47,6 +47,20 @@ import {
   updateManagementTeamRegistry,
 } from './management-teams.ts'
 import {
+  createMeetingMinuteRegistry,
+  deleteMeetingMinuteRegistry,
+  findMeetingMinuteByMeetingIdRegistry,
+  updateMeetingMinuteRegistry,
+} from './meeting-minutes.ts'
+import {
+  createMeetingRegistry,
+  deleteMeetingRegistry,
+  findMeetingByIdRegistry,
+  findMeetingByStatusRegistry,
+  findMeetingsRegistry,
+  updateMeetingRegistry,
+} from './meetings.ts'
+import {
   createNewsRegistry,
   findAllNewsRegistry,
   findNewsByAuthorIdRegistry,
@@ -196,6 +210,20 @@ registry.registerPath(findRegimentByIdRegistry)
 registry.registerPath(findRegimentByStatusRegistry)
 registry.registerPath(updateRegimentRegistry)
 registry.registerPath(deleteRegimentRegistry)
+
+// Meetings
+registry.registerPath(createMeetingRegistry)
+registry.registerPath(findMeetingsRegistry)
+registry.registerPath(findMeetingByIdRegistry)
+registry.registerPath(findMeetingByStatusRegistry)
+registry.registerPath(updateMeetingRegistry)
+registry.registerPath(deleteMeetingRegistry)
+
+// Meeting Minutes (as sub-resource of Meetings)
+registry.registerPath(createMeetingMinuteRegistry)
+registry.registerPath(findMeetingMinuteByMeetingIdRegistry)
+registry.registerPath(updateMeetingMinuteRegistry)
+registry.registerPath(deleteMeetingMinuteRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
