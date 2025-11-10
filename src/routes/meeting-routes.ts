@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateMeetingController,
+  makeDeleteMeetingController,
   makeFindMeetingByIdController,
   makeFindMeetingByStatusController,
   makeFindMeetingsController,
@@ -51,6 +52,18 @@ router.put(
     const { updateMeetingController } = makeUpdateMeetingController()
 
     await updateMeetingController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteMeetingController } = makeDeleteMeetingController()
+
+    await deleteMeetingController.handle(req, res)
   }
 )
 

@@ -1,4 +1,5 @@
 import { CreateMeetingController } from '../../controllers/meeting/create-meeting-controller.ts'
+import { DeleteMeetingController } from '../../controllers/meeting/delete-meeting-controller.ts'
 import { FindMeetingByIdController } from '../../controllers/meeting/find-meeting-by-id-controller.ts'
 import { FindMeetingByStatusController } from '../../controllers/meeting/find-meeting-by-status-controller.ts'
 import { FindMeetingsController } from '../../controllers/meeting/find-meetings-controller.ts'
@@ -38,6 +39,14 @@ export function makeFindMeetingByStatusController() {
 export function makeUpdateMeetingController() {
   return {
     updateMeetingController: new UpdateMeetingController(
+      makeMeetingRepository()
+    ),
+  }
+}
+
+export function makeDeleteMeetingController() {
+  return {
+    deleteMeetingController: new DeleteMeetingController(
       makeMeetingRepository()
     ),
   }

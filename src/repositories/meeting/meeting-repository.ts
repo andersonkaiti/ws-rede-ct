@@ -25,6 +25,14 @@ export class MeetingRepository implements IMeetingRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.meeting.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { title, format, status, orderBy },
