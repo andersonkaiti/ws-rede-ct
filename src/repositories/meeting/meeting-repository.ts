@@ -1,4 +1,4 @@
-import type { Prisma, PrismaClient } from '@prisma/client'
+import type { MeetingStatus, Prisma, PrismaClient } from '@prisma/client'
 import type {
   ICountMeetingDTO,
   ICreateMeetingDTO,
@@ -51,6 +51,17 @@ export class MeetingRepository implements IMeetingRepository {
     return await this.prisma.meeting.findFirst({
       where: {
         id,
+      },
+      include: {
+        minutes: true,
+      },
+    })
+  }
+
+  async findByStatus(status: MeetingStatus) {
+    return await this.prisma.meeting.findMany({
+      where: {
+        status,
       },
       include: {
         minutes: true,

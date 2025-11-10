@@ -2,6 +2,7 @@ import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateMeetingController,
   makeFindMeetingByIdController,
+  makeFindMeetingByStatusController,
   makeFindMeetingsController,
 } from '../factories/controllers/meeting.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -32,6 +33,12 @@ router.get('/:id', async (req: Request, res: Response) => {
   const { findMeetingByIdController } = makeFindMeetingByIdController()
 
   await findMeetingByIdController.handle(req, res)
+})
+
+router.get('/status/:status', async (req: Request, res: Response) => {
+  const { findMeetingByStatusController } = makeFindMeetingByStatusController()
+
+  await findMeetingByStatusController.handle(req, res)
 })
 
 export { router as meetingRoutes }
