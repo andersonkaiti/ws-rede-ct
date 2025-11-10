@@ -7,7 +7,10 @@ import {
   makeFindMeetingsController,
   makeUpdateMeetingController,
 } from '../factories/controllers/meeting.factory.ts'
-import { makeCreateMeetingMinuteController } from '../factories/controllers/meeting-minute.factory.ts'
+import {
+  makeCreateMeetingMinuteController,
+  makeFindMeetingMinuteByMeetingIdController,
+} from '../factories/controllers/meeting-minute.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -82,5 +85,12 @@ router.post(
     await createMeetingMinuteController.handle(req, res)
   }
 )
+
+router.get('/:meetingId/minute', async (req: Request, res: Response) => {
+  const { findMeetingMinuteByMeetingIdController } =
+    makeFindMeetingMinuteByMeetingIdController()
+
+  await findMeetingMinuteByMeetingIdController.handle(req, res)
+})
 
 export { router as meetingRoutes }
