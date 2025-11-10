@@ -10,6 +10,7 @@ import {
 import {
   makeCreateMeetingMinuteController,
   makeFindMeetingMinuteByMeetingIdController,
+  makeUpdateMeetingMinuteByMeetingIdController,
 } from '../factories/controllers/meeting-minute.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -92,5 +93,19 @@ router.get('/:meetingId/minute', async (req: Request, res: Response) => {
 
   await findMeetingMinuteByMeetingIdController.handle(req, res)
 })
+
+router.put(
+  '/:meetingId/minute',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('document'),
+  async (req: Request, res: Response) => {
+    const { updateMeetingMinuteByMeetingIdController } =
+      makeUpdateMeetingMinuteByMeetingIdController()
+
+    await updateMeetingMinuteByMeetingIdController.handle(req, res)
+  }
+)
 
 export { router as meetingRoutes }
