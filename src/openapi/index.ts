@@ -47,13 +47,6 @@ import {
   updateManagementTeamRegistry,
 } from './management-teams.ts'
 import {
-  createSDHCTeamMemberRegistry,
-  deleteSDHCTeamMemberRegistry,
-  findSDHCTeamMemberByIdRegistry,
-  findSDHCTeamMembersRegistry,
-  updateSDHCTeamMemberRegistry,
-} from './sdhc-team-members.ts'
-import {
   createNewsRegistry,
   findAllNewsRegistry,
   findNewsByAuthorIdRegistry,
@@ -74,6 +67,14 @@ import {
   updatePendencyRegistry,
 } from './pendencies.ts'
 import {
+  createRegimentRegistry,
+  deleteRegimentRegistry,
+  findRegimentByIdRegistry,
+  findRegimentByStatusRegistry,
+  findRegimentsRegistry,
+  updateRegimentRegistry,
+} from './regiments.ts'
+import {
   createResearcherRegistry,
   deleteResearcherRegistry,
   findResearcherByIdRegistry,
@@ -81,6 +82,13 @@ import {
   findResearchersRegistry,
   updateResearcherRegistry,
 } from './researchers.ts'
+import {
+  createSDHCTeamMemberRegistry,
+  deleteSDHCTeamMemberRegistry,
+  findSDHCTeamMemberByIdRegistry,
+  findSDHCTeamMembersRegistry,
+  updateSDHCTeamMemberRegistry,
+} from './sdhc-team-members.ts'
 import {
   deleteUserRegistry,
   findUserRegistry,
@@ -180,6 +188,14 @@ registry.registerPath(findLegitimatorCommitteeMembersRegistry)
 registry.registerPath(findLegitimatorCommitteeMemberByIdRegistry)
 registry.registerPath(updateLegitimatorCommitteeMemberRegistry)
 registry.registerPath(deleteLegitimatorCommitteeMemberRegistry)
+
+// Regiments
+registry.registerPath(createRegimentRegistry)
+registry.registerPath(findRegimentsRegistry)
+registry.registerPath(findRegimentByIdRegistry)
+registry.registerPath(findRegimentByStatusRegistry)
+registry.registerPath(updateRegimentRegistry)
+registry.registerPath(deleteRegimentRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
