@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateMeetingController } from '../factories/controllers/meeting.factory.ts'
+import {
+  makeCreateMeetingController,
+  makeFindMeetingsController,
+} from '../factories/controllers/meeting.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
 const router = Router()
@@ -17,5 +20,11 @@ router.post(
     await createMeetingController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findMeetingsController } = makeFindMeetingsController()
+
+  await findMeetingsController.handle(req, res)
+})
 
 export { router as meetingRoutes }

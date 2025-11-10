@@ -9,3 +9,24 @@ export interface ICreateMeetingDTO {
   location?: string
   status?: MeetingStatus
 }
+
+export interface IFindAllMeetingDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    format?: MeetingFormat
+    status?: MeetingStatus
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
+export interface ICountMeetingDTO {
+  filter: {
+    title?: string
+    format?: MeetingFormat
+    status?: MeetingStatus
+  }
+}
