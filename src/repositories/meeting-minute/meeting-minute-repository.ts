@@ -26,6 +26,14 @@ export class MeetingMinuteRepository implements IMeetingMinuteRepository {
     })
   }
 
+  async deleteByMeetingId(id: string) {
+    await this.prisma.meetingMinute.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async findByMeetingId(meetingId: string) {
     return await this.prisma.meetingMinute.findFirst({
       where: {

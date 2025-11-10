@@ -9,6 +9,7 @@ import {
 } from '../factories/controllers/meeting.factory.ts'
 import {
   makeCreateMeetingMinuteController,
+  makeDeleteMeetingMinuteByMeetingIdController,
   makeFindMeetingMinuteByMeetingIdController,
   makeUpdateMeetingMinuteByMeetingIdController,
 } from '../factories/controllers/meeting-minute.factory.ts'
@@ -105,6 +106,19 @@ router.put(
       makeUpdateMeetingMinuteByMeetingIdController()
 
     await updateMeetingMinuteByMeetingIdController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:meetingId/minute',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteMeetingMinuteByMeetingIdController } =
+      makeDeleteMeetingMinuteByMeetingIdController()
+
+    await deleteMeetingMinuteByMeetingIdController.handle(req, res)
   }
 )
 

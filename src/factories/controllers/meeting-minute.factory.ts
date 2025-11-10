@@ -1,4 +1,5 @@
 import { CreateMeetingMinuteController } from '../../controllers/meeting-minute/create-meeting-minute-controller.ts'
+import { DeleteMeetingMinuteByMeetingIdController } from '../../controllers/meeting-minute/delete-meeting-minute-by-meeting-id-controller.ts'
 import { FindMeetingMinuteByMeetingIdController } from '../../controllers/meeting-minute/find-meeting-minute-by-meeting-id-controller.ts'
 import { UpdateMeetingMinuteByMeetingIdController } from '../../controllers/meeting-minute/update-meeting-minute-by-meeting-id-controller.ts'
 import { makeMeetingRepository } from '../repositories/meeting.factory.ts'
@@ -26,6 +27,16 @@ export function makeUpdateMeetingMinuteByMeetingIdController() {
   return {
     updateMeetingMinuteByMeetingIdController:
       new UpdateMeetingMinuteByMeetingIdController(
+        makeMeetingMinuteRepository(),
+        makeFirebaseStorageService()
+      ),
+  }
+}
+
+export function makeDeleteMeetingMinuteByMeetingIdController() {
+  return {
+    deleteMeetingMinuteByMeetingIdController:
+      new DeleteMeetingMinuteByMeetingIdController(
         makeMeetingMinuteRepository(),
         makeFirebaseStorageService()
       ),
