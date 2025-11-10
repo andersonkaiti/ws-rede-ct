@@ -47,12 +47,19 @@ import {
   updateManagementTeamRegistry,
 } from './management-teams.ts'
 import {
-  createSDHCTeamMemberRegistry,
-  deleteSDHCTeamMemberRegistry,
-  findSDHCTeamMemberByIdRegistry,
-  findSDHCTeamMembersRegistry,
-  updateSDHCTeamMemberRegistry,
-} from './sdhc-team-members.ts'
+  createMeetingMinuteRegistry,
+  deleteMeetingMinuteRegistry,
+  findMeetingMinuteByMeetingIdRegistry,
+  updateMeetingMinuteRegistry,
+} from './meeting-minutes.ts'
+import {
+  createMeetingRegistry,
+  deleteMeetingRegistry,
+  findMeetingByIdRegistry,
+  findMeetingByStatusRegistry,
+  findMeetingsRegistry,
+  updateMeetingRegistry,
+} from './meetings.ts'
 import {
   createNewsRegistry,
   findAllNewsRegistry,
@@ -74,6 +81,14 @@ import {
   updatePendencyRegistry,
 } from './pendencies.ts'
 import {
+  createRegimentRegistry,
+  deleteRegimentRegistry,
+  findRegimentByIdRegistry,
+  findRegimentByStatusRegistry,
+  findRegimentsRegistry,
+  updateRegimentRegistry,
+} from './regiments.ts'
+import {
   createResearcherRegistry,
   deleteResearcherRegistry,
   findResearcherByIdRegistry,
@@ -81,6 +96,13 @@ import {
   findResearchersRegistry,
   updateResearcherRegistry,
 } from './researchers.ts'
+import {
+  createSDHCTeamMemberRegistry,
+  deleteSDHCTeamMemberRegistry,
+  findSDHCTeamMemberByIdRegistry,
+  findSDHCTeamMembersRegistry,
+  updateSDHCTeamMemberRegistry,
+} from './sdhc-team-members.ts'
 import {
   deleteUserRegistry,
   findUserRegistry,
@@ -180,6 +202,28 @@ registry.registerPath(findLegitimatorCommitteeMembersRegistry)
 registry.registerPath(findLegitimatorCommitteeMemberByIdRegistry)
 registry.registerPath(updateLegitimatorCommitteeMemberRegistry)
 registry.registerPath(deleteLegitimatorCommitteeMemberRegistry)
+
+// Regiments
+registry.registerPath(createRegimentRegistry)
+registry.registerPath(findRegimentsRegistry)
+registry.registerPath(findRegimentByIdRegistry)
+registry.registerPath(findRegimentByStatusRegistry)
+registry.registerPath(updateRegimentRegistry)
+registry.registerPath(deleteRegimentRegistry)
+
+// Meetings
+registry.registerPath(createMeetingRegistry)
+registry.registerPath(findMeetingsRegistry)
+registry.registerPath(findMeetingByIdRegistry)
+registry.registerPath(findMeetingByStatusRegistry)
+registry.registerPath(updateMeetingRegistry)
+registry.registerPath(deleteMeetingRegistry)
+
+// Meeting Minutes (as sub-resource of Meetings)
+registry.registerPath(createMeetingMinuteRegistry)
+registry.registerPath(findMeetingMinuteByMeetingIdRegistry)
+registry.registerPath(updateMeetingMinuteRegistry)
+registry.registerPath(deleteMeetingMinuteRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 

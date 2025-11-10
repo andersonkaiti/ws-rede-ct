@@ -6,6 +6,7 @@ export const File = {
   CERTIFICATION: 'documents/certifications',
   PENDENCY: 'documents/pendencies',
   REGIMENT: 'documents/regiments',
+  MEETING_MINUTE: 'documents/meeting-minutes',
 } as const
 
 export type FileType = (typeof File)[keyof typeof File]

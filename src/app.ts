@@ -15,6 +15,7 @@ import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
 import { legitimatorCommitteeMemberRoutes } from './routes/legitimator-committee-member-routes.ts'
 import { managementTeamRoutes } from './routes/management-team-routes.ts'
+import { meetingRoutes } from './routes/meeting-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
@@ -57,6 +58,7 @@ app.use('/management-team', managementTeamRoutes)
 app.use('/sdhc-team-member', sdhcTeamMemberRoutes)
 app.use('/legitimator-committee-member', legitimatorCommitteeMemberRoutes)
 app.use('/regiment', regimentRoutes)
+app.use('/meeting', meetingRoutes)
 
 app.use(
   (
