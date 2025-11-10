@@ -4,6 +4,7 @@ import {
   makeFindMeetingByIdController,
   makeFindMeetingByStatusController,
   makeFindMeetingsController,
+  makeUpdateMeetingController,
 } from '../factories/controllers/meeting.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
@@ -40,5 +41,17 @@ router.get('/status/:status', async (req: Request, res: Response) => {
 
   await findMeetingByStatusController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateMeetingController } = makeUpdateMeetingController()
+
+    await updateMeetingController.handle(req, res)
+  }
+)
 
 export { router as meetingRoutes }

@@ -3,6 +3,7 @@ import type {
   ICountMeetingDTO,
   ICreateMeetingDTO,
   IFindAllMeetingDTO,
+  IUpdateMeetingDTO,
 } from '../../dto/meeting.d.ts'
 import type { IMeetingRepository } from './imeeting-repository.d.ts'
 
@@ -11,6 +12,15 @@ export class MeetingRepository implements IMeetingRepository {
 
   async create(meeting: ICreateMeetingDTO) {
     return await this.prisma.meeting.create({
+      data: meeting,
+    })
+  }
+
+  async update(meeting: IUpdateMeetingDTO) {
+    await this.prisma.meeting.update({
+      where: {
+        id: meeting.id,
+      },
       data: meeting,
     })
   }

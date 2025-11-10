@@ -3,6 +3,7 @@ import type {
   ICountMeetingDTO,
   ICreateMeetingDTO,
   IFindAllMeetingDTO,
+  IUpdateMeetingDTO,
 } from '../../dto/meeting.d.ts'
 
 export interface MeetingWithMinutes extends Meeting {
@@ -11,6 +12,7 @@ export interface MeetingWithMinutes extends Meeting {
 
 export interface IMeetingRepository {
   create(meeting: ICreateMeetingDTO): Promise<Meeting>
+  update(meeting: IUpdateMeetingDTO): Promise<void>
   find(data: IFindAllMeetingDTO): Promise<MeetingWithMinutes[] | null>
   findById(id: string): Promise<MeetingWithMinutes | null>
   findByStatus(status: MeetingStatus): Promise<MeetingWithMinutes[] | null>

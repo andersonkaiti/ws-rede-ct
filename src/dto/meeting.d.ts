@@ -1,4 +1,4 @@
-import type { MeetingFormat, MeetingStatus } from '@prisma/client'
+import type { Meeting, MeetingFormat, MeetingStatus } from '@prisma/client'
 
 export interface ICreateMeetingDTO {
   title: string
@@ -23,6 +23,11 @@ export interface IFindAllMeetingDTO {
   }
 }
 
+export interface IUpdateMeetingDTO
+  extends Partial<Omit<Meeting, 'createdAt' | 'updatedAt' | 'minutes'>> {
+  id: string
+}
+
 export interface ICountMeetingDTO {
   filter: {
     title?: string
@@ -30,3 +35,4 @@ export interface ICountMeetingDTO {
     status?: MeetingStatus
   }
 }
+
