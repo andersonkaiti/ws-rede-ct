@@ -47,6 +47,17 @@ export class MeetingRepository implements IMeetingRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.meeting.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        minutes: true,
+      },
+    })
+  }
+
   async count({ filter: { title, format, status } }: ICountMeetingDTO) {
     const where: Prisma.MeetingWhereInput = {}
 

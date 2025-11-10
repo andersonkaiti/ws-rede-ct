@@ -12,5 +12,6 @@ export interface MeetingWithMinutes extends Meeting {
 export interface IMeetingRepository {
   create(meeting: ICreateMeetingDTO): Promise<Meeting>
   find(data: IFindAllMeetingDTO): Promise<MeetingWithMinutes[] | null>
+  findById(id: string): Promise<MeetingWithMinutes | null>
   count(data: ICountMeetingDTO): Promise<number>
 }
