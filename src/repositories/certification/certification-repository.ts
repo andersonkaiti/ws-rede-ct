@@ -40,22 +40,32 @@ export class CertificationRepository implements ICertificationRepository {
   }: IFindCertificationsDTO): Promise<CertificationWithUser[]> {
     const where: Prisma.CertificationWhereInput = {}
 
+    const or: Prisma.CertificationWhereInput[] = []
+
     if (userId) {
       where.userId = userId
     }
 
     if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (description) {
-      where.description = {
-        contains: description,
-        mode: 'insensitive',
-      }
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.certification.findMany({
@@ -67,7 +77,9 @@ export class CertificationRepository implements ICertificationRepository {
           },
         },
       },
-      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
+      orderBy: {
+        updatedAt: orderBy,
+      },
       skip: offset,
       take: limit,
     })
@@ -90,18 +102,28 @@ export class CertificationRepository implements ICertificationRepository {
       userId,
     }
 
+    const or: Prisma.CertificationWhereInput[] = []
+
     if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (description) {
-      where.description = {
-        contains: description,
-        mode: 'insensitive',
-      }
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.certification.findMany({
@@ -141,14 +163,20 @@ export class CertificationRepository implements ICertificationRepository {
   }: ICountCertificationsDTO): Promise<number> {
     const where: Prisma.CertificationWhereInput = {}
 
-    if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
+    const or: Prisma.CertificationWhereInput[] = []
+
+    if (userId) {
+      where.userId = userId
     }
 
-    const or: Prisma.CertificationWhereInput[] = []
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
 
     if (description) {
       or.push({
@@ -156,12 +184,6 @@ export class CertificationRepository implements ICertificationRepository {
           contains: description,
           mode: 'insensitive',
         },
-      })
-    }
-
-    if (userId) {
-      or.push({
-        userId,
       })
     }
 

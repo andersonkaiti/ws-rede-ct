@@ -32,41 +32,55 @@ export class PartnerRepository implements IPartnerRepository {
   }
 
   async find({
-    pagination: { offset, limit },
+    pagination,
     filter: { name, description, category, isActive, orderBy },
   }: IFindAllPartnerDTO) {
     const where: Prisma.PartnerWhereInput = {}
 
-    if (name) {
-      where.name = {
-        contains: name,
-        mode: 'insensitive',
-      }
-    }
-
-    if (description) {
-      where.description = {
-        contains: description,
-        mode: 'insensitive',
-      }
-    }
-
-    if (category) {
-      where.category = {
-        contains: category,
-        mode: 'insensitive',
-      }
-    }
+    const or: Prisma.PartnerWhereInput[] = []
 
     if (isActive !== undefined) {
       where.isActive = isActive
     }
 
+    if (name) {
+      or.push({
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (category) {
+      or.push({
+        category: {
+          contains: category,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
     return await this.prisma.partner.findMany({
       where,
       orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
-      skip: offset,
-      take: limit,
+      ...(pagination && {
+        skip: pagination.offset,
+        take: pagination.limit,
+      }),
     })
   }
 
@@ -83,29 +97,41 @@ export class PartnerRepository implements IPartnerRepository {
   }: ICountPartnerDTO) {
     const where: Prisma.PartnerWhereInput = {}
 
-    if (name) {
-      where.name = {
-        contains: name,
-        mode: 'insensitive',
-      }
-    }
-
-    if (description) {
-      where.description = {
-        contains: description,
-        mode: 'insensitive',
-      }
-    }
-
-    if (category) {
-      where.category = {
-        contains: category,
-        mode: 'insensitive',
-      }
-    }
+    const or: Prisma.PartnerWhereInput[] = []
 
     if (isActive !== undefined) {
       where.isActive = isActive
+    }
+
+    if (name) {
+      or.push({
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (category) {
+      or.push({
+        category: {
+          contains: category,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.partner.count({

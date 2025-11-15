@@ -37,15 +37,23 @@ export class RegimentRepository implements IRegimentRepository {
   }: IFindAllRegimentDTO) {
     const where: Prisma.RegimentWhereInput = {}
 
-    if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
-    }
+    const or: Prisma.RegimentWhereInput[] = []
 
     if (status) {
       where.status = status
+    }
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.regiment.findMany({
@@ -75,15 +83,23 @@ export class RegimentRepository implements IRegimentRepository {
   async count({ filter: { title, status } }: ICountRegimentDTO) {
     const where: Prisma.RegimentWhereInput = {}
 
-    if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
-    }
+    const or: Prisma.RegimentWhereInput[] = []
 
     if (status) {
       where.status = status
+    }
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.regiment.count({

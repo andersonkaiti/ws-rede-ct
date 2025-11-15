@@ -32,7 +32,7 @@ export class ResearcherRepository implements IResearcherRepository {
   }
 
   async find({
-    pagination: { offset, limit },
+    pagination,
     filter: {
       biography,
       degrees,
@@ -47,23 +47,23 @@ export class ResearcherRepository implements IResearcherRepository {
       userName,
     },
   }: IFindAllResearchersDTO) {
-    const where: Prisma.ResearcherWhereInput = {
-      OR: userName
-        ? [
-            {
-              user: {
-                name: {
-                  contains: userName,
-                  mode: 'insensitive',
-                },
-              },
-            },
-          ]
-        : undefined,
+    const where: Prisma.ResearcherWhereInput = {}
+
+    const or: Prisma.ResearcherWhereInput[] = []
+
+    if (userName) {
+      or.push({
+        user: {
+          name: {
+            contains: userName,
+            mode: 'insensitive',
+          },
+        },
+      })
     }
 
     if (registrationNumber) {
-      where.OR?.push({
+      or.push({
         registrationNumber: {
           contains: registrationNumber,
           mode: 'insensitive',
@@ -72,17 +72,52 @@ export class ResearcherRepository implements IResearcherRepository {
     }
 
     if (mainEtps) {
-      where.mainEtps = {
-        contains: mainEtps,
-        mode: 'insensitive',
-      }
+      or.push({
+        mainEtps: {
+          contains: mainEtps,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (formations) {
-      where.formations = {
-        contains: formations,
-        mode: 'insensitive',
-      }
+      or.push({
+        formations: {
+          contains: formations,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (occupations) {
+      or.push({
+        occupations: {
+          contains: occupations,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (institutions) {
+      or.push({
+        institutions: {
+          contains: institutions,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (biography) {
+      or.push({
+        biography: {
+          contains: biography,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     if (degrees && degrees.length > 0) {
@@ -91,29 +126,8 @@ export class ResearcherRepository implements IResearcherRepository {
       }
     }
 
-    if (occupations) {
-      where.occupations = {
-        contains: occupations,
-        mode: 'insensitive',
-      }
-    }
-
     if (seniority) {
       where.seniority = seniority
-    }
-
-    if (institutions) {
-      where.institutions = {
-        contains: institutions,
-        mode: 'insensitive',
-      }
-    }
-
-    if (biography) {
-      where.biography = {
-        contains: biography,
-        mode: 'insensitive',
-      }
     }
 
     if (userId) {
@@ -134,9 +148,13 @@ export class ResearcherRepository implements IResearcherRepository {
           },
         },
       },
-      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
-      skip: offset,
-      take: limit,
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      ...(pagination && {
+        skip: pagination.offset,
+        take: pagination.limit,
+      }),
     })
   }
 
@@ -199,23 +217,23 @@ export class ResearcherRepository implements IResearcherRepository {
       userName,
     },
   }: ICountResearchersDTO) {
-    const researcherWhere: Prisma.ResearcherWhereInput = {
-      OR: userName
-        ? [
-            {
-              user: {
-                name: {
-                  contains: userName,
-                  mode: 'insensitive',
-                },
-              },
-            },
-          ]
-        : undefined,
+    const where: Prisma.ResearcherWhereInput = {}
+
+    const or: Prisma.ResearcherWhereInput[] = []
+
+    if (userName) {
+      or.push({
+        user: {
+          name: {
+            contains: userName,
+            mode: 'insensitive',
+          },
+        },
+      })
     }
 
     if (registrationNumber) {
-      researcherWhere.OR?.push({
+      or.push({
         registrationNumber: {
           contains: registrationNumber,
           mode: 'insensitive',
@@ -223,59 +241,63 @@ export class ResearcherRepository implements IResearcherRepository {
       })
     }
 
+    if (or.length > 0) {
+      where.OR = or
+    }
+
     if (mainEtps) {
-      researcherWhere.mainEtps = {
+      where.mainEtps = {
         contains: mainEtps,
         mode: 'insensitive',
       }
     }
 
     if (formations) {
-      researcherWhere.formations = {
+      where.formations = {
         contains: formations,
         mode: 'insensitive',
       }
     }
 
     if (degrees && degrees.length > 0) {
-      researcherWhere.degrees = {
+      where.degrees = {
         hasSome: degrees,
       }
     }
 
     if (occupations) {
-      researcherWhere.occupations = {
+      where.occupations = {
         contains: occupations,
         mode: 'insensitive',
       }
     }
 
     if (seniority) {
-      researcherWhere.seniority = seniority
+      where.seniority = seniority
     }
 
     if (institutions) {
-      researcherWhere.institutions = {
+      where.institutions = {
         contains: institutions,
         mode: 'insensitive',
       }
     }
 
     if (biography) {
-      researcherWhere.biography = {
+      where.biography = {
         contains: biography,
         mode: 'insensitive',
       }
     }
 
     if (userId) {
-      researcherWhere.userId = {
+      where.userId = {
         equals: userId,
       }
     }
 
     return await this.prisma.researcher.count({
-      where: researcherWhere,
+      where,
     })
   }
 }

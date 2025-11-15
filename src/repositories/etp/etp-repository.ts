@@ -13,7 +13,7 @@ export class ETPRepository implements IETPRepository {
   async create(etp: ICreateETPDTO) {
     const { leaderId, deputyLeaderId, secretaryId, memberIds, ...etpData } = etp
 
-    return await this.prisma.$transaction(async (tx) => {
+    await this.prisma.$transaction(async (tx) => {
       const createdETP = await tx.eTP.create({
         data: etpData,
       })
@@ -51,16 +51,14 @@ export class ETPRepository implements IETPRepository {
           },
         },
       })
-
-      return createdETP
     })
   }
 
   async update(etp: IUpdateETPDTO) {
     const { leaderId, deputyLeaderId, secretaryId, memberIds, ...etpData } = etp
 
-    return await this.prisma.$transaction(async (tx) => {
-      const updatedETP = await tx.eTP.update({
+    await this.prisma.$transaction(async (tx) => {
+      await tx.eTP.update({
         where: {
           id: etp.id,
         },
@@ -71,8 +69,6 @@ export class ETPRepository implements IETPRepository {
       await this.updateDeputyLeader(tx, etp.id, deputyLeaderId)
       await this.updateSecretary(tx, etp.id, secretaryId)
       await this.updateMembers(tx, etp.id, memberIds)
-
-      return updatedETP
     })
   }
 
@@ -186,32 +182,46 @@ export class ETPRepository implements IETPRepository {
   }: IFindAllETPsDTO) {
     const where: Prisma.ETPWhereInput = {}
 
+    const or: Prisma.ETPWhereInput[] = []
+
     if (code) {
-      where.code = {
-        contains: code,
-        mode: 'insensitive',
-      }
+      or.push({
+        code: {
+          contains: code,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (description) {
-      where.description = {
-        contains: description,
-        mode: 'insensitive',
-      }
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (notes) {
-      where.notes = {
-        contains: notes,
-        mode: 'insensitive',
-      }
+      or.push({
+        notes: {
+          contains: notes,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.eTP.findMany({
@@ -266,13 +276,9 @@ export class ETPRepository implements IETPRepository {
           },
         },
       },
-      orderBy: orderBy
-        ? {
-            updatedAt: orderBy,
-          }
-        : {
-            updatedAt: 'desc',
-          },
+      orderBy: {
+        updatedAt: orderBy,
+      },
       skip: offset,
       take: limit,
     })
@@ -397,32 +403,46 @@ export class ETPRepository implements IETPRepository {
   async count({ filter: { code, title, description, notes } }: ICountETPsDTO) {
     const etpWhere: Prisma.ETPWhereInput = {}
 
+    const or: Prisma.ETPWhereInput[] = []
+
     if (code) {
-      etpWhere.code = {
-        contains: code,
-        mode: 'insensitive',
-      }
+      or.push({
+        code: {
+          contains: code,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (title) {
-      etpWhere.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (description) {
-      etpWhere.description = {
-        contains: description,
-        mode: 'insensitive',
-      }
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (notes) {
-      etpWhere.notes = {
-        contains: notes,
-        mode: 'insensitive',
-      }
+      or.push({
+        notes: {
+          contains: notes,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      etpWhere.OR = or
     }
 
     return await this.prisma.eTP.count({
