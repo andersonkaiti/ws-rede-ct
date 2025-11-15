@@ -21,6 +21,11 @@ export interface IFindAllManagementTeamsDTO {
 export interface IUpdateManagementTeamDTO
   extends Partial<Omit<ManagementTeam, 'createdAt' | 'updatedAt'>> {
   id: string
+  members?: {
+    userId: string
+    role: string
+    order?: number
+  }[]
 }
 
 export interface ICountManagementTeamsDTO {
