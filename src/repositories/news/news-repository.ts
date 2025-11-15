@@ -11,16 +11,9 @@ import type { INewsRepository } from './inews-repository.d.ts'
 export class NewsRepository implements INewsRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create({ authorId, ...news }: INewsDTO) {
-    return await this.prisma.news.create({
-      data: {
-        ...news,
-        author: {
-          connect: {
-            id: authorId,
-          },
-        },
-      },
+  async create(news: INewsDTO) {
+    await this.prisma.news.create({
+      data: news,
     })
   }
 
@@ -138,7 +131,7 @@ export class NewsRepository implements INewsRepository {
   }
 
   async update(news: IUpdateNewsDTO) {
-    return await this.prisma.news.update({
+    await this.prisma.news.update({
       where: {
         id: news.id,
       },
