@@ -39,12 +39,7 @@ export class MeetingRepository implements IMeetingRepository {
   }: IFindAllMeetingDTO) {
     const where: Prisma.MeetingWhereInput = {}
 
-    if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
-    }
+    const or: Prisma.MeetingWhereInput[] = []
 
     if (format) {
       where.format = format
@@ -52,6 +47,19 @@ export class MeetingRepository implements IMeetingRepository {
 
     if (status) {
       where.status = status
+    }
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.meeting.findMany({
@@ -90,12 +98,7 @@ export class MeetingRepository implements IMeetingRepository {
   async count({ filter: { title, format, status } }: ICountMeetingDTO) {
     const where: Prisma.MeetingWhereInput = {}
 
-    if (title) {
-      where.title = {
-        contains: title,
-        mode: 'insensitive',
-      }
-    }
+    const or: Prisma.MeetingWhereInput[] = []
 
     if (format) {
       where.format = format
@@ -103,6 +106,19 @@ export class MeetingRepository implements IMeetingRepository {
 
     if (status) {
       where.status = status
+    }
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.meeting.count({

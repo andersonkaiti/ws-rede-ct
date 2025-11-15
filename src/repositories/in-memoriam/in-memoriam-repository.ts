@@ -37,27 +37,39 @@ export class InMemoriamRepository implements IInMemoriamRepository {
   }: IFindAllInMemoriamDTO) {
     const where: Prisma.InMemoriamWhereInput = {}
 
-    if (name) {
-      where.name = {
-        contains: name,
-        mode: 'insensitive',
-      }
-    }
-
-    if (biography) {
-      where.biography = {
-        contains: biography,
-        mode: 'insensitive',
-      }
-    }
+    const or: Prisma.InMemoriamWhereInput[] = []
 
     if (role) {
       where.role = role
     }
 
+    if (name) {
+      or.push({
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (biography) {
+      or.push({
+        biography: {
+          contains: biography,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
     return await this.prisma.inMemoriam.findMany({
       where,
-      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
+      orderBy: {
+        updatedAt: orderBy,
+      },
       skip: offset,
       take: limit,
     })
@@ -82,22 +94,32 @@ export class InMemoriamRepository implements IInMemoriamRepository {
   async count({ filter: { name, biography, role } }: ICountInMemoriamDTO) {
     const where: Prisma.InMemoriamWhereInput = {}
 
-    if (name) {
-      where.name = {
-        contains: name,
-        mode: 'insensitive',
-      }
-    }
-
-    if (biography) {
-      where.biography = {
-        contains: biography,
-        mode: 'insensitive',
-      }
-    }
+    const or: Prisma.InMemoriamWhereInput[] = []
 
     if (role) {
       where.role = role
+    }
+
+    if (name) {
+      or.push({
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (biography) {
+      or.push({
+        biography: {
+          contains: biography,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.inMemoriam.count({

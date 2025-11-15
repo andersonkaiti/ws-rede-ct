@@ -23,7 +23,7 @@ export const findResearchersSchema = z.object({
   occupations: z.string().optional(),
   institutions: z.string().optional(),
   biography: z.string().optional(),
-  orderBy: z.enum(['asc', 'desc']).optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindResearchersController {

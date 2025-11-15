@@ -18,7 +18,7 @@ export const findInMemoriamSchema = z.object({
   name: z.string().optional(),
   biography: z.string().optional(),
   role: z.enum(InMemoriamRole).optional(),
-  orderBy: z.enum(['asc', 'desc']).optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindInMemoriamController {

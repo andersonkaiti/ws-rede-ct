@@ -7,17 +7,17 @@ import type {
   IUpdateNewsDTO,
 } from '../../dto/news.ts'
 
-type ReturnedNews = Omit<News, 'authorId'>
+interface IReturnedNews extends Omit<News, 'authorId'> {}
 
-type ReturnedNewsWithAuthor = ReturnedNews & {
+interface IReturnedNewsWithAuthor extends IReturnedNews {
   author: User
 }
 
 export interface INewsRepository {
   create(news: INewsDTO): Promise<void>
-  find(data: IFindAllDTO): Promise<ReturnedNewsWithAuthor[] | null>
-  findById(id: string): Promise<ReturnedNewsWithAuthor | null>
-  findByAuthorId(data: IFindNewsByAuthorIdDTO): Promise<ReturnedNews[] | null>
+  find(data: IFindAllDTO): Promise<IReturnedNewsWithAuthor[] | null>
+  findById(id: string): Promise<IReturnedNewsWithAuthor | null>
+  findByAuthorId(data: IFindNewsByAuthorIdDTO): Promise<IReturnedNews[] | null>
   update(news: IUpdateNewsDTO): Promise<void>
   delete(id: string): Promise<void>
   count(data: ICountNewsDTO): Promise<number>

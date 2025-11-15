@@ -78,18 +78,28 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
   }: IFindAllManagementTeamsDTO) {
     const where: Prisma.ManagementTeamWhereInput = {}
 
+    const or: Prisma.ManagementTeamWhereInput[] = []
+
     if (name) {
-      where.name = {
-        contains: name,
-        mode: 'insensitive',
-      }
+      or.push({
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (description) {
-      where.description = {
-        contains: description,
-        mode: 'insensitive',
-      }
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.managementTeam.findMany({
@@ -108,13 +118,9 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
           },
         },
       },
-      orderBy: orderBy
-        ? {
-            updatedAt: orderBy,
-          }
-        : {
-            updatedAt: 'desc',
-          },
+      orderBy: {
+        updatedAt: orderBy,
+      },
     })
   }
 
@@ -165,18 +171,28 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
   async count({ filter: { name, description } }: ICountManagementTeamsDTO) {
     const where: Prisma.ManagementTeamWhereInput = {}
 
+    const or: Prisma.ManagementTeamWhereInput[] = []
+
     if (name) {
-      where.name = {
-        contains: name,
-        mode: 'insensitive',
-      }
+      or.push({
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      })
     }
 
     if (description) {
-      where.description = {
-        contains: description,
-        mode: 'insensitive',
-      }
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
     }
 
     return await this.prisma.managementTeam.count({

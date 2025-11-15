@@ -13,7 +13,7 @@ export interface ICreateResearcherDTO {
 }
 
 export interface IFindAllResearchersDTO {
-  pagination: {
+  pagination?: {
     offset: number
     limit: number
   }
