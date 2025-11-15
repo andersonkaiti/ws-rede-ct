@@ -25,8 +25,7 @@ export class FindNewsController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { page, limit, authorId, content, orderBy, title } =
-        findNewsSchema.parse(req.query)
+      const { page, limit, ...filter } = findNewsSchema.parse(req.query)
 
       const offset = limit * page - limit
 
@@ -36,20 +35,11 @@ export class FindNewsController {
             offset,
             limit,
           },
-          filter: {
-            authorId,
-            content,
-            title,
-            orderBy,
-          },
+          filter,
         }),
 
         this.newsRepository.count({
-          filter: {
-            title,
-            content,
-            authorId,
-          },
+          filter,
         }),
       ])
 

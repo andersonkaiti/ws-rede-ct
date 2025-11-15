@@ -10,7 +10,7 @@ extendZodWithOpenApi(z)
 export const findManagementTeamsSchema = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
-  orderBy: z.enum(['asc', 'desc']).optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindManagementTeamsController {
