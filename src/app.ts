@@ -13,6 +13,7 @@ import { certificationRoutes } from './routes/certification-routes.ts'
 import { etpRoutes } from './routes/etp-routes.ts'
 import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
+import { internationalScientificCongressRoutes } from './routes/international-scientific-congress-routes.ts'
 import { legitimatorCommitteeMemberRoutes } from './routes/legitimator-committee-member-routes.ts'
 import { managementTeamRoutes } from './routes/management-team-routes.ts'
 import { meetingRoutes } from './routes/meeting-routes.ts'
@@ -59,6 +60,10 @@ app.use('/sdhc-team-member', sdhcTeamMemberRoutes)
 app.use('/legitimator-committee-member', legitimatorCommitteeMemberRoutes)
 app.use('/regiment', regimentRoutes)
 app.use('/meeting', meetingRoutes)
+app.use(
+  '/international-scientific-congress',
+  internationalScientificCongressRoutes
+)
 
 app.use(
   (
