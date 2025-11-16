@@ -3,6 +3,7 @@ import type {
   ICountInternationalScientificCongressDTO,
   ICreateInternationalScientificCongressDTO,
   IFindAllInternationalScientificCongressDTO,
+  IUpdateInternationalScientificCongressDTO,
 } from '../../dto/international-scientific-congress/international-scientific-congress.js'
 import type { IInternationalScientificCongressRepository } from './iinternational-scientific-congress-repository.d.ts'
 
@@ -13,6 +14,15 @@ export class InternationalScientificCongressRepository
 
   async create(congress: ICreateInternationalScientificCongressDTO) {
     await this.prisma.internationalScientificCongress.create({
+      data: congress,
+    })
+  }
+
+  async update(congress: IUpdateInternationalScientificCongressDTO) {
+    await this.prisma.internationalScientificCongress.update({
+      where: {
+        id: congress.id,
+      },
       data: congress,
     })
   }

@@ -2,6 +2,7 @@ import { CreateInternationalScientificCongressController } from '../../../contro
 import { FindInternationalScientificCongressByEditionController } from '../../../controllers/international-scientific-congress/find-international-scientific-congress-by-edition-controller.ts'
 import { FindInternationalScientificCongressByIdController } from '../../../controllers/international-scientific-congress/find-international-scientific-congress-by-id-controller.ts'
 import { FindInternationalScientificCongressesController } from '../../../controllers/international-scientific-congress/find-international-scientific-congresses-controller.ts'
+import { UpdateInternationalScientificCongressController } from '../../../controllers/international-scientific-congress/update-international-scientific-congress-controller.ts'
 import { makeInternationalScientificCongressRepository } from '../../repositories/international-scientific-congress/international-scientific-congress.factory.ts'
 
 export function makeCreateInternationalScientificCongressController() {
@@ -35,6 +36,15 @@ export function makeFindInternationalScientificCongressByEditionController() {
   return {
     findInternationalScientificCongressByEditionController:
       new FindInternationalScientificCongressByEditionController(
+        makeInternationalScientificCongressRepository()
+      ),
+  }
+}
+
+export function makeUpdateInternationalScientificCongressController() {
+  return {
+    updateInternationalScientificCongressController:
+      new UpdateInternationalScientificCongressController(
         makeInternationalScientificCongressRepository()
       ),
   }

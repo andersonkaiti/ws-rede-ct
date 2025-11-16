@@ -1,3 +1,5 @@
+import type { InternationalScientificCongress } from '@prisma/client'
+
 export interface ICreateInternationalScientificCongressDTO {
   title: string
   edition: number
@@ -23,6 +25,16 @@ export interface IFindAllInternationalScientificCongressDTO {
     edition?: number
     orderBy?: 'asc' | 'desc'
   }
+}
+
+export interface IUpdateInternationalScientificCongressDTO
+  extends Partial<
+    Omit<
+      InternationalScientificCongress,
+      'createdAt' | 'updatedAt' | 'partners' | 'galleries'
+    >
+  > {
+  id: string
 }
 
 export interface ICountInternationalScientificCongressDTO {

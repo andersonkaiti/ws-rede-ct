@@ -7,6 +7,7 @@ import type {
   ICountInternationalScientificCongressDTO,
   ICreateInternationalScientificCongressDTO,
   IFindAllInternationalScientificCongressDTO,
+  IUpdateInternationalScientificCongressDTO,
 } from '../../dto/international-scientific-congress/international-scientific-congress.js'
 
 export interface InternationalScientificCongressWithRelations
@@ -17,6 +18,7 @@ export interface InternationalScientificCongressWithRelations
 
 export interface IInternationalScientificCongressRepository {
   create(congress: ICreateInternationalScientificCongressDTO): Promise<void>
+  update(congress: IUpdateInternationalScientificCongressDTO): Promise<void>
   find(
     data: IFindAllInternationalScientificCongressDTO
   ): Promise<InternationalScientificCongressWithRelations[] | null>

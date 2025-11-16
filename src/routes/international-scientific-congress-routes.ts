@@ -4,6 +4,7 @@ import {
   makeFindInternationalScientificCongressByEditionController,
   makeFindInternationalScientificCongressByIdController,
   makeFindInternationalScientificCongressesController,
+  makeUpdateInternationalScientificCongressController,
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
@@ -44,5 +45,18 @@ router.get('/edition/:edition', async (req: Request, res: Response) => {
 
   await findInternationalScientificCongressByEditionController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateInternationalScientificCongressController } =
+      makeUpdateInternationalScientificCongressController()
+
+    await updateInternationalScientificCongressController.handle(req, res)
+  }
+)
 
 export { router as internationalScientificCongressRoutes }
