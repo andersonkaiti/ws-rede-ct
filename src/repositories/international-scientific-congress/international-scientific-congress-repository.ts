@@ -27,6 +27,14 @@ export class InternationalScientificCongressRepository
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.internationalScientificCongress.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { title, edition, orderBy },

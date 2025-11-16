@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateInternationalScientificCongressController,
+  makeDeleteInternationalScientificCongressController,
   makeFindInternationalScientificCongressByEditionController,
   makeFindInternationalScientificCongressByIdController,
   makeFindInternationalScientificCongressesController,
@@ -56,6 +57,19 @@ router.put(
       makeUpdateInternationalScientificCongressController()
 
     await updateInternationalScientificCongressController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteInternationalScientificCongressController } =
+      makeDeleteInternationalScientificCongressController()
+
+    await deleteInternationalScientificCongressController.handle(req, res)
   }
 )
 

@@ -19,6 +19,7 @@ export interface InternationalScientificCongressWithRelations
 export interface IInternationalScientificCongressRepository {
   create(congress: ICreateInternationalScientificCongressDTO): Promise<void>
   update(congress: IUpdateInternationalScientificCongressDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(
     data: IFindAllInternationalScientificCongressDTO
   ): Promise<InternationalScientificCongressWithRelations[] | null>

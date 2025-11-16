@@ -1,4 +1,5 @@
 import { CreateInternationalScientificCongressController } from '../../../controllers/international-scientific-congress/create-international-scientific-congress-controller.ts'
+import { DeleteInternationalScientificCongressController } from '../../../controllers/international-scientific-congress/delete-international-scientific-congress-controller.ts'
 import { FindInternationalScientificCongressByEditionController } from '../../../controllers/international-scientific-congress/find-international-scientific-congress-by-edition-controller.ts'
 import { FindInternationalScientificCongressByIdController } from '../../../controllers/international-scientific-congress/find-international-scientific-congress-by-id-controller.ts'
 import { FindInternationalScientificCongressesController } from '../../../controllers/international-scientific-congress/find-international-scientific-congresses-controller.ts'
@@ -45,6 +46,15 @@ export function makeUpdateInternationalScientificCongressController() {
   return {
     updateInternationalScientificCongressController:
       new UpdateInternationalScientificCongressController(
+        makeInternationalScientificCongressRepository()
+      ),
+  }
+}
+
+export function makeDeleteInternationalScientificCongressController() {
+  return {
+    deleteInternationalScientificCongressController:
+      new DeleteInternationalScientificCongressController(
         makeInternationalScientificCongressRepository()
       ),
   }
