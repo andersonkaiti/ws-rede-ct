@@ -66,6 +66,18 @@ export class InternationalScientificCongressRepository
     })
   }
 
+  async findByEdition(edition: number) {
+    return await this.prisma.internationalScientificCongress.findMany({
+      where: {
+        edition,
+      },
+      include: {
+        partners: true,
+        galleries: true,
+      },
+    })
+  }
+
   async count({
     filter: { title, edition },
   }: ICountInternationalScientificCongressDTO) {

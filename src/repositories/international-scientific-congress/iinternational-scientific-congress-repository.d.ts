@@ -23,5 +23,8 @@ export interface IInternationalScientificCongressRepository {
   findById(
     id: string
   ): Promise<InternationalScientificCongressWithRelations | null>
+  findByEdition(
+    edition: number
+  ): Promise<InternationalScientificCongressWithRelations[] | null>
   count(data: ICountInternationalScientificCongressDTO): Promise<number>
 }
