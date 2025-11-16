@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateInternationalScientificCongressController,
+  makeFindInternationalScientificCongressByIdController,
   makeFindInternationalScientificCongressesController,
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -27,6 +28,13 @@ router.get('/', async (req: Request, res: Response) => {
     makeFindInternationalScientificCongressesController()
 
   await findInternationalScientificCongressesController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findInternationalScientificCongressByIdController } =
+    makeFindInternationalScientificCongressByIdController()
+
+  await findInternationalScientificCongressByIdController.handle(req, res)
 })
 
 export { router as internationalScientificCongressRoutes }
