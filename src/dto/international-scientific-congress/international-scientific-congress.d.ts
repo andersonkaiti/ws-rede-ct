@@ -12,3 +12,22 @@ export interface ICreateInternationalScientificCongressDTO {
   adminReportUrl?: string
   proceedingsUrl?: string
 }
+
+export interface IFindAllInternationalScientificCongressDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    edition?: number
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
+export interface ICountInternationalScientificCongressDTO {
+  filter: {
+    title?: string
+    edition?: number
+  }
+}
