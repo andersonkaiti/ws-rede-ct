@@ -45,6 +45,14 @@ export class InternationalScientificCongressGalleryRepository
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.congressGalleryItem.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count(data: ICountCongressGalleryDTO) {
     const { filter } = data
 
