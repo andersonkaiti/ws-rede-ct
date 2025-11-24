@@ -1,5 +1,9 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
+  makeCreateInternationalScientificCongressGalleryController,
+  makeFindInternationalScientificCongressGalleriesByCongressIdController,
+} from '../factories/controllers/international-scientific-congress/international-scientific-congress-gallery.factory.ts'
+import {
   makeCreateInternationalScientificCongressController,
   makeDeleteInternationalScientificCongressController,
   makeFindInternationalScientificCongressByEditionController,
@@ -7,7 +11,6 @@ import {
   makeFindInternationalScientificCongressesController,
   makeUpdateInternationalScientificCongressController,
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress.factory.ts'
-import { makeCreateInternationalScientificCongressGalleryController } from '../factories/controllers/international-scientific-congress/international-scientific-congress-gallery.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -91,5 +94,15 @@ router.post(
     )
   }
 )
+
+router.get('/:congressId/gallery', async (req: Request, res: Response) => {
+  const { findInternationalScientificCongressGalleriesByCongressIdController } =
+    makeFindInternationalScientificCongressGalleriesByCongressIdController()
+
+  await findInternationalScientificCongressGalleriesByCongressIdController.handle(
+    req,
+    res
+  )
+})
 
 export { router as internationalScientificCongressRoutes }
