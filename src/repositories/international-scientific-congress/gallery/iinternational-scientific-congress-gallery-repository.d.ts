@@ -9,6 +9,7 @@ import type {
 export interface IInternationalScientificCongressGalleryRepository {
   create(gallery: ICreateCongressGalleryDTO): Promise<CongressGalleryItem>
   update(gallery: IUpdateCongressGalleryDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   findByCongressId(
     data: IFindAllGalleryByCongressIdDTO
   ): Promise<CongressGalleryItem[] | null>

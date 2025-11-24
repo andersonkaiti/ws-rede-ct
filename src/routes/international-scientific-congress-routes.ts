@@ -9,6 +9,7 @@ import {
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress.factory.ts'
 import {
   makeCreateInternationalScientificCongressGalleryController,
+  makeDeleteInternationalScientificCongressGalleryController,
   makeFindInternationalScientificCongressGalleriesByCongressIdController,
   makeFindInternationalScientificCongressGalleryByIdController,
   makeUpdateInternationalScientificCongressGalleryController,
@@ -128,6 +129,22 @@ router.put(
       makeUpdateInternationalScientificCongressGalleryController()
 
     await updateInternationalScientificCongressGalleryController.handle(
+      req,
+      res
+    )
+  }
+)
+
+router.delete(
+  '/gallery/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteInternationalScientificCongressGalleryController } =
+      makeDeleteInternationalScientificCongressGalleryController()
+
+    await deleteInternationalScientificCongressGalleryController.handle(
       req,
       res
     )

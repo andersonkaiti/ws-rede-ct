@@ -27,6 +27,14 @@ export class InternationalScientificCongressGalleryRepository
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.congressGalleryItem.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async findByCongressId(data: IFindAllGalleryByCongressIdDTO) {
     const { pagination, filter } = data
 

@@ -1,4 +1,5 @@
 import { CreateInternationalScientificCongressGalleryController } from '../../../controllers/international-scientific-congress-gallery/create-international-scientific-congress-gallery-controller.ts'
+import { DeleteInternationalScientificCongressGalleryController } from '../../../controllers/international-scientific-congress-gallery/delete-international-scientific-congress-gallery-controller.ts'
 import { FindInternationalScientificCongressGalleriesByCongressIdController } from '../../../controllers/international-scientific-congress-gallery/find-international-scientific-congress-galleries-by-congress-id-controller.ts'
 import { FindInternationalScientificCongressGalleryByIdController } from '../../../controllers/international-scientific-congress-gallery/find-international-scientific-congress-gallery-by-id-controller.ts'
 import { UpdateInternationalScientificCongressGalleryController } from '../../../controllers/international-scientific-congress-gallery/update-international-scientific-congress-gallery-controller.ts'
@@ -41,6 +42,15 @@ export function makeUpdateInternationalScientificCongressGalleryController() {
       new UpdateInternationalScientificCongressGalleryController(
         makeInternationalScientificCongressGalleryRepository(),
         makeFirebaseStorageService()
+      ),
+  }
+}
+
+export function makeDeleteInternationalScientificCongressGalleryController() {
+  return {
+    deleteInternationalScientificCongressGalleryController:
+      new DeleteInternationalScientificCongressGalleryController(
+        makeInternationalScientificCongressGalleryRepository()
       ),
   }
 }
