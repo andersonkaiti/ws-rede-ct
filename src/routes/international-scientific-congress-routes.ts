@@ -7,7 +7,15 @@ import {
   makeFindInternationalScientificCongressesController,
   makeUpdateInternationalScientificCongressController,
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress.factory.ts'
+import {
+  makeCreateInternationalScientificCongressGalleryController,
+  makeDeleteInternationalScientificCongressGalleryController,
+  makeFindInternationalScientificCongressGalleriesByCongressIdController,
+  makeFindInternationalScientificCongressGalleryByIdController,
+  makeUpdateInternationalScientificCongressGalleryController,
+} from '../factories/controllers/international-scientific-congress/international-scientific-congress-gallery.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
+import { upload } from '../middlewares/multer.ts'
 
 const router = Router()
 
@@ -70,6 +78,76 @@ router.delete(
       makeDeleteInternationalScientificCongressController()
 
     await deleteInternationalScientificCongressController.handle(req, res)
+  }
+)
+
+router.post(
+  '/:congressId/gallery',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { createInternationalScientificCongressGalleryController } =
+      makeCreateInternationalScientificCongressGalleryController()
+
+    await createInternationalScientificCongressGalleryController.handle(
+      req,
+      res
+    )
+  }
+)
+
+router.get('/:congressId/gallery', async (req: Request, res: Response) => {
+  const { findInternationalScientificCongressGalleriesByCongressIdController } =
+    makeFindInternationalScientificCongressGalleriesByCongressIdController()
+
+  await findInternationalScientificCongressGalleriesByCongressIdController.handle(
+    req,
+    res
+  )
+})
+
+router.get('/gallery/:id', async (req: Request, res: Response) => {
+  const { findInternationalScientificCongressGalleryByIdController } =
+    makeFindInternationalScientificCongressGalleryByIdController()
+
+  await findInternationalScientificCongressGalleryByIdController.handle(
+    req,
+    res
+  )
+})
+
+router.put(
+  '/gallery/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { updateInternationalScientificCongressGalleryController } =
+      makeUpdateInternationalScientificCongressGalleryController()
+
+    await updateInternationalScientificCongressGalleryController.handle(
+      req,
+      res
+    )
+  }
+)
+
+router.delete(
+  '/gallery/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteInternationalScientificCongressGalleryController } =
+      makeDeleteInternationalScientificCongressGalleryController()
+
+    await deleteInternationalScientificCongressGalleryController.handle(
+      req,
+      res
+    )
   }
 )
 
