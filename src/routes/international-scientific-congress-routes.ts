@@ -7,7 +7,9 @@ import {
   makeFindInternationalScientificCongressesController,
   makeUpdateInternationalScientificCongressController,
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress.factory.ts'
+import { makeCreateInternationalScientificCongressGalleryController } from '../factories/controllers/international-scientific-congress/international-scientific-congress-gallery.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
+import { upload } from '../middlewares/multer.ts'
 
 const router = Router()
 
@@ -70,6 +72,23 @@ router.delete(
       makeDeleteInternationalScientificCongressController()
 
     await deleteInternationalScientificCongressController.handle(req, res)
+  }
+)
+
+router.post(
+  '/:congressId/gallery',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { createInternationalScientificCongressGalleryController } =
+      makeCreateInternationalScientificCongressGalleryController()
+
+    await createInternationalScientificCongressGalleryController.handle(
+      req,
+      res
+    )
   }
 )
 
