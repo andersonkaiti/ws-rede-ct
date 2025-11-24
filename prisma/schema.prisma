@@ -329,7 +329,7 @@ model MeetingMinute {
 model InternationalScientificCongress {
   id             String   @id @default(uuid())
   title          String
-  edition        Int
+  edition        Int      @unique
   startDate      DateTime @map("start_date")
   endDate        DateTime @map("end_date")
   description    String?
