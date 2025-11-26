@@ -33,6 +33,26 @@ import {
   updateInMemoriamRegistry,
 } from './in-memoriam.ts'
 import {
+  createCongressGalleryRegistry,
+  deleteCongressGalleryRegistry,
+  findCongressGalleriesByCongressIdRegistry,
+  updateCongressGalleryRegistry,
+} from './international-scientific-congresses/congress-galleries.ts'
+import {
+  createCongressPartnerRegistry,
+  deleteCongressPartnerRegistry,
+  findCongressPartnersByCongressIdRegistry,
+  updateCongressPartnerRegistry,
+} from './international-scientific-congresses/congress-partners.ts'
+import {
+  createInternationalScientificCongressRegistry,
+  deleteInternationalScientificCongressRegistry,
+  findInternationalScientificCongressByEditionRegistry,
+  findInternationalScientificCongressByIdRegistry,
+  findInternationalScientificCongressesRegistry,
+  updateInternationalScientificCongressRegistry,
+} from './international-scientific-congresses/international-scientific-congresses.ts'
+import {
   createLegitimatorCommitteeMemberRegistry,
   deleteLegitimatorCommitteeMemberRegistry,
   findLegitimatorCommitteeMemberByIdRegistry,
@@ -224,6 +244,26 @@ registry.registerPath(createMeetingMinuteRegistry)
 registry.registerPath(findMeetingMinuteByMeetingIdRegistry)
 registry.registerPath(updateMeetingMinuteRegistry)
 registry.registerPath(deleteMeetingMinuteRegistry)
+
+// International Scientific Congresses
+registry.registerPath(createInternationalScientificCongressRegistry)
+registry.registerPath(findInternationalScientificCongressesRegistry)
+registry.registerPath(findInternationalScientificCongressByIdRegistry)
+registry.registerPath(findInternationalScientificCongressByEditionRegistry)
+registry.registerPath(updateInternationalScientificCongressRegistry)
+registry.registerPath(deleteInternationalScientificCongressRegistry)
+
+// Congress Partners (as sub-resource of Congresses)
+registry.registerPath(createCongressPartnerRegistry)
+registry.registerPath(findCongressPartnersByCongressIdRegistry)
+registry.registerPath(updateCongressPartnerRegistry)
+registry.registerPath(deleteCongressPartnerRegistry)
+
+// Congress Galleries (as sub-resource of Congresses)
+registry.registerPath(createCongressGalleryRegistry)
+registry.registerPath(findCongressGalleriesByCongressIdRegistry)
+registry.registerPath(updateCongressGalleryRegistry)
+registry.registerPath(deleteCongressGalleryRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
