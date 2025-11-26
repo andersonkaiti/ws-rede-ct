@@ -10,7 +10,6 @@ const partnerSchema = z.object({
   id: z.uuid(),
   name: z.string(),
   logoUrl: z.string(),
-  websiteUrl: z.string().nullable(),
   description: z.string().nullable(),
   category: z.string().nullable(),
   since: z.date(),

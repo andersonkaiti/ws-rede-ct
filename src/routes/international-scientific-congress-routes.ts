@@ -14,6 +14,13 @@ import {
   makeFindInternationalScientificCongressGalleryByIdController,
   makeUpdateInternationalScientificCongressGalleryController,
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress-gallery.factory.ts'
+import {
+  makeCreateInternationalScientificCongressPartnerController,
+  makeDeleteInternationalScientificCongressPartnerController,
+  makeFindInternationalScientificCongressPartnerByIdController,
+  makeFindInternationalScientificCongressPartnersByCongressIdController,
+  makeUpdateInternationalScientificCongressPartnerController,
+} from '../factories/controllers/international-scientific-congress/international-scientific-congress-partner.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -145,6 +152,76 @@ router.delete(
       makeDeleteInternationalScientificCongressGalleryController()
 
     await deleteInternationalScientificCongressGalleryController.handle(
+      req,
+      res
+    )
+  }
+)
+
+router.post(
+  '/:congressId/partner',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('logo'),
+  async (req: Request, res: Response) => {
+    const { createInternationalScientificCongressPartnerController } =
+      makeCreateInternationalScientificCongressPartnerController()
+
+    await createInternationalScientificCongressPartnerController.handle(
+      req,
+      res
+    )
+  }
+)
+
+router.get('/:congressId/partner', async (req: Request, res: Response) => {
+  const { findInternationalScientificCongressPartnersByCongressIdController } =
+    makeFindInternationalScientificCongressPartnersByCongressIdController()
+
+  await findInternationalScientificCongressPartnersByCongressIdController.handle(
+    req,
+    res
+  )
+})
+
+router.get('/partner/:id', async (req: Request, res: Response) => {
+  const { findInternationalScientificCongressPartnerByIdController } =
+    makeFindInternationalScientificCongressPartnerByIdController()
+
+  await findInternationalScientificCongressPartnerByIdController.handle(
+    req,
+    res
+  )
+})
+
+router.put(
+  '/partner/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('logo'),
+  async (req: Request, res: Response) => {
+    const { updateInternationalScientificCongressPartnerController } =
+      makeUpdateInternationalScientificCongressPartnerController()
+
+    await updateInternationalScientificCongressPartnerController.handle(
+      req,
+      res
+    )
+  }
+)
+
+router.delete(
+  '/partner/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteInternationalScientificCongressPartnerController } =
+      makeDeleteInternationalScientificCongressPartnerController()
+
+    await deleteInternationalScientificCongressPartnerController.handle(
       req,
       res
     )
