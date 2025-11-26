@@ -14,7 +14,10 @@ import {
   makeFindInternationalScientificCongressGalleryByIdController,
   makeUpdateInternationalScientificCongressGalleryController,
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress-gallery.factory.ts'
-import { makeCreateInternationalScientificCongressPartnerController } from '../factories/controllers/international-scientific-congress/international-scientific-congress-partner.factory.ts'
+import {
+  makeCreateInternationalScientificCongressPartnerController,
+  makeFindInternationalScientificCongressPartnersByCongressIdController,
+} from '../factories/controllers/international-scientific-congress/international-scientific-congress-partner.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -168,5 +171,15 @@ router.post(
     )
   }
 )
+
+router.get('/:congressId/partner', async (req: Request, res: Response) => {
+  const { findInternationalScientificCongressPartnersByCongressIdController } =
+    makeFindInternationalScientificCongressPartnersByCongressIdController()
+
+  await findInternationalScientificCongressPartnersByCongressIdController.handle(
+    req,
+    res
+  )
+})
 
 export { router as internationalScientificCongressRoutes }
