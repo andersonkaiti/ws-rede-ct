@@ -1,4 +1,5 @@
 import { CreateInternationalScientificCongressPartnerController } from '../../../controllers/international-scientific-congress-partner/create-international-scientific-congress-partner-controller.ts'
+import { FindInternationalScientificCongressPartnerByIdController } from '../../../controllers/international-scientific-congress-partner/find-international-scientific-congress-partner-by-id-controller.ts'
 import { FindInternationalScientificCongressPartnersByCongressIdController } from '../../../controllers/international-scientific-congress-partner/find-international-scientific-congress-partners-by-congress-id-controller.ts'
 import { makeInternationalScientificCongressRepository } from '../../repositories/international-scientific-congress/international-scientific-congress.factory.ts'
 import { makeInternationalScientificCongressPartnerRepository } from '../../repositories/international-scientific-congress/international-scientific-congress-partner.factory.ts'
@@ -19,6 +20,15 @@ export function makeFindInternationalScientificCongressPartnersByCongressIdContr
   return {
     findInternationalScientificCongressPartnersByCongressIdController:
       new FindInternationalScientificCongressPartnersByCongressIdController(
+        makeInternationalScientificCongressPartnerRepository()
+      ),
+  }
+}
+
+export function makeFindInternationalScientificCongressPartnerByIdController() {
+  return {
+    findInternationalScientificCongressPartnerByIdController:
+      new FindInternationalScientificCongressPartnerByIdController(
         makeInternationalScientificCongressPartnerRepository()
       ),
   }

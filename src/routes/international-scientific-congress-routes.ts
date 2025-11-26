@@ -16,6 +16,7 @@ import {
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress-gallery.factory.ts'
 import {
   makeCreateInternationalScientificCongressPartnerController,
+  makeFindInternationalScientificCongressPartnerByIdController,
   makeFindInternationalScientificCongressPartnersByCongressIdController,
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress-partner.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -177,6 +178,16 @@ router.get('/:congressId/partner', async (req: Request, res: Response) => {
     makeFindInternationalScientificCongressPartnersByCongressIdController()
 
   await findInternationalScientificCongressPartnersByCongressIdController.handle(
+    req,
+    res
+  )
+})
+
+router.get('/partner/:id', async (req: Request, res: Response) => {
+  const { findInternationalScientificCongressPartnerByIdController } =
+    makeFindInternationalScientificCongressPartnerByIdController()
+
+  await findInternationalScientificCongressPartnerByIdController.handle(
     req,
     res
   )

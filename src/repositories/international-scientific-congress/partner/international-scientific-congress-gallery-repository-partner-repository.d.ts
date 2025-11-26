@@ -12,5 +12,6 @@ export interface IInternationalScientificCongressPartnerRepository {
   findByCongressId(
     data: IFindAllPartnersByCongressIdDTO
   ): Promise<CongressPartner[] | null>
+  findById(id: string): Promise<CongressPartner | null>
   count(data: ICountCongressPartnerDTO): Promise<number>
 }

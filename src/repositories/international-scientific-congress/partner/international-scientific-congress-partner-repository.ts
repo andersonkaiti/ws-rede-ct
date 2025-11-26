@@ -43,6 +43,14 @@ export class InternationalScientificCongressPartnerRepository
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.congressPartner.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count(data: ICountCongressPartnerDTO) {
     return await this.prisma.congressPartner.count({
       where: {
