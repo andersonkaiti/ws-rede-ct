@@ -16,6 +16,7 @@ import {
 } from '../factories/controllers/international-scientific-congress/international-scientific-congress-gallery.factory.ts'
 import {
   makeCreateInternationalScientificCongressPartnerController,
+  makeDeleteInternationalScientificCongressPartnerController,
   makeFindInternationalScientificCongressPartnerByIdController,
   makeFindInternationalScientificCongressPartnersByCongressIdController,
   makeUpdateInternationalScientificCongressPartnerController,
@@ -205,6 +206,22 @@ router.put(
       makeUpdateInternationalScientificCongressPartnerController()
 
     await updateInternationalScientificCongressPartnerController.handle(
+      req,
+      res
+    )
+  }
+)
+
+router.delete(
+  '/partner/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteInternationalScientificCongressPartnerController } =
+      makeDeleteInternationalScientificCongressPartnerController()
+
+    await deleteInternationalScientificCongressPartnerController.handle(
       req,
       res
     )

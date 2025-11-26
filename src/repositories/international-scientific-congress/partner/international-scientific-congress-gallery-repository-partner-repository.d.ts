@@ -9,6 +9,7 @@ import type {
 export interface IInternationalScientificCongressPartnerRepository {
   create(partner: ICreateCongressPartnerDTO): Promise<CongressPartner>
   update(partner: IUpdateCongressPartnerDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   findByCongressId(
     data: IFindAllPartnersByCongressIdDTO
   ): Promise<CongressPartner[] | null>

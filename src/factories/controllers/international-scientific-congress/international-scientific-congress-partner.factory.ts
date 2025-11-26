@@ -1,4 +1,5 @@
 import { CreateInternationalScientificCongressPartnerController } from '../../../controllers/international-scientific-congress-partner/create-international-scientific-congress-partner-controller.ts'
+import { DeleteInternationalScientificCongressPartnerController } from '../../../controllers/international-scientific-congress-partner/delete-international-scientific-congress-partner-controller.ts'
 import { FindInternationalScientificCongressPartnerByIdController } from '../../../controllers/international-scientific-congress-partner/find-international-scientific-congress-partner-by-id-controller.ts'
 import { FindInternationalScientificCongressPartnersByCongressIdController } from '../../../controllers/international-scientific-congress-partner/find-international-scientific-congress-partners-by-congress-id-controller.ts'
 import { UpdateInternationalScientificCongressPartnerController } from '../../../controllers/international-scientific-congress-partner/update-international-scientific-congress-partner-controller.ts'
@@ -41,6 +42,15 @@ export function makeUpdateInternationalScientificCongressPartnerController() {
       new UpdateInternationalScientificCongressPartnerController(
         makeInternationalScientificCongressPartnerRepository(),
         makeFirebaseStorageService()
+      ),
+  }
+}
+
+export function makeDeleteInternationalScientificCongressPartnerController() {
+  return {
+    deleteInternationalScientificCongressPartnerController:
+      new DeleteInternationalScientificCongressPartnerController(
+        makeInternationalScientificCongressPartnerRepository()
       ),
   }
 }

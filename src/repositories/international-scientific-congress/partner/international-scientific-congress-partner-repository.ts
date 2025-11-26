@@ -27,6 +27,14 @@ export class InternationalScientificCongressPartnerRepository
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.congressPartner.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async findByCongressId(data: IFindAllPartnersByCongressIdDTO) {
     return await this.prisma.congressPartner.findMany({
       where: {
