@@ -15,15 +15,19 @@ export const findInternationalScientificCongressSchema = z.object({
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
   title: z.string().optional(),
   edition: z.coerce.number().int().positive().optional(),
+  location: z.string().optional(),
   orderBy: z.enum(['asc', 'desc']).optional(),
 })
 
 export class FindInternationalScientificCongressesController {
-  constructor(private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository) {}
+  constructor(
+    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository
+  ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { page, limit, ...filter } = findInternationalScientificCongressSchema.parse(req.query)
+      const { page, limit, ...filter } =
+        findInternationalScientificCongressSchema.parse(req.query)
 
       const offset = limit * page - limit
 
@@ -56,4 +60,3 @@ export class FindInternationalScientificCongressesController {
     }
   }
 }
-
