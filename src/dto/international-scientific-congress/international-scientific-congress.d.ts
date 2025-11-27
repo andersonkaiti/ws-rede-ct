@@ -23,6 +23,7 @@ export interface IFindAllInternationalScientificCongressDTO {
   filter: {
     title?: string
     edition?: number
+    location?: string
     orderBy?: 'asc' | 'desc'
   }
 }
@@ -41,5 +42,6 @@ export interface ICountInternationalScientificCongressDTO {
   filter: {
     title?: string
     edition?: number
+    location?: string
   }
 }

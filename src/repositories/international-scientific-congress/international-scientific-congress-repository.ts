@@ -37,20 +37,33 @@ export class InternationalScientificCongressRepository
 
   async find({
     pagination: { offset, limit },
-    filter: { title, edition, orderBy },
+    filter: { title, edition, location, orderBy },
   }: IFindAllInternationalScientificCongressDTO) {
     const where: Prisma.InternationalScientificCongressWhereInput = {}
 
     const or: Prisma.InternationalScientificCongressWhereInput[] = []
 
     if (edition) {
-      where.edition = edition
+      or.push({
+        edition: {
+          equals: edition,
+        },
+      })
     }
 
     if (title) {
       or.push({
         title: {
           contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (location) {
+      or.push({
+        location: {
+          contains: location,
           mode: 'insensitive',
         },
       })
@@ -97,20 +110,33 @@ export class InternationalScientificCongressRepository
   }
 
   async count({
-    filter: { title, edition },
+    filter: { title, edition, location },
   }: ICountInternationalScientificCongressDTO) {
     const where: Prisma.InternationalScientificCongressWhereInput = {}
 
     const or: Prisma.InternationalScientificCongressWhereInput[] = []
 
     if (edition) {
-      where.edition = edition
+      or.push({
+        edition: {
+          equals: edition,
+        },
+      })
     }
 
     if (title) {
       or.push({
         title: {
           contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (location) {
+      or.push({
+        location: {
+          contains: location,
           mode: 'insensitive',
         },
       })
