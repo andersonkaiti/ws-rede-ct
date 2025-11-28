@@ -14,5 +14,6 @@ export interface IRegionalCongressGalleryRepository {
   findByCongressId(
     data: IFindAllRegionalCongressGalleryByCongressIdDTO
   ): Promise<RegionalCongressGalleryItem[] | null>
+  findById(id: string): Promise<RegionalCongressGalleryItem | null>
   count(data: ICountRegionalCongressGalleryDTO): Promise<number>
 }

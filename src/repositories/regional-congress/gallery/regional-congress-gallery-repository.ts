@@ -46,6 +46,14 @@ export class RegionalCongressGalleryRepository
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.regionalCongressGalleryItem.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({ filter }: ICountRegionalCongressGalleryDTO) {
     return await this.prisma.regionalCongressGalleryItem.count({
       where: {

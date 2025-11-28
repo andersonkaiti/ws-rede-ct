@@ -10,6 +10,7 @@ import {
 import {
   makeCreateRegionalCongressGalleryController,
   makeFindRegionalCongressGalleriesByCongressIdController,
+  makeFindRegionalCongressGalleryByIdController,
 } from '../factories/controllers/regional-congress/regional-congress-gallery.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -97,6 +98,13 @@ router.get('/:congressId/gallery', async (req: Request, res: Response) => {
     makeFindRegionalCongressGalleriesByCongressIdController()
 
   await findRegionalCongressGalleriesByCongressIdController.handle(req, res)
+})
+
+router.get('/gallery/:id', async (req: Request, res: Response) => {
+  const { findRegionalCongressGalleryByIdController } =
+    makeFindRegionalCongressGalleryByIdController()
+
+  await findRegionalCongressGalleryByIdController.handle(req, res)
 })
 
 export { router as regionalCongressRoutes }
