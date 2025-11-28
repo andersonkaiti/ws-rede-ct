@@ -65,6 +65,18 @@ export class RegionalCongressRepository implements IRegionalCongressRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.regionalCongress.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        regionalCongressPartners: true,
+        regionalCongressGalleryItems: true,
+      },
+    })
+  }
+
   async count({
     filter: { title, edition, location },
   }: ICountRegionalCongressDTO) {

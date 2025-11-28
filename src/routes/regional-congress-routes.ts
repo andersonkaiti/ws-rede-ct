@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateRegionalCongressController,
+  makeFindRegionalCongressByIdController,
   makeFindRegionalCongressesController,
 } from '../factories/controllers/regional-congress/regional-congress.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -27,6 +28,13 @@ router.get('/', async (req: Request, res: Response) => {
     makeFindRegionalCongressesController()
 
   await findRegionalCongressesController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findRegionalCongressByIdController } =
+    makeFindRegionalCongressByIdController()
+
+  await findRegionalCongressByIdController.handle(req, res)
 })
 
 export { router as regionalCongressRoutes }
