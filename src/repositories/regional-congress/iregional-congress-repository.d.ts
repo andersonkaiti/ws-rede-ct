@@ -18,6 +18,7 @@ export interface RegionalCongressWithRelations extends RegionalCongress {
 export interface IRegionalCongressRepository {
   create(congress: ICreateRegionalCongressDTO): Promise<void>
   update(congress: IUpdateRegionalCongressDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(
     data: IFindAllRegionalCongressDTO
   ): Promise<RegionalCongressWithRelations[] | null>

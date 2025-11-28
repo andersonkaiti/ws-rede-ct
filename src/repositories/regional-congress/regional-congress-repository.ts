@@ -25,6 +25,14 @@ export class RegionalCongressRepository implements IRegionalCongressRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.regionalCongress.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { title, edition, location, orderBy },
