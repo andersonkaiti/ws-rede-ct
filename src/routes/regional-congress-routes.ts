@@ -16,6 +16,7 @@ import {
 } from '../factories/controllers/regional-congress/regional-congress-gallery.factory.ts'
 import {
   makeCreateRegionalCongressPartnerController,
+  makeFindRegionalCongressPartnerByIdController,
   makeFindRegionalCongressPartnersByCongressIdController,
 } from '../factories/controllers/regional-congress/regional-congress-partner.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -159,6 +160,13 @@ router.get('/:congressId/partner', async (req: Request, res: Response) => {
     makeFindRegionalCongressPartnersByCongressIdController()
 
   await findRegionalCongressPartnersByCongressIdController.handle(req, res)
+})
+
+router.get('/partner/:id', async (req: Request, res: Response) => {
+  const { findRegionalCongressPartnerByIdController } =
+    makeFindRegionalCongressPartnerByIdController()
+
+  await findRegionalCongressPartnerByIdController.handle(req, res)
 })
 
 export { router as regionalCongressRoutes }

@@ -45,6 +45,14 @@ export class RegionalCongressPartnerRepository
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.regionalCongressPartner.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count(data: ICountRegionalCongressPartnerDTO) {
     return await this.prisma.regionalCongressPartner.count({
       where: {
