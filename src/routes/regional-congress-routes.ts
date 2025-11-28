@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateRegionalCongressController,
+  makeFindRegionalCongressByEditionController,
   makeFindRegionalCongressByIdController,
   makeFindRegionalCongressesController,
 } from '../factories/controllers/regional-congress/regional-congress.factory.ts'
@@ -35,6 +36,13 @@ router.get('/:id', async (req: Request, res: Response) => {
     makeFindRegionalCongressByIdController()
 
   await findRegionalCongressByIdController.handle(req, res)
+})
+
+router.get('/edition/:edition', async (req: Request, res: Response) => {
+  const { findRegionalCongressByEditionController } =
+    makeFindRegionalCongressByEditionController()
+
+  await findRegionalCongressByEditionController.handle(req, res)
 })
 
 export { router as regionalCongressRoutes }

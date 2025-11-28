@@ -20,5 +20,8 @@ export interface IRegionalCongressRepository {
     data: IFindAllRegionalCongressDTO
   ): Promise<RegionalCongressWithRelations[] | null>
   findById(id: string): Promise<RegionalCongressWithRelations | null>
+  findByEdition(
+    edition: number
+  ): Promise<RegionalCongressWithRelations[] | null>
   count(data: ICountRegionalCongressDTO): Promise<number>
 }

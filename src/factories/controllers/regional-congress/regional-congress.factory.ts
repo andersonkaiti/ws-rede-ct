@@ -1,4 +1,5 @@
 import { CreateRegionalCongressController } from '../../../controllers/regional-congress/create-regional-congress-controller.ts'
+import { FindRegionalCongressByEditionController } from '../../../controllers/regional-congress/find-regional-congress-by-edition-controller.ts'
 import { FindRegionalCongressByIdController } from '../../../controllers/regional-congress/find-regional-congress-by-id-controller.ts'
 import { FindRegionalCongressesController } from '../../../controllers/regional-congress/find-regional-congresses-controller.ts'
 import { makeRegionalCongressRepository } from '../../repositories/regional-congress/regional-congress.factory.ts'
@@ -24,5 +25,14 @@ export function makeFindRegionalCongressByIdController() {
     findRegionalCongressByIdController: new FindRegionalCongressByIdController(
       makeRegionalCongressRepository()
     ),
+  }
+}
+
+export function makeFindRegionalCongressByEditionController() {
+  return {
+    findRegionalCongressByEditionController:
+      new FindRegionalCongressByEditionController(
+        makeRegionalCongressRepository()
+      ),
   }
 }
