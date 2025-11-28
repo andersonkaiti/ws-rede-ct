@@ -7,7 +7,9 @@ import {
   makeFindRegionalCongressesController,
   makeUpdateRegionalCongressController,
 } from '../factories/controllers/regional-congress/regional-congress.factory.ts'
+import { makeCreateRegionalCongressGalleryController } from '../factories/controllers/regional-congress/regional-congress-gallery.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
+import { upload } from '../middlewares/multer.ts'
 
 const router = Router()
 
@@ -70,6 +72,20 @@ router.delete(
       makeDeleteRegionalCongressController()
 
     await deleteRegionalCongressController.handle(req, res)
+  }
+)
+
+router.post(
+  '/:congressId/gallery',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { createRegionalCongressGalleryController } =
+      makeCreateRegionalCongressGalleryController()
+
+    await createRegionalCongressGalleryController.handle(req, res)
   }
 )
 
