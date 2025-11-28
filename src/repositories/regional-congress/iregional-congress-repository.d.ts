@@ -7,6 +7,7 @@ import type {
   ICountRegionalCongressDTO,
   ICreateRegionalCongressDTO,
   IFindAllRegionalCongressDTO,
+  IUpdateRegionalCongressDTO,
 } from '../../dto/regional-congress/regional-congress.js'
 
 export interface RegionalCongressWithRelations extends RegionalCongress {
@@ -16,6 +17,7 @@ export interface RegionalCongressWithRelations extends RegionalCongress {
 
 export interface IRegionalCongressRepository {
   create(congress: ICreateRegionalCongressDTO): Promise<void>
+  update(congress: IUpdateRegionalCongressDTO): Promise<void>
   find(
     data: IFindAllRegionalCongressDTO
   ): Promise<RegionalCongressWithRelations[] | null>

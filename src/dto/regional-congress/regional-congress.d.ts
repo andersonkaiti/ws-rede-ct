@@ -1,3 +1,5 @@
+import type { RegionalCongress } from '@prisma/client'
+
 export interface ICreateRegionalCongressDTO {
   title: string
   edition: number
@@ -24,6 +26,13 @@ export interface IFindAllRegionalCongressDTO {
     location?: string
     orderBy?: 'asc' | 'desc'
   }
+}
+
+export interface IUpdateRegionalCongressDTO
+  extends Partial<
+    Omit<RegionalCongress, 'createdAt' | 'updatedAt' | 'partners' | 'galleries'>
+  > {
+  id: string
 }
 
 export interface ICountRegionalCongressDTO {

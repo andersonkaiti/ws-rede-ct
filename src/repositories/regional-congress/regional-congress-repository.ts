@@ -3,6 +3,7 @@ import type {
   ICountRegionalCongressDTO,
   ICreateRegionalCongressDTO,
   IFindAllRegionalCongressDTO,
+  IUpdateRegionalCongressDTO,
 } from '../../dto/regional-congress/regional-congress.js'
 import type { IRegionalCongressRepository } from './iregional-congress-repository.d.ts'
 
@@ -11,6 +12,15 @@ export class RegionalCongressRepository implements IRegionalCongressRepository {
 
   async create(congress: ICreateRegionalCongressDTO) {
     await this.prisma.regionalCongress.create({
+      data: congress,
+    })
+  }
+
+  async update(congress: IUpdateRegionalCongressDTO) {
+    await this.prisma.regionalCongress.update({
+      where: {
+        id: congress.id,
+      },
       data: congress,
     })
   }
