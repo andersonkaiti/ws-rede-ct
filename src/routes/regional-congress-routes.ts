@@ -1,0 +1,76 @@
+import { type NextFunction, type Request, type Response, Router } from 'express'
+import {
+  makeCreateRegionalCongressController,
+  makeDeleteRegionalCongressController,
+  makeFindRegionalCongressByEditionController,
+  makeFindRegionalCongressByIdController,
+  makeFindRegionalCongressesController,
+  makeUpdateRegionalCongressController,
+} from '../factories/controllers/regional-congress/regional-congress.factory.ts'
+import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
+
+const router = Router()
+
+const { authMiddleware } = makeAuthMiddleware()
+
+router.post(
+  '/',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { createRegionalCongressController } =
+      makeCreateRegionalCongressController()
+
+    await createRegionalCongressController.handle(req, res)
+  }
+)
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findRegionalCongressesController } =
+    makeFindRegionalCongressesController()
+
+  await findRegionalCongressesController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findRegionalCongressByIdController } =
+    makeFindRegionalCongressByIdController()
+
+  await findRegionalCongressByIdController.handle(req, res)
+})
+
+router.get('/edition/:edition', async (req: Request, res: Response) => {
+  const { findRegionalCongressByEditionController } =
+    makeFindRegionalCongressByEditionController()
+
+  await findRegionalCongressByEditionController.handle(req, res)
+})
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateRegionalCongressController } =
+      makeUpdateRegionalCongressController()
+
+    await updateRegionalCongressController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteRegionalCongressController } =
+      makeDeleteRegionalCongressController()
+
+    await deleteRegionalCongressController.handle(req, res)
+  }
+)
+
+export { router as regionalCongressRoutes }

@@ -334,24 +334,24 @@ model InternationalScientificCongress {
   endDate        DateTime @map("end_date")
   description    String?
   location       String?
-  congressLink   String?  @map("congress_link") // Link direto para a página principal/publicação do congresso
-  noticeUrl      String?  @map("general_notice_url") // Edital geral
-  scheduleUrl    String?  @map("schedule_document_url") // Cronograma
-  programUrl     String?  @map("program_document_url") // Programação
-  adminReportUrl String?  @map("admin_report_document_url") // Relatório administrativo
-  proceedingsUrl String?  @map("proceedings_document_url") // Anais
+  congressLink   String?  @map("congress_link")
+  noticeUrl      String?  @map("general_notice_url")
+  scheduleUrl    String?  @map("schedule_document_url")
+  programUrl     String?  @map("program_document_url")
+  adminReportUrl String?  @map("admin_report_document_url")
+  proceedingsUrl String?  @map("proceedings_document_url")
 
-  partners  CongressPartner[]
-  galleries CongressGalleryItem[]
+  partners  InternationalScientificCongressPartner[]
+  galleries InternationalScientificCongressGalleryItem[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([edition], name: "congress_edition")
-  @@map("congresses")
+  @@map("international_scientific_congresses")
 }
 
-model CongressPartner {
+model InternationalScientificCongressPartner {
   id      String  @id @default(uuid())
   name    String
   logoUrl String? @map("logo_url")
@@ -360,10 +360,10 @@ model CongressPartner {
   congress   InternationalScientificCongress @relation(fields: [congressId], references: [id], onDelete: Cascade)
 
   @@index([congressId])
-  @@map("congress_partners")
+  @@map("international_scientific_congress_partners")
 }
 
-model CongressGalleryItem {
+model InternationalScientificCongressGalleryItem {
   id       String  @id @default(uuid())
   imageUrl String  @map("image_url")
   caption  String?
@@ -372,5 +372,53 @@ model CongressGalleryItem {
   congress   InternationalScientificCongress @relation(fields: [congressId], references: [id], onDelete: Cascade)
 
   @@index([congressId])
-  @@map("congress_galleries")
+  @@map("international_scientific_congress_galleries")
+}
+
+model RegionalCongress {
+  id             String   @id @default(uuid())
+  title          String
+  edition        Int      @unique
+  startDate      DateTime @map("start_date")
+  endDate        DateTime @map("end_date")
+  description    String?
+  location       String?
+  congressLink   String?  @map("congress_link")
+  noticeUrl      String?  @map("notice_url")
+  scheduleUrl    String?  @map("schedule_url")
+  programUrl     String?  @map("program_url")
+  adminReportUrl String?  @map("admin_report_url")
+  proceedingsUrl String?  @map("proceedings_url")
+
+  createdAt                    DateTime                      @default(now()) @map("created_at")
+  updatedAt                    DateTime                      @updatedAt @map("updated_at")
+  regionalCongressPartners     RegionalCongressPartner[]
+  regionalCongressGalleryItems RegionalCongressGalleryItem[]
+
+  @@index([edition], name: "regional_congress_edition")
+  @@map("regional_congresses")
+}
+
+model RegionalCongressPartner {
+  id      String  @id @default(uuid())
+  name    String
+  logoUrl String? @map("logo_url")
+
+  congressId String           @map("congress_id")
+  congress   RegionalCongress @relation(fields: [congressId], references: [id], onDelete: Cascade)
+
+  @@index([congressId])
+  @@map("regional_congress_partners")
+}
+
+model RegionalCongressGalleryItem {
+  id       String  @id @default(uuid())
+  imageUrl String  @map("image_url")
+  caption  String?
+
+  congressId String           @map("congress_id")
+  congress   RegionalCongress @relation(fields: [congressId], references: [id], onDelete: Cascade)
+
+  @@index([congressId])
+  @@map("regional_congress_galleries")
 }

@@ -9,6 +9,8 @@ export const File = {
   MEETING_MINUTE: 'documents/meeting-minutes',
   INTERNATIONAL_SCIENTIFIC_CONGRESS_GALLERY:
     'images/international-scientific-congress-gallery',
+  GALLERY: 'images/regional-congress-gallery',
+  REGIONAL_CONGRESS_GALLERY: 'images/regional-congress-gallery',
 } as const
 
 export type FileType = (typeof File)[keyof typeof File]
