@@ -14,6 +14,7 @@ import {
   makeFindRegionalCongressGalleryByIdController,
   makeUpdateRegionalCongressGalleryController,
 } from '../factories/controllers/regional-congress/regional-congress-gallery.factory.ts'
+import { makeCreateRegionalCongressPartnerController } from '../factories/controllers/regional-congress/regional-congress-partner.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -133,6 +134,20 @@ router.delete(
       makeDeleteRegionalCongressGalleryController()
 
     await deleteRegionalCongressGalleryController.handle(req, res)
+  }
+)
+
+router.post(
+  '/:congressId/partner',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('logo'),
+  async (req: Request, res: Response) => {
+    const { createRegionalCongressPartnerController } =
+      makeCreateRegionalCongressPartnerController()
+
+    await createRegionalCongressPartnerController.handle(req, res)
   }
 )
 
