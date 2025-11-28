@@ -11,6 +11,7 @@ export interface IRegionalCongressPartnerRepository {
     partner: ICreateRegionalCongressPartnerDTO
   ): Promise<RegionalCongressPartner>
   update(partner: IUpdateRegionalCongressPartnerDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   findByCongressId(
     data: IFindAllRegionalCongressPartnersByCongressIdDTO
   ): Promise<RegionalCongressPartner[] | null>

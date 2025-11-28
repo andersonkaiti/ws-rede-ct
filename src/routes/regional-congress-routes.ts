@@ -1,13 +1,5 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
-  makeCreateRegionalCongressController,
-  makeDeleteRegionalCongressController,
-  makeFindRegionalCongressByEditionController,
-  makeFindRegionalCongressByIdController,
-  makeFindRegionalCongressesController,
-  makeUpdateRegionalCongressController,
-} from '../factories/controllers/regional-congress/regional-congress.factory.ts'
-import {
   makeCreateRegionalCongressGalleryController,
   makeDeleteRegionalCongressGalleryController,
   makeFindRegionalCongressGalleriesByCongressIdController,
@@ -16,10 +8,19 @@ import {
 } from '../factories/controllers/regional-congress/regional-congress-gallery.factory.ts'
 import {
   makeCreateRegionalCongressPartnerController,
+  makeDeleteRegionalCongressPartnerController,
   makeFindRegionalCongressPartnerByIdController,
   makeFindRegionalCongressPartnersByCongressIdController,
   makeUpdateRegionalCongressPartnerController,
 } from '../factories/controllers/regional-congress/regional-congress-partner.factory.ts'
+import {
+  makeCreateRegionalCongressController,
+  makeDeleteRegionalCongressController,
+  makeFindRegionalCongressByEditionController,
+  makeFindRegionalCongressByIdController,
+  makeFindRegionalCongressesController,
+  makeUpdateRegionalCongressController,
+} from '../factories/controllers/regional-congress/regional-congress.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -181,6 +182,19 @@ router.put(
       makeUpdateRegionalCongressPartnerController()
 
     await updateRegionalCongressPartnerController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/partner/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteRegionalCongressPartnerController } =
+      makeDeleteRegionalCongressPartnerController()
+
+    await deleteRegionalCongressPartnerController.handle(req, res)
   }
 )
 

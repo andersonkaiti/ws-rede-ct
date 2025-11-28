@@ -27,6 +27,14 @@ export class RegionalCongressPartnerRepository
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.regionalCongressPartner.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async findByCongressId(
     data: IFindAllRegionalCongressPartnersByCongressIdDTO
   ) {

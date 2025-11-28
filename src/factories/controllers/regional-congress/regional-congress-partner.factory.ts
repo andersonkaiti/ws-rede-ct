@@ -1,4 +1,5 @@
 import { CreateRegionalCongressPartnerController } from '../../../controllers/regional-congress-partner/create-regional-congress-partner-controller.ts'
+import { DeleteRegionalCongressPartnerController } from '../../../controllers/regional-congress-partner/delete-regional-congress-partner-controller.ts'
 import { FindRegionalCongressPartnerByIdController } from '../../../controllers/regional-congress-partner/find-regional-congress-partner-by-id-controller.ts'
 import { FindRegionalCongressPartnersByCongressIdController } from '../../../controllers/regional-congress-partner/find-regional-congress-partners-by-congress-id-controller.ts'
 import { UpdateRegionalCongressPartnerController } from '../../../controllers/regional-congress-partner/update-regional-congress-partner-controller.ts'
@@ -41,6 +42,15 @@ export function makeUpdateRegionalCongressPartnerController() {
       new UpdateRegionalCongressPartnerController(
         makeRegionalCongressPartnerRepository(),
         makeFirebaseStorageService()
+      ),
+  }
+}
+
+export function makeDeleteRegionalCongressPartnerController() {
+  return {
+    deleteRegionalCongressPartnerController:
+      new DeleteRegionalCongressPartnerController(
+        makeRegionalCongressPartnerRepository()
       ),
   }
 }
