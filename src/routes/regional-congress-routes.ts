@@ -9,6 +9,7 @@ import {
 } from '../factories/controllers/regional-congress/regional-congress.factory.ts'
 import {
   makeCreateRegionalCongressGalleryController,
+  makeDeleteRegionalCongressGalleryController,
   makeFindRegionalCongressGalleriesByCongressIdController,
   makeFindRegionalCongressGalleryByIdController,
   makeUpdateRegionalCongressGalleryController,
@@ -119,6 +120,19 @@ router.put(
       makeUpdateRegionalCongressGalleryController()
 
     await updateRegionalCongressGalleryController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/gallery/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteRegionalCongressGalleryController } =
+      makeDeleteRegionalCongressGalleryController()
+
+    await deleteRegionalCongressGalleryController.handle(req, res)
   }
 )
 

@@ -1,4 +1,5 @@
 import { CreateRegionalCongressGalleryController } from '../../../controllers/regional-congress-gallery/create-regional-congress-gallery-controller.ts'
+import { DeleteRegionalCongressGalleryController } from '../../../controllers/regional-congress-gallery/delete-regional-congress-gallery-controller.ts'
 import { FindRegionalCongressGalleriesByCongressIdController } from '../../../controllers/regional-congress-gallery/find-regional-congress-galleries-by-congress-id-controller.ts'
 import { FindRegionalCongressGalleryByIdController } from '../../../controllers/regional-congress-gallery/find-regional-congress-gallery-by-id-controller.ts'
 import { UpdateRegionalCongressGalleryController } from '../../../controllers/regional-congress-gallery/update-regional-congress-gallery-controller.ts'
@@ -41,6 +42,15 @@ export function makeUpdateRegionalCongressGalleryController() {
       new UpdateRegionalCongressGalleryController(
         makeRegionalCongressGalleryRepository(),
         makeFirebaseStorageService()
+      ),
+  }
+}
+
+export function makeDeleteRegionalCongressGalleryController() {
+  return {
+    deleteRegionalCongressGalleryController:
+      new DeleteRegionalCongressGalleryController(
+        makeRegionalCongressGalleryRepository()
       ),
   }
 }

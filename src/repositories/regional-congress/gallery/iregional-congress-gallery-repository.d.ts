@@ -11,6 +11,7 @@ export interface IRegionalCongressGalleryRepository {
     gallery: ICreateRegionalCongressGalleryDTO
   ): Promise<RegionalCongressGalleryItem>
   update(gallery: IUpdateRegionalCongressGalleryDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   findByCongressId(
     data: IFindAllRegionalCongressGalleryByCongressIdDTO
   ): Promise<RegionalCongressGalleryItem[] | null>

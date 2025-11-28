@@ -27,6 +27,14 @@ export class RegionalCongressGalleryRepository
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.regionalCongressGalleryItem.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async findByCongressId({
     pagination,
     filter,
