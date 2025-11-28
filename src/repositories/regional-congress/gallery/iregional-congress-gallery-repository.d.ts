@@ -1,6 +1,8 @@
 import type { RegionalCongressGalleryItem } from '@prisma/client'
 import type {
+  ICountRegionalCongressGalleryDTO,
   ICreateRegionalCongressGalleryDTO,
+  IFindAllRegionalCongressGalleryByCongressIdDTO,
   IUpdateRegionalCongressGalleryDTO,
 } from '../../../dto/regional-congress/gallery.js'
 
@@ -9,4 +11,8 @@ export interface IRegionalCongressGalleryRepository {
     gallery: ICreateRegionalCongressGalleryDTO
   ): Promise<RegionalCongressGalleryItem>
   update(gallery: IUpdateRegionalCongressGalleryDTO): Promise<void>
+  findByCongressId(
+    data: IFindAllRegionalCongressGalleryByCongressIdDTO
+  ): Promise<RegionalCongressGalleryItem[] | null>
+  count(data: ICountRegionalCongressGalleryDTO): Promise<number>
 }

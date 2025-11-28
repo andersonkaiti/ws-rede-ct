@@ -1,6 +1,8 @@
 import type { PrismaClient } from '@prisma/client'
 import type {
+  ICountRegionalCongressGalleryDTO,
   ICreateRegionalCongressGalleryDTO,
+  IFindAllRegionalCongressGalleryByCongressIdDTO,
   IUpdateRegionalCongressGalleryDTO,
 } from '../../../dto/regional-congress/gallery.js'
 import type { IRegionalCongressGalleryRepository } from './iregional-congress-gallery-repository.js'
@@ -22,6 +24,39 @@ export class RegionalCongressGalleryRepository
         id: gallery.id,
       },
       data: gallery,
+    })
+  }
+
+  async findByCongressId({
+    pagination,
+    filter,
+  }: IFindAllRegionalCongressGalleryByCongressIdDTO) {
+    return await this.prisma.regionalCongressGalleryItem.findMany({
+      where: {
+        congressId: filter.congressId,
+        ...(filter.caption && {
+          caption: {
+            contains: filter.caption,
+            mode: 'insensitive',
+          },
+        }),
+      },
+      skip: pagination.offset,
+      take: pagination.limit,
+    })
+  }
+
+  async count({ filter }: ICountRegionalCongressGalleryDTO) {
+    return await this.prisma.regionalCongressGalleryItem.count({
+      where: {
+        congressId: filter.congressId,
+        ...(filter.caption && {
+          caption: {
+            contains: filter.caption,
+            mode: 'insensitive',
+          },
+        }),
+      },
     })
   }
 }
