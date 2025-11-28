@@ -11,6 +11,7 @@ import {
   makeCreateRegionalCongressGalleryController,
   makeFindRegionalCongressGalleriesByCongressIdController,
   makeFindRegionalCongressGalleryByIdController,
+  makeUpdateRegionalCongressGalleryController,
 } from '../factories/controllers/regional-congress/regional-congress-gallery.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -106,5 +107,19 @@ router.get('/gallery/:id', async (req: Request, res: Response) => {
 
   await findRegionalCongressGalleryByIdController.handle(req, res)
 })
+
+router.put(
+  '/gallery/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { updateRegionalCongressGalleryController } =
+      makeUpdateRegionalCongressGalleryController()
+
+    await updateRegionalCongressGalleryController.handle(req, res)
+  }
+)
 
 export { router as regionalCongressRoutes }
