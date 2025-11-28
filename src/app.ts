@@ -21,6 +21,7 @@ import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
 import { regimentRoutes } from './routes/regiment-routes.ts'
+import { regionalCongressRoutes } from './routes/regional-congress-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
 import { sdhcTeamMemberRoutes } from './routes/sdhc-team-member-routes.ts'
 import { userRoutes } from './routes/user-routes.ts'
@@ -64,6 +65,7 @@ app.use(
   '/international-scientific-congress',
   internationalScientificCongressRoutes
 )
+app.use('/regional-congress', regionalCongressRoutes)
 
 app.use(
   (
