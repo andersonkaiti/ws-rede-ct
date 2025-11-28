@@ -18,6 +18,7 @@ import {
   makeCreateRegionalCongressPartnerController,
   makeFindRegionalCongressPartnerByIdController,
   makeFindRegionalCongressPartnersByCongressIdController,
+  makeUpdateRegionalCongressPartnerController,
 } from '../factories/controllers/regional-congress/regional-congress-partner.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -168,5 +169,19 @@ router.get('/partner/:id', async (req: Request, res: Response) => {
 
   await findRegionalCongressPartnerByIdController.handle(req, res)
 })
+
+router.put(
+  '/partner/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('logo'),
+  async (req: Request, res: Response) => {
+    const { updateRegionalCongressPartnerController } =
+      makeUpdateRegionalCongressPartnerController()
+
+    await updateRegionalCongressPartnerController.handle(req, res)
+  }
+)
 
 export { router as regionalCongressRoutes }
