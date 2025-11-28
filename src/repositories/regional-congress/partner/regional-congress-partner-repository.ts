@@ -1,6 +1,8 @@
 import type { PrismaClient } from '@prisma/client'
 import type {
+  ICountRegionalCongressPartnerDTO,
   ICreateRegionalCongressPartnerDTO,
+  IFindAllRegionalCongressPartnersByCongressIdDTO,
   IUpdateRegionalCongressPartnerDTO,
 } from '../../../dto/regional-congress/partner.js'
 import type { IRegionalCongressPartnerRepository } from './iregional-congress-partner-repository.js'
@@ -22,6 +24,38 @@ export class RegionalCongressPartnerRepository
         id: partner.id,
       },
       data: partner,
+    })
+  }
+
+  async findByCongressId(
+    data: IFindAllRegionalCongressPartnersByCongressIdDTO
+  ) {
+    return await this.prisma.regionalCongressPartner.findMany({
+      where: {
+        congressId: data.filter.congressId,
+        name: data.filter.name
+          ? {
+              contains: data.filter.name,
+              mode: 'insensitive',
+            }
+          : undefined,
+      },
+      skip: data.pagination?.offset,
+      take: data.pagination?.limit,
+    })
+  }
+
+  async count(data: ICountRegionalCongressPartnerDTO) {
+    return await this.prisma.regionalCongressPartner.count({
+      where: {
+        congressId: data.filter.congressId,
+        name: data.filter.name
+          ? {
+              contains: data.filter.name,
+              mode: 'insensitive',
+            }
+          : undefined,
+      },
     })
   }
 }

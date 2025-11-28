@@ -1,6 +1,8 @@
 import type { RegionalCongressPartner } from '@prisma/client'
 import type {
+  ICountRegionalCongressPartnerDTO,
   ICreateRegionalCongressPartnerDTO,
+  IFindAllRegionalCongressPartnersByCongressIdDTO,
   IUpdateRegionalCongressPartnerDTO,
 } from '../../../dto/regional-congress/partner.js'
 
@@ -9,4 +11,8 @@ export interface IRegionalCongressPartnerRepository {
     partner: ICreateRegionalCongressPartnerDTO
   ): Promise<RegionalCongressPartner>
   update(partner: IUpdateRegionalCongressPartnerDTO): Promise<void>
+  findByCongressId(
+    data: IFindAllRegionalCongressPartnersByCongressIdDTO
+  ): Promise<RegionalCongressPartner[] | null>
+  count(data: ICountRegionalCongressPartnerDTO): Promise<number>
 }
