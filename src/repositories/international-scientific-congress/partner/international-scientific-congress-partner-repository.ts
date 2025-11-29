@@ -13,13 +13,13 @@ export class InternationalScientificCongressPartnerRepository
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(partner: ICreateCongressPartnerDTO) {
-    return await this.prisma.congressPartner.create({
+    return await this.prisma.internationalScientificCongressPartner.create({
       data: partner,
     })
   }
 
   async update(partner: IUpdateCongressPartnerDTO) {
-    await this.prisma.congressPartner.update({
+    await this.prisma.internationalScientificCongressPartner.update({
       where: {
         id: partner.id,
       },
@@ -28,7 +28,7 @@ export class InternationalScientificCongressPartnerRepository
   }
 
   async deleteById(id: string) {
-    await this.prisma.congressPartner.delete({
+    await this.prisma.internationalScientificCongressPartner.delete({
       where: {
         id,
       },
@@ -36,7 +36,7 @@ export class InternationalScientificCongressPartnerRepository
   }
 
   async findByCongressId(data: IFindAllPartnersByCongressIdDTO) {
-    return await this.prisma.congressPartner.findMany({
+    return await this.prisma.internationalScientificCongressPartner.findMany({
       where: {
         congressId: data.filter.congressId,
         name: data.filter.name
@@ -52,7 +52,7 @@ export class InternationalScientificCongressPartnerRepository
   }
 
   async findById(id: string) {
-    return await this.prisma.congressPartner.findFirst({
+    return await this.prisma.internationalScientificCongressPartner.findFirst({
       where: {
         id,
       },
@@ -60,7 +60,7 @@ export class InternationalScientificCongressPartnerRepository
   }
 
   async count(data: ICountCongressPartnerDTO) {
-    return await this.prisma.congressPartner.count({
+    return await this.prisma.internationalScientificCongressPartner.count({
       where: {
         congressId: data.filter.congressId,
         name: data.filter.name

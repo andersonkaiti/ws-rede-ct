@@ -109,6 +109,26 @@ import {
   updateRegimentRegistry,
 } from './regiments.ts'
 import {
+  createCongressGalleryRegistry as createRegionalCongressGalleryRegistry,
+  deleteCongressGalleryRegistry as deleteRegionalCongressGalleryRegistry,
+  findCongressGalleriesByCongressIdRegistry as findRegionalCongressGalleriesByCongressIdRegistry,
+  updateCongressGalleryRegistry as updateRegionalCongressGalleryRegistry,
+} from './regional-congresses/congress-galleries.ts'
+import {
+  createCongressPartnerRegistry as createRegionalCongressPartnerRegistry,
+  deleteCongressPartnerRegistry as deleteRegionalCongressPartnerRegistry,
+  findCongressPartnersByCongressIdRegistry as findRegionalCongressPartnersByCongressIdRegistry,
+  updateCongressPartnerRegistry as updateRegionalCongressPartnerRegistry,
+} from './regional-congresses/congress-partners.ts'
+import {
+  createRegionalCongressRegistry,
+  deleteRegionalCongressRegistry,
+  findRegionalCongressByEditionRegistry,
+  findRegionalCongressByIdRegistry,
+  findRegionalCongressesRegistry,
+  updateRegionalCongressRegistry,
+} from './regional-congresses/regional-congresses.ts'
+import {
   createResearcherRegistry,
   deleteResearcherRegistry,
   findResearcherByIdRegistry,
@@ -264,6 +284,26 @@ registry.registerPath(createCongressGalleryRegistry)
 registry.registerPath(findCongressGalleriesByCongressIdRegistry)
 registry.registerPath(updateCongressGalleryRegistry)
 registry.registerPath(deleteCongressGalleryRegistry)
+
+// Regional Congresses
+registry.registerPath(createRegionalCongressRegistry)
+registry.registerPath(findRegionalCongressesRegistry)
+registry.registerPath(findRegionalCongressByIdRegistry)
+registry.registerPath(findRegionalCongressByEditionRegistry)
+registry.registerPath(updateRegionalCongressRegistry)
+registry.registerPath(deleteRegionalCongressRegistry)
+
+// Regional Congress Partners (as sub-resource of Regional Congresses)
+registry.registerPath(createRegionalCongressPartnerRegistry)
+registry.registerPath(findRegionalCongressPartnersByCongressIdRegistry)
+registry.registerPath(updateRegionalCongressPartnerRegistry)
+registry.registerPath(deleteRegionalCongressPartnerRegistry)
+
+// Regional Congress Galleries (as sub-resource of Regional Congresses)
+registry.registerPath(createRegionalCongressGalleryRegistry)
+registry.registerPath(findRegionalCongressGalleriesByCongressIdRegistry)
+registry.registerPath(updateRegionalCongressGalleryRegistry)
+registry.registerPath(deleteRegionalCongressGalleryRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
