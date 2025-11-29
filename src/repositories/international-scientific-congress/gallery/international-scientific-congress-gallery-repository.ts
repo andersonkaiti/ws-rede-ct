@@ -13,13 +13,13 @@ export class InternationalScientificCongressGalleryRepository
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(gallery: ICreateCongressGalleryDTO) {
-    return await this.prisma.congressGalleryItem.create({
+    return await this.prisma.internationalScientificCongressGalleryItem.create({
       data: gallery,
     })
   }
 
   async update(gallery: IUpdateCongressGalleryDTO) {
-    await this.prisma.congressGalleryItem.update({
+    await this.prisma.internationalScientificCongressGalleryItem.update({
       where: {
         id: gallery.id,
       },
@@ -28,7 +28,7 @@ export class InternationalScientificCongressGalleryRepository
   }
 
   async deleteById(id: string) {
-    await this.prisma.congressGalleryItem.delete({
+    await this.prisma.internationalScientificCongressGalleryItem.delete({
       where: {
         id,
       },
@@ -38,33 +38,37 @@ export class InternationalScientificCongressGalleryRepository
   async findByCongressId(data: IFindAllGalleryByCongressIdDTO) {
     const { pagination, filter } = data
 
-    return await this.prisma.congressGalleryItem.findMany({
-      where: {
-        congressId: filter.congressId,
-        ...(filter.caption && {
-          caption: {
-            contains: filter.caption,
-            mode: 'insensitive',
-          },
-        }),
-      },
-      skip: pagination.offset,
-      take: pagination.limit,
-    })
+    return await this.prisma.internationalScientificCongressGalleryItem.findMany(
+      {
+        where: {
+          congressId: filter.congressId,
+          ...(filter.caption && {
+            caption: {
+              contains: filter.caption,
+              mode: 'insensitive',
+            },
+          }),
+        },
+        skip: pagination.offset,
+        take: pagination.limit,
+      }
+    )
   }
 
   async findById(id: string) {
-    return await this.prisma.congressGalleryItem.findFirst({
-      where: {
-        id,
-      },
-    })
+    return await this.prisma.internationalScientificCongressGalleryItem.findFirst(
+      {
+        where: {
+          id,
+        },
+      }
+    )
   }
 
   async count(data: ICountCongressGalleryDTO) {
     const { filter } = data
 
-    return await this.prisma.congressGalleryItem.count({
+    return await this.prisma.internationalScientificCongressGalleryItem.count({
       where: {
         congressId: filter.congressId,
         ...(filter.caption && {
