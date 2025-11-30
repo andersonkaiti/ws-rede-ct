@@ -32,6 +32,7 @@ model User {
   certification              Certification[]
   pendencies                 Pendency[]
   Researcher                 Researcher[]
+  webinars                   Webinar[]
 
   @@map("users")
 }
@@ -421,4 +422,20 @@ model RegionalCongressGalleryItem {
 
   @@index([congressId])
   @@map("regional_congress_galleries")
+}
+
+model Webinar {
+  id           String   @id @default(uuid())
+  title        String
+  description  String?
+  scheduledAt  DateTime @map("scheduled_at")
+  webinarLink  String?  @map("webinar_link")
+  thumbnailUrl String?  @map("thumbnail_url")
+
+  guests User[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("webinars")
 }
