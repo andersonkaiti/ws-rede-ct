@@ -19,6 +19,13 @@ import {
   updateCertificationRegistry,
 } from './certifications.ts'
 import {
+  createCourseRegistry,
+  deleteCourseRegistry,
+  findCourseByIdRegistry,
+  findCoursesRegistry,
+  updateCourseRegistry,
+} from './courses.ts'
+import {
   createETPRegistry,
   deleteETPRegistry,
   findETPByIdRegistry,
@@ -318,6 +325,13 @@ registry.registerPath(findWebinarsRegistry)
 registry.registerPath(findWebinarByIdRegistry)
 registry.registerPath(updateWebinarRegistry)
 registry.registerPath(deleteWebinarRegistry)
+
+// Courses
+registry.registerPath(createCourseRegistry)
+registry.registerPath(findCoursesRegistry)
+registry.registerPath(findCourseByIdRegistry)
+registry.registerPath(updateCourseRegistry)
+registry.registerPath(deleteCourseRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
