@@ -84,6 +84,21 @@ export class WebinarRepository implements IWebinarRepository {
     })
   }
 
+  async findById(id: string): Promise<WebinarWithGuests | null> {
+    return await this.prisma.webinar.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        guests: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+    })
+  }
+
   async update({
     id,
     title,

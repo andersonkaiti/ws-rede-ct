@@ -1,4 +1,5 @@
 import { CreateWebinarController } from '../../controllers/webinars/create-webinar-controller.ts'
+import { FindWebinarByIdController } from '../../controllers/webinars/find-webinar-by-id-controller.ts'
 import { FindWebinarsController } from '../../controllers/webinars/find-webinars-controller.ts'
 import { makeWebinarRepository } from '../repositories/webinar.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
@@ -15,5 +16,13 @@ export function makeCreateWebinarController() {
 export function makeFindWebinarsController() {
   return {
     findWebinarsController: new FindWebinarsController(makeWebinarRepository()),
+  }
+}
+
+export function makeFindWebinarByIdController() {
+  return {
+    findWebinarByIdController: new FindWebinarByIdController(
+      makeWebinarRepository()
+    ),
   }
 }

@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateWebinarController,
+  makeFindWebinarByIdController,
   makeFindWebinarsController,
 } from '../factories/controllers/webinar.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -32,6 +33,18 @@ router.get(
     const { findWebinarsController } = makeFindWebinarsController()
 
     await findWebinarsController.handle(req, res)
+  }
+)
+
+router.get(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findWebinarByIdController } = makeFindWebinarByIdController()
+
+    await findWebinarByIdController.handle(req, res)
   }
 )
 

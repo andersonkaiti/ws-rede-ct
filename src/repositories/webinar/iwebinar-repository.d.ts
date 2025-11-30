@@ -13,6 +13,7 @@ type WebinarWithGuests = Webinar & {
 export interface IWebinarRepository {
   create(data: ICreateWebinarDTO): Promise<Webinar>
   find(data: IFindWebinarsDTO): Promise<WebinarWithGuests[] | null>
+  findById(id: string): Promise<WebinarWithGuests | null>
   update(data: IUpdateWebinarDTO): Promise<void>
   count(data: ICountWebinarsDTO): Promise<number>
 }
