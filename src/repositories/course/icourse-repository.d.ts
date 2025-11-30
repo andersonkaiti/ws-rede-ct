@@ -16,6 +16,7 @@ export interface ICourseRepository {
   find(
     data: IFindCoursesDTO
   ): Promise<CourseWithInstructorsAndCoordinator[] | null>
+  findById(id: string): Promise<CourseWithInstructorsAndCoordinator | null>
   update(data: IUpdateCourseDTO): Promise<void>
   count(data: ICountCoursesDTO): Promise<number>
 }

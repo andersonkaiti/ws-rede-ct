@@ -1,4 +1,5 @@
 import { CreateCourseController } from '../../controllers/courses/create-course-controller.ts'
+import { FindCourseByIdController } from '../../controllers/courses/find-course-by-id-controller.ts'
 import { FindCoursesController } from '../../controllers/courses/find-courses-controller.ts'
 import { makeCourseRepository } from '../repositories/course.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
@@ -15,5 +16,13 @@ export function makeCreateCourseController() {
 export function makeFindCoursesController() {
   return {
     findCoursesController: new FindCoursesController(makeCourseRepository()),
+  }
+}
+
+export function makeFindCourseByIdController() {
+  return {
+    findCourseByIdController: new FindCourseByIdController(
+      makeCourseRepository()
+    ),
   }
 }

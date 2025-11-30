@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateCourseController,
+  makeFindCourseByIdController,
   makeFindCoursesController,
 } from '../factories/controllers/course.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -34,4 +35,17 @@ router.get(
     await findCoursesController.handle(req, res)
   }
 )
+
+router.get(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findCourseByIdController } = makeFindCourseByIdController()
+
+    await findCourseByIdController.handle(req, res)
+  }
+)
+
 export { router as courseRoutes }
