@@ -80,6 +80,8 @@ export class AuthMiddleware {
         })
       }
 
+      req.user = decodedToken
+
       next()
     } catch (err) {
       console.log(err)

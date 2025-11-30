@@ -25,6 +25,7 @@ import { regionalCongressRoutes } from './routes/regional-congress-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
 import { sdhcTeamMemberRoutes } from './routes/sdhc-team-member-routes.ts'
 import { userRoutes } from './routes/user-routes.ts'
+import { webinarRoutes } from './routes/webinar-routes.ts'
 
 const app: Application = express()
 
@@ -66,6 +67,7 @@ app.use(
   internationalScientificCongressRoutes
 )
 app.use('/regional-congress', regionalCongressRoutes)
+app.use('/webinars', webinarRoutes)
 
 app.use(
   (
