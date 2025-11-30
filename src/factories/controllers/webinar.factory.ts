@@ -1,4 +1,5 @@
 import { CreateWebinarController } from '../../controllers/webinars/create-webinar-controller.ts'
+import { DeleteWebinarController } from '../../controllers/webinars/delete-webinar-controller.ts'
 import { FindWebinarByIdController } from '../../controllers/webinars/find-webinar-by-id-controller.ts'
 import { FindWebinarsController } from '../../controllers/webinars/find-webinars-controller.ts'
 import { UpdateWebinarController } from '../../controllers/webinars/update-webinar-controller.ts'
@@ -31,6 +32,15 @@ export function makeFindWebinarByIdController() {
 export function makeUpdateWebinarController() {
   return {
     updateWebinarController: new UpdateWebinarController(
+      makeWebinarRepository(),
+      makeFirebaseStorageService()
+    ),
+  }
+}
+
+export function makeDeleteWebinarController() {
+  return {
+    deleteWebinarController: new DeleteWebinarController(
       makeWebinarRepository(),
       makeFirebaseStorageService()
     ),

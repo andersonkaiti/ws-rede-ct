@@ -129,6 +129,14 @@ export class WebinarRepository implements IWebinarRepository {
     })
   }
 
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.webinar.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { description, title },
   }: ICountWebinarsDTO): Promise<number> {

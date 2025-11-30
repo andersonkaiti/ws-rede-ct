@@ -15,5 +15,6 @@ export interface IWebinarRepository {
   find(data: IFindWebinarsDTO): Promise<WebinarWithGuests[] | null>
   findById(id: string): Promise<WebinarWithGuests | null>
   update(data: IUpdateWebinarDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   count(data: ICountWebinarsDTO): Promise<number>
 }

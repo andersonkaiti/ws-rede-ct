@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateWebinarController,
+  makeDeleteWebinarController,
   makeFindWebinarByIdController,
   makeFindWebinarsController,
   makeUpdateWebinarController,
@@ -59,6 +60,18 @@ router.put(
     const { updateWebinarController } = makeUpdateWebinarController()
 
     await updateWebinarController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteWebinarController } = makeDeleteWebinarController()
+
+    await deleteWebinarController.handle(req, res)
   }
 )
 
