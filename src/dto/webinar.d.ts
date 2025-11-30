@@ -7,7 +7,26 @@ export interface ICreateWebinarDTO {
   guestIds?: string[]
 }
 
+export interface IFindWebinarsDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    description?: string
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
 export interface IUpdateWebinarDTO
   extends Partial<Omit<Webinar, 'createdAt' | 'updatedAt'>> {
   id: string
+}
+
+export interface ICountWebinarsDTO {
+  filter: {
+    title?: string
+    description?: string
+  }
 }

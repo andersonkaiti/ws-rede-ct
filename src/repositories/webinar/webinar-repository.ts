@@ -1,6 +1,14 @@
-import type { PrismaClient, Webinar } from '@prisma/client'
-import type { ICreateWebinarDTO, IUpdateWebinarDTO } from '../../dto/webinar.ts'
-import type { IWebinarRepository } from './iwebinar-repository.ts'
+import type { Prisma, PrismaClient, Webinar } from '@prisma/client'
+import type {
+  ICountWebinarsDTO,
+  ICreateWebinarDTO,
+  IFindWebinarsDTO,
+  IUpdateWebinarDTO,
+} from '../../dto/webinar.ts'
+import type {
+  IWebinarRepository,
+  WebinarWithGuests,
+} from './iwebinar-repository.ts'
 
 export class WebinarRepository implements IWebinarRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -26,6 +34,53 @@ export class WebinarRepository implements IWebinarRepository {
             }
           : undefined,
       },
+    })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { description, orderBy, title },
+  }: IFindWebinarsDTO): Promise<WebinarWithGuests[]> {
+    const where: Prisma.WebinarWhereInput = {}
+
+    const or: Prisma.WebinarWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.webinar.findMany({
+      where,
+      include: {
+        guests: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
     })
   }
 
@@ -56,6 +111,40 @@ export class WebinarRepository implements IWebinarRepository {
             }
           : undefined,
       },
+    })
+  }
+
+  async count({
+    filter: { description, title },
+  }: ICountWebinarsDTO): Promise<number> {
+    const where: Prisma.WebinarWhereInput = {}
+
+    const or: Prisma.WebinarWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.webinar.count({
+      where,
     })
   }
 }
