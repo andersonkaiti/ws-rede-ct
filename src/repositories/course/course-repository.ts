@@ -175,6 +175,14 @@ export class CourseRepository implements ICourseRepository {
     })
   }
 
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.course.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { description, title, coordinator },
   }: ICountCoursesDTO): Promise<number> {

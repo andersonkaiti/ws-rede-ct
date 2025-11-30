@@ -1,4 +1,5 @@
 import { CreateCourseController } from '../../controllers/courses/create-course-controller.ts'
+import { DeleteCourseController } from '../../controllers/courses/delete-course-controller.ts'
 import { FindCourseByIdController } from '../../controllers/courses/find-course-by-id-controller.ts'
 import { FindCoursesController } from '../../controllers/courses/find-courses-controller.ts'
 import { UpdateCourseController } from '../../controllers/courses/update-course-controller.ts'
@@ -31,6 +32,15 @@ export function makeFindCourseByIdController() {
 export function makeUpdateCourseController() {
   return {
     updateCourseController: new UpdateCourseController(
+      makeCourseRepository(),
+      makeFirebaseStorageService()
+    ),
+  }
+}
+
+export function makeDeleteCourseController() {
+  return {
+    deleteCourseController: new DeleteCourseController(
       makeCourseRepository(),
       makeFirebaseStorageService()
     ),
