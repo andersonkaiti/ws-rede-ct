@@ -1,6 +1,14 @@
-import type { Course, PrismaClient } from '@prisma/client'
-import type { ICreateCourseDTO, IUpdateCourseDTO } from '../../dto/course.ts'
-import type { ICourseRepository } from './icourse-repository.ts'
+import type { Course, Prisma, PrismaClient } from '@prisma/client'
+import type {
+  ICountCoursesDTO,
+  ICreateCourseDTO,
+  IFindCoursesDTO,
+  IUpdateCourseDTO,
+} from '../../dto/course.ts'
+import type {
+  CourseWithInstructorsAndCoordinator,
+  ICourseRepository,
+} from './icourse-repository.ts'
 
 export class CourseRepository implements ICourseRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -32,6 +40,69 @@ export class CourseRepository implements ICourseRepository {
           })),
         },
       },
+    })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { description, orderBy, title, coordinator },
+  }: IFindCoursesDTO): Promise<CourseWithInstructorsAndCoordinator[]> {
+    const where: Prisma.CourseWhereInput = {}
+
+    const or: Prisma.CourseWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (coordinator) {
+      or.push({
+        coordinator: {
+          name: {
+            contains: coordinator,
+            mode: 'insensitive',
+          },
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.course.findMany({
+      where,
+      include: {
+        coordinator: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+        instructors: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
     })
   }
 
@@ -79,6 +150,51 @@ export class CourseRepository implements ICourseRepository {
           },
         }),
       },
+    })
+  }
+
+  async count({
+    filter: { description, title, coordinator },
+  }: ICountCoursesDTO): Promise<number> {
+    const where: Prisma.CourseWhereInput = {}
+
+    const or: Prisma.CourseWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (coordinator) {
+      or.push({
+        coordinator: {
+          name: {
+            contains: coordinator,
+            mode: 'insensitive',
+          },
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.course.count({
+      where,
     })
   }
 }

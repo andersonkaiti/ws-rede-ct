@@ -10,7 +10,28 @@ export interface ICreateCourseDTO {
   description?: string
 }
 
+export interface IFindCoursesDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    description?: string
+    coordinator?: string
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
 export interface IUpdateCourseDTO
   extends Partial<Omit<Course, 'createdAt' | 'updatedAt'>> {
   id: string
+}
+
+export interface ICountCoursesDTO {
+  filter: {
+    title?: string
+    description?: string
+    coordinator?: string
+  }
 }

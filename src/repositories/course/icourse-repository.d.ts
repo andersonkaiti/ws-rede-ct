@@ -1,7 +1,21 @@
-import type { Course } from '@prisma/client'
-import type { ICreateCourseDTO, IUpdateCourseDTO } from '../../dto/course.ts'
+import type { Course, User } from '@prisma/client'
+import type {
+  ICountCoursesDTO,
+  ICreateCourseDTO,
+  IFindCoursesDTO,
+  IUpdateCourseDTO,
+} from '../../dto/course.ts'
+
+interface CourseWithInstructorsAndCoordinator extends Course {
+  instructors: Omit<User, 'passwordHash'>[]
+  coordinator: Omit<User, 'passwordHash'>
+}
 
 export interface ICourseRepository {
   create(data: ICreateCourseDTO): Promise<Course>
+  find(
+    data: IFindCoursesDTO
+  ): Promise<CourseWithInstructorsAndCoordinator[] | null>
   update(data: IUpdateCourseDTO): Promise<void>
+  count(data: ICountCoursesDTO): Promise<number>
 }
