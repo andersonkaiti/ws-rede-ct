@@ -3,6 +3,7 @@ import {
   makeCreateWebinarController,
   makeFindWebinarByIdController,
   makeFindWebinarsController,
+  makeUpdateWebinarController,
 } from '../factories/controllers/webinar.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -45,6 +46,19 @@ router.get(
     const { findWebinarByIdController } = makeFindWebinarByIdController()
 
     await findWebinarByIdController.handle(req, res)
+  }
+)
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  upload.single('thumbnail'),
+  async (req: Request, res: Response) => {
+    const { updateWebinarController } = makeUpdateWebinarController()
+
+    await updateWebinarController.handle(req, res)
   }
 )
 
