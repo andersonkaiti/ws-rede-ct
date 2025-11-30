@@ -3,6 +3,7 @@ import {
   makeCreateCourseController,
   makeFindCourseByIdController,
   makeFindCoursesController,
+  makeUpdateCourseController,
 } from '../factories/controllers/course.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -45,6 +46,19 @@ router.get(
     const { findCourseByIdController } = makeFindCourseByIdController()
 
     await findCourseByIdController.handle(req, res)
+  }
+)
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { updateCourseController } = makeUpdateCourseController()
+
+    await updateCourseController.handle(req, res)
   }
 )
 
