@@ -149,6 +149,13 @@ import {
   findUsersRegistry,
   updateUserRegistry,
 } from './users.ts'
+import {
+  createWebinarRegistry,
+  deleteWebinarRegistry,
+  findWebinarByIdRegistry,
+  findWebinarsRegistry,
+  updateWebinarRegistry,
+} from './webinars.ts'
 
 const registry = new OpenAPIRegistry()
 
@@ -304,6 +311,13 @@ registry.registerPath(createRegionalCongressGalleryRegistry)
 registry.registerPath(findRegionalCongressGalleriesByCongressIdRegistry)
 registry.registerPath(updateRegionalCongressGalleryRegistry)
 registry.registerPath(deleteRegionalCongressGalleryRegistry)
+
+// Webinars
+registry.registerPath(createWebinarRegistry)
+registry.registerPath(findWebinarsRegistry)
+registry.registerPath(findWebinarByIdRegistry)
+registry.registerPath(updateWebinarRegistry)
+registry.registerPath(deleteWebinarRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
