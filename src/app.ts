@@ -12,6 +12,7 @@ import { authRoutes } from './routes/auth-routes.ts'
 import { certificationRoutes } from './routes/certification-routes.ts'
 import { courseRoutes } from './routes/course-routes.ts'
 import { etpRoutes } from './routes/etp-routes.ts'
+import { eventRoutes } from './routes/event-routes.ts'
 import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
 import { internationalScientificCongressRoutes } from './routes/international-scientific-congress-routes.ts'
@@ -72,6 +73,7 @@ app.use('/regional-congress', regionalCongressRoutes)
 app.use('/webinars', webinarRoutes)
 app.use('/courses', courseRoutes)
 app.use('/post-graduate-programs', postGraduateProgramRoutes)
+app.use('/event', eventRoutes)
 
 app.use(
   (
