@@ -117,6 +117,14 @@ export class PostGraduateProgramRepository
     })
   }
 
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.postGraduateProgram.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { description, title, contact },
   }: ICountPostGraduateProgramsDTO): Promise<number> {
