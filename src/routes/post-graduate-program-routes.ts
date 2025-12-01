@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreatePostGraduateProgramController } from '../factories/controllers/post-graduate-program.factory.ts'
+import {
+  makeCreatePostGraduateProgramController,
+  makeFindPostGraduateProgramsController,
+} from '../factories/controllers/post-graduate-program.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -18,6 +21,19 @@ router.post(
       makeCreatePostGraduateProgramController()
 
     await createPostGraduateProgramController.handle(req, res)
+  }
+)
+
+router.get(
+  '/',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findPostGraduateProgramsController } =
+      makeFindPostGraduateProgramsController()
+
+    await findPostGraduateProgramsController.handle(req, res)
   }
 )
 
