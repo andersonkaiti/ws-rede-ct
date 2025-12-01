@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreatePostGraduateProgramController,
+  makeFindPostGraduateProgramByIdController,
   makeFindPostGraduateProgramsController,
 } from '../factories/controllers/post-graduate-program.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -34,6 +35,19 @@ router.get(
       makeFindPostGraduateProgramsController()
 
     await findPostGraduateProgramsController.handle(req, res)
+  }
+)
+
+router.get(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findPostGraduateProgramByIdController } =
+      makeFindPostGraduateProgramByIdController()
+
+    await findPostGraduateProgramByIdController.handle(req, res)
   }
 )
 

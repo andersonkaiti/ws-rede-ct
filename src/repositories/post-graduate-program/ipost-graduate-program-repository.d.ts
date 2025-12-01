@@ -11,6 +11,7 @@ export interface IPostGraduateProgramRepository {
   find(
     data: IFindPostGraduateProgramsDTO
   ): Promise<PostGraduateProgram[] | null>
+  findById(id: string): Promise<PostGraduateProgram | null>
   update(data: IUpdatePostGraduateProgramDTO): Promise<void>
   count(data: ICountPostGraduateProgramsDTO): Promise<number>
 }
