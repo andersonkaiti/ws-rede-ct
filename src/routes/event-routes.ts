@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateEventController } from '../factories/controllers/event.factory.ts'
+import {
+  makeCreateEventController,
+  makeFindEventsController,
+} from '../factories/controllers/event.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -19,5 +22,11 @@ router.post(
     await createEventController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findEventsController } = makeFindEventsController()
+
+  await findEventsController.handle(req, res)
+})
 
 export { router as eventRoutes }

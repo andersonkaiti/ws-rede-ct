@@ -1,5 +1,10 @@
-import type { PrismaClient } from '@prisma/client'
-import type { ICreateEventDTO, IUpdateEventDTO } from '../../dto/event.d.ts'
+import type { Prisma, PrismaClient } from '@prisma/client'
+import type {
+  ICountEventsDTO,
+  ICreateEventDTO,
+  IFindAllEventDTO,
+  IUpdateEventDTO,
+} from '../../dto/event.d.ts'
 import type { IEventRepository } from './ievent-repository.d.ts'
 
 export class EventRepository implements IEventRepository {
@@ -17,6 +22,74 @@ export class EventRepository implements IEventRepository {
         id: event.id,
       },
       data: event,
+    })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { title, status, format, orderBy },
+  }: IFindAllEventDTO) {
+    const where: Prisma.EventWhereInput = {}
+
+    const or: Prisma.EventWhereInput[] = []
+
+    if (status) {
+      where.status = status
+    }
+
+    if (format) {
+      where.format = format
+    }
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.event.findMany({
+      where,
+      orderBy: orderBy ? { startDate: orderBy } : { startDate: 'desc' },
+      skip: offset,
+      take: limit,
+    })
+  }
+
+  async count({ filter: { title, status, format } }: ICountEventsDTO) {
+    const where: Prisma.EventWhereInput = {}
+
+    const or: Prisma.EventWhereInput[] = []
+
+    if (status) {
+      where.status = status
+    }
+
+    if (format) {
+      where.format = format
+    }
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.event.count({
+      where,
     })
   }
 }

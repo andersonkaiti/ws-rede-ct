@@ -12,7 +12,28 @@ export interface ICreateEventDTO {
   eventLink?: string
 }
 
+export interface IFindAllEventDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    status?: EventStatus
+    format?: EventFormat
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
 export interface IUpdateEventDTO
   extends Partial<Omit<Event, 'createdAt' | 'updatedAt'>> {
   id: string
+}
+
+export interface ICountEventsDTO {
+  filter: {
+    title?: string
+    status?: EventStatus
+    format?: EventFormat
+  }
 }
