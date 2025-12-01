@@ -25,6 +25,14 @@ export class EventRepository implements IEventRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.event.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { title, status, format, orderBy },

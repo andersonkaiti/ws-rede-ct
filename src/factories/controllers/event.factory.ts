@@ -1,4 +1,5 @@
 import { CreateEventController } from '../../controllers/event/create-event-controller.ts'
+import { DeleteEventController } from '../../controllers/event/delete-event-controller.ts'
 import { FindEventByIdController } from '../../controllers/event/find-event-by-id-controller.ts'
 import { FindEventsController } from '../../controllers/event/find-events-controller.ts'
 import { UpdateEventController } from '../../controllers/event/update-event-controller.ts'
@@ -32,5 +33,11 @@ export function makeUpdateEventController() {
       makeEventRepository(),
       makeFirebaseStorageService()
     ),
+  }
+}
+
+export function makeDeleteEventController() {
+  return {
+    deleteEventController: new DeleteEventController(makeEventRepository()),
   }
 }
