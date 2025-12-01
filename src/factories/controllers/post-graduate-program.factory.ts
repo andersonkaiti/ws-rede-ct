@@ -1,6 +1,7 @@
 import { CreatePostGraduateProgramController } from '../../controllers/post-graduate-programs/create-post-graduate-program-controller.ts'
 import { FindPostGraduateProgramByIdController } from '../../controllers/post-graduate-programs/find-post-graduate-program-by-id-controller.ts'
 import { FindPostGraduateProgramsController } from '../../controllers/post-graduate-programs/find-post-graduate-programs-controller.ts'
+import { UpdatePostGraduateProgramController } from '../../controllers/post-graduate-programs/update-post-graduate-program-controller.ts'
 import { makePostGraduateProgramRepository } from '../repositories/post-graduate-program.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
 
@@ -27,6 +28,16 @@ export function makeFindPostGraduateProgramByIdController() {
     findPostGraduateProgramByIdController:
       new FindPostGraduateProgramByIdController(
         makePostGraduateProgramRepository()
+      ),
+  }
+}
+
+export function makeUpdatePostGraduateProgramController() {
+  return {
+    updatePostGraduateProgramController:
+      new UpdatePostGraduateProgramController(
+        makePostGraduateProgramRepository(),
+        makeFirebaseStorageService()
       ),
   }
 }

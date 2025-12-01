@@ -3,6 +3,7 @@ import {
   makeCreatePostGraduateProgramController,
   makeFindPostGraduateProgramByIdController,
   makeFindPostGraduateProgramsController,
+  makeUpdatePostGraduateProgramController,
 } from '../factories/controllers/post-graduate-program.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -48,6 +49,20 @@ router.get(
       makeFindPostGraduateProgramByIdController()
 
     await findPostGraduateProgramByIdController.handle(req, res)
+  }
+)
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { updatePostGraduateProgramController } =
+      makeUpdatePostGraduateProgramController()
+
+    await updatePostGraduateProgramController.handle(req, res)
   }
 )
 
