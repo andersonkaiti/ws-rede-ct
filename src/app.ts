@@ -21,6 +21,7 @@ import { meetingRoutes } from './routes/meeting-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
+import { postGraduateProgramRoutes } from './routes/post-graduate-program-routes.ts'
 import { regimentRoutes } from './routes/regiment-routes.ts'
 import { regionalCongressRoutes } from './routes/regional-congress-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
@@ -70,6 +71,7 @@ app.use(
 app.use('/regional-congress', regionalCongressRoutes)
 app.use('/webinars', webinarRoutes)
 app.use('/courses', courseRoutes)
+app.use('/post-graduate-programs', postGraduateProgramRoutes)
 
 app.use(
   (
