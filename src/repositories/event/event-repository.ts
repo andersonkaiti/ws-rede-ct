@@ -62,6 +62,14 @@ export class EventRepository implements IEventRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.event.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({ filter: { title, status, format } }: ICountEventsDTO) {
     const where: Prisma.EventWhereInput = {}
 

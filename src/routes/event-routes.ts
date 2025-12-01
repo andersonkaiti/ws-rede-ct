@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateEventController,
+  makeFindEventByIdController,
   makeFindEventsController,
 } from '../factories/controllers/event.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -27,6 +28,12 @@ router.get('/', async (req: Request, res: Response) => {
   const { findEventsController } = makeFindEventsController()
 
   await findEventsController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findEventByIdController } = makeFindEventByIdController()
+
+  await findEventByIdController.handle(req, res)
 })
 
 export { router as eventRoutes }
