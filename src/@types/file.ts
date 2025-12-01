@@ -13,6 +13,7 @@ export const File = {
   REGIONAL_CONGRESS_GALLERY: 'images/regional-congress-gallery',
   WEBINAR: 'images/webinars',
   COURSE: 'images/courses',
+  POST_GRADUATE_PROGRAM: 'images/post-graduate-programs',
 } as const
 
 export type FileType = (typeof File)[keyof typeof File]

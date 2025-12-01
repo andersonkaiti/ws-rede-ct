@@ -108,6 +108,13 @@ import {
   updatePendencyRegistry,
 } from './pendencies.ts'
 import {
+  createPostGraduateProgramRegistry,
+  deletePostGraduateProgramRegistry,
+  findPostGraduateProgramByIdRegistry,
+  findPostGraduateProgramsRegistry,
+  updatePostGraduateProgramRegistry,
+} from './post-graduate-programs.ts'
+import {
   createRegimentRegistry,
   deleteRegimentRegistry,
   findRegimentByIdRegistry,
@@ -332,6 +339,13 @@ registry.registerPath(findCoursesRegistry)
 registry.registerPath(findCourseByIdRegistry)
 registry.registerPath(updateCourseRegistry)
 registry.registerPath(deleteCourseRegistry)
+
+// Post Graduate Programs
+registry.registerPath(createPostGraduateProgramRegistry)
+registry.registerPath(findPostGraduateProgramsRegistry)
+registry.registerPath(findPostGraduateProgramByIdRegistry)
+registry.registerPath(updatePostGraduateProgramRegistry)
+registry.registerPath(deletePostGraduateProgramRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
