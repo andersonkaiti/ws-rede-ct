@@ -33,6 +33,13 @@ import {
   updateETPRegistry,
 } from './etps.ts'
 import {
+  createEventRegistry,
+  deleteEventRegistry,
+  findEventByIdRegistry,
+  findEventsRegistry,
+  updateEventRegistry,
+} from './events.ts'
+import {
   createInMemoriamRegistry,
   deleteInMemoriamRegistry,
   findInMemoriamByIdRegistry,
@@ -346,6 +353,13 @@ registry.registerPath(findPostGraduateProgramsRegistry)
 registry.registerPath(findPostGraduateProgramByIdRegistry)
 registry.registerPath(updatePostGraduateProgramRegistry)
 registry.registerPath(deletePostGraduateProgramRegistry)
+
+// Events
+registry.registerPath(createEventRegistry)
+registry.registerPath(findEventsRegistry)
+registry.registerPath(findEventByIdRegistry)
+registry.registerPath(updateEventRegistry)
+registry.registerPath(deleteEventRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
