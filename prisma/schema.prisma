@@ -512,3 +512,19 @@ model Event {
   @@index([id], name: "event_id")
   @@map("events")
 }
+
+model ScientificJournal {
+  id             String   @id @default(uuid())
+  name           String
+  issn           String
+  description    String
+  logoUrl        String?  @map("logo_url")
+  journalUrl     String   @map("journal_url")
+  directors      String?  @map("directors")
+  editorialBoard String?  @map("editorial_board")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@index([id], name: "scientific_journal_id")
+  @@map("scientific_journals")
+}
