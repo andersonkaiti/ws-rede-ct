@@ -158,6 +158,13 @@ import {
   updateResearcherRegistry,
 } from './researchers.ts'
 import {
+  createScientificJournalRegistry,
+  deleteScientificJournalRegistry,
+  findScientificJournalByIdRegistry,
+  findScientificJournalsRegistry,
+  updateScientificJournalRegistry,
+} from './scientific-journals.ts'
+import {
   createSDHCTeamMemberRegistry,
   deleteSDHCTeamMemberRegistry,
   findSDHCTeamMemberByIdRegistry,
@@ -360,6 +367,13 @@ registry.registerPath(findEventsRegistry)
 registry.registerPath(findEventByIdRegistry)
 registry.registerPath(updateEventRegistry)
 registry.registerPath(deleteEventRegistry)
+
+// Scientific Journals
+registry.registerPath(createScientificJournalRegistry)
+registry.registerPath(findScientificJournalsRegistry)
+registry.registerPath(findScientificJournalByIdRegistry)
+registry.registerPath(updateScientificJournalRegistry)
+registry.registerPath(deleteScientificJournalRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
