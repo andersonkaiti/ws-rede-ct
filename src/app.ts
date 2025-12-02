@@ -26,6 +26,7 @@ import { postGraduateProgramRoutes } from './routes/post-graduate-program-routes
 import { regimentRoutes } from './routes/regiment-routes.ts'
 import { regionalCongressRoutes } from './routes/regional-congress-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
+import { scientificJournalRoutes } from './routes/scientific-journal-routes.ts'
 import { sdhcTeamMemberRoutes } from './routes/sdhc-team-member-routes.ts'
 import { userRoutes } from './routes/user-routes.ts'
 import { webinarRoutes } from './routes/webinar-routes.ts'
@@ -74,6 +75,7 @@ app.use('/webinars', webinarRoutes)
 app.use('/courses', courseRoutes)
 app.use('/post-graduate-programs', postGraduateProgramRoutes)
 app.use('/event', eventRoutes)
+app.use('/scientific-journals', scientificJournalRoutes)
 
 app.use(
   (
