@@ -135,6 +135,14 @@ export class ScientificJournalRepository
     })
   }
 
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.scientificJournal.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { name, description, issn, directors, editorialBoard },
   }: ICountScientificJournalsDTO): Promise<number> {

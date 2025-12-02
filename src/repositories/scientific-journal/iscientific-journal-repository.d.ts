@@ -11,5 +11,6 @@ export interface IScientificJournalRepository {
   find(data: IFindScientificJournalsDTO): Promise<ScientificJournal[] | null>
   findById(id: string): Promise<ScientificJournal | null>
   update(data: IUpdateScientificJournalDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   count(data: ICountScientificJournalsDTO): Promise<number>
 }

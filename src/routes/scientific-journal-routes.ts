@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateScientificJournalController,
+  makeDeleteScientificJournalController,
   makeFindScientificJournalByIdController,
   makeFindScientificJournalsController,
   makeUpdateScientificJournalController,
@@ -63,6 +64,19 @@ router.put(
       makeUpdateScientificJournalController()
 
     await updateScientificJournalController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteScientificJournalController } =
+      makeDeleteScientificJournalController()
+
+    await deleteScientificJournalController.handle(req, res)
   }
 )
 
