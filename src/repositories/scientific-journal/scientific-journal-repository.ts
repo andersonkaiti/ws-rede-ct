@@ -101,6 +101,14 @@ export class ScientificJournalRepository
     })
   }
 
+  async findById(id: string): Promise<ScientificJournal | null> {
+    return await this.prisma.scientificJournal.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async update({
     id,
     name,
