@@ -3,6 +3,7 @@ import {
   makeCreateScientificJournalController,
   makeFindScientificJournalByIdController,
   makeFindScientificJournalsController,
+  makeUpdateScientificJournalController,
 } from '../factories/controllers/scientific-journal.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -48,6 +49,20 @@ router.get(
       makeFindScientificJournalByIdController()
 
     await findScientificJournalByIdController.handle(req, res)
+  }
+)
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  upload.single('logo'),
+  async (req: Request, res: Response) => {
+    const { updateScientificJournalController } =
+      makeUpdateScientificJournalController()
+
+    await updateScientificJournalController.handle(req, res)
   }
 )
 

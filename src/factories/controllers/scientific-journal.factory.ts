@@ -1,6 +1,7 @@
 import { CreateScientificJournalController } from '../../controllers/scientific-journals/create-scientific-journal-controller.ts'
 import { FindScientificJournalByIdController } from '../../controllers/scientific-journals/find-scientific-journal-by-id-controller.ts'
 import { FindScientificJournalsController } from '../../controllers/scientific-journals/find-scientific-journals-controller.ts'
+import { UpdateScientificJournalController } from '../../controllers/scientific-journals/update-scientific-journal-controller.ts'
 import { makeScientificJournalRepository } from '../repositories/scientific-journal.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
 
@@ -27,5 +28,14 @@ export function makeFindScientificJournalByIdController() {
       new FindScientificJournalByIdController(
         makeScientificJournalRepository()
       ),
+  }
+}
+
+export function makeUpdateScientificJournalController() {
+  return {
+    updateScientificJournalController: new UpdateScientificJournalController(
+      makeScientificJournalRepository(),
+      makeFirebaseStorageService()
+    ),
   }
 }
