@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateBookVolumeController } from '../factories/controllers/book-volume.factory.ts'
+import {
+  makeCreateBookVolumeController,
+  makeFindBookVolumesController,
+} from '../factories/controllers/book-volume.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -21,6 +24,18 @@ router.post(
     const { createBookVolumeController } = makeCreateBookVolumeController()
 
     await createBookVolumeController.handle(req, res)
+  }
+)
+
+router.get(
+  '/',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findBookVolumesController } = makeFindBookVolumesController()
+
+    await findBookVolumesController.handle(req, res)
   }
 )
 

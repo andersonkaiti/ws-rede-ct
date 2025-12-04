@@ -1,6 +1,8 @@
-import type { BookVolume, PrismaClient } from '@prisma/client'
+import type { BookVolume, Prisma, PrismaClient } from '@prisma/client'
 import type {
+  ICountBookVolumesDTO,
   ICreateBookVolumeDTO,
+  IFindBookVolumesDTO,
   IUpdateBookVolumeDTO,
 } from '../../dto/book-volume.ts'
 import type { IBookVolumeRepository } from './ibook-volume-repository.ts'
@@ -34,6 +36,55 @@ export class BookVolumeRepository implements IBookVolumeRepository {
     })
   }
 
+  async find({
+    pagination: { offset, limit },
+    filter: { title, author, description, orderBy },
+  }: IFindBookVolumesDTO): Promise<BookVolume[]> {
+    const where: Prisma.BookVolumeWhereInput = {}
+
+    const or: Prisma.BookVolumeWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (author) {
+      or.push({
+        author: {
+          contains: author,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.bookVolume.findMany({
+      where,
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
+    })
+  }
+
   async update({
     id,
     volumeNumber,
@@ -61,6 +112,49 @@ export class BookVolumeRepository implements IBookVolumeRepository {
         catalogSheetUrl,
         description,
       },
+    })
+  }
+
+  async count({
+    filter: { title, author, description },
+  }: ICountBookVolumesDTO): Promise<number> {
+    const where: Prisma.BookVolumeWhereInput = {}
+
+    const or: Prisma.BookVolumeWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (author) {
+      or.push({
+        author: {
+          contains: author,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.bookVolume.count({
+      where,
     })
   }
 }
