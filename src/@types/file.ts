@@ -16,6 +16,9 @@ export const File = {
   POST_GRADUATE_PROGRAM: 'images/post-graduate-programs',
   EVENT: 'images/events',
   SCIENTIFIC_JOURNAL: 'images/scientific-journals',
+  BOOK_VOLUME_AUTHOR_IMAGE: 'images/book-volumes/authors',
+  BOOK_VOLUME_COVER: 'images/book-volumes/covers',
+  BOOK_VOLUME_CATALOG_SHEET: 'documents/book-volumes/catalog-sheets',
 } as const
 
 export type FileType = (typeof File)[keyof typeof File]
