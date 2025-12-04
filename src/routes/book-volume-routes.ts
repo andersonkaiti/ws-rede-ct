@@ -3,6 +3,7 @@ import {
   makeCreateBookVolumeController,
   makeFindBookVolumeByIdController,
   makeFindBookVolumesController,
+  makeUpdateBookVolumeController,
 } from '../factories/controllers/book-volume.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -49,6 +50,23 @@ router.get(
     const { findBookVolumeByIdController } = makeFindBookVolumeByIdController()
 
     await findBookVolumeByIdController.handle(req, res)
+  }
+)
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  upload.fields([
+    { name: 'authorImage', maxCount: 1 },
+    { name: 'coverImage', maxCount: 1 },
+    { name: 'catalogSheet', maxCount: 1 },
+  ]),
+  async (req: Request, res: Response) => {
+    const { updateBookVolumeController } = makeUpdateBookVolumeController()
+
+    await updateBookVolumeController.handle(req, res)
   }
 )
 
