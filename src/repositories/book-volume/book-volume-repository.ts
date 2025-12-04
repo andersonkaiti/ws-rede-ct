@@ -85,6 +85,14 @@ export class BookVolumeRepository implements IBookVolumeRepository {
     })
   }
 
+  async findById(id: string): Promise<BookVolume | null> {
+    return await this.prisma.bookVolume.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async update({
     id,
     volumeNumber,
