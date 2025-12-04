@@ -1,5 +1,6 @@
 import type { BookVolume } from '@prisma/client'
 import type {
+  ICountBookVolumesDTO,
   ICreateBookVolumeDTO,
   IFindBookVolumesDTO,
   IUpdateBookVolumeDTO,
@@ -10,5 +11,6 @@ export interface IBookVolumeRepository {
   find(data: IFindBookVolumesDTO): Promise<BookVolume[] | null>
   findById(id: string): Promise<BookVolume | null>
   update(data: IUpdateBookVolumeDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   count(data: ICountBookVolumesDTO): Promise<number>
 }

@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateBookVolumeController,
+  makeDeleteBookVolumeController,
   makeFindBookVolumeByIdController,
   makeFindBookVolumesController,
   makeUpdateBookVolumeController,
@@ -67,6 +68,18 @@ router.put(
     const { updateBookVolumeController } = makeUpdateBookVolumeController()
 
     await updateBookVolumeController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteBookVolumeController } = makeDeleteBookVolumeController()
+
+    await deleteBookVolumeController.handle(req, res)
   }
 )
 

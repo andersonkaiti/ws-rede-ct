@@ -123,6 +123,14 @@ export class BookVolumeRepository implements IBookVolumeRepository {
     })
   }
 
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.bookVolume.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { title, author, description },
   }: ICountBookVolumesDTO): Promise<number> {
