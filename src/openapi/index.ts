@@ -12,6 +12,13 @@ import {
   signUpRegistry,
 } from './auth.ts'
 import {
+  createBookVolumeRegistry,
+  deleteBookVolumeRegistry,
+  findBookVolumeByIdRegistry,
+  findBookVolumesRegistry,
+  updateBookVolumeRegistry,
+} from './book-volumes.ts'
+import {
   deleteCertificationRegistry,
   findCertificationByIdRegistry,
   findCertificationsRegistry,
@@ -374,6 +381,13 @@ registry.registerPath(findScientificJournalsRegistry)
 registry.registerPath(findScientificJournalByIdRegistry)
 registry.registerPath(updateScientificJournalRegistry)
 registry.registerPath(deleteScientificJournalRegistry)
+
+// Book Volumes
+registry.registerPath(createBookVolumeRegistry)
+registry.registerPath(findBookVolumesRegistry)
+registry.registerPath(findBookVolumeByIdRegistry)
+registry.registerPath(updateBookVolumeRegistry)
+registry.registerPath(deleteBookVolumeRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
