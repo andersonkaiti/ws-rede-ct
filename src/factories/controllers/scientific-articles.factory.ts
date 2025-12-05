@@ -1,9 +1,18 @@
 import { CreateScientificArticleController } from '../../controllers/scientific-articles/create-scientific-article-controller.ts'
+import { FindScientificArticlesController } from '../../controllers/scientific-articles/find-scientific-articles-controller.ts'
 import { makeScientificArticlesRepository } from '../repositories/scientific-articles.factory.ts'
 
 export function makeCreateScientificArticleController() {
   return {
     createScientificArticleController: new CreateScientificArticleController(
+      makeScientificArticlesRepository()
+    ),
+  }
+}
+
+export function makeFindScientificArticlesController() {
+  return {
+    findScientificArticlesController: new FindScientificArticlesController(
       makeScientificArticlesRepository()
     ),
   }

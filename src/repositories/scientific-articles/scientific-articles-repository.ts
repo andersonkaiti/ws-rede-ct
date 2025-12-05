@@ -1,5 +1,9 @@
-import type { PrismaClient, ScientificArticle } from '@prisma/client'
-import type { ICreateScientificArticleDTO } from '../../dto/scientific-article.ts'
+import type { Prisma, PrismaClient, ScientificArticle } from '@prisma/client'
+import type {
+  ICountScientificArticlesDTO,
+  ICreateScientificArticleDTO,
+  IFindScientificArticlesDTO,
+} from '../../dto/scientific-article.ts'
 import type { IScientificArticlesRepository } from './iscientific-articles-repository.ts'
 
 export class ScientificArticlesRepository
@@ -44,6 +48,98 @@ export class ScientificArticlesRepository
         year,
         accessUrl,
       },
+    })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { title, author, journal, orderBy },
+  }: IFindScientificArticlesDTO): Promise<ScientificArticle[]> {
+    const where: Prisma.ScientificArticleWhereInput = {}
+
+    const or: Prisma.ScientificArticleWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (author) {
+      or.push({
+        author: {
+          contains: author,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (journal) {
+      or.push({
+        journal: {
+          contains: journal,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.scientificArticle.findMany({
+      where,
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
+    })
+  }
+
+  async count({
+    filter: { title, author, journal },
+  }: ICountScientificArticlesDTO): Promise<number> {
+    const where: Prisma.ScientificArticleWhereInput = {}
+
+    const or: Prisma.ScientificArticleWhereInput[] = []
+
+    if (title) {
+      or.push({
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (author) {
+      or.push({
+        author: {
+          contains: author,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (journal) {
+      or.push({
+        journal: {
+          contains: journal,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.scientificArticle.count({
+      where,
     })
   }
 }

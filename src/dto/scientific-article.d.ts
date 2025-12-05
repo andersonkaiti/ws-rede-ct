@@ -16,3 +16,24 @@ export interface ICreateScientificArticleDTO {
   year?: number
   accessUrl?: string
 }
+
+export interface IFindScientificArticlesDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    title?: string
+    author?: string
+    journal?: string
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
+export interface ICountScientificArticlesDTO {
+  filter: {
+    title?: string
+    author?: string
+    journal?: string
+  }
+}
