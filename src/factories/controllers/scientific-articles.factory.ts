@@ -1,4 +1,5 @@
 import { CreateScientificArticleController } from '../../controllers/scientific-articles/create-scientific-article-controller.ts'
+import { DeleteScientificArticleController } from '../../controllers/scientific-articles/delete-scientific-article-controller.ts'
 import { FindScientificArticleByIdController } from '../../controllers/scientific-articles/find-scientific-article-by-id-controller.ts'
 import { FindScientificArticlesController } from '../../controllers/scientific-articles/find-scientific-articles-controller.ts'
 import { UpdateScientificArticleController } from '../../controllers/scientific-articles/update-scientific-article-controller.ts'
@@ -32,6 +33,14 @@ export function makeFindScientificArticleByIdController() {
 export function makeUpdateScientificArticleController() {
   return {
     updateScientificArticleController: new UpdateScientificArticleController(
+      makeScientificArticlesRepository()
+    ),
+  }
+}
+
+export function makeDeleteScientificArticleController() {
+  return {
+    deleteScientificArticleController: new DeleteScientificArticleController(
       makeScientificArticlesRepository()
     ),
   }
