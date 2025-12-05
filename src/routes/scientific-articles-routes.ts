@@ -3,6 +3,7 @@ import {
   makeCreateScientificArticleController,
   makeFindScientificArticleByIdController,
   makeFindScientificArticlesController,
+  makeUpdateScientificArticleController,
 } from '../factories/controllers/scientific-articles.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
@@ -46,6 +47,19 @@ router.get(
       makeFindScientificArticleByIdController()
 
     await findScientificArticleByIdController.handle(req, res)
+  }
+)
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateScientificArticleController } =
+      makeUpdateScientificArticleController()
+
+    await updateScientificArticleController.handle(req, res)
   }
 )
 

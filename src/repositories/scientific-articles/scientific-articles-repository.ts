@@ -3,6 +3,7 @@ import type {
   ICountScientificArticlesDTO,
   ICreateScientificArticleDTO,
   IFindScientificArticlesDTO,
+  IUpdateScientificArticleDTO,
 } from '../../dto/scientific-article.ts'
 import type { IScientificArticlesRepository } from './iscientific-articles-repository.ts'
 
@@ -104,6 +105,50 @@ export class ScientificArticlesRepository
     return await this.prisma.scientificArticle.findFirst({
       where: {
         id,
+      },
+    })
+  }
+
+  async update({
+    id,
+    title,
+    author,
+    journal,
+    volume,
+    edition,
+    pageStart,
+    pageEnd,
+    startDate,
+    endDate,
+    city,
+    state,
+    country,
+    publisher,
+    description,
+    year,
+    accessUrl,
+  }: IUpdateScientificArticleDTO): Promise<void> {
+    await this.prisma.scientificArticle.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        author,
+        journal,
+        volume,
+        edition,
+        pageStart,
+        pageEnd,
+        startDate,
+        endDate,
+        city,
+        state,
+        country,
+        publisher,
+        description,
+        year,
+        accessUrl,
       },
     })
   }

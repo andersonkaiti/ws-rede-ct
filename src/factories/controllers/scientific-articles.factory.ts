@@ -1,6 +1,7 @@
 import { CreateScientificArticleController } from '../../controllers/scientific-articles/create-scientific-article-controller.ts'
 import { FindScientificArticleByIdController } from '../../controllers/scientific-articles/find-scientific-article-by-id-controller.ts'
 import { FindScientificArticlesController } from '../../controllers/scientific-articles/find-scientific-articles-controller.ts'
+import { UpdateScientificArticleController } from '../../controllers/scientific-articles/update-scientific-article-controller.ts'
 import { makeScientificArticlesRepository } from '../repositories/scientific-articles.factory.ts'
 
 export function makeCreateScientificArticleController() {
@@ -25,5 +26,13 @@ export function makeFindScientificArticleByIdController() {
       new FindScientificArticleByIdController(
         makeScientificArticlesRepository()
       ),
+  }
+}
+
+export function makeUpdateScientificArticleController() {
+  return {
+    updateScientificArticleController: new UpdateScientificArticleController(
+      makeScientificArticlesRepository()
+    ),
   }
 }

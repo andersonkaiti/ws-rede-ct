@@ -30,6 +30,11 @@ export interface IFindScientificArticlesDTO {
   }
 }
 
+export interface IUpdateScientificArticleDTO
+  extends Partial<Omit<ScientificArticle, 'createdAt' | 'updatedAt'>> {
+  id: string
+}
+
 export interface ICountScientificArticlesDTO {
   filter: {
     title?: string
