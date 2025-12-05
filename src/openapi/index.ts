@@ -165,6 +165,13 @@ import {
   updateResearcherRegistry,
 } from './researchers.ts'
 import {
+  createScientificArticleRegistry,
+  deleteScientificArticleRegistry,
+  findScientificArticleByIdRegistry,
+  findScientificArticlesRegistry,
+  updateScientificArticleRegistry,
+} from './scientific-articles.ts'
+import {
   createScientificJournalRegistry,
   deleteScientificJournalRegistry,
   findScientificJournalByIdRegistry,
@@ -381,6 +388,13 @@ registry.registerPath(findScientificJournalsRegistry)
 registry.registerPath(findScientificJournalByIdRegistry)
 registry.registerPath(updateScientificJournalRegistry)
 registry.registerPath(deleteScientificJournalRegistry)
+
+// Scientific Articles
+registry.registerPath(createScientificArticleRegistry)
+registry.registerPath(findScientificArticlesRegistry)
+registry.registerPath(findScientificArticleByIdRegistry)
+registry.registerPath(updateScientificArticleRegistry)
+registry.registerPath(deleteScientificArticleRegistry)
 
 // Book Volumes
 registry.registerPath(createBookVolumeRegistry)
