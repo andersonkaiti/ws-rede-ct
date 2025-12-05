@@ -100,6 +100,14 @@ export class ScientificArticlesRepository
     })
   }
 
+  async findById(id: string): Promise<ScientificArticle | null> {
+    return await this.prisma.scientificArticle.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { title, author, journal },
   }: ICountScientificArticlesDTO): Promise<number> {

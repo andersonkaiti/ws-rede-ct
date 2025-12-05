@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateScientificArticleController,
+  makeFindScientificArticleByIdController,
   makeFindScientificArticlesController,
 } from '../factories/controllers/scientific-articles.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -32,6 +33,19 @@ router.get(
       makeFindScientificArticlesController()
 
     await findScientificArticlesController.handle(req, res)
+  }
+)
+
+router.get(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findScientificArticleByIdController } =
+      makeFindScientificArticleByIdController()
+
+    await findScientificArticleByIdController.handle(req, res)
   }
 )
 
