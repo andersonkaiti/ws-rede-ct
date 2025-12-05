@@ -546,3 +546,33 @@ model BookVolume {
   @@index([id], name: "book_volume_id")
   @@map("book_volumes")
 }
+
+model ScientificArticle {
+  id      String  @id @default(uuid())
+  title   String
+  author  String
+  journal String?
+  volume  String?
+  edition String?
+
+  pageStart Int? @map("page_start")
+  pageEnd   Int? @map("page_end")
+
+  startDate DateTime @map("start_date")
+  endDate   DateTime @map("end_date")
+
+  city        String?
+  state       String?
+  country     String?
+  publisher   String?
+  description String?
+  year        Int?
+
+  accessUrl String? @map("access_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([id], name: "scientific_article_id")
+  @@map("scientific_articles")
+}
