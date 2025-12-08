@@ -51,6 +51,21 @@ export class WorkGroupTeamMemberRepository
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.workGroupTeamMember.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+    })
+  }
+
   async count({ filter: { role } }: ICountWorkGroupTeamMembersDTO) {
     const where: Prisma.WorkGroupTeamMemberWhereInput = {}
 

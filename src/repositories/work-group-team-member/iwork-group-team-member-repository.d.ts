@@ -14,5 +14,6 @@ export interface IWorkGroupTeamMemberRepository {
   find(
     data: IFindAllWorkGroupTeamMembersDTO
   ): Promise<IReturnedWorkGroupTeamMember[] | null>
+  findById(id: string): Promise<IReturnedWorkGroupTeamMember | null>
   count(data: ICountWorkGroupTeamMembersDTO): Promise<number>
 }
