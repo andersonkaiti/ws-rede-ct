@@ -32,6 +32,7 @@ import { scientificJournalRoutes } from './routes/scientific-journal-routes.ts'
 import { sdhcTeamMemberRoutes } from './routes/sdhc-team-member-routes.ts'
 import { userRoutes } from './routes/user-routes.ts'
 import { webinarRoutes } from './routes/webinar-routes.ts'
+import { workGroupTeamMemberRoutes } from './routes/work-group-team-member-routes.ts'
 
 const app: Application = express()
 
@@ -80,6 +81,7 @@ app.use('/event', eventRoutes)
 app.use('/scientific-journals', scientificJournalRoutes)
 app.use('/book-volumes', bookVolumeRoutes)
 app.use('/scientific-articles', scientificArticlesRoutes)
+app.use('/work-group-team-member', workGroupTeamMemberRoutes)
 
 app.use(
   (
