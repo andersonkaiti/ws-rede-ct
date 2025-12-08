@@ -3,6 +3,7 @@ import type {
   ICountWorkGroupTeamMembersDTO,
   ICreateWorkGroupTeamMemberDTO,
   IFindAllWorkGroupTeamMembersDTO,
+  IUpdateWorkGroupTeamMemberDTO,
 } from '../../dto/work-group-team-member.d.ts'
 
 interface IReturnedWorkGroupTeamMember extends WorkGroupTeamMember {
@@ -11,6 +12,7 @@ interface IReturnedWorkGroupTeamMember extends WorkGroupTeamMember {
 
 export interface IWorkGroupTeamMemberRepository {
   create(member: ICreateWorkGroupTeamMemberDTO): Promise<void>
+  update(member: IUpdateWorkGroupTeamMemberDTO): Promise<void>
   find(
     data: IFindAllWorkGroupTeamMembersDTO
   ): Promise<IReturnedWorkGroupTeamMember[] | null>

@@ -3,6 +3,7 @@ import type {
   ICountWorkGroupTeamMembersDTO,
   ICreateWorkGroupTeamMemberDTO,
   IFindAllWorkGroupTeamMembersDTO,
+  IUpdateWorkGroupTeamMemberDTO,
 } from '../../dto/work-group-team-member.d.ts'
 import type { IWorkGroupTeamMemberRepository } from './iwork-group-team-member-repository.d.ts'
 
@@ -16,6 +17,17 @@ export class WorkGroupTeamMemberRepository
       data: {
         ...member,
       },
+    })
+  }
+
+  async update(member: IUpdateWorkGroupTeamMemberDTO) {
+    const { id, ...memberData } = member
+
+    await this.prisma.workGroupTeamMember.update({
+      where: {
+        id,
+      },
+      data: memberData,
     })
   }
 
