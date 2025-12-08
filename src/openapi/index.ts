@@ -198,6 +198,13 @@ import {
   findWebinarsRegistry,
   updateWebinarRegistry,
 } from './webinars.ts'
+import {
+  createWorkGroupTeamMemberRegistry,
+  deleteWorkGroupTeamMemberRegistry,
+  findWorkGroupTeamMemberByIdRegistry,
+  findWorkGroupTeamMembersRegistry,
+  updateWorkGroupTeamMemberRegistry,
+} from './work-group-team-members.ts'
 
 const registry = new OpenAPIRegistry()
 
@@ -402,6 +409,13 @@ registry.registerPath(findBookVolumesRegistry)
 registry.registerPath(findBookVolumeByIdRegistry)
 registry.registerPath(updateBookVolumeRegistry)
 registry.registerPath(deleteBookVolumeRegistry)
+
+// Work Group Team Members
+registry.registerPath(createWorkGroupTeamMemberRegistry)
+registry.registerPath(findWorkGroupTeamMembersRegistry)
+registry.registerPath(findWorkGroupTeamMemberByIdRegistry)
+registry.registerPath(updateWorkGroupTeamMemberRegistry)
+registry.registerPath(deleteWorkGroupTeamMemberRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 

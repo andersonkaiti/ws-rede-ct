@@ -1,0 +1,22 @@
+import type { User, WorkGroupTeamMember } from '@prisma/client'
+import type {
+  ICountWorkGroupTeamMembersDTO,
+  ICreateWorkGroupTeamMemberDTO,
+  IFindAllWorkGroupTeamMembersDTO,
+  IUpdateWorkGroupTeamMemberDTO,
+} from '../../dto/work-group-team-member.d.ts'
+
+interface IReturnedWorkGroupTeamMember extends WorkGroupTeamMember {
+  user: Omit<User, 'passwordHash'>
+}
+
+export interface IWorkGroupTeamMemberRepository {
+  create(member: ICreateWorkGroupTeamMemberDTO): Promise<void>
+  update(member: IUpdateWorkGroupTeamMemberDTO): Promise<void>
+  deleteById(id: string): Promise<void>
+  find(
+    data: IFindAllWorkGroupTeamMembersDTO
+  ): Promise<IReturnedWorkGroupTeamMember[] | null>
+  findById(id: string): Promise<IReturnedWorkGroupTeamMember | null>
+  count(data: ICountWorkGroupTeamMembersDTO): Promise<number>
+}
