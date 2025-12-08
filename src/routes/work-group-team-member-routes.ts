@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateWorkGroupTeamMemberController,
+  makeDeleteWorkGroupTeamMemberController,
   makeFindWorkGroupTeamMemberByIdController,
   makeFindWorkGroupTeamMembersController,
   makeUpdateWorkGroupTeamMemberController,
@@ -48,6 +49,19 @@ router.put(
       makeUpdateWorkGroupTeamMemberController()
 
     await updateWorkGroupTeamMemberController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteWorkGroupTeamMemberController } =
+      makeDeleteWorkGroupTeamMemberController()
+
+    await deleteWorkGroupTeamMemberController.handle(req, res)
   }
 )
 

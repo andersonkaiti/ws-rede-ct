@@ -13,6 +13,7 @@ interface IReturnedWorkGroupTeamMember extends WorkGroupTeamMember {
 export interface IWorkGroupTeamMemberRepository {
   create(member: ICreateWorkGroupTeamMemberDTO): Promise<void>
   update(member: IUpdateWorkGroupTeamMemberDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(
     data: IFindAllWorkGroupTeamMembersDTO
   ): Promise<IReturnedWorkGroupTeamMember[] | null>

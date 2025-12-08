@@ -31,6 +31,14 @@ export class WorkGroupTeamMemberRepository
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.workGroupTeamMember.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination,
     filter: { role, orderBy },
