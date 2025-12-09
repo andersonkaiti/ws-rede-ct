@@ -13,6 +13,7 @@ interface IReturnedReferenceCenterTeamMember extends ReferenceCenterTeamMember {
 export interface IReferenceCenterTeamMemberRepository {
   create(member: ICreateReferenceCenterTeamMemberDTO): Promise<void>
   update(member: IUpdateReferenceCenterTeamMemberDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(
     data: IFindAllReferenceCenterTeamMembersDTO
   ): Promise<IReturnedReferenceCenterTeamMember[] | null>
