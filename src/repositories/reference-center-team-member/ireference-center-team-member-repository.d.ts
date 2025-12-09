@@ -3,6 +3,7 @@ import type {
   ICountReferenceCenterTeamMembersDTO,
   ICreateReferenceCenterTeamMemberDTO,
   IFindAllReferenceCenterTeamMembersDTO,
+  IUpdateReferenceCenterTeamMemberDTO,
 } from '../../dto/reference-center-team-member.d.ts'
 
 interface IReturnedReferenceCenterTeamMember extends ReferenceCenterTeamMember {
@@ -11,6 +12,7 @@ interface IReturnedReferenceCenterTeamMember extends ReferenceCenterTeamMember {
 
 export interface IReferenceCenterTeamMemberRepository {
   create(member: ICreateReferenceCenterTeamMemberDTO): Promise<void>
+  update(member: IUpdateReferenceCenterTeamMemberDTO): Promise<void>
   find(
     data: IFindAllReferenceCenterTeamMembersDTO
   ): Promise<IReturnedReferenceCenterTeamMember[] | null>

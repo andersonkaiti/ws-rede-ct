@@ -1,3 +1,5 @@
+import type { ReferenceCenterTeamMember } from '@prisma/client'
+
 export interface ICreateReferenceCenterTeamMemberDTO {
   role: string
   description?: string
@@ -13,6 +15,11 @@ export interface IFindAllReferenceCenterTeamMembersDTO {
     role?: string
     orderBy?: 'asc' | 'desc'
   }
+}
+
+export interface IUpdateReferenceCenterTeamMemberDTO
+  extends Partial<Omit<ReferenceCenterTeamMember, 'createdAt' | 'updatedAt'>> {
+  id: string
 }
 
 export interface ICountReferenceCenterTeamMembersDTO {

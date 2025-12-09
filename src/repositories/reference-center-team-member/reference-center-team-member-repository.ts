@@ -3,6 +3,7 @@ import type {
   ICountReferenceCenterTeamMembersDTO,
   ICreateReferenceCenterTeamMemberDTO,
   IFindAllReferenceCenterTeamMembersDTO,
+  IUpdateReferenceCenterTeamMemberDTO,
 } from '../../dto/reference-center-team-member.d.ts'
 import type { IReferenceCenterTeamMemberRepository } from './ireference-center-team-member-repository.d.ts'
 
@@ -16,6 +17,17 @@ export class ReferenceCenterTeamMemberRepository
       data: {
         ...member,
       },
+    })
+  }
+
+  async update(member: IUpdateReferenceCenterTeamMemberDTO) {
+    const { id, ...memberData } = member
+
+    await this.prisma.referenceCenterTeamMember.update({
+      where: {
+        id,
+      },
+      data: memberData,
     })
   }
 
