@@ -129,6 +129,13 @@ import {
   updatePostGraduateProgramRegistry,
 } from './post-graduate-programs.ts'
 import {
+  createReferenceCenterTeamMemberRegistry,
+  deleteReferenceCenterTeamMemberRegistry,
+  findReferenceCenterTeamMemberByIdRegistry,
+  findReferenceCenterTeamMembersRegistry,
+  updateReferenceCenterTeamMemberRegistry,
+} from './reference-center-team-members.ts'
+import {
   createRegimentRegistry,
   deleteRegimentRegistry,
   findRegimentByIdRegistry,
@@ -416,6 +423,13 @@ registry.registerPath(findWorkGroupTeamMembersRegistry)
 registry.registerPath(findWorkGroupTeamMemberByIdRegistry)
 registry.registerPath(updateWorkGroupTeamMemberRegistry)
 registry.registerPath(deleteWorkGroupTeamMemberRegistry)
+
+// Reference Center Team Members
+registry.registerPath(createReferenceCenterTeamMemberRegistry)
+registry.registerPath(findReferenceCenterTeamMembersRegistry)
+registry.registerPath(findReferenceCenterTeamMemberByIdRegistry)
+registry.registerPath(updateReferenceCenterTeamMemberRegistry)
+registry.registerPath(deleteReferenceCenterTeamMemberRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
