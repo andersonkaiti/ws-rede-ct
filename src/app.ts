@@ -24,6 +24,7 @@ import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
 import { postGraduateProgramRoutes } from './routes/post-graduate-program-routes.ts'
+import { referenceCenterTeamMemberRoutes } from './routes/reference-center-team-member-routes.ts'
 import { regimentRoutes } from './routes/regiment-routes.ts'
 import { regionalCongressRoutes } from './routes/regional-congress-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
@@ -82,6 +83,7 @@ app.use('/scientific-journals', scientificJournalRoutes)
 app.use('/book-volumes', bookVolumeRoutes)
 app.use('/scientific-articles', scientificArticlesRoutes)
 app.use('/work-group-team-member', workGroupTeamMemberRoutes)
+app.use('/reference-center-team-member', referenceCenterTeamMemberRoutes)
 
 app.use(
   (
