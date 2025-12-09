@@ -38,6 +38,7 @@ model User {
   coursesInstructed  Course[] @relation("InstructedCourses")
 
   workGroupTeamMembers WorkGroupTeamMember[]
+  referenceCenterTeamMembers ReferenceCenterTeamMember[]
 
   @@map("users")
 }
@@ -591,4 +592,18 @@ model WorkGroupTeamMember {
 
   @@index([id], name: "work_group_team_member_id")
   @@map("work_group_team_members")
+}
+
+model ReferenceCenterTeamMember {
+  id          String   @id @default(uuid())
+  role        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([id], name: "reference_center_team_member_id")
+  @@map("reference_center_team_members")
 }
