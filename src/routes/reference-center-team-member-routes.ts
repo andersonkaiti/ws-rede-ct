@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateReferenceCenterTeamMemberController,
+  makeDeleteReferenceCenterTeamMemberController,
   makeFindReferenceCenterTeamMemberByIdController,
   makeFindReferenceCenterTeamMembersController,
   makeUpdateReferenceCenterTeamMemberController,
@@ -48,6 +49,19 @@ router.put(
       makeUpdateReferenceCenterTeamMemberController()
 
     await updateReferenceCenterTeamMemberController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteReferenceCenterTeamMemberController } =
+      makeDeleteReferenceCenterTeamMemberController()
+
+    await deleteReferenceCenterTeamMemberController.handle(req, res)
   }
 )
 

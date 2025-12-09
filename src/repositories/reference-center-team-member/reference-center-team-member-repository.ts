@@ -31,6 +31,14 @@ export class ReferenceCenterTeamMemberRepository
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.referenceCenterTeamMember.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination,
     filter: { role, orderBy },
