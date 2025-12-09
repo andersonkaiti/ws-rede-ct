@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateReferenceCenterTeamMemberController,
+  makeFindReferenceCenterTeamMemberByIdController,
   makeFindReferenceCenterTeamMembersController,
 } from '../factories/controllers/reference-center-team-member.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -27,6 +28,13 @@ router.get('/', async (req: Request, res: Response) => {
     makeFindReferenceCenterTeamMembersController()
 
   await findReferenceCenterTeamMembersController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findReferenceCenterTeamMemberByIdController } =
+    makeFindReferenceCenterTeamMemberByIdController()
+
+  await findReferenceCenterTeamMemberByIdController.handle(req, res)
 })
 
 export { router as referenceCenterTeamMemberRoutes }

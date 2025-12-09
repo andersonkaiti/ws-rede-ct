@@ -51,6 +51,21 @@ export class ReferenceCenterTeamMemberRepository
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.referenceCenterTeamMember.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        user: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+    })
+  }
+
   async count({ filter: { role } }: ICountReferenceCenterTeamMembersDTO) {
     const where: Prisma.ReferenceCenterTeamMemberWhereInput = {}
 

@@ -14,5 +14,6 @@ export interface IReferenceCenterTeamMemberRepository {
   find(
     data: IFindAllReferenceCenterTeamMembersDTO
   ): Promise<IReturnedReferenceCenterTeamMember[] | null>
+  findById(id: string): Promise<IReturnedReferenceCenterTeamMember | null>
   count(data: ICountReferenceCenterTeamMembersDTO): Promise<number>
 }
