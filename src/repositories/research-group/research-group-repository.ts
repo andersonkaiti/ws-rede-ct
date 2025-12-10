@@ -113,6 +113,26 @@ export class ResearchGroupRepository implements IResearchGroupRepository {
     })
   }
 
+  async findById(id: string): Promise<ResearchGroupWithLeaders | null> {
+    return await this.prisma.researchGroup.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        leader: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+        deputyLeader: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+    })
+  }
+
   async update({
     id,
     name,

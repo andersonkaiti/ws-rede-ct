@@ -14,6 +14,7 @@ interface ResearchGroupWithLeaders extends ResearchGroup {
 export interface IResearchGroupRepository {
   create(data: ICreateResearchGroupDTO): Promise<ResearchGroup>
   find(data: IFindResearchGroupsDTO): Promise<ResearchGroupWithLeaders[] | null>
+  findById(id: string): Promise<ResearchGroupWithLeaders | null>
   update(data: IUpdateResearchGroupDTO): Promise<void>
   count(data: ICountResearchGroupsDTO): Promise<number>
 }
