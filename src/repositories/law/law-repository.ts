@@ -49,6 +49,14 @@ export class LawRepository implements ILawRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.law.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({ filter: { title, country } }: ICountLawsDTO) {
     const where: Prisma.LawWhereInput = {}
 
