@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateLawController } from '../factories/controllers/law.factory.ts'
+import {
+  makeCreateLawController,
+  makeFindLawsController,
+} from '../factories/controllers/law.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
 const router = Router()
@@ -17,5 +20,11 @@ router.post(
     await createLawController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findLawsController } = makeFindLawsController()
+
+  await findLawsController.handle(req, res)
+})
 
 export { router as lawRoutes }

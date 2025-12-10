@@ -1,5 +1,9 @@
-import type { PrismaClient } from '@prisma/client'
-import type { ICreateLawDTO } from '../../dto/law.d.ts'
+import type { Prisma, PrismaClient } from '@prisma/client'
+import type {
+  ICountLawsDTO,
+  ICreateLawDTO,
+  IFindAllLawsDTO,
+} from '../../dto/law.d.ts'
 import type { ILawRepository } from './ilaw-repository.d.ts'
 
 export class LawRepository implements ILawRepository {
@@ -10,6 +14,60 @@ export class LawRepository implements ILawRepository {
       data: {
         ...law,
       },
+    })
+  }
+
+  async find({
+    pagination,
+    filter: { title, country, orderBy },
+  }: IFindAllLawsDTO) {
+    const where: Prisma.LawWhereInput = {}
+
+    if (title) {
+      where.title = {
+        contains: title,
+        mode: 'insensitive',
+      }
+    }
+
+    if (country) {
+      where.country = {
+        contains: country,
+        mode: 'insensitive',
+      }
+    }
+
+    return await this.prisma.law.findMany({
+      where,
+      orderBy: {
+        updatedAt: orderBy ?? 'desc',
+      },
+      ...(pagination && {
+        skip: pagination.offset,
+        take: pagination.limit,
+      }),
+    })
+  }
+
+  async count({ filter: { title, country } }: ICountLawsDTO) {
+    const where: Prisma.LawWhereInput = {}
+
+    if (title) {
+      where.title = {
+        contains: title,
+        mode: 'insensitive',
+      }
+    }
+
+    if (country) {
+      where.country = {
+        contains: country,
+        mode: 'insensitive',
+      }
+    }
+
+    return await this.prisma.law.count({
+      where,
     })
   }
 }
