@@ -3,6 +3,7 @@ import {
   makeCreateResearchGroupController,
   makeFindResearchGroupByIdController,
   makeFindResearchGroupsController,
+  makeUpdateResearchGroupController,
 } from '../factories/controllers/research-group.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -47,6 +48,20 @@ router.get(
       makeFindResearchGroupByIdController()
 
     await findResearchGroupByIdController.handle(req, res)
+  }
+)
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  upload.single('logo'),
+  async (req: Request, res: Response) => {
+    const { updateResearchGroupController } =
+      makeUpdateResearchGroupController()
+
+    await updateResearchGroupController.handle(req, res)
   }
 )
 
