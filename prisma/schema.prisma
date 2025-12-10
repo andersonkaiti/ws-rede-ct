@@ -37,7 +37,7 @@ model User {
   coursesCoordinated Course[] @relation("CoordinatedCourses")
   coursesInstructed  Course[] @relation("InstructedCourses")
 
-  workGroupTeamMembers WorkGroupTeamMember[]
+  workGroupTeamMembers       WorkGroupTeamMember[]
   referenceCenterTeamMembers ReferenceCenterTeamMember[]
 
   @@map("users")
@@ -606,4 +606,16 @@ model ReferenceCenterTeamMember {
 
   @@index([id], name: "reference_center_team_member_id")
   @@map("reference_center_team_members")
+}
+
+model Law {
+  id        String   @id @default(uuid())
+  title     String
+  link      String
+  country   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([id], name: "law_id")
+  @@map("laws")
 }

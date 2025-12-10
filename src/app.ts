@@ -17,6 +17,7 @@ import { eventRoutes } from './routes/event-routes.ts'
 import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
 import { internationalScientificCongressRoutes } from './routes/international-scientific-congress-routes.ts'
+import { lawRoutes } from './routes/law-routes.ts'
 import { legitimatorCommitteeMemberRoutes } from './routes/legitimator-committee-member-routes.ts'
 import { managementTeamRoutes } from './routes/management-team-routes.ts'
 import { meetingRoutes } from './routes/meeting-routes.ts'
@@ -84,6 +85,7 @@ app.use('/book-volumes', bookVolumeRoutes)
 app.use('/scientific-articles', scientificArticlesRoutes)
 app.use('/work-group-team-member', workGroupTeamMemberRoutes)
 app.use('/reference-center-team-member', referenceCenterTeamMemberRoutes)
+app.use('/law', lawRoutes)
 
 app.use(
   (
