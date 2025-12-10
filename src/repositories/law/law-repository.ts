@@ -3,6 +3,7 @@ import type {
   ICountLawsDTO,
   ICreateLawDTO,
   IFindAllLawsDTO,
+  IUpdateLawDTO,
 } from '../../dto/law.d.ts'
 import type { ILawRepository } from './ilaw-repository.d.ts'
 
@@ -14,6 +15,17 @@ export class LawRepository implements ILawRepository {
       data: {
         ...law,
       },
+    })
+  }
+
+  async update(law: IUpdateLawDTO) {
+    const { id, ...lawData } = law
+
+    await this.prisma.law.update({
+      where: {
+        id,
+      },
+      data: lawData,
     })
   }
 

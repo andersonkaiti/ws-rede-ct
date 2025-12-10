@@ -1,3 +1,5 @@
+import type { Law } from '@prisma/client'
+
 export interface ICreateLawDTO {
   title: string
   link: string
@@ -14,6 +16,11 @@ export interface IFindAllLawsDTO {
     country?: string
     orderBy?: 'asc' | 'desc'
   }
+}
+
+export interface IUpdateLawDTO
+  extends Partial<Omit<Law, 'createdAt' | 'updatedAt'>> {
+  id: string
 }
 
 export interface ICountLawsDTO {
