@@ -74,6 +74,13 @@ import {
   updateInternationalScientificCongressRegistry,
 } from './international-scientific-congresses/international-scientific-congresses.ts'
 import {
+  createLawRegistry,
+  deleteLawRegistry,
+  findLawByIdRegistry,
+  findLawsRegistry,
+  updateLawRegistry,
+} from './laws.ts'
+import {
   createLegitimatorCommitteeMemberRegistry,
   deleteLegitimatorCommitteeMemberRegistry,
   findLegitimatorCommitteeMemberByIdRegistry,
@@ -416,6 +423,13 @@ registry.registerPath(findBookVolumesRegistry)
 registry.registerPath(findBookVolumeByIdRegistry)
 registry.registerPath(updateBookVolumeRegistry)
 registry.registerPath(deleteBookVolumeRegistry)
+
+// Laws
+registry.registerPath(createLawRegistry)
+registry.registerPath(findLawsRegistry)
+registry.registerPath(findLawByIdRegistry)
+registry.registerPath(updateLawRegistry)
+registry.registerPath(deleteLawRegistry)
 
 // Work Group Team Members
 registry.registerPath(createWorkGroupTeamMemberRegistry)
