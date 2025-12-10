@@ -19,6 +19,7 @@ export const File = {
   BOOK_VOLUME_AUTHOR_IMAGE: 'images/book-volumes/authors',
   BOOK_VOLUME_COVER: 'images/book-volumes/covers',
   BOOK_VOLUME_CATALOG_SHEET: 'documents/book-volumes/catalog-sheets',
+  RESEARCH_GROUP_LOGO: 'images/research-groups',
 } as const
 
 export type FileType = (typeof File)[keyof typeof File]
