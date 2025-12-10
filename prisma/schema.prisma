@@ -39,6 +39,8 @@ model User {
 
   workGroupTeamMembers       WorkGroupTeamMember[]
   referenceCenterTeamMembers ReferenceCenterTeamMember[]
+  researchGroupsLeader       ResearchGroup[]             @relation("LeaderRelation")
+  researchGroupsDeputyLeader ResearchGroup[]             @relation("DeputyLeaderRelation")
 
   @@map("users")
 }
@@ -618,4 +620,28 @@ model Law {
 
   @@index([id], name: "law_id")
   @@map("laws")
+}
+
+model ResearchGroup {
+  id          String   @id @default(uuid())
+  name        String
+  acronym     String?
+  description String?
+  url         String?
+  logoUrl     String?  @map("logo_url")
+  foundedAt   DateTime @map("founded_at")
+  scope       String?
+  email       String?
+
+  leader   User   @relation("LeaderRelation", fields: [leaderId], references: [id])
+  leaderId String
+
+  deputyLeader   User   @relation("DeputyLeaderRelation", fields: [deputyLeaderId], references: [id])
+  deputyLeaderId String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([id], name: "research_group_id")
+  @@map("research_groups")
 }
