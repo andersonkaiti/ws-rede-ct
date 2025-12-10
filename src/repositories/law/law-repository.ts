@@ -29,6 +29,14 @@ export class LawRepository implements ILawRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.law.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination,
     filter: { title, country, orderBy },

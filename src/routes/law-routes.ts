@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateLawController,
+  makeDeleteLawController,
   makeFindLawByIdController,
   makeFindLawsController,
   makeUpdateLawController,
@@ -44,6 +45,18 @@ router.put(
     const { updateLawController } = makeUpdateLawController()
 
     await updateLawController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteLawController } = makeDeleteLawController()
+
+    await deleteLawController.handle(req, res)
   }
 )
 
