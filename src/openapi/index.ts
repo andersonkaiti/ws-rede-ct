@@ -171,6 +171,13 @@ import {
   updateRegionalCongressRegistry,
 } from './regional-congresses/regional-congresses.ts'
 import {
+  createResearchGroupRegistry,
+  deleteResearchGroupRegistry,
+  findResearchGroupByIdRegistry,
+  findResearchGroupsRegistry,
+  updateResearchGroupRegistry,
+} from './research-groups.ts'
+import {
   createResearcherRegistry,
   deleteResearcherRegistry,
   findResearcherByIdRegistry,
@@ -444,6 +451,13 @@ registry.registerPath(findReferenceCenterTeamMembersRegistry)
 registry.registerPath(findReferenceCenterTeamMemberByIdRegistry)
 registry.registerPath(updateReferenceCenterTeamMemberRegistry)
 registry.registerPath(deleteReferenceCenterTeamMemberRegistry)
+
+// Research Groups
+registry.registerPath(createResearchGroupRegistry)
+registry.registerPath(findResearchGroupsRegistry)
+registry.registerPath(findResearchGroupByIdRegistry)
+registry.registerPath(updateResearchGroupRegistry)
+registry.registerPath(deleteResearchGroupRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
