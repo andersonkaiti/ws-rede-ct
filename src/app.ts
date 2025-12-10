@@ -28,6 +28,7 @@ import { postGraduateProgramRoutes } from './routes/post-graduate-program-routes
 import { referenceCenterTeamMemberRoutes } from './routes/reference-center-team-member-routes.ts'
 import { regimentRoutes } from './routes/regiment-routes.ts'
 import { regionalCongressRoutes } from './routes/regional-congress-routes.ts'
+import { researchGroupRoutes } from './routes/research-group-routes.ts'
 import { researcherRoutes } from './routes/researcher-routes.ts'
 import { scientificArticlesRoutes } from './routes/scientific-articles-routes.ts'
 import { scientificJournalRoutes } from './routes/scientific-journal-routes.ts'
@@ -86,6 +87,7 @@ app.use('/scientific-articles', scientificArticlesRoutes)
 app.use('/work-group-team-member', workGroupTeamMemberRoutes)
 app.use('/reference-center-team-member', referenceCenterTeamMemberRoutes)
 app.use('/law', lawRoutes)
+app.use('/research-groups', researchGroupRoutes)
 
 app.use(
   (
