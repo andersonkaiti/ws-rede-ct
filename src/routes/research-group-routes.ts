@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateResearchGroupController } from '../factories/controllers/research-group.factory.ts'
+import {
+  makeCreateResearchGroupController,
+  makeFindResearchGroupsController,
+} from '../factories/controllers/research-group.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -18,6 +21,18 @@ router.post(
       makeCreateResearchGroupController()
 
     await createResearchGroupController.handle(req, res)
+  }
+)
+
+router.get(
+  '/',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findResearchGroupsController } = makeFindResearchGroupsController()
+
+    await findResearchGroupsController.handle(req, res)
   }
 )
 

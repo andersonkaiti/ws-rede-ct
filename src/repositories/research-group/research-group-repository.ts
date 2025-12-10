@@ -1,9 +1,14 @@
-import type { PrismaClient, ResearchGroup } from '@prisma/client'
+import type { Prisma, PrismaClient, ResearchGroup } from '@prisma/client'
 import type {
+  ICountResearchGroupsDTO,
   ICreateResearchGroupDTO,
+  IFindResearchGroupsDTO,
   IUpdateResearchGroupDTO,
 } from '../../dto/research-group.ts'
-import type { IResearchGroupRepository } from './iresearch-group-repository.ts'
+import type {
+  IResearchGroupRepository,
+  ResearchGroupWithLeaders,
+} from './iresearch-group-repository.ts'
 
 export class ResearchGroupRepository implements IResearchGroupRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -36,6 +41,78 @@ export class ResearchGroupRepository implements IResearchGroupRepository {
     })
   }
 
+  async find({
+    pagination: { offset, limit },
+    filter: { name, acronym, description, leader, orderBy },
+  }: IFindResearchGroupsDTO): Promise<ResearchGroupWithLeaders[]> {
+    const where: Prisma.ResearchGroupWhereInput = {}
+
+    const or: Prisma.ResearchGroupWhereInput[] = []
+
+    if (name) {
+      or.push({
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (acronym) {
+      or.push({
+        acronym: {
+          contains: acronym,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (leader) {
+      or.push({
+        leader: {
+          name: {
+            contains: leader,
+            mode: 'insensitive',
+          },
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.researchGroup.findMany({
+      where,
+      include: {
+        leader: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+        deputyLeader: {
+          omit: {
+            passwordHash: true,
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
+    })
+  }
+
   async update({
     id,
     name,
@@ -65,6 +142,60 @@ export class ResearchGroupRepository implements IResearchGroupRepository {
         leaderId,
         deputyLeaderId,
       },
+    })
+  }
+
+  async count({
+    filter: { name, acronym, description, leader },
+  }: ICountResearchGroupsDTO): Promise<number> {
+    const where: Prisma.ResearchGroupWhereInput = {}
+
+    const or: Prisma.ResearchGroupWhereInput[] = []
+
+    if (name) {
+      or.push({
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (acronym) {
+      or.push({
+        acronym: {
+          contains: acronym,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (description) {
+      or.push({
+        description: {
+          contains: description,
+          mode: 'insensitive',
+        },
+      })
+    }
+
+    if (leader) {
+      or.push({
+        leader: {
+          name: {
+            contains: leader,
+            mode: 'insensitive',
+          },
+        },
+      })
+    }
+
+    if (or.length > 0) {
+      where.OR = or
+    }
+
+    return await this.prisma.researchGroup.count({
+      where,
     })
   }
 }
