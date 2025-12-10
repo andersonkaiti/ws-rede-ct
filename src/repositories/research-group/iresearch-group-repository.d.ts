@@ -16,5 +16,6 @@ export interface IResearchGroupRepository {
   find(data: IFindResearchGroupsDTO): Promise<ResearchGroupWithLeaders[] | null>
   findById(id: string): Promise<ResearchGroupWithLeaders | null>
   update(data: IUpdateResearchGroupDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   count(data: ICountResearchGroupsDTO): Promise<number>
 }

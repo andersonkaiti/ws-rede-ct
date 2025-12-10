@@ -165,6 +165,14 @@ export class ResearchGroupRepository implements IResearchGroupRepository {
     })
   }
 
+  async deleteById(id: string): Promise<void> {
+    await this.prisma.researchGroup.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { name, acronym, description, leader },
   }: ICountResearchGroupsDTO): Promise<number> {

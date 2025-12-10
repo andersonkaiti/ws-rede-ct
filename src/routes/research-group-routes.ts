@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateResearchGroupController,
+  makeDeleteResearchGroupController,
   makeFindResearchGroupByIdController,
   makeFindResearchGroupsController,
   makeUpdateResearchGroupController,
@@ -62,6 +63,19 @@ router.put(
       makeUpdateResearchGroupController()
 
     await updateResearchGroupController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteResearchGroupController } =
+      makeDeleteResearchGroupController()
+
+    await deleteResearchGroupController.handle(req, res)
   }
 )
 

@@ -1,4 +1,5 @@
 import { CreateResearchGroupController } from '../../controllers/research-groups/create-research-group-controller.ts'
+import { DeleteResearchGroupController } from '../../controllers/research-groups/delete-research-group-controller.ts'
 import { FindResearchGroupByIdController } from '../../controllers/research-groups/find-research-group-by-id-controller.ts'
 import { FindResearchGroupsController } from '../../controllers/research-groups/find-research-groups-controller.ts'
 import { UpdateResearchGroupController } from '../../controllers/research-groups/update-research-group-controller.ts'
@@ -33,6 +34,15 @@ export function makeFindResearchGroupByIdController() {
 export function makeUpdateResearchGroupController() {
   return {
     updateResearchGroupController: new UpdateResearchGroupController(
+      makeResearchGroupRepository(),
+      makeFirebaseStorageService()
+    ),
+  }
+}
+
+export function makeDeleteResearchGroupController() {
+  return {
+    deleteResearchGroupController: new DeleteResearchGroupController(
       makeResearchGroupRepository(),
       makeFirebaseStorageService()
     ),
