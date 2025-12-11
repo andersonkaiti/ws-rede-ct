@@ -645,3 +645,27 @@ model ResearchGroup {
   @@index([id], name: "research_group_id")
   @@map("research_groups")
 }
+
+model Museum {
+  id String @id @default(uuid())
+
+  logoUrl String? @map("logo_url")
+
+  name    String
+  city    String?
+  state   String?
+  country String?
+
+  description String?
+  website     String?
+  email       String?
+  phone       String?
+  address     String?
+  functioning String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([id], name: "museum_id")
+  @@map("museums")
+}
