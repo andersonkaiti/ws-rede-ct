@@ -83,6 +83,14 @@ export class MuseumRepository implements IMuseumRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.museum.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({ filter: { name, city, state, country } }: ICountMuseumDTO) {
     const where: Prisma.MuseumWhereInput = {}
 
