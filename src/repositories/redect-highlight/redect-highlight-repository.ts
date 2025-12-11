@@ -25,6 +25,12 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.redeCTHighlight.delete({
+      where: { id },
+    })
+  }
+
   async find({
     pagination,
     filter: { name, type, description, honorableMention, orderBy },

@@ -9,6 +9,7 @@ import type {
 export interface IRedeCTHighlightRepository {
   create(highlight: ICreateRedeCTHighlightDTO): Promise<RedeCTHighlight>
   update(highlight: IUpdateRedeCTHighlightDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(data: IFindAllRedeCTHighlightDTO): Promise<RedeCTHighlight[] | null>
   findById(id: string): Promise<RedeCTHighlight | null>
   count(data: ICountRedeCTHighlightDTO): Promise<number>
