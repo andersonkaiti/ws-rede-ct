@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateRedeCTHighlightController,
+  makeFindRedeCTHighlightByIdController,
   makeFindRedeCTHighlightsController,
 } from '../factories/controllers/redect-highlight.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -29,6 +30,13 @@ router.get('/', async (req: Request, res: Response) => {
     makeFindRedeCTHighlightsController()
 
   await findRedeCTHighlightsController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findRedeCTHighlightByIdController } =
+    makeFindRedeCTHighlightByIdController()
+
+  await findRedeCTHighlightByIdController.handle(req, res)
 })
 
 export { router as redectHighlightRoutes }

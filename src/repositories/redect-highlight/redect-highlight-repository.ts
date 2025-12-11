@@ -78,6 +78,14 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.redeCTHighlight.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count({
     filter: { name, type, description, honorableMention },
   }: ICountRedeCTHighlightDTO) {
