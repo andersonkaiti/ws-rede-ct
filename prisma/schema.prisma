@@ -669,3 +669,25 @@ model Museum {
   @@index([id], name: "museum_id")
   @@map("museums")
 }
+
+enum RedeCTHighlightType {
+  PERSON
+  INSTITUTION
+}
+
+model RedeCTHighlight {
+  id               String              @id @default(uuid())
+  type             RedeCTHighlightType
+  name             String
+  description      String?
+  honorableMention String?             @map("honorable_mention")
+  imageUrl         String?             @map("image_url")
+  honoredAt        DateTime            @map("honored_at")
+  meritUrl         String?             @map("merit_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([id], name: "redect_highlight_id")
+  @@map("redect_highlights")
+}
