@@ -26,6 +26,7 @@ import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
 import { postGraduateProgramRoutes } from './routes/post-graduate-program-routes.ts'
+import { redectHighlightRoutes } from './routes/redect-highlight-routes.ts'
 import { referenceCenterTeamMemberRoutes } from './routes/reference-center-team-member-routes.ts'
 import { regimentRoutes } from './routes/regiment-routes.ts'
 import { regionalCongressRoutes } from './routes/regional-congress-routes.ts'
@@ -90,6 +91,7 @@ app.use('/reference-center-team-member', referenceCenterTeamMemberRoutes)
 app.use('/law', lawRoutes)
 app.use('/research-groups', researchGroupRoutes)
 app.use('/museum', museumRoutes)
+app.use('/redect-highlight', redectHighlightRoutes)
 
 app.use(
   (

@@ -21,6 +21,7 @@ export const File = {
   BOOK_VOLUME_CATALOG_SHEET: 'documents/book-volumes/catalog-sheets',
   RESEARCH_GROUP_LOGO: 'images/research-groups',
   MUSEUM: 'images/museums',
+  REDECT_HIGHLIGHT: 'images/redect-highlights',
 } as const
 
 export type FileType = (typeof File)[keyof typeof File]

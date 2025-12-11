@@ -143,6 +143,13 @@ import {
   updatePostGraduateProgramRegistry,
 } from './post-graduate-programs.ts'
 import {
+  createRedeCTHighlightRegistry,
+  deleteRedeCTHighlightRegistry,
+  findRedeCTHighlightByIdRegistry,
+  findRedeCTHighlightsRegistry,
+  updateRedeCTHighlightRegistry,
+} from './redect-highlights.ts'
+import {
   createReferenceCenterTeamMemberRegistry,
   deleteReferenceCenterTeamMemberRegistry,
   findReferenceCenterTeamMemberByIdRegistry,
@@ -312,6 +319,13 @@ registry.registerPath(findMuseumsRegistry)
 registry.registerPath(findMuseumByIdRegistry)
 registry.registerPath(updateMuseumRegistry)
 registry.registerPath(deleteMuseumRegistry)
+
+// RedeCT Highlights
+registry.registerPath(createRedeCTHighlightRegistry)
+registry.registerPath(findRedeCTHighlightsRegistry)
+registry.registerPath(findRedeCTHighlightByIdRegistry)
+registry.registerPath(updateRedeCTHighlightRegistry)
+registry.registerPath(deleteRedeCTHighlightRegistry)
 
 // Management Teams
 registry.registerPath(createManagementTeamRegistry)
