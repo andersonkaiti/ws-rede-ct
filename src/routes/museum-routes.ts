@@ -3,6 +3,7 @@ import {
   makeCreateMuseumController,
   makeFindMuseumByIdController,
   makeFindMuseumsController,
+  makeUpdateMuseumController,
 } from '../factories/controllers/museum.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -35,5 +36,18 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   await findMuseumByIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('logo'),
+  async (req: Request, res: Response) => {
+    const { updateMuseumController } = makeUpdateMuseumController()
+
+    await updateMuseumController.handle(req, res)
+  }
+)
 
 export { router as museumRoutes }
