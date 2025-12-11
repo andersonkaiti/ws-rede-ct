@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateMuseumController } from '../factories/controllers/museum.factory.ts'
+import {
+  makeCreateMuseumController,
+  makeFindMuseumsController,
+} from '../factories/controllers/museum.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -19,5 +22,11 @@ router.post(
     await createMuseumController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findMuseumsController } = makeFindMuseumsController()
+
+  await findMuseumsController.handle(req, res)
+})
 
 export { router as museumRoutes }
