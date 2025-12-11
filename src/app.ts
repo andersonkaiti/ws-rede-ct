@@ -21,6 +21,7 @@ import { lawRoutes } from './routes/law-routes.ts'
 import { legitimatorCommitteeMemberRoutes } from './routes/legitimator-committee-member-routes.ts'
 import { managementTeamRoutes } from './routes/management-team-routes.ts'
 import { meetingRoutes } from './routes/meeting-routes.ts'
+import { museumRoutes } from './routes/museum-routes.ts'
 import { newsRoutes } from './routes/news-routes.ts'
 import { partnerRoutes } from './routes/partner-routes.ts'
 import { pendencyRoutes } from './routes/pendency-routes.ts'
@@ -88,6 +89,7 @@ app.use('/work-group-team-member', workGroupTeamMemberRoutes)
 app.use('/reference-center-team-member', referenceCenterTeamMemberRoutes)
 app.use('/law', lawRoutes)
 app.use('/research-groups', researchGroupRoutes)
+app.use('/museum', museumRoutes)
 
 app.use(
   (

@@ -109,6 +109,13 @@ import {
   updateMeetingRegistry,
 } from './meetings.ts'
 import {
+  createMuseumRegistry,
+  deleteMuseumRegistry,
+  findMuseumByIdRegistry,
+  findMuseumsRegistry,
+  updateMuseumRegistry,
+} from './museums.ts'
+import {
   createNewsRegistry,
   findAllNewsRegistry,
   findNewsByAuthorIdRegistry,
@@ -298,6 +305,13 @@ registry.registerPath(findPartnersRegistry)
 registry.registerPath(findPartnerByIdRegistry)
 registry.registerPath(updatePartnerRegistry)
 registry.registerPath(deletePartnerRegistry)
+
+// Museums
+registry.registerPath(createMuseumRegistry)
+registry.registerPath(findMuseumsRegistry)
+registry.registerPath(findMuseumByIdRegistry)
+registry.registerPath(updateMuseumRegistry)
+registry.registerPath(deleteMuseumRegistry)
 
 // Management Teams
 registry.registerPath(createManagementTeamRegistry)
