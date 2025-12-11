@@ -3,6 +3,7 @@ import {
   makeCreateRedeCTHighlightController,
   makeFindRedeCTHighlightByIdController,
   makeFindRedeCTHighlightsController,
+  makeUpdateRedeCTHighlightController,
 } from '../factories/controllers/redect-highlight.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -38,5 +39,19 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   await findRedeCTHighlightByIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { updateRedeCTHighlightController } =
+      makeUpdateRedeCTHighlightController()
+
+    await updateRedeCTHighlightController.handle(req, res)
+  }
+)
 
 export { router as redectHighlightRoutes }
