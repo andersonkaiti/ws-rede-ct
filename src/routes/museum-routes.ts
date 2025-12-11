@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateMuseumController,
+  makeDeleteMuseumController,
   makeFindMuseumByIdController,
   makeFindMuseumsController,
   makeUpdateMuseumController,
@@ -47,6 +48,18 @@ router.put(
     const { updateMuseumController } = makeUpdateMuseumController()
 
     await updateMuseumController.handle(req, res)
+  }
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.authenticated(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteMuseumController } = makeDeleteMuseumController()
+
+    await deleteMuseumController.handle(req, res)
   }
 )
 

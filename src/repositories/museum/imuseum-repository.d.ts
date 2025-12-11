@@ -9,6 +9,7 @@ import type {
 export interface IMuseumRepository {
   create(museum: ICreateMuseumDTO): Promise<Museum>
   update(museum: IUpdateMuseumDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(data: IFindAllMuseumDTO): Promise<Museum[] | null>
   findById(id: string): Promise<Museum | null>
   count(data: ICountMuseumDTO): Promise<number>

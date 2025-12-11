@@ -25,6 +25,12 @@ export class MuseumRepository implements IMuseumRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.museum.delete({
+      where: { id },
+    })
+  }
+
   async find({
     pagination,
     filter: { name, city, state, country, orderBy },
