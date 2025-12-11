@@ -1,4 +1,5 @@
 import { CreateRedeCTHighlightController } from '../../controllers/redect-highlights/create-redect-highlight-controller.ts'
+import { FindRedeCTHighlightsController } from '../../controllers/redect-highlights/find-redect-highlights-controller.ts'
 import { makeRedeCTHighlightRepository } from '../repositories/redect-highlight.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
 
@@ -7,6 +8,14 @@ export function makeCreateRedeCTHighlightController() {
     createRedeCTHighlightController: new CreateRedeCTHighlightController(
       makeRedeCTHighlightRepository(),
       makeFirebaseStorageService()
+    ),
+  }
+}
+
+export function makeFindRedeCTHighlightsController() {
+  return {
+    findRedeCTHighlightsController: new FindRedeCTHighlightsController(
+      makeRedeCTHighlightRepository()
     ),
   }
 }

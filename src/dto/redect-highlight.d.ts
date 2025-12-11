@@ -10,7 +10,30 @@ export interface ICreateRedeCTHighlightDTO {
   meritUrl?: string
 }
 
+export interface IFindAllRedeCTHighlightDTO {
+  pagination: {
+    offset: number
+    limit: number
+  }
+  filter: {
+    name?: string
+    type?: RedeCTHighlightType
+    description?: string
+    honorableMention?: string
+    orderBy?: 'asc' | 'desc'
+  }
+}
+
 export interface IUpdateRedeCTHighlightDTO
   extends Partial<Omit<RedeCTHighlight, 'createdAt' | 'updatedAt'>> {
   id: string
+}
+
+export interface ICountRedeCTHighlightDTO {
+  filter: {
+    name?: string
+    type?: RedeCTHighlightType
+    description?: string
+    honorableMention?: string
+  }
 }

@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateRedeCTHighlightController } from '../factories/controllers/redect-highlight.factory.ts'
+import {
+  makeCreateRedeCTHighlightController,
+  makeFindRedeCTHighlightsController,
+} from '../factories/controllers/redect-highlight.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -20,5 +23,12 @@ router.post(
     await createRedeCTHighlightController.handle(req, res)
   }
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findRedeCTHighlightsController } =
+    makeFindRedeCTHighlightsController()
+
+  await findRedeCTHighlightsController.handle(req, res)
+})
 
 export { router as redectHighlightRoutes }
