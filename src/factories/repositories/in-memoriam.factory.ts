@@ -1,4 +1,4 @@
-import { prisma } from '../../../config/database.ts'
+import { prisma } from '../../../config/database/index.ts'
 import { InMemoriamRepository } from '../../repositories/in-memoriam/in-memoriam-repository.ts'
 
 export function makeInMemoriamRepository() {

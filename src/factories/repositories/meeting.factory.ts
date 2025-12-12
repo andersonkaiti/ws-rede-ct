@@ -1,4 +1,4 @@
-import { prisma } from '../../../config/database.ts'
+import { prisma } from '../../../config/database/index.ts'
 import { MeetingRepository } from '../../repositories/meeting/meeting-repository.ts'
 
 export function makeMeetingRepository() {

@@ -1,4 +1,4 @@
-import { prisma } from '../../../../config/database.ts'
+import { prisma } from '../../../../config/database/index.ts'
 import { RegionalCongressPartnerRepository } from '../../../repositories/regional-congress/partner/regional-congress-partner-repository.ts'
 
 export function makeRegionalCongressPartnerRepository() {

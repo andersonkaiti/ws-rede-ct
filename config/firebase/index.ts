@@ -1,8 +1,5 @@
-import { config } from 'dotenv'
 import admin, { type ServiceAccount } from 'firebase-admin'
 import { env } from '../../src/config/env.ts'
-
-config()
 
 const app = admin.initializeApp({
   credential: admin.credential.cert({
@@ -27,3 +24,4 @@ if (app.name) {
 }
 
 export { app }
+

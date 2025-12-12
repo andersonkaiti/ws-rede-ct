@@ -1,4 +1,4 @@
-import { prisma } from '../../../config/database.ts'
+import { prisma } from '../../../config/database/index.ts'
 import { ResearchGroupRepository } from '../../repositories/research-group/research-group-repository.ts'
 
 export function makeResearchGroupRepository() {

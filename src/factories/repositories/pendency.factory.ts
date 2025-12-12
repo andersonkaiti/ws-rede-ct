@@ -1,4 +1,4 @@
-import { prisma } from '../../../config/database.ts'
+import { prisma } from '../../../config/database/index.ts'
 import { PendencyRepository } from '../../repositories/pendency/pendency-repository.ts'
 
 export function makePendencyRepository() {
