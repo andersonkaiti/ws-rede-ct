@@ -25,11 +25,10 @@ export const updateEventSchema = z.object({
   endDate: z.coerce.date().optional(),
   location: z.string().optional(),
   format: z.nativeEnum(EventFormat).optional(),
-  eventLink: z
-    .string()
-    .url('Link do evento deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
+  eventLink: z.union([
+    z.url('Link do evento deve ser uma URL válida'),
+    z.literal(''),
+  ]),
   status: z.nativeEnum(EventStatus).optional(),
   image: z
     .any()
@@ -41,7 +40,7 @@ export const updateEventSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A imagem deve ser uma imagem válida de no máximo 5MB.'
+      'A imagem deve ser uma imagem válida de no máximo 5MB.',
     )
     .optional(),
 })
@@ -49,7 +48,7 @@ export const updateEventSchema = z.object({
 export class UpdateEventController {
   constructor(
     private readonly eventRepository: IEventRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

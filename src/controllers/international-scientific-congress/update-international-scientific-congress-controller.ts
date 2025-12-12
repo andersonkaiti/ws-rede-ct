@@ -20,35 +20,35 @@ export const updateInternationalScientificCongressSchema = z.object({
   endDate: z.coerce.date().optional(),
   description: z.string().optional(),
   location: z.string().optional(),
-  congressLink: z
-    .url('Link do congresso deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
-  noticeUrl: z
-    .url('URL do edital deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
-  scheduleUrl: z
-    .url('URL do cronograma deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
-  programUrl: z
-    .url('URL da programação deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
-  adminReportUrl: z
-    .url('URL do relatório administrativo deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
-  proceedingsUrl: z
-    .url('URL dos anais deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
+  congressLink: z.union([
+    z.url('Link do congresso deve ser uma URL válida'),
+    z.literal(''),
+  ]),
+  noticeUrl: z.union([
+    z.url('URL do edital deve ser uma URL válida'),
+    z.literal(''),
+  ]),
+  scheduleUrl: z.union([
+    z.url('URL do cronograma deve ser uma URL válida'),
+    z.literal(''),
+  ]),
+  programUrl: z.union([
+    z.url('URL da programação deve ser uma URL válida'),
+    z.literal(''),
+  ]),
+  adminReportUrl: z.union([
+    z.url('URL do relatório administrativo deve ser uma URL válida'),
+    z.literal(''),
+  ]),
+  proceedingsUrl: z.union([
+    z.url('URL dos anais deve ser uma URL válida'),
+    z.literal(''),
+  ]),
 })
 
 export class UpdateInternationalScientificCongressController {
   constructor(
-    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository
+    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

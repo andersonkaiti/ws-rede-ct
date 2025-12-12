@@ -22,19 +22,18 @@ extendZodWithOpenApi(z)
 export const updateUserSchema = z.object({
   name: z.string().optional(),
   lattesUrl: z.string().optional(),
-  orcid: z
-    .string()
-    .optional()
-    .transform((val) => (val === undefined ? undefined : val.trim()))
-    .refine((val) => val === undefined || val === '' || ORCID_REGEX.test(val), {
+  orcid: z.union([
+    z.string().regex(ORCID_REGEX, {
       message: 'ORCID inválido. Deve estar no formato 0000-0000-0000-0000',
     }),
-  phone: z
-    .string()
-    .optional()
-    .refine((val) => val === undefined || val === '' || PHONE_REGEX.test(val), {
+    z.literal(''),
+  ]),
+  phone: z.union([
+    z.string().regex(PHONE_REGEX, {
       message: 'Telefone inválido. Deve estar no formato (99) 99999-9999',
     }),
+    z.literal(''),
+  ]),
   avatarImage: z
     .any()
     .refine((value) => {
@@ -54,7 +53,7 @@ export const updateUserSchema = z.object({
 export class UpdateUserController {
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

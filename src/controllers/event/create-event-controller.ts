@@ -24,11 +24,10 @@ export const createEventSchema = z
     endDate: z.coerce.date(),
     location: z.string().optional(),
     format: z.enum(EventFormat).default(EventFormat.ONLINE),
-    eventLink: z
-      .string()
-      .url('Link do evento deve ser uma URL válida')
-      .optional()
-      .or(z.literal('')),
+    eventLink: z.union([
+      z.url('Link do evento deve ser uma URL válida'),
+      z.literal(''),
+    ]),
     status: z.enum(EventStatus).default(EventStatus.PENDING),
     image: z
       .any()
@@ -40,7 +39,7 @@ export const createEventSchema = z
             file.mimetype.startsWith('image/') &&
             typeof file.size === 'number' &&
             file.size <= MAX_IMAGE_SIZE_BYTES),
-        'A imagem deve ser uma imagem válida de no máximo 5MB.'
+        'A imagem deve ser uma imagem válida de no máximo 5MB.',
       ),
   })
   .refine(
@@ -57,13 +56,13 @@ export const createEventSchema = z
       message:
         'Eventos online devem ter link e eventos presenciais devem ter localização',
       path: ['format'],
-    }
+    },
   )
 
 export class CreateEventController {
   constructor(
     private readonly eventRepository: IEventRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
