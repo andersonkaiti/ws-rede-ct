@@ -1,7 +1,10 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { EventFormat, EventStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import {
+  EventFormat,
+  EventStatus,
+} from '../../../config/database/generated/enums.ts'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
@@ -24,12 +27,12 @@ export const updateEventSchema = z.object({
   startDate: z.coerce.date().optional(),
   endDate: z.coerce.date().optional(),
   location: z.string().optional(),
-  format: z.nativeEnum(EventFormat).optional(),
+  format: z.enum(EventFormat).optional(),
   eventLink: z.union([
     z.url('Link do evento deve ser uma URL válida'),
     z.literal(''),
   ]),
-  status: z.nativeEnum(EventStatus).optional(),
+  status: z.enum(EventStatus).optional(),
   image: z
     .any()
     .refine(

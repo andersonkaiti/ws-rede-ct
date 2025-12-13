@@ -1,4 +1,4 @@
-import type { News, User } from '@prisma/client'
+import type { News, User } from '../../../config/database/generated/client.ts'
 import type {
   ICountNewsDTO,
   IFindAllDTO,

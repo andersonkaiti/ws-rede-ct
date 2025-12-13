@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { $Enums } from '@prisma/client'
 import z from 'zod'
+import { UserRole } from '../../config/database/generated/enums.ts'
 import { createReferenceCenterTeamMemberSchema } from '../controllers/reference-center-team-member/create-reference-center-team-member-controller.ts'
 import { deleteReferenceCenterTeamMemberSchema } from '../controllers/reference-center-team-member/delete-reference-center-team-member-controller.ts'
 import { findReferenceCenterTeamMemberByIdSchema } from '../controllers/reference-center-team-member/find-reference-center-team-member-by-id-controller.ts'
@@ -14,7 +14,7 @@ const userSchema = z.object({
   orcid: z.string().nullable(),
   phone: z.string().nullable(),
   lattesUrl: z.string().nullable(),
-  role: z.enum($Enums.UserRole),
+  role: z.nativeEnum(UserRole),
 })
 
 const referenceCenterTeamMemberSchema = z.object({

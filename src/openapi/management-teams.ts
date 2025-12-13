@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { $Enums } from '@prisma/client'
 import z from 'zod'
+import { UserRole } from '../../config/database/generated/enums.ts'
 import { createManagementTeamSchema } from '../controllers/management-team/create-management-team-controller.ts'
 import { deleteManagementTeamSchema } from '../controllers/management-team/delete-management-team-controller.ts'
 import { findManagementTeamByIdSchema } from '../controllers/management-team/find-management-team-by-id-controller.ts'
@@ -14,7 +14,7 @@ const userSchema = z.object({
   orcid: z.string().nullable(),
   phone: z.string().nullable(),
   lattesUrl: z.string().nullable(),
-  role: z.enum($Enums.UserRole),
+  role: z.nativeEnum(UserRole),
 })
 
 const memberSchema = z.object({
@@ -336,4 +336,3 @@ export const deleteManagementTeamRegistry: RouteConfig = {
     },
   },
 }
-

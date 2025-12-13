@@ -1,4 +1,7 @@
-import type { Researcher, User } from '@prisma/client'
+import type {
+  Researcher,
+  User,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountResearchersDTO,
   ICreateResearcherDTO,
@@ -17,12 +20,12 @@ export interface IResearcherRepository {
   update(researcher: IUpdateResearcherDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
-    data: IFindAllResearchersDTO
+    data: IFindAllResearchersDTO,
   ): Promise<ReturnedResearcherWithUser[] | null>
   findById(id: string): Promise<ReturnedResearcherWithUser | null>
   findByUserId(userId: string): Promise<ReturnedResearcherWithUser | null>
   findByRegistrationNumber(
-    registrationNumber: string
+    registrationNumber: string,
   ): Promise<ReturnedResearcherWithUser | null>
   count(data: ICountResearchersDTO): Promise<number>
 }

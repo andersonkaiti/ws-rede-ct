@@ -1,4 +1,4 @@
-import type { ScientificArticle } from '@prisma/client'
+import type { ScientificArticle } from '../../../config/database/generated/client.ts'
 import type {
   ICountScientificArticlesDTO,
   ICreateScientificArticleDTO,

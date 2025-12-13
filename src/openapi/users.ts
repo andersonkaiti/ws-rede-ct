@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { $Enums } from '@prisma/client'
 import z from 'zod'
+import { UserRole } from '../../config/database/generated/enums.ts'
 import { deleteUserSchema } from '../controllers/users/delete-user-controller.ts'
 import { paramsSchema } from '../controllers/users/find-user-controller.ts'
 import { updateUserSchema } from '../controllers/users/update-user-controller.ts'
@@ -24,7 +24,7 @@ export const findUserRegistry: RouteConfig = {
             name: z.string(),
             createdAt: z.date(),
             updatedAt: z.date(),
-            role: z.enum($Enums.UserRole),
+            role: z.nativeEnum(UserRole),
             lattesUrl: z.string().nullable(),
             orcid: z.string().nullable(),
             phone: z.string().nullable(),
@@ -207,13 +207,13 @@ export const findUsersRegistry: RouteConfig = {
               name: z.string(),
               createdAt: z.date(),
               updatedAt: z.date(),
-              role: z.enum($Enums.UserRole),
+              role: z.nativeEnum(UserRole),
               lattesUrl: z.url().nullable(),
               orcid: z.string().nullable(),
               phone: z.string().nullable(),
               avatarUrl: z.string().nullable(),
               emailAddress: z.email(),
-            })
+            }),
           ),
         },
       },

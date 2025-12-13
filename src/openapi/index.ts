@@ -249,7 +249,6 @@ registry.registerComponent('securitySchemes', 'bearerAuth', {
   bearerFormat: 'JWT',
 })
 
-// Auth
 registry.registerPath(signUpRegistry)
 registry.registerPath(signInRegistry)
 registry.registerPath(authUserRegistry)
@@ -258,40 +257,34 @@ registry.registerPath(authUserCertificationsRegistry)
 registry.registerPath(authUserPendenciesRegistry)
 registry.registerPath(adminPingRegistry)
 
-// Users
 registry.registerPath(findUserRegistry)
 registry.registerPath(updateUserRegistry)
 registry.registerPath(deleteUserRegistry)
 registry.registerPath(findUsersRegistry)
 
-// News
 registry.registerPath(createNewsRegistry)
 registry.registerPath(findAllNewsRegistry)
 registry.registerPath(findNewsByIdRegistry)
 registry.registerPath(findNewsByAuthorIdRegistry)
 
-// Certifications
 registry.registerPath(registerCertificationRegistry)
 registry.registerPath(findCertificationsRegistry)
 registry.registerPath(findCertificationByIdRegistry)
 registry.registerPath(updateCertificationRegistry)
 registry.registerPath(deleteCertificationRegistry)
 
-// Pendencies
 registry.registerPath(createPendencyRegistry)
 registry.registerPath(findPendenciesRegistry)
 registry.registerPath(findPendencyByIdRegistry)
 registry.registerPath(updatePendencyRegistry)
 registry.registerPath(deletePendencyRegistry)
 
-// In Memoriam
 registry.registerPath(createInMemoriamRegistry)
 registry.registerPath(findInMemoriamsRegistry)
 registry.registerPath(findInMemoriamByIdRegistry)
 registry.registerPath(updateInMemoriamRegistry)
 registry.registerPath(deleteInMemoriamRegistry)
 
-// Researchers
 registry.registerPath(createResearcherRegistry)
 registry.registerPath(findResearchersRegistry)
 registry.registerPath(findResearcherByIdRegistry)
@@ -299,56 +292,48 @@ registry.registerPath(findResearcherByUserIdRegistry)
 registry.registerPath(updateResearcherRegistry)
 registry.registerPath(deleteResearcherRegistry)
 
-// ETPs
 registry.registerPath(createETPRegistry)
 registry.registerPath(findETPsRegistry)
 registry.registerPath(findETPByIdRegistry)
 registry.registerPath(updateETPRegistry)
 registry.registerPath(deleteETPRegistry)
 
-// Partners
 registry.registerPath(createPartnerRegistry)
 registry.registerPath(findPartnersRegistry)
 registry.registerPath(findPartnerByIdRegistry)
 registry.registerPath(updatePartnerRegistry)
 registry.registerPath(deletePartnerRegistry)
 
-// Museums
 registry.registerPath(createMuseumRegistry)
 registry.registerPath(findMuseumsRegistry)
 registry.registerPath(findMuseumByIdRegistry)
 registry.registerPath(updateMuseumRegistry)
 registry.registerPath(deleteMuseumRegistry)
 
-// RedeCT Highlights
 registry.registerPath(createRedeCTHighlightRegistry)
 registry.registerPath(findRedeCTHighlightsRegistry)
 registry.registerPath(findRedeCTHighlightByIdRegistry)
 registry.registerPath(updateRedeCTHighlightRegistry)
 registry.registerPath(deleteRedeCTHighlightRegistry)
 
-// Management Teams
 registry.registerPath(createManagementTeamRegistry)
 registry.registerPath(findManagementTeamsRegistry)
 registry.registerPath(findManagementTeamByIdRegistry)
 registry.registerPath(updateManagementTeamRegistry)
 registry.registerPath(deleteManagementTeamRegistry)
 
-// SDHC Team Members
 registry.registerPath(createSDHCTeamMemberRegistry)
 registry.registerPath(findSDHCTeamMembersRegistry)
 registry.registerPath(findSDHCTeamMemberByIdRegistry)
 registry.registerPath(updateSDHCTeamMemberRegistry)
 registry.registerPath(deleteSDHCTeamMemberRegistry)
 
-// Legitimator Committee Members
 registry.registerPath(createLegitimatorCommitteeMemberRegistry)
 registry.registerPath(findLegitimatorCommitteeMembersRegistry)
 registry.registerPath(findLegitimatorCommitteeMemberByIdRegistry)
 registry.registerPath(updateLegitimatorCommitteeMemberRegistry)
 registry.registerPath(deleteLegitimatorCommitteeMemberRegistry)
 
-// Regiments
 registry.registerPath(createRegimentRegistry)
 registry.registerPath(findRegimentsRegistry)
 registry.registerPath(findRegimentByIdRegistry)
@@ -356,7 +341,6 @@ registry.registerPath(findRegimentByStatusRegistry)
 registry.registerPath(updateRegimentRegistry)
 registry.registerPath(deleteRegimentRegistry)
 
-// Meetings
 registry.registerPath(createMeetingRegistry)
 registry.registerPath(findMeetingsRegistry)
 registry.registerPath(findMeetingByIdRegistry)
@@ -364,13 +348,11 @@ registry.registerPath(findMeetingByStatusRegistry)
 registry.registerPath(updateMeetingRegistry)
 registry.registerPath(deleteMeetingRegistry)
 
-// Meeting Minutes (as sub-resource of Meetings)
 registry.registerPath(createMeetingMinuteRegistry)
 registry.registerPath(findMeetingMinuteByMeetingIdRegistry)
 registry.registerPath(updateMeetingMinuteRegistry)
 registry.registerPath(deleteMeetingMinuteRegistry)
 
-// International Scientific Congresses
 registry.registerPath(createInternationalScientificCongressRegistry)
 registry.registerPath(findInternationalScientificCongressesRegistry)
 registry.registerPath(findInternationalScientificCongressByIdRegistry)
@@ -378,19 +360,16 @@ registry.registerPath(findInternationalScientificCongressByEditionRegistry)
 registry.registerPath(updateInternationalScientificCongressRegistry)
 registry.registerPath(deleteInternationalScientificCongressRegistry)
 
-// Congress Partners (as sub-resource of Congresses)
 registry.registerPath(createCongressPartnerRegistry)
 registry.registerPath(findCongressPartnersByCongressIdRegistry)
 registry.registerPath(updateCongressPartnerRegistry)
 registry.registerPath(deleteCongressPartnerRegistry)
 
-// Congress Galleries (as sub-resource of Congresses)
 registry.registerPath(createCongressGalleryRegistry)
 registry.registerPath(findCongressGalleriesByCongressIdRegistry)
 registry.registerPath(updateCongressGalleryRegistry)
 registry.registerPath(deleteCongressGalleryRegistry)
 
-// Regional Congresses
 registry.registerPath(createRegionalCongressRegistry)
 registry.registerPath(findRegionalCongressesRegistry)
 registry.registerPath(findRegionalCongressByIdRegistry)
@@ -398,89 +377,76 @@ registry.registerPath(findRegionalCongressByEditionRegistry)
 registry.registerPath(updateRegionalCongressRegistry)
 registry.registerPath(deleteRegionalCongressRegistry)
 
-// Regional Congress Partners (as sub-resource of Regional Congresses)
 registry.registerPath(createRegionalCongressPartnerRegistry)
 registry.registerPath(findRegionalCongressPartnersByCongressIdRegistry)
 registry.registerPath(updateRegionalCongressPartnerRegistry)
 registry.registerPath(deleteRegionalCongressPartnerRegistry)
 
-// Regional Congress Galleries (as sub-resource of Regional Congresses)
 registry.registerPath(createRegionalCongressGalleryRegistry)
 registry.registerPath(findRegionalCongressGalleriesByCongressIdRegistry)
 registry.registerPath(updateRegionalCongressGalleryRegistry)
 registry.registerPath(deleteRegionalCongressGalleryRegistry)
 
-// Webinars
 registry.registerPath(createWebinarRegistry)
 registry.registerPath(findWebinarsRegistry)
 registry.registerPath(findWebinarByIdRegistry)
 registry.registerPath(updateWebinarRegistry)
 registry.registerPath(deleteWebinarRegistry)
 
-// Courses
 registry.registerPath(createCourseRegistry)
 registry.registerPath(findCoursesRegistry)
 registry.registerPath(findCourseByIdRegistry)
 registry.registerPath(updateCourseRegistry)
 registry.registerPath(deleteCourseRegistry)
 
-// Post Graduate Programs
 registry.registerPath(createPostGraduateProgramRegistry)
 registry.registerPath(findPostGraduateProgramsRegistry)
 registry.registerPath(findPostGraduateProgramByIdRegistry)
 registry.registerPath(updatePostGraduateProgramRegistry)
 registry.registerPath(deletePostGraduateProgramRegistry)
 
-// Events
 registry.registerPath(createEventRegistry)
 registry.registerPath(findEventsRegistry)
 registry.registerPath(findEventByIdRegistry)
 registry.registerPath(updateEventRegistry)
 registry.registerPath(deleteEventRegistry)
 
-// Scientific Journals
 registry.registerPath(createScientificJournalRegistry)
 registry.registerPath(findScientificJournalsRegistry)
 registry.registerPath(findScientificJournalByIdRegistry)
 registry.registerPath(updateScientificJournalRegistry)
 registry.registerPath(deleteScientificJournalRegistry)
 
-// Scientific Articles
 registry.registerPath(createScientificArticleRegistry)
 registry.registerPath(findScientificArticlesRegistry)
 registry.registerPath(findScientificArticleByIdRegistry)
 registry.registerPath(updateScientificArticleRegistry)
 registry.registerPath(deleteScientificArticleRegistry)
 
-// Book Volumes
 registry.registerPath(createBookVolumeRegistry)
 registry.registerPath(findBookVolumesRegistry)
 registry.registerPath(findBookVolumeByIdRegistry)
 registry.registerPath(updateBookVolumeRegistry)
 registry.registerPath(deleteBookVolumeRegistry)
 
-// Laws
 registry.registerPath(createLawRegistry)
 registry.registerPath(findLawsRegistry)
 registry.registerPath(findLawByIdRegistry)
 registry.registerPath(updateLawRegistry)
 registry.registerPath(deleteLawRegistry)
 
-// Work Group Team Members
 registry.registerPath(createWorkGroupTeamMemberRegistry)
 registry.registerPath(findWorkGroupTeamMembersRegistry)
 registry.registerPath(findWorkGroupTeamMemberByIdRegistry)
 registry.registerPath(updateWorkGroupTeamMemberRegistry)
 registry.registerPath(deleteWorkGroupTeamMemberRegistry)
 
-// Reference Center Team Members
 registry.registerPath(createReferenceCenterTeamMemberRegistry)
 registry.registerPath(findReferenceCenterTeamMembersRegistry)
 registry.registerPath(findReferenceCenterTeamMemberByIdRegistry)
 registry.registerPath(updateReferenceCenterTeamMemberRegistry)
 registry.registerPath(deleteReferenceCenterTeamMemberRegistry)
 
-// Research Groups
 registry.registerPath(createResearchGroupRegistry)
 registry.registerPath(findResearchGroupsRegistry)
 registry.registerPath(findResearchGroupByIdRegistry)

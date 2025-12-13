@@ -1,4 +1,7 @@
-import type { User, Webinar } from '@prisma/client'
+import type {
+  User,
+  Webinar,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountWebinarsDTO,
   ICreateWebinarDTO,

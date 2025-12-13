@@ -1,4 +1,7 @@
-import type { Prisma, PrismaClient } from '@prisma/client'
+import type {
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountSDHCTeamMembersDTO,
   ICreateSDHCTeamMemberDTO,

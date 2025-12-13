@@ -1,6 +1,9 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { $Enums } from '@prisma/client'
 import z from 'zod'
+import {
+  PendencyStatus,
+  UserRole,
+} from '../../config/database/generated/enums.ts'
 import { findAuthenticatedUserCertificationsSchema } from '../controllers/auth/find-user-certifications-controller.ts'
 import { findByAuthenticatedUserSchema } from '../controllers/auth/find-user-news-controller.ts'
 import { findAuthenticatedUserPendenciesSchema } from '../controllers/auth/find-user-pendencies-controller.ts'
@@ -154,7 +157,7 @@ export const authUserRegistry: RouteConfig = {
               orcid: z.string().nullable(),
               phone: z.string().nullable(),
               lattesUrl: z.string().nullable(),
-              role: z.enum($Enums.UserRole),
+              role: z.nativeEnum(UserRole),
             })
             .nullable(),
         },
@@ -370,7 +373,7 @@ export const authUserPendenciesRegistry: RouteConfig = {
               id: z.string(),
               title: z.string(),
               description: z.string(),
-              status: z.enum($Enums.PendencyStatus),
+              status: z.nativeEnum(PendencyStatus),
               createdAt: z.date(),
               updatedAt: z.date(),
               userId: z.string(),

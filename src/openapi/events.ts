@@ -1,6 +1,9 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { EventFormat, EventStatus } from '@prisma/client'
 import z from 'zod'
+import {
+  EventFormat,
+  EventStatus,
+} from '../../config/database/generated/enums.ts'
 import { createEventSchema } from '../controllers/event/create-event-controller.ts'
 import { deleteEventSchema } from '../controllers/event/delete-event-controller.ts'
 import { findEventByIdSchema } from '../controllers/event/find-event-by-id-controller.ts'
@@ -15,8 +18,8 @@ const eventSchema = z.object({
   startDate: z.date(),
   endDate: z.date(),
   location: z.string().nullable(),
-  status: z.nativeEnum(EventStatus),
-  format: z.nativeEnum(EventFormat),
+  status: z.enum(EventStatus),
+  format: z.enum(EventFormat),
   eventLink: z.string().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),

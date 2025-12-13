@@ -1,4 +1,3 @@
-import type { Pendency, User } from '@prisma/client'
 import type {
   ICountPendenciesDTO,
   ICreatePendencyDTO,

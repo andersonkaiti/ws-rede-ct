@@ -1,4 +1,4 @@
-import type { Partner } from '@prisma/client'
+import type { Partner } from '../../../config/database/generated/client.ts'
 import type {
   ICountPartnerDTO,
   ICreatePartnerDTO,

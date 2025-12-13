@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client'
+import type { User } from '../../../config/database/generated/client.ts'
 import type { ICreateUserDTO, IUpdateUserDTO } from '../../dto/user.d.ts'
 
 export interface IUserRepository {

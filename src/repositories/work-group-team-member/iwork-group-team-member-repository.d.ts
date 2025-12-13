@@ -1,4 +1,7 @@
-import type { User, WorkGroupTeamMember } from '@prisma/client'
+import type {
+  User,
+  WorkGroupTeamMember,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountWorkGroupTeamMembersDTO,
   ICreateWorkGroupTeamMemberDTO,
@@ -15,7 +18,7 @@ export interface IWorkGroupTeamMemberRepository {
   update(member: IUpdateWorkGroupTeamMemberDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
-    data: IFindAllWorkGroupTeamMembersDTO
+    data: IFindAllWorkGroupTeamMembersDTO,
   ): Promise<IReturnedWorkGroupTeamMember[] | null>
   findById(id: string): Promise<IReturnedWorkGroupTeamMember | null>
   count(data: ICountWorkGroupTeamMembersDTO): Promise<number>

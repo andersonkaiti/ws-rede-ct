@@ -1,4 +1,8 @@
-import type { Prisma, PrismaClient, ScientificJournal } from '@prisma/client'
+import type {
+  Prisma,
+  PrismaClient,
+  ScientificJournal,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountScientificJournalsDTO,
   ICreateScientificJournalDTO,

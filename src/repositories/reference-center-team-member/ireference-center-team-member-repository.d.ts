@@ -1,4 +1,7 @@
-import type { ReferenceCenterTeamMember, User } from '@prisma/client'
+import type {
+  ReferenceCenterTeamMember,
+  User,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountReferenceCenterTeamMembersDTO,
   ICreateReferenceCenterTeamMemberDTO,
@@ -15,7 +18,7 @@ export interface IReferenceCenterTeamMemberRepository {
   update(member: IUpdateReferenceCenterTeamMemberDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
-    data: IFindAllReferenceCenterTeamMembersDTO
+    data: IFindAllReferenceCenterTeamMembersDTO,
   ): Promise<IReturnedReferenceCenterTeamMember[] | null>
   findById(id: string): Promise<IReturnedReferenceCenterTeamMember | null>
   count(data: ICountReferenceCenterTeamMembersDTO): Promise<number>

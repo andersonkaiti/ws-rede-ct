@@ -1,4 +1,7 @@
-import type { SDHCTeamMember, User } from '@prisma/client'
+import type {
+  SDHCTeamMember,
+  User,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountSDHCTeamMembersDTO,
   ICreateSDHCTeamMemberDTO,
@@ -15,7 +18,7 @@ export interface ISDHCTeamMemberRepository {
   update(member: IUpdateSDHCTeamMemberDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
-    data: IFindAllSDHCTeamMembersDTO
+    data: IFindAllSDHCTeamMembersDTO,
   ): Promise<IReturnedSDHCTeamMember[] | null>
   findById(id: string): Promise<IReturnedSDHCTeamMember | null>
   count(data: ICountSDHCTeamMembersDTO): Promise<number>
