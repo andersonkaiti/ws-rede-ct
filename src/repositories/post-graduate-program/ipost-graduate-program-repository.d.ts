@@ -1,4 +1,4 @@
-import type { PostGraduateProgram } from '@prisma/client'
+import type { PostGraduateProgram } from '../../../config/database/generated/client.ts'
 import type {
   ICountPostGraduateProgramsDTO,
   ICreatePostGraduateProgramDTO,
@@ -9,7 +9,7 @@ import type {
 export interface IPostGraduateProgramRepository {
   create(data: ICreatePostGraduateProgramDTO): Promise<PostGraduateProgram>
   find(
-    data: IFindPostGraduateProgramsDTO
+    data: IFindPostGraduateProgramsDTO,
   ): Promise<PostGraduateProgram[] | null>
   findById(id: string): Promise<PostGraduateProgram | null>
   update(data: IUpdatePostGraduateProgramDTO): Promise<void>

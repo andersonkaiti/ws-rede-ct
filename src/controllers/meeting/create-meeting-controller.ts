@@ -14,11 +14,10 @@ export const createMeetingSchema = z
     scheduledAt: z.coerce.date(),
     format: z.enum(MeetingFormat).default(MeetingFormat.ONLINE),
     agenda: z.string().min(1, 'Pauta é obrigatória'),
-    meetingLink: z
-      .string()
-      .url('Link da reunião deve ser uma URL válida')
-      .optional()
-      .or(z.literal('')),
+    meetingLink: z.union([
+      z.url('Link da reunião deve ser uma URL válida'),
+      z.literal(''),
+    ]),
     location: z.string().optional(),
     status: z.enum(MeetingStatus).default(MeetingStatus.PENDING),
   })
@@ -36,7 +35,7 @@ export const createMeetingSchema = z
       message:
         'Reuniões online devem ter link e reuniões presenciais devem ter localização',
       path: ['format'],
-    }
+    },
   )
 
 export class CreateMeetingController {

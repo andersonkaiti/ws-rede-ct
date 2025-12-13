@@ -1,4 +1,4 @@
-import { prisma } from '../../../../config/database.ts'
+import { prisma } from '../../../../config/database/index.ts'
 import { RegionalCongressGalleryRepository } from '../../../repositories/regional-congress/gallery/regional-congress-gallery-repository.ts'
 
 export function makeRegionalCongressGalleryRepository() {

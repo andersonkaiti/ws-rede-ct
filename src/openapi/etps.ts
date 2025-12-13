@@ -1,6 +1,10 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { $Enums } from '@prisma/client'
 import z from 'zod'
+import {
+  Degree,
+  Seniority,
+  UserRole,
+} from '../../config/database/generated/enums.ts'
 import { createETPSchema } from '../controllers/etps/create-etp-controller.ts'
 import { deleteETPSchema } from '../controllers/etps/delete-etp-controller.ts'
 import { findETPByIdSchema } from '../controllers/etps/find-etp-by-id-controller.ts'
@@ -14,9 +18,9 @@ const researcherSchema = z.object({
   registrationNumber: z.string(),
   mainEtps: z.string().nullable(),
   formations: z.string().nullable(),
-  degrees: z.array(z.enum($Enums.Degree)),
+  degrees: z.array(z.nativeEnum(Degree)),
   occupations: z.string(),
-  seniority: z.enum($Enums.Seniority),
+  seniority: z.nativeEnum(Seniority),
   institutions: z.string(),
   biography: z.string().nullable(),
   createdAt: z.date(),
@@ -29,7 +33,7 @@ const researcherSchema = z.object({
     orcid: z.string().nullable(),
     phone: z.string().nullable(),
     lattesUrl: z.string().nullable(),
-    role: z.enum($Enums.UserRole),
+    role: z.nativeEnum(UserRole),
   }),
 })
 

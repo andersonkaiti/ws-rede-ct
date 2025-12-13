@@ -2,7 +2,7 @@ import type {
   RegionalCongress,
   RegionalCongressGalleryItem,
   RegionalCongressPartner,
-} from '@prisma/client'
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountRegionalCongressDTO,
   ICreateRegionalCongressDTO,
@@ -20,11 +20,11 @@ export interface IRegionalCongressRepository {
   update(congress: IUpdateRegionalCongressDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
-    data: IFindAllRegionalCongressDTO
+    data: IFindAllRegionalCongressDTO,
   ): Promise<RegionalCongressWithRelations[] | null>
   findById(id: string): Promise<RegionalCongressWithRelations | null>
   findByEdition(
-    edition: number
+    edition: number,
   ): Promise<RegionalCongressWithRelations[] | null>
   count(data: ICountRegionalCongressDTO): Promise<number>
 }

@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { RegimentStatus } from '@prisma/client'
 import z from 'zod'
+import { RegimentStatus } from '../../config/database/generated/enums.ts'
 import { createRegimentSchema } from '../controllers/regiment/create-regiment-controller.ts'
 import { deleteRegimentSchema } from '../controllers/regiment/delete-regiment-controller.ts'
 import { findRegimentByIdSchema } from '../controllers/regiment/find-regiment-by-id-controller.ts'
@@ -14,7 +14,7 @@ const regimentSchema = z.object({
   version: z.string(),
   publishedAt: z.date(),
   documentUrl: z.string(),
-  status: z.enum(RegimentStatus),
+  status: z.nativeEnum(RegimentStatus),
   createdAt: z.date(),
   updatedAt: z.date(),
 })

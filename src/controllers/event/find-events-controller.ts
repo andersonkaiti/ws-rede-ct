@@ -1,7 +1,10 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { EventFormat, EventStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import {
+  EventFormat,
+  EventStatus,
+} from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { IEventRepository } from '../../repositories/event/ievent-repository.d.ts'
@@ -15,8 +18,8 @@ export const findEventsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
   title: z.string().optional(),
-  status: z.nativeEnum(EventStatus).optional(),
-  format: z.nativeEnum(EventFormat).optional(),
+  status: z.enum(EventStatus).optional(),
+  format: z.enum(EventFormat).optional(),
   orderBy: z.enum(['asc', 'desc']).optional(),
 })
 

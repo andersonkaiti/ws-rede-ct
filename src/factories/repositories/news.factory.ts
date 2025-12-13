@@ -1,4 +1,4 @@
-import { prisma } from '../../../config/database.ts'
+import { prisma } from '../../../config/database/index.ts'
 import { NewsRepository } from '../../repositories/news/news-repository.ts'
 
 export function makeNewsRepository() {

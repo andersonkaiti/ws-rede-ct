@@ -1,11 +1,13 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { MeetingFormat, MeetingStatus } from '@prisma/client'
 import z from 'zod'
+import {
+  MeetingFormat,
+  MeetingStatus,
+} from '../../config/database/generated/enums.ts'
 import { createMeetingMinuteSchema } from '../controllers/meeting-minute/create-meeting-minute-controller.ts'
 import { findMeetingMinuteByMeetingIdSchema } from '../controllers/meeting-minute/find-meeting-minute-by-meeting-id-controller.ts'
 import { updateMeetingMinuteByMeetingIdSchema } from '../controllers/meeting-minute/update-meeting-minute-by-meeting-id-controller.ts'
 
-// Meeting schema used within MeetingMinute (without minutes to avoid circular reference)
 const meetingSchema = z.object({
   id: z.uuid(),
   title: z.string(),

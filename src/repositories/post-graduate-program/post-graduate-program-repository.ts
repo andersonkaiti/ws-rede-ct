@@ -1,4 +1,8 @@
-import type { PostGraduateProgram, Prisma, PrismaClient } from '@prisma/client'
+import type {
+  PostGraduateProgram,
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountPostGraduateProgramsDTO,
   ICreatePostGraduateProgramDTO,

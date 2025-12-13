@@ -1,4 +1,4 @@
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../../../../config/database/generated/client.ts'
 import type {
   ICountRegionalCongressPartnerDTO,
   ICreateRegionalCongressPartnerDTO,
@@ -36,7 +36,7 @@ export class RegionalCongressPartnerRepository
   }
 
   async findByCongressId(
-    data: IFindAllRegionalCongressPartnersByCongressIdDTO
+    data: IFindAllRegionalCongressPartnersByCongressIdDTO,
   ) {
     return await this.prisma.regionalCongressPartner.findMany({
       where: {

@@ -1,4 +1,8 @@
-import type { Prisma, PrismaClient, ResearchGroup } from '@prisma/client'
+import type {
+  Prisma,
+  PrismaClient,
+  ResearchGroup,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountResearchGroupsDTO,
   ICreateResearchGroupDTO,

@@ -1,6 +1,9 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { MeetingFormat, MeetingStatus } from '@prisma/client'
 import z from 'zod'
+import {
+  MeetingFormat,
+  MeetingStatus,
+} from '../../config/database/generated/enums.ts'
 import { createMeetingSchema } from '../controllers/meeting/create-meeting-controller.ts'
 import { deleteMeetingSchema } from '../controllers/meeting/delete-meeting-controller.ts'
 import { findMeetingByIdSchema } from '../controllers/meeting/find-meeting-by-id-controller.ts'
@@ -18,7 +21,6 @@ const meetingMinuteSchema = z.object({
   updatedAt: z.date(),
 })
 
-// MeetingWithMinutes schema - Meeting with optional minutes (matches IMeetingRepository interface)
 const meetingSchema = z.object({
   id: z.uuid(),
   title: z.string(),

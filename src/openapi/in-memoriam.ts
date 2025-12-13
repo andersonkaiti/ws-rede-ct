@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { InMemoriamRole } from '@prisma/client'
 import z from 'zod'
+import { InMemoriamRole } from '../../config/database/generated/enums.ts'
 import { createInMemoriamSchema } from '../controllers/in-memoriam/create-in-memoriam-controller.ts'
 import { deleteInMemoriamSchema } from '../controllers/in-memoriam/delete-in-memoriam-controller.ts'
 import { findInMemoriamByIdSchema } from '../controllers/in-memoriam/find-in-memoriam-by-id-controller.ts'
@@ -15,7 +15,7 @@ const inMemoriamSchema = z.object({
   deathDate: z.date(),
   biography: z.string().nullable(),
   photoUrl: z.string().nullable(),
-  role: z.enum(InMemoriamRole),
+  role: z.nativeEnum(InMemoriamRole),
   createdAt: z.date(),
   updatedAt: z.date(),
 })

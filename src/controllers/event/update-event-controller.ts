@@ -1,7 +1,10 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { EventFormat, EventStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import {
+  EventFormat,
+  EventStatus,
+} from '../../../config/database/generated/enums.ts'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
@@ -24,13 +27,12 @@ export const updateEventSchema = z.object({
   startDate: z.coerce.date().optional(),
   endDate: z.coerce.date().optional(),
   location: z.string().optional(),
-  format: z.nativeEnum(EventFormat).optional(),
-  eventLink: z
-    .string()
-    .url('Link do evento deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
-  status: z.nativeEnum(EventStatus).optional(),
+  format: z.enum(EventFormat).optional(),
+  eventLink: z.union([
+    z.url('Link do evento deve ser uma URL válida'),
+    z.literal(''),
+  ]),
+  status: z.enum(EventStatus).optional(),
   image: z
     .any()
     .refine(
@@ -41,7 +43,7 @@ export const updateEventSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A imagem deve ser uma imagem válida de no máximo 5MB.'
+      'A imagem deve ser uma imagem válida de no máximo 5MB.',
     )
     .optional(),
 })
@@ -49,7 +51,7 @@ export const updateEventSchema = z.object({
 export class UpdateEventController {
   constructor(
     private readonly eventRepository: IEventRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

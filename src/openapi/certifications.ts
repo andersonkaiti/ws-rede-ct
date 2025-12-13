@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { $Enums } from '@prisma/client'
 import z from 'zod'
+import { UserRole } from '../../config/database/generated/enums.ts'
 import { deleteCertificationSchema } from '../controllers/certifications/delete-certification-controller.ts'
 import { findCertificationByIdControllerSchema } from '../controllers/certifications/find-certification-by-id-controller.ts'
 import { findCertificationsControllerSchema } from '../controllers/certifications/find-certifications-controller.ts'
@@ -113,9 +113,9 @@ export const findCertificationsRegistry: RouteConfig = {
                   orcid: z.string().nullable(),
                   phone: z.string().nullable(),
                   lattesUrl: z.url().nullable(),
-                  role: z.enum($Enums.UserRole),
+                  role: z.nativeEnum(UserRole),
                 }),
-              })
+              }),
             ),
           }),
         },

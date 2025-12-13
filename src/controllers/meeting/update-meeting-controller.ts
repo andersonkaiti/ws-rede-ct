@@ -15,11 +15,10 @@ export const updateMeetingSchema = z.object({
   scheduledAt: z.coerce.date().optional(),
   format: z.enum(MeetingFormat).optional(),
   agenda: z.string().min(1, 'Pauta é obrigatória').optional(),
-  meetingLink: z
-    .string()
-    .url('Link da reunião deve ser uma URL válida')
-    .optional()
-    .or(z.literal('')),
+  meetingLink: z.union([
+    z.url('Link da reunião deve ser uma URL válida'),
+    z.literal(''),
+  ]),
   location: z.string().optional(),
   status: z.enum(MeetingStatus).optional(),
 })

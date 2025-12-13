@@ -1,4 +1,4 @@
-import type { RegionalCongressGalleryItem } from '@prisma/client'
+import type { RegionalCongressGalleryItem } from '../../../../config/database/generated/client.ts'
 import type {
   ICountRegionalCongressGalleryDTO,
   ICreateRegionalCongressGalleryDTO,
@@ -8,12 +8,12 @@ import type {
 
 export interface IRegionalCongressGalleryRepository {
   create(
-    gallery: ICreateRegionalCongressGalleryDTO
+    gallery: ICreateRegionalCongressGalleryDTO,
   ): Promise<RegionalCongressGalleryItem>
   update(gallery: IUpdateRegionalCongressGalleryDTO): Promise<void>
   deleteById(id: string): Promise<void>
   findByCongressId(
-    data: IFindAllRegionalCongressGalleryByCongressIdDTO
+    data: IFindAllRegionalCongressGalleryByCongressIdDTO,
   ): Promise<RegionalCongressGalleryItem[] | null>
   findById(id: string): Promise<RegionalCongressGalleryItem | null>
   count(data: ICountRegionalCongressGalleryDTO): Promise<number>

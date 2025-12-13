@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { $Enums } from '@prisma/client'
 import z from 'zod'
+import { PendencyStatus } from '../../config/database/generated/enums.ts'
 import { createPendencySchema } from '../controllers/pendencies/create-pendency-controller.ts'
 import { deletePendencySchema } from '../controllers/pendencies/delete-pendency-controller.ts'
 import { findPendenciesControllerSchema } from '../controllers/pendencies/find-pendencies-controller.ts'
@@ -87,13 +87,13 @@ export const findPendenciesRegistry: RouteConfig = {
                 id: z.string(),
                 title: z.string(),
                 description: z.string().nullable(),
-                status: z.enum($Enums.PendencyStatus),
+                status: z.nativeEnum(PendencyStatus),
                 dueDate: z.date().nullable(),
                 documentUrl: z.string(),
                 userId: z.string(),
                 createdAt: z.date(),
                 updatedAt: z.date(),
-              })
+              }),
             ),
           }),
         },
@@ -144,7 +144,7 @@ export const findPendencyByIdRegistry: RouteConfig = {
               id: z.string(),
               title: z.string(),
               description: z.string().nullable(),
-              status: z.enum($Enums.PendencyStatus),
+              status: z.nativeEnum(PendencyStatus),
               dueDate: z.date().nullable(),
               documentUrl: z.string(),
               userId: z.string(),

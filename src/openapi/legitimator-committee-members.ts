@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
-import { $Enums } from '@prisma/client'
 import z from 'zod'
+import { UserRole } from '../../config/database/generated/enums.ts'
 import { createLegitimatorCommitteeMemberSchema } from '../controllers/legitimator-committee-member/create-legitimator-committee-member-controller.ts'
 import { deleteLegitimatorCommitteeMemberSchema } from '../controllers/legitimator-committee-member/delete-legitimator-committee-member-controller.ts'
 import { findLegitimatorCommitteeMemberByIdSchema } from '../controllers/legitimator-committee-member/find-legitimator-committee-member-by-id-controller.ts'
@@ -14,7 +14,7 @@ const userSchema = z.object({
   orcid: z.string().nullable(),
   phone: z.string().nullable(),
   lattesUrl: z.string().nullable(),
-  role: z.enum($Enums.UserRole),
+  role: z.nativeEnum(UserRole),
 })
 
 const legitimatorCommitteeMemberSchema = z.object({
@@ -97,7 +97,8 @@ export const findLegitimatorCommitteeMembersRegistry: RouteConfig = {
   },
   responses: {
     200: {
-      description: 'List of Legitimator Committee Members retrieved successfully',
+      description:
+        'List of Legitimator Committee Members retrieved successfully',
       summary: 'Legitimator Committee Members Retrieved',
       content: {
         'application/json': {
@@ -131,7 +132,8 @@ export const findLegitimatorCommitteeMemberByIdRegistry: RouteConfig = {
   },
   responses: {
     200: {
-      description: 'Legitimator Committee Member details retrieved successfully',
+      description:
+        'Legitimator Committee Member details retrieved successfully',
       summary: 'Legitimator Committee Member Retrieved',
       content: {
         'application/json': {
@@ -151,7 +153,8 @@ export const findLegitimatorCommitteeMemberByIdRegistry: RouteConfig = {
       },
     },
     404: {
-      description: 'Legitimator Committee Member not found with the provided ID',
+      description:
+        'Legitimator Committee Member not found with the provided ID',
       summary: 'Legitimator Committee Member Not Found',
       content: {
         'application/json': {
@@ -197,7 +200,8 @@ export const updateLegitimatorCommitteeMemberRegistry: RouteConfig = {
       summary: 'Legitimator Committee Member Updated',
     },
     400: {
-      description: 'Invalid input data or Legitimator Committee Member ID format',
+      description:
+        'Invalid input data or Legitimator Committee Member ID format',
       summary: 'Validation Error',
       content: {
         'application/json': {
@@ -219,7 +223,8 @@ export const updateLegitimatorCommitteeMemberRegistry: RouteConfig = {
       },
     },
     404: {
-      description: 'Legitimator Committee Member not found with the provided ID',
+      description:
+        'Legitimator Committee Member not found with the provided ID',
       summary: 'Legitimator Committee Member Not Found',
       content: {
         'application/json': {
@@ -280,7 +285,8 @@ export const deleteLegitimatorCommitteeMemberRegistry: RouteConfig = {
       },
     },
     404: {
-      description: 'Legitimator Committee Member not found with the provided ID',
+      description:
+        'Legitimator Committee Member not found with the provided ID',
       summary: 'Legitimator Committee Member Not Found',
       content: {
         'application/json': {
@@ -303,4 +309,3 @@ export const deleteLegitimatorCommitteeMemberRegistry: RouteConfig = {
     },
   },
 }
-
