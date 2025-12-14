@@ -1,3 +1,5 @@
+import type { Certification } from '../../config/database/generated/client.ts'
+
 export interface IRegisterCertificationDTO {
   userId: string
   title: string

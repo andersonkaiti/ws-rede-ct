@@ -1,7 +1,7 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { RedeCTHighlightType } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import { RedeCTHighlightType } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
@@ -38,7 +38,7 @@ export const createRedeCTHighlightSchema = z.object({
 export class CreateRedeCTHighlightController {
   constructor(
     private readonly redectHighlightRepository: IRedeCTHighlightRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

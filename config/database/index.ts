@@ -1,10 +1,9 @@
 import { PrismaPg } from '@prisma/adapter-pg'
+import { env } from '../../src/config/env.ts'
 import { PrismaClient } from './generated/client.ts'
 
 const adapter = new PrismaPg({
-  connection: {
-    url: 'postgresql://localhost:5432/rede-ct'
-  }
+  connectionString: env.DATABASE_URL,
 })
 
 const prisma = new PrismaClient({
@@ -13,4 +12,3 @@ const prisma = new PrismaClient({
 })
 
 export { prisma }
-

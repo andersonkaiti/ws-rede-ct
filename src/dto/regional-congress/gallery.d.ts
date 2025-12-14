@@ -1,4 +1,4 @@
-import type { RegionalCongressGalleryItem } from '@prisma/client'
+import type { RegionalCongressGalleryItem } from '../../config/database/generated/client.ts'
 
 export interface ICreateRegionalCongressGalleryDTO {
   imageUrl: string

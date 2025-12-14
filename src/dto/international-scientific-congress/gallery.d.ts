@@ -1,4 +1,4 @@
-import type { InternationalScientificCongressGallery } from '@prisma/client'
+import type { InternationalScientificCongressGallery } from '../../config/database/generated/client.ts'
 
 export interface ICreateCongressGalleryDTO {
   imageUrl: string

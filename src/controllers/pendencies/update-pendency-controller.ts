@@ -1,7 +1,7 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { PendencyStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import { PendencyStatus } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { BadRequestError } from '../../errrors/bad-request-error.ts'
@@ -25,7 +25,7 @@ export const updatePendencySchema = z.object({
         (typeof file === 'object' &&
           typeof file.size === 'number' &&
           (file.size === 0 || file.size > 0)),
-      'Arquivo do documento é inválido'
+      'Arquivo do documento é inválido',
     )
     .optional(),
 })
@@ -33,7 +33,7 @@ export const updatePendencySchema = z.object({
 export class UpdatePendencyController {
   constructor(
     private readonly pendencyRepository: IPendencyRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

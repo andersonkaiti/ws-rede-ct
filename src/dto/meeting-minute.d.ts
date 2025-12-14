@@ -1,4 +1,4 @@
-import type { MeetingMinute } from '@prisma/client'
+import type { MeetingMinute } from '../../config/database/generated/client.ts'
 
 export interface ICreateMeetingMinuteDTO {
   title: string

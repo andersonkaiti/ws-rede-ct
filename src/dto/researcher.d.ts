@@ -1,4 +1,8 @@
-import type { Degree, Researcher, Seniority } from '@prisma/client'
+import type {
+  Degree,
+  Researcher,
+  Seniority,
+} from '../../config/database/generated/client.ts'
 
 export interface ICreateResearcherDTO {
   registrationNumber: string

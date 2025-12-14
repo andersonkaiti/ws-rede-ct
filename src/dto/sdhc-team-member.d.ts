@@ -1,4 +1,4 @@
-import type { SDHCTeamMember } from '@prisma/client'
+import type { SDHCTeamMember } from '../../config/database/generated/client.ts'
 
 export interface ICreateSDHCTeamMemberDTO {
   role: string

@@ -1,4 +1,4 @@
-import type { ResearchGroup } from '@prisma/client'
+import type { ResearchGroup } from '../../config/database/generated/client.ts'
 
 export interface ICreateResearchGroupDTO {
   name: string

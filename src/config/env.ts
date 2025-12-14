@@ -13,6 +13,8 @@ const envSchema = z.object({
   FIREBASE_TOKEN_URI: z.string(),
   FIREBASE_AUTH_PROVIDER_X509_CERT_URL: z.string(),
   FIREBASE_CLIENT_X509_CERT_URL: z.string(),
+
+  DATABASE_URL: z.string(),
 })
 
 export const env = envSchema.parse(process.env)

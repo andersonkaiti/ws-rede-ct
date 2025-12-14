@@ -1,4 +1,4 @@
-import type { Partner } from '@prisma/client'
+import type { Partner } from '../../config/database/generated/client.ts'
 
 export interface ICreatePartnerDTO {
   name: string

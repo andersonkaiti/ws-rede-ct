@@ -1,4 +1,8 @@
-import type { Event, EventFormat, EventStatus } from '@prisma/client'
+import type {
+  Event,
+  EventFormat,
+  EventStatus,
+} from '../../config/database/generated/client.ts'
 
 export interface ICreateEventDTO {
   title: string

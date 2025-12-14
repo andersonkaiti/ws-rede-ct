@@ -1,4 +1,4 @@
-import type { InternationalScientificCongress } from '@prisma/client'
+import type { InternationalScientificCongress } from '../../config/database/generated/client.ts'
 
 export interface ICreateInternationalScientificCongressDTO {
   title: string

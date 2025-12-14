@@ -1,4 +1,4 @@
-import type { WorkGroupTeamMember } from '@prisma/client'
+import type { WorkGroupTeamMember } from '../../config/database/generated/client.ts'
 
 export interface ICreateWorkGroupTeamMemberDTO {
   role: string

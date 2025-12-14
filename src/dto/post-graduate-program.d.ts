@@ -1,3 +1,5 @@
+import type { PostGraduateProgram } from '../../config/database/generated/client.ts'
+
 export interface ICreatePostGraduateProgramDTO {
   title: string
   imageUrl?: string

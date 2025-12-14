@@ -1,3 +1,5 @@
+import type { Webinar } from '../../config/database/generated/client.ts'
+
 export interface ICreateWebinarDTO {
   title: string
   description?: string

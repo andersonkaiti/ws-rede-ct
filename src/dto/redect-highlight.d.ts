@@ -1,4 +1,7 @@
-import type { RedeCTHighlight, RedeCTHighlightType } from '@prisma/client'
+import type {
+  RedeCTHighlight,
+  RedeCTHighlightType,
+} from '../../config/database/generated/client.ts'
 
 export interface ICreateRedeCTHighlightDTO {
   type: RedeCTHighlightType

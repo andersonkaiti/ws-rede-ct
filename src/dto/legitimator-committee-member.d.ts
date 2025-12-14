@@ -1,4 +1,4 @@
-import type { LegitimatorCommitteeMember } from '@prisma/client'
+import type { LegitimatorCommitteeMember } from '../../config/database/generated/client.ts'
 
 export interface ICreateLegitimatorCommitteeMemberDTO {
   role: string

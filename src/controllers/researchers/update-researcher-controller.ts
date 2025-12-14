@@ -1,7 +1,7 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { Degree, Seniority } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import { Degree, Seniority } from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { ConflictError } from '../../errrors/conflict-error.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
@@ -54,7 +54,7 @@ export class UpdateResearcherController {
       ) {
         const researcherWithSameRegistration =
           await this.researcherRepository.findByRegistrationNumber(
-            registrationNumber
+            registrationNumber,
           )
 
         if (
@@ -62,7 +62,7 @@ export class UpdateResearcherController {
           researcherWithSameRegistration.id !== id
         ) {
           throw new ConflictError(
-            'Já existe um pesquisador com este número de registro.'
+            'Já existe um pesquisador com este número de registro.',
           )
         }
       }

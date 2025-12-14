@@ -1,3 +1,5 @@
+import type { Course } from '../../config/database/generated/client.ts'
+
 export interface ICreateCourseDTO {
   title: string
   imageUrl?: string

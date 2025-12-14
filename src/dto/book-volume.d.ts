@@ -1,3 +1,5 @@
+import type { BookVolume } from '../../config/database/generated/client.ts'
+
 export interface ICreateBookVolumeDTO {
   volumeNumber: number
   year: number

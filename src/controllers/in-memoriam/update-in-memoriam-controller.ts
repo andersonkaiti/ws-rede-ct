@@ -1,7 +1,7 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { InMemoriamRole } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import { InMemoriamRole } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
@@ -49,13 +49,13 @@ export const updateInMemoriamSchema = z
     {
       message: 'Data de falecimento deve ser posterior à data de nascimento',
       path: ['deathDate'],
-    }
+    },
   )
 
 export class UpdateInMemoriamController {
   constructor(
     private readonly inMemoriamRepository: IInMemoriamRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

@@ -1,4 +1,4 @@
-import type { ETP } from '@prisma/client'
+import type { ETP } from '../../config/database/generated/client.ts'
 
 export interface ICreateETPDTO {
   code: string
