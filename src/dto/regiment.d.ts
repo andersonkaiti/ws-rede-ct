@@ -1,4 +1,7 @@
-import type { Regiment, RegimentStatus } from '@prisma/client'
+import type {
+  Regiment,
+  RegimentStatus,
+} from '../../config/database/generated/client.ts'
 
 export interface ICreateRegimentDTO {
   title: string

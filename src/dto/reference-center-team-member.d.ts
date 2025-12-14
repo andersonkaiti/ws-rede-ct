@@ -1,4 +1,4 @@
-import type { ReferenceCenterTeamMember } from '@prisma/client'
+import type { ReferenceCenterTeamMember } from '../../config/database/generated/client.ts'
 
 export interface ICreateReferenceCenterTeamMemberDTO {
   role: string

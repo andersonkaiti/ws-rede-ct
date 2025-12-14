@@ -1,4 +1,4 @@
-import type { CongressPartner } from '@prisma/client'
+import type { CongressPartner } from '../../config/database/generated/client.ts'
 
 export interface ICreateCongressPartnerDTO {
   name: string

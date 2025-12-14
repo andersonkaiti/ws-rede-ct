@@ -1,4 +1,4 @@
-import type { ManagementTeam } from '@prisma/client'
+import type { ManagementTeam } from '../../config/database/generated/client.ts'
 
 export interface ICreateManagementTeamDTO {
   name: string

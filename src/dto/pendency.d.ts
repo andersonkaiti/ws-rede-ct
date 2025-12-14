@@ -1,4 +1,4 @@
-import type { Pendency } from '@prisma/client'
+import type { Pendency } from '../../config/database/generated/client.ts'
 
 export interface ICreatePendencyDTO {
   title: string

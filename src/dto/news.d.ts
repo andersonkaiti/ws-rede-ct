@@ -1,4 +1,4 @@
-import type { News } from '@prisma/client'
+import type { News } from '../../config/database/generated/client.ts'
 
 export interface INewsDTO {
   title: string

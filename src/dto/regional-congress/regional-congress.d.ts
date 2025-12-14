@@ -1,4 +1,4 @@
-import type { RegionalCongress } from '@prisma/client'
+import type { RegionalCongress } from '../../config/database/generated/client.ts'
 
 export interface ICreateRegionalCongressDTO {
   title: string

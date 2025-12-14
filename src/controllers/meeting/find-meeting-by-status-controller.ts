@@ -1,7 +1,7 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { MeetingStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import { MeetingStatus } from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { IMeetingRepository } from '../../repositories/meeting/imeeting-repository.d.ts'

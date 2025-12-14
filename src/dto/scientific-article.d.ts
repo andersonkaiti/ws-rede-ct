@@ -1,3 +1,5 @@
+import type { ScientificArticle } from '../../config/database/generated/client.ts'
+
 export interface ICreateScientificArticleDTO {
   title: string
   author: string

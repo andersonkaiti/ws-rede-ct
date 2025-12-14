@@ -1,4 +1,4 @@
-import type { Law } from '@prisma/client'
+import type { Law } from '../../config/database/generated/client.ts'
 
 export interface ICreateLawDTO {
   title: string

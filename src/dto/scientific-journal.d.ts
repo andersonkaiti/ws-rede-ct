@@ -1,3 +1,5 @@
+import type { ScientificJournal } from '../../config/database/generated/client.ts'
+
 export interface ICreateScientificJournalDTO {
   name: string
   issn: string

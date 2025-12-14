@@ -1,4 +1,8 @@
-import type { Meeting, MeetingFormat, MeetingStatus } from '@prisma/client'
+import type {
+  Meeting,
+  MeetingFormat,
+  MeetingStatus,
+} from '../../config/database/generated/client.ts'
 
 export interface ICreateMeetingDTO {
   title: string
@@ -35,4 +39,3 @@ export interface ICountMeetingDTO {
     status?: MeetingStatus
   }
 }
-

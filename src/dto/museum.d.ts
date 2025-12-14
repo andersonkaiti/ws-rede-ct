@@ -1,4 +1,4 @@
-import type { Museum } from '@prisma/client'
+import type { Museum } from '../../config/database/generated/client.ts'
 
 export interface ICreateMuseumDTO {
   name: string

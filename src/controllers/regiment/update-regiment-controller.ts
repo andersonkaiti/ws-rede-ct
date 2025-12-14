@@ -1,7 +1,7 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { RegimentStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import { RegimentStatus } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
@@ -41,7 +41,7 @@ export const updateRegimentSchema = z.object({
 export class UpdateRegimentController {
   constructor(
     private readonly regimentRepository: IRegimentRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

@@ -1,7 +1,10 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { EventFormat, EventStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import {
+  EventFormat,
+  EventStatus,
+} from '../../../config/database/generated/enums.ts'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'

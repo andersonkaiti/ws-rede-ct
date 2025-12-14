@@ -1,7 +1,7 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { RegimentStatus } from '@prisma/client'
 import type { Request, Response } from 'express'
 import z from 'zod'
+import { RegimentStatus } from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { InternalServerError } from '../../errrors/internal-server-error.ts'
 import type { IRegimentRepository } from '../../repositories/regiment/iregiment-repository.d.ts'
