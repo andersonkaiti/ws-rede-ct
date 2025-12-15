@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IInternationalScientificCongressRepository } from '../../repositories/international-scientific-congress/iinternational-scientific-congress-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -13,7 +13,9 @@ export const findInternationalScientificCongressByIdSchema = z.object({
 })
 
 export class FindInternationalScientificCongressByIdController {
-  constructor(private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository) {}
+  constructor(
+    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
+  ) {}
 
   async handle(req: Request, res: Response) {
     try {
@@ -21,7 +23,8 @@ export class FindInternationalScientificCongressByIdController {
         id: req.params.id,
       })
 
-      const congress = await this.internationalScientificCongressRepository.findById(id)
+      const congress =
+        await this.internationalScientificCongressRepository.findById(id)
 
       if (!congress) {
         throw new NotFoundError('O congresso não existe.')
@@ -35,4 +38,3 @@ export class FindInternationalScientificCongressByIdController {
     }
   }
 }
-

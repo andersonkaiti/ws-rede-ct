@@ -3,7 +3,7 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IMuseumRepository } from '../../repositories/museum/imuseum-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
@@ -41,7 +41,7 @@ export const createMuseumSchema = z.object({
 export class CreateMuseumController {
   constructor(
     private readonly museumRepository: IMuseumRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

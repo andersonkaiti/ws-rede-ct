@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IScientificJournalRepository } from '../../repositories/scientific-journal/iscientific-journal-repository.ts'
 
 extendZodWithOpenApi(z)
@@ -14,7 +14,7 @@ export const findScientificJournalByIdSchema = z.object({
 
 export class FindScientificJournalByIdController {
   constructor(
-    private readonly scientificJournalRepository: IScientificJournalRepository
+    private readonly scientificJournalRepository: IScientificJournalRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

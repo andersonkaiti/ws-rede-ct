@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IWorkGroupTeamMemberRepository } from '../../repositories/work-group-team-member/iwork-group-team-member-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -17,7 +17,7 @@ export const updateWorkGroupTeamMemberSchema = z.object({
 
 export class UpdateWorkGroupTeamMemberController {
   constructor(
-    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository
+    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

@@ -56,7 +56,7 @@ app.use(
   apiReference({
     content: swaggerDocument,
     theme: 'kepler',
-  })
+  }),
 )
 
 app.use('/', indexRoutes)
@@ -76,7 +76,7 @@ app.use('/regiment', regimentRoutes)
 app.use('/meeting', meetingRoutes)
 app.use(
   '/international-scientific-congress',
-  internationalScientificCongressRoutes
+  internationalScientificCongressRoutes,
 )
 app.use('/regional-congress', regionalCongressRoutes)
 app.use('/webinars', webinarRoutes)
@@ -98,12 +98,12 @@ app.use(
     error: unknown,
     request: Request,
     response: Response,
-    next: NextFunction
+    next: NextFunction,
   ) => {
     const { errorHandler } = makeErrorHandler()
 
     errorHandler.handle(error, request, response, next)
-  }
+  },
 )
 
 export { app }

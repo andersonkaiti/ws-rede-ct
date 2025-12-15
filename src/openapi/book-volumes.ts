@@ -124,7 +124,7 @@ export const findBookVolumesRegistry: RouteConfig = {
                 description: z.string().nullable(),
                 createdAt: z.date(),
                 updatedAt: z.date(),
-              })
+              }),
             ),
           }),
         },

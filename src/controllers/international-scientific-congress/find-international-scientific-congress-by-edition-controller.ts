@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IInternationalScientificCongressRepository } from '../../repositories/international-scientific-congress/iinternational-scientific-congress-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -12,15 +12,21 @@ export const findInternationalScientificCongressByEditionSchema = z.object({
 })
 
 export class FindInternationalScientificCongressByEditionController {
-  constructor(private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository) {}
+  constructor(
+    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
+  ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { edition } = findInternationalScientificCongressByEditionSchema.parse({
-        edition: req.params.edition,
-      })
+      const { edition } =
+        findInternationalScientificCongressByEditionSchema.parse({
+          edition: req.params.edition,
+        })
 
-      const congresses = await this.internationalScientificCongressRepository.findByEdition(edition)
+      const congresses =
+        await this.internationalScientificCongressRepository.findByEdition(
+          edition,
+        )
 
       return res.status(HttpStatus.OK).json(congresses)
     } catch (err) {
@@ -30,4 +36,3 @@ export class FindInternationalScientificCongressByEditionController {
     }
   }
 }
-

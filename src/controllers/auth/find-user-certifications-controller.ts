@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -21,7 +21,7 @@ export const findAuthenticatedUserCertificationsSchema = z.object({
 
 export class FindAuthenticatedUserCertificationsController {
   constructor(
-    private readonly certificationRepository: ICertificationRepository
+    private readonly certificationRepository: ICertificationRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

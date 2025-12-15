@@ -6,7 +6,7 @@ import {
   EventStatus,
 } from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IEventRepository } from '../../repositories/event/ievent-repository.d.ts'
 
 const DEFAULT_PAGE = 1

@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IInternationalScientificCongressRepository } from '../../repositories/international-scientific-congress/iinternational-scientific-congress-repository.d.ts'
 
 const DEFAULT_PAGE = 1
@@ -21,7 +21,7 @@ export const findInternationalScientificCongressSchema = z.object({
 
 export class FindInternationalScientificCongressesController {
   constructor(
-    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository
+    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

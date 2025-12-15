@@ -10,7 +10,7 @@ export function makeCreateCourseController() {
   return {
     createCourseController: new CreateCourseController(
       makeCourseRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -24,7 +24,7 @@ export function makeFindCoursesController() {
 export function makeFindCourseByIdController() {
   return {
     findCourseByIdController: new FindCourseByIdController(
-      makeCourseRepository()
+      makeCourseRepository(),
     ),
   }
 }
@@ -33,7 +33,7 @@ export function makeUpdateCourseController() {
   return {
     updateCourseController: new UpdateCourseController(
       makeCourseRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -42,7 +42,7 @@ export function makeDeleteCourseController() {
   return {
     deleteCourseController: new DeleteCourseController(
       makeCourseRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

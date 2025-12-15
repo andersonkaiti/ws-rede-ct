@@ -13,7 +13,7 @@ export function makeCreateRegionalCongressGalleryController() {
       new CreateRegionalCongressGalleryController(
         makeRegionalCongressGalleryRepository(),
         makeRegionalCongressRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -22,7 +22,7 @@ export function makeFindRegionalCongressGalleriesByCongressIdController() {
   return {
     findRegionalCongressGalleriesByCongressIdController:
       new FindRegionalCongressGalleriesByCongressIdController(
-        makeRegionalCongressGalleryRepository()
+        makeRegionalCongressGalleryRepository(),
       ),
   }
 }
@@ -31,7 +31,7 @@ export function makeFindRegionalCongressGalleryByIdController() {
   return {
     findRegionalCongressGalleryByIdController:
       new FindRegionalCongressGalleryByIdController(
-        makeRegionalCongressGalleryRepository()
+        makeRegionalCongressGalleryRepository(),
       ),
   }
 }
@@ -41,7 +41,7 @@ export function makeUpdateRegionalCongressGalleryController() {
     updateRegionalCongressGalleryController:
       new UpdateRegionalCongressGalleryController(
         makeRegionalCongressGalleryRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -50,7 +50,7 @@ export function makeDeleteRegionalCongressGalleryController() {
   return {
     deleteRegionalCongressGalleryController:
       new DeleteRegionalCongressGalleryController(
-        makeRegionalCongressGalleryRepository()
+        makeRegionalCongressGalleryRepository(),
       ),
   }
 }

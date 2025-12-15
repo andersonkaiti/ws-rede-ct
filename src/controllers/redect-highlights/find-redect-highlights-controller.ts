@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IRedeCTHighlightRepository } from '../../repositories/redect-highlight/iredect-highlight-repository.d.ts'
 
 const DEFAULT_PAGE = 1
@@ -22,13 +22,13 @@ export const findRedeCTHighlightsSchema = z.object({
 
 export class FindRedeCTHighlightsController {
   constructor(
-    private readonly redectHighlightRepository: IRedeCTHighlightRepository
+    private readonly redectHighlightRepository: IRedeCTHighlightRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
       const { page, limit, ...filter } = findRedeCTHighlightsSchema.parse(
-        req.query
+        req.query,
       )
 
       const offset = limit * page - limit

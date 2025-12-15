@@ -11,7 +11,7 @@ export interface IInternationalScientificCongressPartnerRepository {
   update(partner: IUpdateCongressPartnerDTO): Promise<void>
   deleteById(id: string): Promise<void>
   findByCongressId(
-    data: IFindAllPartnersByCongressIdDTO
+    data: IFindAllPartnersByCongressIdDTO,
   ): Promise<CongressPartner[] | null>
   findById(id: string): Promise<CongressPartner | null>
   count(data: ICountCongressPartnerDTO): Promise<number>

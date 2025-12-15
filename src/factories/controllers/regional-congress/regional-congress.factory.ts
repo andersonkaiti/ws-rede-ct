@@ -9,7 +9,7 @@ import { makeRegionalCongressRepository } from '../../repositories/regional-cong
 export function makeCreateRegionalCongressController() {
   return {
     createRegionalCongressController: new CreateRegionalCongressController(
-      makeRegionalCongressRepository()
+      makeRegionalCongressRepository(),
     ),
   }
 }
@@ -17,7 +17,7 @@ export function makeCreateRegionalCongressController() {
 export function makeFindRegionalCongressesController() {
   return {
     findRegionalCongressesController: new FindRegionalCongressesController(
-      makeRegionalCongressRepository()
+      makeRegionalCongressRepository(),
     ),
   }
 }
@@ -25,7 +25,7 @@ export function makeFindRegionalCongressesController() {
 export function makeFindRegionalCongressByIdController() {
   return {
     findRegionalCongressByIdController: new FindRegionalCongressByIdController(
-      makeRegionalCongressRepository()
+      makeRegionalCongressRepository(),
     ),
   }
 }
@@ -34,7 +34,7 @@ export function makeFindRegionalCongressByEditionController() {
   return {
     findRegionalCongressByEditionController:
       new FindRegionalCongressByEditionController(
-        makeRegionalCongressRepository()
+        makeRegionalCongressRepository(),
       ),
   }
 }
@@ -42,7 +42,7 @@ export function makeFindRegionalCongressByEditionController() {
 export function makeUpdateRegionalCongressController() {
   return {
     updateRegionalCongressController: new UpdateRegionalCongressController(
-      makeRegionalCongressRepository()
+      makeRegionalCongressRepository(),
     ),
   }
 }
@@ -50,7 +50,7 @@ export function makeUpdateRegionalCongressController() {
 export function makeDeleteRegionalCongressController() {
   return {
     deleteRegionalCongressController: new DeleteRegionalCongressController(
-      makeRegionalCongressRepository()
+      makeRegionalCongressRepository(),
     ),
   }
 }

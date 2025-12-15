@@ -4,4 +4,3 @@ import { MeetingMinuteRepository } from '../../repositories/meeting-minute/meeti
 export function makeMeetingMinuteRepository() {
   return new MeetingMinuteRepository(prisma)
 }
-

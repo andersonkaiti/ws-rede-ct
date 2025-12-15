@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegimentRepository } from '../../repositories/regiment/iregiment-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -16,7 +16,7 @@ export const deleteRegimentSchema = z.object({
 export class DeleteRegimentController {
   constructor(
     private readonly regimentRepository: IRegimentRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
@@ -47,4 +47,3 @@ export class DeleteRegimentController {
     }
   }
 }
-

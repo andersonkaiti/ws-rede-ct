@@ -10,7 +10,7 @@ export function makeCreateInternationalScientificCongressController() {
   return {
     createInternationalScientificCongressController:
       new CreateInternationalScientificCongressController(
-        makeInternationalScientificCongressRepository()
+        makeInternationalScientificCongressRepository(),
       ),
   }
 }
@@ -19,7 +19,7 @@ export function makeFindInternationalScientificCongressesController() {
   return {
     findInternationalScientificCongressesController:
       new FindInternationalScientificCongressesController(
-        makeInternationalScientificCongressRepository()
+        makeInternationalScientificCongressRepository(),
       ),
   }
 }
@@ -28,7 +28,7 @@ export function makeFindInternationalScientificCongressByIdController() {
   return {
     findInternationalScientificCongressByIdController:
       new FindInternationalScientificCongressByIdController(
-        makeInternationalScientificCongressRepository()
+        makeInternationalScientificCongressRepository(),
       ),
   }
 }
@@ -37,7 +37,7 @@ export function makeFindInternationalScientificCongressByEditionController() {
   return {
     findInternationalScientificCongressByEditionController:
       new FindInternationalScientificCongressByEditionController(
-        makeInternationalScientificCongressRepository()
+        makeInternationalScientificCongressRepository(),
       ),
   }
 }
@@ -46,7 +46,7 @@ export function makeUpdateInternationalScientificCongressController() {
   return {
     updateInternationalScientificCongressController:
       new UpdateInternationalScientificCongressController(
-        makeInternationalScientificCongressRepository()
+        makeInternationalScientificCongressRepository(),
       ),
   }
 }
@@ -55,7 +55,7 @@ export function makeDeleteInternationalScientificCongressController() {
   return {
     deleteInternationalScientificCongressController:
       new DeleteInternationalScientificCongressController(
-        makeInternationalScientificCongressRepository()
+        makeInternationalScientificCongressRepository(),
       ),
   }
 }

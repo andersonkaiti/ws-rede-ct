@@ -10,7 +10,7 @@ export function makeCreateWebinarController() {
   return {
     createWebinarController: new CreateWebinarController(
       makeWebinarRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -24,7 +24,7 @@ export function makeFindWebinarsController() {
 export function makeFindWebinarByIdController() {
   return {
     findWebinarByIdController: new FindWebinarByIdController(
-      makeWebinarRepository()
+      makeWebinarRepository(),
     ),
   }
 }
@@ -33,7 +33,7 @@ export function makeUpdateWebinarController() {
   return {
     updateWebinarController: new UpdateWebinarController(
       makeWebinarRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -42,7 +42,7 @@ export function makeDeleteWebinarController() {
   return {
     deleteWebinarController: new DeleteWebinarController(
       makeWebinarRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

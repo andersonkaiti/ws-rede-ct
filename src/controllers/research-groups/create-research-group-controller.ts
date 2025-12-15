@@ -3,7 +3,7 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IResearchGroupRepository } from '../../repositories/research-group/iresearch-group-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -35,7 +35,7 @@ export const createResearchGroupSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'O logo deve ser uma imagem válida de no máximo 5MB.'
+      'O logo deve ser uma imagem válida de no máximo 5MB.',
     )
     .optional(),
 })
@@ -43,7 +43,7 @@ export const createResearchGroupSchema = z.object({
 export class CreateResearchGroupController {
   constructor(
     private readonly researchGroupRepository: IResearchGroupRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

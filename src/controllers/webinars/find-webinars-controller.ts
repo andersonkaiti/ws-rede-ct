@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IWebinarRepository } from '../../repositories/webinar/iwebinar-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -25,7 +25,7 @@ export class FindWebinarsController {
   async handle(req: Request, res: Response) {
     try {
       const { limit, page, ...filter } = findWebinarsControllerSchema.parse(
-        req.query
+        req.query,
       )
 
       const offset = page * limit - limit

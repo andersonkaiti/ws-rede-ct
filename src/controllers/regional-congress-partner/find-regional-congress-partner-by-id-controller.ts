@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressPartnerRepository } from '../../repositories/regional-congress/partner/iregional-congress-partner-repository.js'
 
 extendZodWithOpenApi(z)
@@ -14,7 +14,7 @@ export const findRegionalCongressPartnerByIdSchema = z.object({
 
 export class FindRegionalCongressPartnerByIdController {
   constructor(
-    private readonly regionalCongressPartnerRepository: IRegionalCongressPartnerRepository
+    private readonly regionalCongressPartnerRepository: IRegionalCongressPartnerRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

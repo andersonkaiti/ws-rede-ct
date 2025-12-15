@@ -10,7 +10,7 @@ export function makeCreateScientificJournalController() {
   return {
     createScientificJournalController: new CreateScientificJournalController(
       makeScientificJournalRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -18,7 +18,7 @@ export function makeCreateScientificJournalController() {
 export function makeFindScientificJournalsController() {
   return {
     findScientificJournalsController: new FindScientificJournalsController(
-      makeScientificJournalRepository()
+      makeScientificJournalRepository(),
     ),
   }
 }
@@ -27,7 +27,7 @@ export function makeFindScientificJournalByIdController() {
   return {
     findScientificJournalByIdController:
       new FindScientificJournalByIdController(
-        makeScientificJournalRepository()
+        makeScientificJournalRepository(),
       ),
   }
 }
@@ -36,7 +36,7 @@ export function makeUpdateScientificJournalController() {
   return {
     updateScientificJournalController: new UpdateScientificJournalController(
       makeScientificJournalRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -45,7 +45,7 @@ export function makeDeleteScientificJournalController() {
   return {
     deleteScientificJournalController: new DeleteScientificJournalController(
       makeScientificJournalRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

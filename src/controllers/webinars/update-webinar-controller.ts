@@ -3,8 +3,8 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IWebinarRepository } from '../../repositories/webinar/iwebinar-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -24,7 +24,7 @@ export const updateWebinarSchema = z.object({
   webinarLink: z.url('URL do webinar deve ser válida').optional(),
   guestIds: z
     .transform((value) =>
-      typeof value === 'string' ? value.split(',') : value
+      typeof value === 'string' ? value.split(',') : value,
     )
     .pipe(z.array(z.uuid()))
     .optional(),
@@ -47,7 +47,7 @@ export const updateWebinarSchema = z.object({
 export class UpdateWebinarController {
   constructor(
     private readonly webinarRepository: IWebinarRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

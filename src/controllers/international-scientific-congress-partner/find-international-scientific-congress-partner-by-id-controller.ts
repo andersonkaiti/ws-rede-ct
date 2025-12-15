@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IInternationalScientificCongressPartnerRepository } from '../../repositories/international-scientific-congress/partner/international-scientific-congress-gallery-repository-partner-repository.js'
 
 extendZodWithOpenApi(z)
@@ -14,7 +14,7 @@ export const findInternationalScientificCongressPartnerByIdSchema = z.object({
 
 export class FindInternationalScientificCongressPartnerByIdController {
   constructor(
-    private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository
+    private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
@@ -22,7 +22,7 @@ export class FindInternationalScientificCongressPartnerByIdController {
       const { id } = findInternationalScientificCongressPartnerByIdSchema.parse(
         {
           id: req.params.id,
-        }
+        },
       )
 
       const partner =

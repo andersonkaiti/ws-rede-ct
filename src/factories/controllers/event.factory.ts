@@ -10,7 +10,7 @@ export function makeCreateEventController() {
   return {
     createEventController: new CreateEventController(
       makeEventRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -31,7 +31,7 @@ export function makeUpdateEventController() {
   return {
     updateEventController: new UpdateEventController(
       makeEventRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

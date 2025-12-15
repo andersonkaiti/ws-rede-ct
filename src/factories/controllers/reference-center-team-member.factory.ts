@@ -9,7 +9,7 @@ export function makeCreateReferenceCenterTeamMemberController() {
   return {
     createReferenceCenterTeamMemberController:
       new CreateReferenceCenterTeamMemberController(
-        makeReferenceCenterTeamMemberRepository()
+        makeReferenceCenterTeamMemberRepository(),
       ),
   }
 }
@@ -18,7 +18,7 @@ export function makeFindReferenceCenterTeamMembersController() {
   return {
     findReferenceCenterTeamMembersController:
       new FindReferenceCenterTeamMembersController(
-        makeReferenceCenterTeamMemberRepository()
+        makeReferenceCenterTeamMemberRepository(),
       ),
   }
 }
@@ -27,7 +27,7 @@ export function makeFindReferenceCenterTeamMemberByIdController() {
   return {
     findReferenceCenterTeamMemberByIdController:
       new FindReferenceCenterTeamMemberByIdController(
-        makeReferenceCenterTeamMemberRepository()
+        makeReferenceCenterTeamMemberRepository(),
       ),
   }
 }
@@ -36,7 +36,7 @@ export function makeUpdateReferenceCenterTeamMemberController() {
   return {
     updateReferenceCenterTeamMemberController:
       new UpdateReferenceCenterTeamMemberController(
-        makeReferenceCenterTeamMemberRepository()
+        makeReferenceCenterTeamMemberRepository(),
       ),
   }
 }
@@ -45,7 +45,7 @@ export function makeDeleteReferenceCenterTeamMemberController() {
   return {
     deleteReferenceCenterTeamMemberController:
       new DeleteReferenceCenterTeamMemberController(
-        makeReferenceCenterTeamMemberRepository()
+        makeReferenceCenterTeamMemberRepository(),
       ),
   }
 }

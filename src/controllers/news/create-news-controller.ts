@@ -3,7 +3,7 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -30,14 +30,14 @@ export const createNewsSchema = z.object({
           file.size <= MAX_IMAGE_SIZE_BYTES),
       {
         message: 'A imagem deve ser uma imagem válida de no máximo 5MB.',
-      }
+      },
     ),
 })
 
 export class CreateNewsController {
   constructor(
     private readonly newsRepository: INewsRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

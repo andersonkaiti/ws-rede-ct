@@ -4,4 +4,3 @@ import { RegimentRepository } from '../../repositories/regiment/regiment-reposit
 export function makeRegimentRepository() {
   return new RegimentRepository(prisma)
 }
-

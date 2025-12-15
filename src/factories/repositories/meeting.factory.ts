@@ -4,4 +4,3 @@ import { MeetingRepository } from '../../repositories/meeting/meeting-repository
 export function makeMeetingRepository() {
   return new MeetingRepository(prisma)
 }
-

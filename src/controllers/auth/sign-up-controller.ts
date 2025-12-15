@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { ConflictError } from '../../errrors/conflict-error.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { ConflictError } from '../../errors/conflict-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.ts'
 import type { IBcryptService } from '../../services/auth/bcrypt/ibcryptjs.ts'
 
@@ -19,13 +19,13 @@ export const createUserSchema = z
       .string('A senha é obrigatória.')
       .min(
         PASSWORD_MIN_LENGTH,
-        `A senha deve ter pelo menos ${PASSWORD_MIN_LENGTH} caracteres.`
+        `A senha deve ter pelo menos ${PASSWORD_MIN_LENGTH} caracteres.`,
       ),
     confirmPassword: z
       .string('A senha é obrigatória.')
       .min(
         PASSWORD_MIN_LENGTH,
-        `A senha deve ter pelo menos ${PASSWORD_MIN_LENGTH} caracteres.`
+        `A senha deve ter pelo menos ${PASSWORD_MIN_LENGTH} caracteres.`,
       ),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -36,7 +36,7 @@ export const createUserSchema = z
 export class SignUpController {
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly bcrypt: IBcryptService
+    private readonly bcrypt: IBcryptService,
   ) {}
 
   async handle(req: Request, res: Response) {

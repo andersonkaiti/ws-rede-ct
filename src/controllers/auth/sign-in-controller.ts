@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { UnauthorizedError } from '../../errrors/unauthorized-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { UnauthorizedError } from '../../errors/unauthorized-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.ts'
 import type { IBcryptService } from '../../services/auth/bcrypt/ibcryptjs.ts'
 import type { IJWTService } from '../../services/auth/jwt/ijwt.ts'
@@ -19,7 +19,7 @@ export class SignInController {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly bcrypt: IBcryptService,
-    private readonly jwtService: IJWTService
+    private readonly jwtService: IJWTService,
   ) {}
 
   async handle(req: Request, res: Response) {

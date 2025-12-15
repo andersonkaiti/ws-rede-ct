@@ -3,9 +3,9 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { Degree, Seniority } from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { ConflictError } from '../../errrors/conflict-error.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { ConflictError } from '../../errors/conflict-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IResearcherRepository } from '../../repositories/researcher/iresearcher-repository.d.ts'
 
 extendZodWithOpenApi(z)

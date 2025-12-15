@@ -3,7 +3,7 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ICourseRepository } from '../../repositories/course/icourse-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -25,7 +25,7 @@ export const createCourseSchema = z.object({
   description: z.string().optional(),
   instructorIds: z
     .transform((value) =>
-      typeof value === 'string' ? value.split(',') : value
+      typeof value === 'string' ? value.split(',') : value,
     )
     .pipe(z.array(z.uuid())),
   image: z
@@ -38,14 +38,14 @@ export const createCourseSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A imagem deve ser uma imagem válida de no máximo 5MB.'
+      'A imagem deve ser uma imagem válida de no máximo 5MB.',
     ),
 })
 
 export class CreateCourseController {
   constructor(
     private readonly courseRepository: ICourseRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

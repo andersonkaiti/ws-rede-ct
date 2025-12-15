@@ -4,4 +4,3 @@ import { SDHCTeamMemberRepository } from '../../repositories/sdhc-team-member/sd
 export function makeSDHCTeamMemberRepository() {
   return new SDHCTeamMemberRepository(prisma)
 }
-

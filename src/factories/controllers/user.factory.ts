@@ -9,7 +9,7 @@ export function makeUpdateUserController() {
   return {
     updateUserController: new UpdateUserController(
       makeUserRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

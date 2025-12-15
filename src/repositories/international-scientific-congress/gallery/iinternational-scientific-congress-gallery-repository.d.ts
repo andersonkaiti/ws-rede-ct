@@ -11,7 +11,7 @@ export interface IInternationalScientificCongressGalleryRepository {
   update(gallery: IUpdateCongressGalleryDTO): Promise<void>
   deleteById(id: string): Promise<void>
   findByCongressId(
-    data: IFindAllGalleryByCongressIdDTO
+    data: IFindAllGalleryByCongressIdDTO,
   ): Promise<CongressGalleryItem[] | null>
   findById(id: string): Promise<CongressGalleryItem | null>
   count(data: ICountCongressGalleryDTO): Promise<number>

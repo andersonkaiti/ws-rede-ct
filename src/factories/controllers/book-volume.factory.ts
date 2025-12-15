@@ -10,7 +10,7 @@ export function makeCreateBookVolumeController() {
   return {
     createBookVolumeController: new CreateBookVolumeController(
       makeBookVolumeRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -18,7 +18,7 @@ export function makeCreateBookVolumeController() {
 export function makeFindBookVolumesController() {
   return {
     findBookVolumesController: new FindBookVolumesController(
-      makeBookVolumeRepository()
+      makeBookVolumeRepository(),
     ),
   }
 }
@@ -26,7 +26,7 @@ export function makeFindBookVolumesController() {
 export function makeFindBookVolumeByIdController() {
   return {
     findBookVolumeByIdController: new FindBookVolumeByIdController(
-      makeBookVolumeRepository()
+      makeBookVolumeRepository(),
     ),
   }
 }
@@ -35,7 +35,7 @@ export function makeUpdateBookVolumeController() {
   return {
     updateBookVolumeController: new UpdateBookVolumeController(
       makeBookVolumeRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -44,7 +44,7 @@ export function makeDeleteBookVolumeController() {
   return {
     deleteBookVolumeController: new DeleteBookVolumeController(
       makeBookVolumeRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

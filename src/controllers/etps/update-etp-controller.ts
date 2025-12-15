@@ -2,9 +2,9 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { ConflictError } from '../../errrors/conflict-error.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { ConflictError } from '../../errors/conflict-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IETPRepository } from '../../repositories/etp/ietp-repository.d.ts'
 
 extendZodWithOpenApi(z)

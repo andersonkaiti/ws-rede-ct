@@ -131,9 +131,9 @@ export const findCoursesRegistry: RouteConfig = {
                     avatarUrl: z.string().nullable(),
                     createdAt: z.date(),
                     updatedAt: z.date(),
-                  })
+                  }),
                 ),
-              })
+              }),
             ),
           }),
         },
@@ -200,7 +200,7 @@ export const findCourseByIdRegistry: RouteConfig = {
                   avatarUrl: z.string().nullable(),
                   createdAt: z.date(),
                   updatedAt: z.date(),
-                })
+                }),
               ),
             })
             .nullable(),

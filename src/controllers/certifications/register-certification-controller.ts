@@ -3,8 +3,8 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { BadRequestError } from '../../errrors/bad-request-error.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { BadRequestError } from '../../errors/bad-request-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -19,7 +19,7 @@ export const registerCertificationSchema = z.object({
     .any()
     .refine(
       (file) => file && typeof file === 'object' && file.size > 0,
-      'Arquivo do certificado é obrigatório'
+      'Arquivo do certificado é obrigatório',
     ),
 })
 
@@ -27,7 +27,7 @@ export class RegisterCertificationController {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly certificationRepository: ICertificationRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

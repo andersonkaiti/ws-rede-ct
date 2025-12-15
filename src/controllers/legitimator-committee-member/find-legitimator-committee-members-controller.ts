@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ILegitimatorCommitteeMemberRepository } from '../../repositories/legitimator-committee-member/ilegitimator-committee-member-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -14,7 +14,7 @@ export const findLegitimatorCommitteeMembersSchema = z.object({
 
 export class FindLegitimatorCommitteeMembersController {
   constructor(
-    private readonly legitimatorCommitteeMemberRepository: ILegitimatorCommitteeMemberRepository
+    private readonly legitimatorCommitteeMemberRepository: ILegitimatorCommitteeMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

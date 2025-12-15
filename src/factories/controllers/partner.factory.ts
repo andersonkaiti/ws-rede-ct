@@ -10,7 +10,7 @@ export function makeCreatePartnerController() {
   return {
     createPartnerController: new CreatePartnerController(
       makePartnerRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -24,7 +24,7 @@ export function makeFindPartnersController() {
 export function makeFindPartnerByIdController() {
   return {
     findPartnerByIdController: new FindPartnerByIdController(
-      makePartnerRepository()
+      makePartnerRepository(),
     ),
   }
 }
@@ -33,7 +33,7 @@ export function makeUpdatePartnerController() {
   return {
     updatePartnerController: new UpdatePartnerController(
       makePartnerRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -42,7 +42,7 @@ export function makeDeletePartnerController() {
   return {
     deletePartnerController: new DeletePartnerController(
       makePartnerRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

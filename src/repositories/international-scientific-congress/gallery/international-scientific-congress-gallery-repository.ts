@@ -51,7 +51,7 @@ export class InternationalScientificCongressGalleryRepository
         },
         skip: pagination.offset,
         take: pagination.limit,
-      }
+      },
     )
   }
 
@@ -61,7 +61,7 @@ export class InternationalScientificCongressGalleryRepository
         where: {
           id,
         },
-      }
+      },
     )
   }
 

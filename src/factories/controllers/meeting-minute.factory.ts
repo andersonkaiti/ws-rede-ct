@@ -11,7 +11,7 @@ export function makeCreateMeetingMinuteController() {
     createMeetingMinuteController: new CreateMeetingMinuteController(
       makeMeetingMinuteRepository(),
       makeMeetingRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -28,7 +28,7 @@ export function makeUpdateMeetingMinuteByMeetingIdController() {
     updateMeetingMinuteByMeetingIdController:
       new UpdateMeetingMinuteByMeetingIdController(
         makeMeetingMinuteRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -38,7 +38,7 @@ export function makeDeleteMeetingMinuteByMeetingIdController() {
     deleteMeetingMinuteByMeetingIdController:
       new DeleteMeetingMinuteByMeetingIdController(
         makeMeetingMinuteRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }

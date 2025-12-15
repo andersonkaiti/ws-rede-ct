@@ -13,7 +13,7 @@ export function makeCreateRegionalCongressPartnerController() {
       new CreateRegionalCongressPartnerController(
         makeRegionalCongressPartnerRepository(),
         makeRegionalCongressRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -22,7 +22,7 @@ export function makeFindRegionalCongressPartnersByCongressIdController() {
   return {
     findRegionalCongressPartnersByCongressIdController:
       new FindRegionalCongressPartnersByCongressIdController(
-        makeRegionalCongressPartnerRepository()
+        makeRegionalCongressPartnerRepository(),
       ),
   }
 }
@@ -31,7 +31,7 @@ export function makeFindRegionalCongressPartnerByIdController() {
   return {
     findRegionalCongressPartnerByIdController:
       new FindRegionalCongressPartnerByIdController(
-        makeRegionalCongressPartnerRepository()
+        makeRegionalCongressPartnerRepository(),
       ),
   }
 }
@@ -41,7 +41,7 @@ export function makeUpdateRegionalCongressPartnerController() {
     updateRegionalCongressPartnerController:
       new UpdateRegionalCongressPartnerController(
         makeRegionalCongressPartnerRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -50,7 +50,7 @@ export function makeDeleteRegionalCongressPartnerController() {
   return {
     deleteRegionalCongressPartnerController:
       new DeleteRegionalCongressPartnerController(
-        makeRegionalCongressPartnerRepository()
+        makeRegionalCongressPartnerRepository(),
       ),
   }
 }

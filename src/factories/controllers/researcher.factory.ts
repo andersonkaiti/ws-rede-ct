@@ -9,7 +9,7 @@ import { makeResearcherRepository } from '../repositories/researcher.factory.ts'
 export function makeCreateResearcherController() {
   return {
     createResearcherController: new CreateResearcherController(
-      makeResearcherRepository()
+      makeResearcherRepository(),
     ),
   }
 }
@@ -17,7 +17,7 @@ export function makeCreateResearcherController() {
 export function makeFindResearchersController() {
   return {
     findResearchersController: new FindResearchersController(
-      makeResearcherRepository()
+      makeResearcherRepository(),
     ),
   }
 }
@@ -25,7 +25,7 @@ export function makeFindResearchersController() {
 export function makeFindResearcherByIdController() {
   return {
     findResearcherByIdController: new FindResearcherByIdController(
-      makeResearcherRepository()
+      makeResearcherRepository(),
     ),
   }
 }
@@ -33,7 +33,7 @@ export function makeFindResearcherByIdController() {
 export function makeFindResearcherByUserIdController() {
   return {
     findResearcherByUserIdController: new FindResearcherByUserIdController(
-      makeResearcherRepository()
+      makeResearcherRepository(),
     ),
   }
 }
@@ -41,7 +41,7 @@ export function makeFindResearcherByUserIdController() {
 export function makeUpdateResearcherController() {
   return {
     updateResearcherController: new UpdateResearcherController(
-      makeResearcherRepository()
+      makeResearcherRepository(),
     ),
   }
 }
@@ -49,7 +49,7 @@ export function makeUpdateResearcherController() {
 export function makeDeleteResearcherController() {
   return {
     deleteResearcherController: new DeleteResearcherController(
-      makeResearcherRepository()
+      makeResearcherRepository(),
     ),
   }
 }

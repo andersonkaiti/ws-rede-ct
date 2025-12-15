@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IWorkGroupTeamMemberRepository } from '../../repositories/work-group-team-member/iwork-group-team-member-repository.d.ts'
 
 const DEFAULT_PAGE = 1
@@ -19,13 +19,13 @@ export const findWorkGroupTeamMembersSchema = z.object({
 
 export class FindWorkGroupTeamMembersController {
   constructor(
-    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository
+    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
       const { page, limit, ...filter } = findWorkGroupTeamMembersSchema.parse(
-        req.query
+        req.query,
       )
 
       const offset = limit * page - limit

@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IPostGraduateProgramRepository } from '../../repositories/post-graduate-program/ipost-graduate-program-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -22,7 +22,7 @@ export const findPostGraduateProgramsControllerSchema = z.object({
 
 export class FindPostGraduateProgramsController {
   constructor(
-    private readonly postGraduateProgramRepository: IPostGraduateProgramRepository
+    private readonly postGraduateProgramRepository: IPostGraduateProgramRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
@@ -49,7 +49,7 @@ export class FindPostGraduateProgramsController {
 
       const totalPages = Math.max(
         Math.ceil(totalPostGraduatePrograms / limit),
-        1
+        1,
       )
 
       return res.status(HttpStatus.OK).json({

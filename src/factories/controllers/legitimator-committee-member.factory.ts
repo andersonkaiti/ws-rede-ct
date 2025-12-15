@@ -9,7 +9,7 @@ export function makeCreateLegitimatorCommitteeMemberController() {
   return {
     createLegitimatorCommitteeMemberController:
       new CreateLegitimatorCommitteeMemberController(
-        makeLegitimatorCommitteeMemberRepository()
+        makeLegitimatorCommitteeMemberRepository(),
       ),
   }
 }
@@ -18,7 +18,7 @@ export function makeFindLegitimatorCommitteeMembersController() {
   return {
     findLegitimatorCommitteeMembersController:
       new FindLegitimatorCommitteeMembersController(
-        makeLegitimatorCommitteeMemberRepository()
+        makeLegitimatorCommitteeMemberRepository(),
       ),
   }
 }
@@ -27,7 +27,7 @@ export function makeFindLegitimatorCommitteeMemberByIdController() {
   return {
     findLegitimatorCommitteeMemberByIdController:
       new FindLegitimatorCommitteeMemberByIdController(
-        makeLegitimatorCommitteeMemberRepository()
+        makeLegitimatorCommitteeMemberRepository(),
       ),
   }
 }
@@ -36,7 +36,7 @@ export function makeUpdateLegitimatorCommitteeMemberController() {
   return {
     updateLegitimatorCommitteeMemberController:
       new UpdateLegitimatorCommitteeMemberController(
-        makeLegitimatorCommitteeMemberRepository()
+        makeLegitimatorCommitteeMemberRepository(),
       ),
   }
 }
@@ -45,8 +45,7 @@ export function makeDeleteLegitimatorCommitteeMemberController() {
   return {
     deleteLegitimatorCommitteeMemberController:
       new DeleteLegitimatorCommitteeMemberController(
-        makeLegitimatorCommitteeMemberRepository()
+        makeLegitimatorCommitteeMemberRepository(),
       ),
   }
 }
-

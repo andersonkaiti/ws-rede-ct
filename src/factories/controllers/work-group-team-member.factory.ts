@@ -9,7 +9,7 @@ export function makeCreateWorkGroupTeamMemberController() {
   return {
     createWorkGroupTeamMemberController:
       new CreateWorkGroupTeamMemberController(
-        makeWorkGroupTeamMemberRepository()
+        makeWorkGroupTeamMemberRepository(),
       ),
   }
 }
@@ -17,7 +17,7 @@ export function makeCreateWorkGroupTeamMemberController() {
 export function makeFindWorkGroupTeamMembersController() {
   return {
     findWorkGroupTeamMembersController: new FindWorkGroupTeamMembersController(
-      makeWorkGroupTeamMemberRepository()
+      makeWorkGroupTeamMemberRepository(),
     ),
   }
 }
@@ -26,7 +26,7 @@ export function makeFindWorkGroupTeamMemberByIdController() {
   return {
     findWorkGroupTeamMemberByIdController:
       new FindWorkGroupTeamMemberByIdController(
-        makeWorkGroupTeamMemberRepository()
+        makeWorkGroupTeamMemberRepository(),
       ),
   }
 }
@@ -35,7 +35,7 @@ export function makeUpdateWorkGroupTeamMemberController() {
   return {
     updateWorkGroupTeamMemberController:
       new UpdateWorkGroupTeamMemberController(
-        makeWorkGroupTeamMemberRepository()
+        makeWorkGroupTeamMemberRepository(),
       ),
   }
 }
@@ -44,7 +44,7 @@ export function makeDeleteWorkGroupTeamMemberController() {
   return {
     deleteWorkGroupTeamMemberController:
       new DeleteWorkGroupTeamMemberController(
-        makeWorkGroupTeamMemberRepository()
+        makeWorkGroupTeamMemberRepository(),
       ),
   }
 }
