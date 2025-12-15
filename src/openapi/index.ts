@@ -222,8 +222,10 @@ import {
 } from './sdhc-team-members.ts'
 import {
   deleteUserRegistry,
+  demoteUserRegistry,
   findUserRegistry,
   findUsersRegistry,
+  promoteUserRegistry,
   updateUserRegistry,
 } from './users.ts'
 import {
@@ -261,6 +263,8 @@ registry.registerPath(findUserRegistry)
 registry.registerPath(updateUserRegistry)
 registry.registerPath(deleteUserRegistry)
 registry.registerPath(findUsersRegistry)
+registry.registerPath(promoteUserRegistry)
+registry.registerPath(demoteUserRegistry)
 
 registry.registerPath(createNewsRegistry)
 registry.registerPath(findAllNewsRegistry)

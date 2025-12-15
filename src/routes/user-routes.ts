@@ -1,8 +1,10 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeDeleteUserController,
+  makeDemoteUserController,
   makeFindUserController,
   makeFindUsersController,
+  makePromoteUserController,
   makeUpdateUserController,
 } from '../factories/controllers/user.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -48,5 +50,29 @@ router.get('/', async (req: Request, res: Response) => {
 
   await findUsersController.handle(req, res)
 })
+
+router.put(
+  '/promote/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { promoteUserController } = makePromoteUserController()
+
+    await promoteUserController.handle(req, res)
+  },
+)
+
+router.put(
+  '/demote/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { demoteUserController } = makeDemoteUserController()
+
+    await demoteUserController.handle(req, res)
+  },
+)
 
 export { router as userRoutes }

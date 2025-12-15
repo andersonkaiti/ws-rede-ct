@@ -188,10 +188,15 @@ export const findNewsByAuthorIdRegistry: RouteConfig = {
   tags: ['News'],
   summary: 'List news by author',
   request: {
-    params: findNewsByAuthorSchema
-      .pick({ authorId: true })
-      .transform(() => ({ author_id: '' })),
-    query: findNewsByAuthorSchema.omit({ authorId: true }),
+    params: z.object({
+      author_id: z.string().openapi({
+        param: {
+          name: 'author_id',
+          in: 'path',
+        },
+      }),
+    }),
+    query: findNewsByAuthorSchema.omit({ id: true }),
   },
   responses: {
     200: {

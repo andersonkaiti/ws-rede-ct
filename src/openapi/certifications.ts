@@ -14,9 +14,14 @@ export const registerCertificationRegistry: RouteConfig = {
   summary: 'Register certification for user',
   security: [{ bearerAuth: [] }],
   request: {
-    params: registerCertificationSchema
-      .pick({ userId: true })
-      .transform(() => ({ user_id: '' })),
+    params: z.object({
+      user_id: z.string().openapi({
+        param: {
+          name: 'user_id',
+          in: 'path',
+        },
+      }),
+    }),
     body: {
       content: {
         'multipart/form-data': {

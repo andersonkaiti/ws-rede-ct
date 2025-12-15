@@ -26,7 +26,7 @@ export const createCongressGalleryRegistry: RouteConfig = {
       content: {
         'application/json': {
           schema: createRegionalCongressGallerySchema.omit({
-            congressId: true,
+            id: true,
           }),
         },
       },
