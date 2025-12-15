@@ -9,7 +9,7 @@ import {
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
@@ -27,32 +27,20 @@ router.post(
     const { createBookVolumeController } = makeCreateBookVolumeController()
 
     await createBookVolumeController.handle(req, res)
-  }
-)
-
-router.get(
-  '/',
-  (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.isAdmin(req, res, next)
   },
-  async (req: Request, res: Response) => {
-    const { findBookVolumesController } = makeFindBookVolumesController()
-
-    await findBookVolumesController.handle(req, res)
-  }
 )
 
-router.get(
-  '/:id',
-  (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.isAdmin(req, res, next)
-  },
-  async (req: Request, res: Response) => {
-    const { findBookVolumeByIdController } = makeFindBookVolumeByIdController()
+router.get('/', async (req: Request, res: Response) => {
+  const { findBookVolumesController } = makeFindBookVolumesController()
 
-    await findBookVolumeByIdController.handle(req, res)
-  }
-)
+  await findBookVolumesController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findBookVolumeByIdController } = makeFindBookVolumeByIdController()
+
+  await findBookVolumeByIdController.handle(req, res)
+})
 
 router.put(
   '/:id',
@@ -68,7 +56,7 @@ router.put(
     const { updateBookVolumeController } = makeUpdateBookVolumeController()
 
     await updateBookVolumeController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
@@ -80,7 +68,7 @@ router.delete(
     const { deleteBookVolumeController } = makeDeleteBookVolumeController()
 
     await deleteBookVolumeController.handle(req, res)
-  }
+  },
 )
 
 export { router as bookVolumeRoutes }

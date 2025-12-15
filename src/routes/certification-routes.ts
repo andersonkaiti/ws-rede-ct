@@ -9,7 +9,7 @@ import {
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
@@ -24,36 +24,24 @@ router.post(
       makeRegisterCertificationController()
 
     await registerCertificationController.handle(req, res)
-  }
-)
-
-router.get(
-  '/',
-  (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.isAdmin(req, res, next)
   },
-  async (req: Request, res: Response) => {
-    const { findCertificationsController } = makeFindCertificationsController()
-
-    await findCertificationsController.handle(req, res)
-  }
 )
 
-router.get(
-  '/:certification_id',
-  (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.isAdmin(req, res, next)
-  },
-  async (req: Request, res: Response) => {
-    const { findCertificationByIdController } =
-      makeFindCertificationByIdController()
+router.get('/', async (req: Request, res: Response) => {
+  const { findCertificationsController } = makeFindCertificationsController()
 
-    await findCertificationByIdController.handle(req, res)
-  }
-)
+  await findCertificationsController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findCertificationByIdController } =
+    makeFindCertificationByIdController()
+
+  await findCertificationByIdController.handle(req, res)
+})
 
 router.put(
-  '/:certification_id',
+  '/:id',
   (req: Request, res: Response, next: NextFunction) => {
     authMiddleware.isAdmin(req, res, next)
   },
@@ -63,11 +51,11 @@ router.put(
       makeUpdateCertificationController()
 
     await updateCertificationController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
-  '/:certification_id',
+  '/:id',
   (req: Request, res: Response, next: NextFunction) => {
     authMiddleware.isAdmin(req, res, next)
   },
@@ -76,7 +64,7 @@ router.delete(
       makeDeleteCertificationController()
 
     await deleteCertificationController.handle(req, res)
-  }
+  },
 )
 
 export { router as certificationRoutes }

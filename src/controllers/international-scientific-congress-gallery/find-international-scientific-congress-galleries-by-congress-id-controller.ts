@@ -12,7 +12,7 @@ extendZodWithOpenApi(z)
 
 export const findInternationalScientificCongressGalleriesByCongressIdSchema =
   z.object({
-    congressId: z.uuid(),
+    id: z.uuid(),
     page: z.coerce.number().min(1).default(DEFAULT_PAGE),
     limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
     caption: z.string().optional(),
@@ -20,14 +20,14 @@ export const findInternationalScientificCongressGalleriesByCongressIdSchema =
 
 export class FindInternationalScientificCongressGalleriesByCongressIdController {
   constructor(
-    private readonly internationalScientificCongressGalleryRepository: IInternationalScientificCongressGalleryRepository
+    private readonly internationalScientificCongressGalleryRepository: IInternationalScientificCongressGalleryRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { congressId, page, limit, ...filter } =
+      const { id, page, limit, ...filter } =
         findInternationalScientificCongressGalleriesByCongressIdSchema.parse({
-          congressId: req.params.congressId,
+          id: req.params.id,
           ...req.query,
         })
 
@@ -40,13 +40,13 @@ export class FindInternationalScientificCongressGalleriesByCongressIdController 
             limit,
           },
           filter: {
-            congressId,
+            congressId: id,
             ...filter,
           },
         }),
         this.internationalScientificCongressGalleryRepository.count({
           filter: {
-            congressId,
+            congressId: id,
             caption: filter.caption,
           },
         }),

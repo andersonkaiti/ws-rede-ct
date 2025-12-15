@@ -10,7 +10,7 @@ import {
 } from '../factories/controllers/auth.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
@@ -36,7 +36,7 @@ router.get(
       makeFindAuthenticatedUserController()
 
     await findAuthenticatedUserController.handle(req, res)
-  }
+  },
 )
 
 router.get(
@@ -49,7 +49,7 @@ router.get(
       makeFindAuthenticatedUserNewsController()
 
     await findAuthenticatedUserController.handle(req, res)
-  }
+  },
 )
 
 router.get(
@@ -69,7 +69,7 @@ router.get(
         })
       }
     }
-  }
+  },
 )
 
 router.get(
@@ -82,7 +82,7 @@ router.get(
       makeFindAuthenticatedUserCertificationsController()
 
     await findAuthenticatedUserCertificationsController.handle(req, res)
-  }
+  },
 )
 
 router.get(
@@ -95,7 +95,7 @@ router.get(
       makeFindAuthenticatedUserPendenciesController()
 
     await findAuthenticatedUserPendenciesController.handle(req, res)
-  }
+  },
 )
 
 export { router as authRoutes }

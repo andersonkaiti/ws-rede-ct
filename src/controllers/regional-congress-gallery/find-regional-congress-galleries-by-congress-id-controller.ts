@@ -9,7 +9,7 @@ import type { IRegionalCongressGalleryRepository } from '../../repositories/regi
 extendZodWithOpenApi(z)
 
 export const findRegionalCongressGalleriesByCongressIdSchema = z.object({
-  congressId: z.uuid('ID do congresso inválido'),
+  id: z.uuid('ID do congresso inválido'),
   page: z.coerce.number().int().positive().default(1),
   limit: z.coerce.number().int().positive().default(10),
   caption: z.string().optional(),
@@ -17,12 +17,12 @@ export const findRegionalCongressGalleriesByCongressIdSchema = z.object({
 
 export class FindRegionalCongressGalleriesByCongressIdController {
   constructor(
-    private readonly regionalCongressGalleryRepository: IRegionalCongressGalleryRepository
+    private readonly regionalCongressGalleryRepository: IRegionalCongressGalleryRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { page, limit, ...filter } =
+      const { page, limit, caption, id } =
         findRegionalCongressGalleriesByCongressIdSchema.parse({
           ...req.params,
           ...req.query,
@@ -36,7 +36,10 @@ export class FindRegionalCongressGalleriesByCongressIdController {
             offset,
             limit,
           },
-          filter,
+          filter: {
+            caption,
+            congressId: id,
+          },
         })
 
       if (!galleries) {
@@ -44,7 +47,10 @@ export class FindRegionalCongressGalleriesByCongressIdController {
       }
 
       const total = await this.regionalCongressGalleryRepository.count({
-        filter,
+        filter: {
+          caption,
+          congressId: id,
+        },
       })
 
       return res.status(HttpStatus.OK).json({

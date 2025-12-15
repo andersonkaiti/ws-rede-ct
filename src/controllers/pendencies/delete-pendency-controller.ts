@@ -16,14 +16,12 @@ export const deletePendencySchema = z.object({
 export class DeletePendencyController {
   constructor(
     private readonly pendencyRepository: IPendencyRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { id } = deletePendencySchema.parse({
-        id: req.params.pendency_id,
-      })
+      const { id } = deletePendencySchema.parse(req.params)
 
       const pendency = await this.pendencyRepository.findById(id)
 

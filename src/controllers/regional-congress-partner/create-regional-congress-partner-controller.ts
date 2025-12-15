@@ -32,27 +32,26 @@ export const createRegionalCongressPartnerSchema = z.object({
       return value.size <= MAX_LOGO_SIZE_BYTES
     }, `A imagem deve ter no máximo ${MAX_LOGO_SIZE_MB}MB.`)
     .optional(),
-  congressId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class CreateRegionalCongressPartnerController {
   constructor(
     private readonly regionalCongressPartnerRepository: IRegionalCongressPartnerRepository,
     private readonly regionalCongressRepository: IRegionalCongressRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { name, logo, congressId } =
-        createRegionalCongressPartnerSchema.parse({
-          ...req.body,
-          ...req.params,
-          logo: req.file,
-        })
+      const { name, logo, id } = createRegionalCongressPartnerSchema.parse({
+        ...req.body,
+        ...req.params,
+        logo: req.file,
+      })
 
       const existingCongress =
-        await this.regionalCongressRepository.findById(congressId)
+        await this.regionalCongressRepository.findById(id)
 
       if (!existingCongress) {
         throw new NotFoundError('O congresso não existe.')
@@ -60,7 +59,7 @@ export class CreateRegionalCongressPartnerController {
 
       const partner = await this.regionalCongressPartnerRepository.create({
         name,
-        congressId,
+        congressId: id,
       })
 
       let logoUrl: string | undefined

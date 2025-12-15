@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from 'express'
 import { HttpStatus } from '../@types/status-code.ts'
 
-const router = Router()
+const router: Router = Router()
 
 router.get('/', (_req: Request, res: Response) => {
   res.status(HttpStatus.OK).json({

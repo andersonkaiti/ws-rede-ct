@@ -8,7 +8,7 @@ import {
 } from '../factories/controllers/scientific-articles.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
@@ -22,34 +22,22 @@ router.post(
       makeCreateScientificArticleController()
 
     await createScientificArticleController.handle(req, res)
-  }
-)
-
-router.get(
-  '/',
-  (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.isAdmin(req, res, next)
   },
-  async (req: Request, res: Response) => {
-    const { findScientificArticlesController } =
-      makeFindScientificArticlesController()
-
-    await findScientificArticlesController.handle(req, res)
-  }
 )
 
-router.get(
-  '/:id',
-  (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.isAdmin(req, res, next)
-  },
-  async (req: Request, res: Response) => {
-    const { findScientificArticleByIdController } =
-      makeFindScientificArticleByIdController()
+router.get('/', async (req: Request, res: Response) => {
+  const { findScientificArticlesController } =
+    makeFindScientificArticlesController()
 
-    await findScientificArticleByIdController.handle(req, res)
-  }
-)
+  await findScientificArticlesController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findScientificArticleByIdController } =
+    makeFindScientificArticleByIdController()
+
+  await findScientificArticleByIdController.handle(req, res)
+})
 
 router.put(
   '/:id',
@@ -61,7 +49,7 @@ router.put(
       makeUpdateScientificArticleController()
 
     await updateScientificArticleController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
@@ -74,7 +62,7 @@ router.delete(
       makeDeleteScientificArticleController()
 
     await deleteScientificArticleController.handle(req, res)
-  }
+  },
 )
 
 export { router as scientificArticlesRoutes }

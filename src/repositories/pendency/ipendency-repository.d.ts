@@ -1,3 +1,4 @@
+import type { Pendency } from '../../../config/database/generated/client.ts'
 import type {
   ICountPendenciesDTO,
   ICreatePendencyDTO,

@@ -10,21 +10,21 @@ import {
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
 router.post(
   '/',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('photo'),
   async (req: Request, res: Response) => {
     const { createInMemoriamController } = makeCreateInMemoriamController()
 
     await createInMemoriamController.handle(req, res)
-  }
+  },
 )
 
 router.get('/', async (req: Request, res: Response) => {
@@ -39,36 +39,42 @@ router.get('/:id', async (req: Request, res: Response) => {
   await findInMemoriamByIdController.handle(req, res)
 })
 
-router.get('/role/:role', async (req: Request, res: Response) => {
-  const { findInMemoriamByRoleController } =
-    makeFindInMemoriamByRoleController()
+router.get(
+  '/role/:role',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { findInMemoriamByRoleController } =
+      makeFindInMemoriamByRoleController()
 
-  await findInMemoriamByRoleController.handle(req, res)
-})
+    await findInMemoriamByRoleController.handle(req, res)
+  },
+)
 
 router.put(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('photo'),
   async (req: Request, res: Response) => {
     const { updateInMemoriamController } = makeUpdateInMemoriamController()
 
     await updateInMemoriamController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteInMemoriamController } = makeDeleteInMemoriamController()
 
     await deleteInMemoriamController.handle(req, res)
-  }
+  },
 )
 
 export { router as inMemoriamRoutes }

@@ -10,7 +10,7 @@ import {
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const routes = Router()
+const routes: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
@@ -24,7 +24,7 @@ routes.post(
     const { createNewsController } = makeCreateNewsController()
 
     await createNewsController.handle(req, res)
-  }
+  },
 )
 
 routes.get('/', async (req: Request, res: Response) => {
@@ -39,7 +39,7 @@ routes.get('/:id', async (req: Request, res: Response) => {
   await findNewsByIdController.handle(req, res)
 })
 
-routes.get('/author/:authorId', async (req: Request, res: Response) => {
+routes.get('/author/:id', async (req: Request, res: Response) => {
   const { findNewsByAuthorIdController } = makeFindNewsByAuthorIdController()
 
   await findNewsByAuthorIdController.handle(req, res)
@@ -55,7 +55,7 @@ routes.put(
     const { updateNewsController } = makeUpdateNewsController()
 
     await updateNewsController.handle(req, res)
-  }
+  },
 )
 
 routes.delete(
@@ -67,7 +67,7 @@ routes.delete(
     const { deleteNewsController } = makeDeleteNewsController()
 
     await deleteNewsController.handle(req, res)
-  }
+  },
 )
 
 export { routes as newsRoutes }

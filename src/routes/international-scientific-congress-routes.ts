@@ -24,21 +24,21 @@ import {
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
 router.post(
   '/',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { createInternationalScientificCongressController } =
       makeCreateInternationalScientificCongressController()
 
     await createInternationalScientificCongressController.handle(req, res)
-  }
+  },
 )
 
 router.get('/', async (req: Request, res: Response) => {
@@ -65,33 +65,33 @@ router.get('/edition/:edition', async (req: Request, res: Response) => {
 router.put(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { updateInternationalScientificCongressController } =
       makeUpdateInternationalScientificCongressController()
 
     await updateInternationalScientificCongressController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteInternationalScientificCongressController } =
       makeDeleteInternationalScientificCongressController()
 
     await deleteInternationalScientificCongressController.handle(req, res)
-  }
+  },
 )
 
 router.post(
-  '/:congressId/gallery',
+  '/:id/gallery',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('image'),
   async (req: Request, res: Response) => {
@@ -100,18 +100,18 @@ router.post(
 
     await createInternationalScientificCongressGalleryController.handle(
       req,
-      res
+      res,
     )
-  }
+  },
 )
 
-router.get('/:congressId/gallery', async (req: Request, res: Response) => {
+router.get('/:id/gallery', async (req: Request, res: Response) => {
   const { findInternationalScientificCongressGalleriesByCongressIdController } =
     makeFindInternationalScientificCongressGalleriesByCongressIdController()
 
   await findInternationalScientificCongressGalleriesByCongressIdController.handle(
     req,
-    res
+    res,
   )
 })
 
@@ -121,14 +121,14 @@ router.get('/gallery/:id', async (req: Request, res: Response) => {
 
   await findInternationalScientificCongressGalleryByIdController.handle(
     req,
-    res
+    res,
   )
 })
 
 router.put(
   '/gallery/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('image'),
   async (req: Request, res: Response) => {
@@ -137,15 +137,15 @@ router.put(
 
     await updateInternationalScientificCongressGalleryController.handle(
       req,
-      res
+      res,
     )
-  }
+  },
 )
 
 router.delete(
   '/gallery/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteInternationalScientificCongressGalleryController } =
@@ -153,15 +153,15 @@ router.delete(
 
     await deleteInternationalScientificCongressGalleryController.handle(
       req,
-      res
+      res,
     )
-  }
+  },
 )
 
 router.post(
-  '/:congressId/partner',
+  '/:id/partner',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('logo'),
   async (req: Request, res: Response) => {
@@ -170,18 +170,18 @@ router.post(
 
     await createInternationalScientificCongressPartnerController.handle(
       req,
-      res
+      res,
     )
-  }
+  },
 )
 
-router.get('/:congressId/partner', async (req: Request, res: Response) => {
+router.get('/:id/partner', async (req: Request, res: Response) => {
   const { findInternationalScientificCongressPartnersByCongressIdController } =
     makeFindInternationalScientificCongressPartnersByCongressIdController()
 
   await findInternationalScientificCongressPartnersByCongressIdController.handle(
     req,
-    res
+    res,
   )
 })
 
@@ -191,14 +191,14 @@ router.get('/partner/:id', async (req: Request, res: Response) => {
 
   await findInternationalScientificCongressPartnerByIdController.handle(
     req,
-    res
+    res,
   )
 })
 
 router.put(
   '/partner/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('logo'),
   async (req: Request, res: Response) => {
@@ -207,15 +207,15 @@ router.put(
 
     await updateInternationalScientificCongressPartnerController.handle(
       req,
-      res
+      res,
     )
-  }
+  },
 )
 
 router.delete(
   '/partner/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteInternationalScientificCongressPartnerController } =
@@ -223,9 +223,9 @@ router.delete(
 
     await deleteInternationalScientificCongressPartnerController.handle(
       req,
-      res
+      res,
     )
-  }
+  },
 )
 
 export { router as internationalScientificCongressRoutes }

@@ -8,7 +8,7 @@ import {
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
@@ -28,7 +28,7 @@ router.put(
     const { updateUserController } = makeUpdateUserController()
 
     await updateUserController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
@@ -40,7 +40,7 @@ router.delete(
     const { deleteUserController } = makeDeleteUserController()
 
     await deleteUserController.handle(req, res)
-  }
+  },
 )
 
 router.get('/', async (req: Request, res: Response) => {

@@ -9,7 +9,7 @@ import type { IRegionalCongressPartnerRepository } from '../../repositories/regi
 extendZodWithOpenApi(z)
 
 export const findRegionalCongressPartnersByCongressIdSchema = z.object({
-  congressId: z.uuid('ID do congresso inválido'),
+  id: z.uuid('ID do congresso inválido'),
   page: z.coerce.number().int().positive().optional(),
   limit: z.coerce.number().int().positive().optional(),
   name: z.string().optional(),
@@ -17,12 +17,12 @@ export const findRegionalCongressPartnersByCongressIdSchema = z.object({
 
 export class FindRegionalCongressPartnersByCongressIdController {
   constructor(
-    private readonly regionalCongressPartnerRepository: IRegionalCongressPartnerRepository
+    private readonly regionalCongressPartnerRepository: IRegionalCongressPartnerRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { congressId, page, limit, name } =
+      const { id, page, limit, name } =
         findRegionalCongressPartnersByCongressIdSchema.parse({
           ...req.params,
           ...req.query,
@@ -40,7 +40,10 @@ export class FindRegionalCongressPartnersByCongressIdController {
       const partners =
         await this.regionalCongressPartnerRepository.findByCongressId({
           pagination,
-          filter: { congressId, name },
+          filter: {
+            congressId: id,
+            name,
+          },
         })
 
       if (!partners) {
@@ -52,7 +55,10 @@ export class FindRegionalCongressPartnersByCongressIdController {
       }
 
       const total = await this.regionalCongressPartnerRepository.count({
-        filter: { congressId, name },
+        filter: {
+          congressId: id,
+          name,
+        },
       })
 
       return res.status(HttpStatus.OK).json({

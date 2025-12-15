@@ -29,19 +29,19 @@ export const createInternationalScientificCongressGallerySchema = z.object({
     return value.size <= MAX_IMAGE_SIZE_BYTES
   }, `A imagem deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`),
   caption: z.string().optional(),
-  congressId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class CreateInternationalScientificCongressGalleryController {
   constructor(
     private readonly internationalScientificCongressGalleryRepository: IInternationalScientificCongressGalleryRepository,
     private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { image, caption, congressId } =
+      const { image, caption, id } =
         createInternationalScientificCongressGallerySchema.parse({
           ...req.body,
           ...req.params,
@@ -49,9 +49,7 @@ export class CreateInternationalScientificCongressGalleryController {
         })
 
       const existingCongress =
-        await this.internationalScientificCongressRepository.findById(
-          congressId
-        )
+        await this.internationalScientificCongressRepository.findById(id)
 
       if (!existingCongress) {
         throw new NotFoundError('O congresso não existe.')
@@ -61,7 +59,7 @@ export class CreateInternationalScientificCongressGalleryController {
         await this.internationalScientificCongressGalleryRepository.create({
           imageUrl: '',
           caption: caption || undefined,
-          congressId,
+          congressId: id,
         })
 
       const imageUrl = await this.firebaseStorageService.uploadFile({

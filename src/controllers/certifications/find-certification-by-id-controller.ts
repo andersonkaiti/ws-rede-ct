@@ -9,22 +9,19 @@ import type { ICertificationRepository } from '../../repositories/certification/
 extendZodWithOpenApi(z)
 
 export const findCertificationByIdControllerSchema = z.object({
-  certificationId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class FindCertificationByIdController {
   constructor(
-    private readonly certificationRepository: ICertificationRepository
+    private readonly certificationRepository: ICertificationRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { certificationId } = findCertificationByIdControllerSchema.parse({
-        certificationId: req.params.certification_id,
-      })
+      const { id } = findCertificationByIdControllerSchema.parse(req.params)
 
-      const certification =
-        await this.certificationRepository.findById(certificationId)
+      const certification = await this.certificationRepository.findById(id)
 
       if (!certification) {
         throw new NotFoundError('Certificado não encontrado.')
