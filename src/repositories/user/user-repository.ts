@@ -1,5 +1,12 @@
-import type { PrismaClient } from '../../../config/database/generated/client.ts'
-import type { ICreateUserDTO, IUpdateUserDTO } from '../../dto/user.d.ts'
+import type {
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
+import type {
+  ICreateUserDTO,
+  IFindUsersDTO,
+  IUpdateUserDTO,
+} from '../../dto/user.d.ts'
 import type { IUserRepository } from './iuser-repository.d.ts'
 
 export class UserRepository implements IUserRepository {
@@ -31,11 +38,109 @@ export class UserRepository implements IUserRepository {
     })
   }
 
-  async find() {
+  async find({
+    pagination,
+    filter: { emailAddress, name, phone, lattesUrl, orcid },
+  }: IFindUsersDTO) {
+    const where: Prisma.UserWhereInput = {}
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
+    if (emailAddress) {
+      where.emailAddress = {
+        contains: emailAddress,
+        mode: 'insensitive',
+      }
+    }
+
+    if (phone) {
+      where.phone = {
+        contains: phone,
+        mode: 'insensitive',
+      }
+    }
+
+    if (lattesUrl) {
+      where.lattesUrl = {
+        contains: lattesUrl,
+        mode: 'insensitive',
+      }
+    }
+
+    if (orcid) {
+      where.orcid = {
+        contains: orcid,
+        mode: 'insensitive',
+      }
+    }
+
     return await this.prisma.user.findMany({
+      where,
       omit: {
         passwordHash: true,
       },
+      ...(pagination && {
+        skip: pagination.offset,
+        take: pagination.limit,
+      }),
+    })
+  }
+
+  async count({
+    filter: { emailAddress, name, phone, lattesUrl, orcid },
+  }: {
+    filter: {
+      name?: string
+      emailAddress?: string
+      phone?: string
+      lattesUrl?: string
+      orcid?: string
+    }
+  }) {
+    const where: Prisma.UserWhereInput = {}
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
+    if (emailAddress) {
+      where.emailAddress = {
+        contains: emailAddress,
+        mode: 'insensitive',
+      }
+    }
+
+    if (phone) {
+      where.phone = {
+        contains: phone,
+        mode: 'insensitive',
+      }
+    }
+
+    if (lattesUrl) {
+      where.lattesUrl = {
+        contains: lattesUrl,
+        mode: 'insensitive',
+      }
+    }
+
+    if (orcid) {
+      where.orcid = {
+        contains: orcid,
+        mode: 'insensitive',
+      }
+    }
+
+    return await this.prisma.user.count({
+      where,
     })
   }
 
