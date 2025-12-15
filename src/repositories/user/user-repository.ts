@@ -28,6 +28,9 @@ export class UserRepository implements IUserRepository {
         orcid: user.orcid ?? null,
         phone: user.phone ?? null,
         avatarUrl: user.avatarUrl ?? null,
+        ...(user.role && {
+          role: user.role,
+        }),
       },
     })
   }

@@ -1,4 +1,5 @@
 import { DeleteUserController } from '../../controllers/users/delete-user-controller.ts'
+import { DemoteUserController } from '../../controllers/users/demote-user-controller.ts'
 import { FindUserController } from '../../controllers/users/find-user-controller.ts'
 import { FindUsersController } from '../../controllers/users/find-users-controller.ts'
 import { PromoteUserController } from '../../controllers/users/promote-user-controller.ts'
@@ -36,5 +37,11 @@ export function makeFindUserController() {
 export function makePromoteUserController() {
   return {
     promoteUserController: new PromoteUserController(makeUserRepository()),
+  }
+}
+
+export function makeDemoteUserController() {
+  return {
+    demoteUserController: new DemoteUserController(makeUserRepository()),
   }
 }

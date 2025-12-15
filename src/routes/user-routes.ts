@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeDeleteUserController,
+  makeDemoteUserController,
   makeFindUserController,
   makeFindUsersController,
   makePromoteUserController,
@@ -59,6 +60,18 @@ router.put(
     const { promoteUserController } = makePromoteUserController()
 
     await promoteUserController.handle(req, res)
+  },
+)
+
+router.put(
+  '/demote/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { demoteUserController } = makeDemoteUserController()
+
+    await demoteUserController.handle(req, res)
   },
 )
 
