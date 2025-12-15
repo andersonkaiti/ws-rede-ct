@@ -16,7 +16,7 @@ const MAX_DOCUMENT_SIZE_BYTES = MAX_DOCUMENT_SIZE_MB * MEGABYTE
 extendZodWithOpenApi(z)
 
 export const updateMeetingMinuteByMeetingIdSchema = z.object({
-  meetingId: z.uuid(),
+  id: z.uuid(),
   title: z.string().min(1, 'Título é obrigatório').optional(),
   publishedAt: z.coerce.date().optional(),
   document: z
@@ -38,20 +38,20 @@ export const updateMeetingMinuteByMeetingIdSchema = z.object({
 export class UpdateMeetingMinuteByMeetingIdController {
   constructor(
     private readonly meetingMinuteRepository: IMeetingMinuteRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { meetingId, title, publishedAt, document } =
+      const { id, title, publishedAt, document } =
         updateMeetingMinuteByMeetingIdSchema.parse({
-          meetingId: req.params.meetingId,
+          ...req.params,
           ...req.body,
           document: req.file,
         })
 
       const existingMeetingMinute =
-        await this.meetingMinuteRepository.findByMeetingId(meetingId)
+        await this.meetingMinuteRepository.findByMeetingId(id)
 
       if (!existingMeetingMinute) {
         throw new NotFoundError('A ata não existe para esta reunião.')
@@ -88,4 +88,3 @@ export class UpdateMeetingMinuteByMeetingIdController {
     }
   }
 }
-

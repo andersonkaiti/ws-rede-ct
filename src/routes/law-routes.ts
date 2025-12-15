@@ -8,20 +8,20 @@ import {
 } from '../factories/controllers/law.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
 router.post(
   '/',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { createLawController } = makeCreateLawController()
 
     await createLawController.handle(req, res)
-  }
+  },
 )
 
 router.get('/', async (req: Request, res: Response) => {
@@ -39,25 +39,25 @@ router.get('/:id', async (req: Request, res: Response) => {
 router.put(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { updateLawController } = makeUpdateLawController()
 
     await updateLawController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteLawController } = makeDeleteLawController()
 
     await deleteLawController.handle(req, res)
-  }
+  },
 )
 
 export { router as lawRoutes }

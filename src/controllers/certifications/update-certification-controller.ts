@@ -22,7 +22,7 @@ export const updateCertificationSchema = z.object({
         (typeof file === 'object' &&
           typeof file.size === 'number' &&
           (file.size === 0 || file.size > 0)),
-      'Arquivo do certificado é inválido'
+      'Arquivo do certificado é inválido',
     )
     .optional(),
 })
@@ -30,14 +30,14 @@ export const updateCertificationSchema = z.object({
 export class UpdateCertificationController {
   constructor(
     private readonly certificationRepository: ICertificationRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
       const { certification, id, ...rest } = updateCertificationSchema.parse({
         ...req.body,
-        id: req.params.certification_id,
+        id: req.params.id,
         certification: req.file,
       })
 

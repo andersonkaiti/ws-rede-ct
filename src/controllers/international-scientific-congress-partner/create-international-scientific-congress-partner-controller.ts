@@ -32,19 +32,19 @@ export const createInternationalScientificCongressPartnerSchema = z.object({
       return value.size <= MAX_LOGO_SIZE_BYTES
     }, `A imagem deve ter no máximo ${MAX_LOGO_SIZE_MB}MB.`)
     .optional(),
-  congressId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class CreateInternationalScientificCongressPartnerController {
   constructor(
     private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository,
     private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { name, logo, congressId } =
+      const { name, logo, id } =
         createInternationalScientificCongressPartnerSchema.parse({
           ...req.body,
           ...req.params,
@@ -52,9 +52,7 @@ export class CreateInternationalScientificCongressPartnerController {
         })
 
       const existingCongress =
-        await this.internationalScientificCongressRepository.findById(
-          congressId
-        )
+        await this.internationalScientificCongressRepository.findById(id)
 
       if (!existingCongress) {
         throw new NotFoundError('O congresso não existe.')
@@ -63,7 +61,7 @@ export class CreateInternationalScientificCongressPartnerController {
       const partner =
         await this.internationalScientificCongressPartnerRepository.create({
           name,
-          congressId,
+          congressId: id,
         })
 
       let logoUrl: string | undefined

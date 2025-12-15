@@ -16,20 +16,20 @@ import {
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
 router.post(
   '/',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { createMeetingController } = makeCreateMeetingController()
 
     await createMeetingController.handle(req, res)
-  }
+  },
 )
 
 router.get('/', async (req: Request, res: Response) => {
@@ -53,31 +53,31 @@ router.get('/status/:status', async (req: Request, res: Response) => {
 router.put(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { updateMeetingController } = makeUpdateMeetingController()
 
     await updateMeetingController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteMeetingController } = makeDeleteMeetingController()
 
     await deleteMeetingController.handle(req, res)
-  }
+  },
 )
 
 router.post(
-  '/:meetingId/minute',
+  '/:id/minute',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('document'),
   async (req: Request, res: Response) => {
@@ -85,10 +85,10 @@ router.post(
       makeCreateMeetingMinuteController()
 
     await createMeetingMinuteController.handle(req, res)
-  }
+  },
 )
 
-router.get('/:meetingId/minute', async (req: Request, res: Response) => {
+router.get('/:id/minute', async (req: Request, res: Response) => {
   const { findMeetingMinuteByMeetingIdController } =
     makeFindMeetingMinuteByMeetingIdController()
 
@@ -96,9 +96,9 @@ router.get('/:meetingId/minute', async (req: Request, res: Response) => {
 })
 
 router.put(
-  '/:meetingId/minute',
+  '/:id/minute',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('document'),
   async (req: Request, res: Response) => {
@@ -106,20 +106,20 @@ router.put(
       makeUpdateMeetingMinuteByMeetingIdController()
 
     await updateMeetingMinuteByMeetingIdController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
-  '/:meetingId/minute',
+  '/:id/minute',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteMeetingMinuteByMeetingIdController } =
       makeDeleteMeetingMinuteByMeetingIdController()
 
     await deleteMeetingMinuteByMeetingIdController.handle(req, res)
-  }
+  },
 )
 
 export { router as meetingRoutes }

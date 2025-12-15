@@ -8,19 +8,22 @@ import type { IMeetingMinuteRepository } from '../../repositories/meeting-minute
 extendZodWithOpenApi(z)
 
 export const findMeetingMinuteByMeetingIdSchema = z.object({
-  meetingId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class FindMeetingMinuteByMeetingIdController {
-  constructor(private readonly meetingMinuteRepository: IMeetingMinuteRepository) {}
+  constructor(
+    private readonly meetingMinuteRepository: IMeetingMinuteRepository,
+  ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { meetingId } = findMeetingMinuteByMeetingIdSchema.parse({
-        meetingId: req.params.meetingId,
+      const { id } = findMeetingMinuteByMeetingIdSchema.parse({
+        id: req.params.id,
       })
 
-      const meetingMinute = await this.meetingMinuteRepository.findByMeetingId(meetingId)
+      const meetingMinute =
+        await this.meetingMinuteRepository.findByMeetingId(id)
 
       return res.status(HttpStatus.OK).json(meetingMinute)
     } catch (err) {
@@ -30,4 +33,3 @@ export class FindMeetingMinuteByMeetingIdController {
     }
   }
 }
-

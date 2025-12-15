@@ -10,23 +10,21 @@ import type { IFirebaseStorageService } from '../../services/firebase-storage/if
 extendZodWithOpenApi(z)
 
 export const deleteMeetingMinuteByMeetingIdSchema = z.object({
-  meetingId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class DeleteMeetingMinuteByMeetingIdController {
   constructor(
     private readonly meetingMinuteRepository: IMeetingMinuteRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { meetingId } = deleteMeetingMinuteByMeetingIdSchema.parse({
-        meetingId: req.params.meetingId,
-      })
+      const { id } = deleteMeetingMinuteByMeetingIdSchema.parse(req.params)
 
       const existingMeetingMinute =
-        await this.meetingMinuteRepository.findByMeetingId(meetingId)
+        await this.meetingMinuteRepository.findByMeetingId(id)
 
       if (!existingMeetingMinute) {
         throw new NotFoundError('A ata não existe para esta reunião.')
@@ -39,7 +37,7 @@ export class DeleteMeetingMinuteByMeetingIdController {
       }
 
       await this.meetingMinuteRepository.deleteByMeetingId(
-        existingMeetingMinute.id
+        existingMeetingMinute.id,
       )
 
       return res.sendStatus(HttpStatus.OK)

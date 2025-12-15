@@ -1,5 +1,13 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
+  makeCreateRegionalCongressController,
+  makeDeleteRegionalCongressController,
+  makeFindRegionalCongressByEditionController,
+  makeFindRegionalCongressByIdController,
+  makeFindRegionalCongressesController,
+  makeUpdateRegionalCongressController,
+} from '../factories/controllers/regional-congress/regional-congress.factory.ts'
+import {
   makeCreateRegionalCongressGalleryController,
   makeDeleteRegionalCongressGalleryController,
   makeFindRegionalCongressGalleriesByCongressIdController,
@@ -13,32 +21,24 @@ import {
   makeFindRegionalCongressPartnersByCongressIdController,
   makeUpdateRegionalCongressPartnerController,
 } from '../factories/controllers/regional-congress/regional-congress-partner.factory.ts'
-import {
-  makeCreateRegionalCongressController,
-  makeDeleteRegionalCongressController,
-  makeFindRegionalCongressByEditionController,
-  makeFindRegionalCongressByIdController,
-  makeFindRegionalCongressesController,
-  makeUpdateRegionalCongressController,
-} from '../factories/controllers/regional-congress/regional-congress.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
 router.post(
   '/',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { createRegionalCongressController } =
       makeCreateRegionalCongressController()
 
     await createRegionalCongressController.handle(req, res)
-  }
+  },
 )
 
 router.get('/', async (req: Request, res: Response) => {
@@ -65,33 +65,33 @@ router.get('/edition/:edition', async (req: Request, res: Response) => {
 router.put(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { updateRegionalCongressController } =
       makeUpdateRegionalCongressController()
 
     await updateRegionalCongressController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteRegionalCongressController } =
       makeDeleteRegionalCongressController()
 
     await deleteRegionalCongressController.handle(req, res)
-  }
+  },
 )
 
 router.post(
-  '/:congressId/gallery',
+  '/:id/gallery',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('image'),
   async (req: Request, res: Response) => {
@@ -99,10 +99,10 @@ router.post(
       makeCreateRegionalCongressGalleryController()
 
     await createRegionalCongressGalleryController.handle(req, res)
-  }
+  },
 )
 
-router.get('/:congressId/gallery', async (req: Request, res: Response) => {
+router.get('/:id/gallery', async (req: Request, res: Response) => {
   const { findRegionalCongressGalleriesByCongressIdController } =
     makeFindRegionalCongressGalleriesByCongressIdController()
 
@@ -119,7 +119,7 @@ router.get('/gallery/:id', async (req: Request, res: Response) => {
 router.put(
   '/gallery/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('image'),
   async (req: Request, res: Response) => {
@@ -127,26 +127,26 @@ router.put(
       makeUpdateRegionalCongressGalleryController()
 
     await updateRegionalCongressGalleryController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
   '/gallery/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteRegionalCongressGalleryController } =
       makeDeleteRegionalCongressGalleryController()
 
     await deleteRegionalCongressGalleryController.handle(req, res)
-  }
+  },
 )
 
 router.post(
-  '/:congressId/partner',
+  '/:id/partner',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('logo'),
   async (req: Request, res: Response) => {
@@ -154,10 +154,10 @@ router.post(
       makeCreateRegionalCongressPartnerController()
 
     await createRegionalCongressPartnerController.handle(req, res)
-  }
+  },
 )
 
-router.get('/:congressId/partner', async (req: Request, res: Response) => {
+router.get('/:id/partner', async (req: Request, res: Response) => {
   const { findRegionalCongressPartnersByCongressIdController } =
     makeFindRegionalCongressPartnersByCongressIdController()
 
@@ -174,7 +174,7 @@ router.get('/partner/:id', async (req: Request, res: Response) => {
 router.put(
   '/partner/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   upload.single('logo'),
   async (req: Request, res: Response) => {
@@ -182,20 +182,20 @@ router.put(
       makeUpdateRegionalCongressPartnerController()
 
     await updateRegionalCongressPartnerController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
   '/partner/:id',
   (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.authenticated(req, res, next)
+    authMiddleware.isAdmin(req, res, next)
   },
   async (req: Request, res: Response) => {
     const { deleteRegionalCongressPartnerController } =
       makeDeleteRegionalCongressPartnerController()
 
     await deleteRegionalCongressPartnerController.handle(req, res)
-  }
+  },
 )
 
 export { router as regionalCongressRoutes }

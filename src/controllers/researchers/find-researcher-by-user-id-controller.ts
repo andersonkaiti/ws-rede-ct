@@ -9,7 +9,7 @@ import type { IResearcherRepository } from '../../repositories/researcher/iresea
 extendZodWithOpenApi(z)
 
 export const findResearcherByUserIdSchema = z.object({
-  userId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class FindResearcherByUserIdController {
@@ -17,11 +17,9 @@ export class FindResearcherByUserIdController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { userId } = findResearcherByUserIdSchema.parse({
-        userId: req.params.userId,
-      })
+      const { id } = findResearcherByUserIdSchema.parse(req.params)
 
-      const researcher = await this.researcherRepository.findByUserId(userId)
+      const researcher = await this.researcherRepository.findByUserId(id)
 
       if (!researcher) {
         throw new NotFoundError('O pesquisador não existe para este usuário.')

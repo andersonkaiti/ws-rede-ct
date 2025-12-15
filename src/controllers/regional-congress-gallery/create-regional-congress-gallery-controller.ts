@@ -29,27 +29,26 @@ export const createRegionalCongressGallerySchema = z.object({
 
     return value.size <= MAX_IMAGE_SIZE_BYTES
   }, `A imagem deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`),
-  congressId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class CreateRegionalCongressGalleryController {
   constructor(
     private readonly regionalCongressGalleryRepository: IRegionalCongressGalleryRepository,
     private readonly regionalCongressRepository: IRegionalCongressRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { caption, image, congressId } =
-        createRegionalCongressGallerySchema.parse({
-          ...req.body,
-          ...req.params,
-          image: req.file,
-        })
+      const { caption, image, id } = createRegionalCongressGallerySchema.parse({
+        ...req.body,
+        ...req.params,
+        image: req.file,
+      })
 
       const existingCongress =
-        await this.regionalCongressRepository.findById(congressId)
+        await this.regionalCongressRepository.findById(id)
 
       if (!existingCongress) {
         throw new NotFoundError('O congresso não existe.')
@@ -57,7 +56,7 @@ export class CreateRegionalCongressGalleryController {
 
       const galleryItem = await this.regionalCongressGalleryRepository.create({
         caption,
-        congressId,
+        congressId: id,
         imageUrl: '',
       })
 

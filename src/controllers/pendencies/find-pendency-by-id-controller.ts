@@ -9,7 +9,7 @@ import type { IPendencyRepository } from '../../repositories/pendency/ipendency-
 extendZodWithOpenApi(z)
 
 export const findPendencyByIdControllerSchema = z.object({
-  pendencyId: z.uuid(),
+  id: z.uuid(),
 })
 
 export class FindPendencyByIdController {
@@ -17,11 +17,9 @@ export class FindPendencyByIdController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { pendencyId } = findPendencyByIdControllerSchema.parse({
-        pendencyId: req.params.pendency_id,
-      })
+      const { id } = findPendencyByIdControllerSchema.parse(req.params)
 
-      const pendency = await this.pendencyRepository.findById(pendencyId)
+      const pendency = await this.pendencyRepository.findById(id)
 
       if (!pendency) {
         throw new NotFoundError('Pendência não encontrada.')

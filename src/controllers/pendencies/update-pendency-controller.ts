@@ -40,7 +40,7 @@ export class UpdatePendencyController {
     try {
       const { document, id, ...rest } = updatePendencySchema.parse({
         ...req.body,
-        id: req.params.pendency_id,
+        id: req.params.id,
         document: req.file,
       })
 

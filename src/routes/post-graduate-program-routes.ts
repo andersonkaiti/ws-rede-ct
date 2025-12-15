@@ -9,7 +9,7 @@ import {
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
-const router = Router()
+const router: Router = Router()
 
 const { authMiddleware } = makeAuthMiddleware()
 
@@ -24,34 +24,22 @@ router.post(
       makeCreatePostGraduateProgramController()
 
     await createPostGraduateProgramController.handle(req, res)
-  }
-)
-
-router.get(
-  '/',
-  (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.isAdmin(req, res, next)
   },
-  async (req: Request, res: Response) => {
-    const { findPostGraduateProgramsController } =
-      makeFindPostGraduateProgramsController()
-
-    await findPostGraduateProgramsController.handle(req, res)
-  }
 )
 
-router.get(
-  '/:id',
-  (req: Request, res: Response, next: NextFunction) => {
-    authMiddleware.isAdmin(req, res, next)
-  },
-  async (req: Request, res: Response) => {
-    const { findPostGraduateProgramByIdController } =
-      makeFindPostGraduateProgramByIdController()
+router.get('/', async (req: Request, res: Response) => {
+  const { findPostGraduateProgramsController } =
+    makeFindPostGraduateProgramsController()
 
-    await findPostGraduateProgramByIdController.handle(req, res)
-  }
-)
+  await findPostGraduateProgramsController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findPostGraduateProgramByIdController } =
+    makeFindPostGraduateProgramByIdController()
+
+  await findPostGraduateProgramByIdController.handle(req, res)
+})
 
 router.put(
   '/:id',
@@ -64,7 +52,7 @@ router.put(
       makeUpdatePostGraduateProgramController()
 
     await updatePostGraduateProgramController.handle(req, res)
-  }
+  },
 )
 
 router.delete(
@@ -77,7 +65,7 @@ router.delete(
       makeDeletePostGraduateProgramController()
 
     await deletePostGraduateProgramController.handle(req, res)
-  }
+  },
 )
 
 export { router as postGraduateProgramRoutes }

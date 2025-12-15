@@ -13,7 +13,7 @@ import type { IFirebaseStorageService } from '../../services/firebase-storage/if
 extendZodWithOpenApi(z)
 
 export const createPendencySchema = z.object({
-  userId: z.uuid(),
+  id: z.uuid(),
   title: z.string().min(1),
   description: z.string().optional(),
   status: z.enum(PendencyStatus).default('PENDING'),
@@ -35,14 +35,14 @@ export class CreatePendencyController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { userId, title, description, status, dueDate, document } =
+      const { id, title, description, status, dueDate, document } =
         createPendencySchema.parse({
           ...req.body,
-          userId: req.params.user_id,
+          ...req.params,
           document: req.file,
         })
 
-      const user = await this.userRepository.findById(userId)
+      const user = await this.userRepository.findById(id)
 
       if (!user) {
         throw new BadRequestError('O usuário não existe.')
@@ -50,12 +50,12 @@ export class CreatePendencyController {
 
       const documentUrl = await this.firebaseStorageService.uploadFile({
         file: document,
-        id: userId,
+        id,
         folder: FileType.PENDENCY,
       })
 
       await this.pendencyRepository.create({
-        userId,
+        userId: id,
         title,
         description,
         status,

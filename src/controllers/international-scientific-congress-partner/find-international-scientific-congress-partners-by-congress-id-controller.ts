@@ -12,7 +12,7 @@ extendZodWithOpenApi(z)
 
 export const findInternationalScientificCongressPartnersByCongressIdSchema =
   z.object({
-    congressId: z.uuid(),
+    id: z.uuid(),
     page: z.coerce.number().min(1).optional(),
     limit: z.coerce.number().min(1).optional(),
     name: z.string().optional(),
@@ -20,14 +20,14 @@ export const findInternationalScientificCongressPartnersByCongressIdSchema =
 
 export class FindInternationalScientificCongressPartnersByCongressIdController {
   constructor(
-    private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository
+    private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { congressId, page, limit, ...filter } =
+      const { id, page, limit, ...filter } =
         findInternationalScientificCongressPartnersByCongressIdSchema.parse({
-          congressId: req.params.congressId,
+          ...req.params,
           ...req.query,
         })
 
@@ -44,14 +44,14 @@ export class FindInternationalScientificCongressPartnersByCongressIdController {
                 limit: actualLimit,
               },
               filter: {
-                congressId,
+                congressId: id,
                 ...filter,
               },
-            }
+            },
           ),
           this.internationalScientificCongressPartnerRepository.count({
             filter: {
-              congressId,
+              congressId: id,
               name: filter.name,
             },
           }),
@@ -72,10 +72,10 @@ export class FindInternationalScientificCongressPartnersByCongressIdController {
         await this.internationalScientificCongressPartnerRepository.findByCongressId(
           {
             filter: {
-              congressId,
+              congressId: id,
               ...filter,
             },
-          }
+          },
         )
 
       return res.status(HttpStatus.OK).json(allPartners)
