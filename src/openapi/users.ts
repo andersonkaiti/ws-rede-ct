@@ -2,7 +2,10 @@ import type { RouteConfig } from '@asteasolutions/zod-to-openapi'
 import z from 'zod'
 import { UserRole } from '../../config/database/generated/enums.ts'
 import { deleteUserSchema } from '../controllers/users/delete-user-controller.ts'
+import { demoteUserSchema } from '../controllers/users/demote-user-controller.ts'
 import { paramsSchema } from '../controllers/users/find-user-controller.ts'
+import { findUsersQuerySchema } from '../controllers/users/find-users-controller.ts'
+import { promoteUserSchema } from '../controllers/users/promote-user-controller.ts'
 import { updateUserSchema } from '../controllers/users/update-user-controller.ts'
 
 export const findUserRegistry: RouteConfig = {
@@ -194,27 +197,155 @@ export const findUsersRegistry: RouteConfig = {
   method: 'get',
   path: '/users',
   tags: ['Users'],
-  summary: 'List users',
+  summary: 'List users with optional pagination and filters',
+  request: {
+    query: findUsersQuerySchema,
+  },
   responses: {
     200: {
-      description: 'Complete list of users retrieved successfully',
+      description:
+        'Users retrieved successfully. Returns paginated object when page and limit are provided, or simple array otherwise.',
       summary: 'Users Retrieved',
       content: {
         'application/json': {
-          schema: z.array(
+          schema: z.union([
+            // Paginated response
             z.object({
-              id: z.string(),
-              name: z.string(),
-              createdAt: z.date(),
-              updatedAt: z.date(),
-              role: z.nativeEnum(UserRole),
-              lattesUrl: z.url().nullable(),
-              orcid: z.string().nullable(),
-              phone: z.string().nullable(),
-              avatarUrl: z.string().nullable(),
-              emailAddress: z.email(),
+              page: z.number(),
+              totalPages: z.number(),
+              offset: z.number(),
+              limit: z.number(),
+              users: z.array(
+                z.object({
+                  id: z.string(),
+                  name: z.string(),
+                  createdAt: z.date(),
+                  updatedAt: z.date(),
+                  role: z.nativeEnum(UserRole),
+                  lattesUrl: z.url().nullable(),
+                  orcid: z.string().nullable(),
+                  phone: z.string().nullable(),
+                  avatarUrl: z.string().nullable(),
+                  emailAddress: z.email(),
+                }),
+              ),
             }),
-          ),
+            // Simple array response
+            z.array(
+              z.object({
+                id: z.string(),
+                name: z.string(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
+                role: z.nativeEnum(UserRole),
+                lattesUrl: z.url().nullable(),
+                orcid: z.string().nullable(),
+                phone: z.string().nullable(),
+                avatarUrl: z.string().nullable(),
+                emailAddress: z.email(),
+              }),
+            ),
+          ]),
+        },
+      },
+    },
+    500: {
+      description: 'Internal server error occurred',
+      summary: 'Server Error',
+      content: {
+        'application/json': {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+  },
+}
+
+export const promoteUserRegistry: RouteConfig = {
+  method: 'put',
+  path: '/users/promote/{id}',
+  tags: ['Users'],
+  summary: 'Promote user to ADMIN',
+  security: [{ bearerAuth: [] }],
+  request: {
+    params: promoteUserSchema,
+  },
+  responses: {
+    204: {
+      description: 'User successfully promoted to ADMIN',
+      summary: 'User Promoted',
+    },
+    400: {
+      description: 'Bad request - User does not exist or is already an ADMIN',
+      summary: 'Validation Error',
+      content: {
+        'application/json': {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    401: {
+      description: 'User not authenticated or unauthorized',
+      summary: 'Authentication Required',
+      content: {
+        'application/json': {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    500: {
+      description: 'Internal server error occurred',
+      summary: 'Server Error',
+      content: {
+        'application/json': {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+  },
+}
+
+export const demoteUserRegistry: RouteConfig = {
+  method: 'put',
+  path: '/users/demote/{id}',
+  tags: ['Users'],
+  summary: 'Demote user to USER',
+  security: [{ bearerAuth: [] }],
+  request: {
+    params: demoteUserSchema,
+  },
+  responses: {
+    204: {
+      description: 'User successfully demoted to USER',
+      summary: 'User Demoted',
+    },
+    400: {
+      description: 'Bad request - User does not exist or is not an ADMIN',
+      summary: 'Validation Error',
+      content: {
+        'application/json': {
+          schema: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+    },
+    401: {
+      description: 'User not authenticated or unauthorized',
+      summary: 'Authentication Required',
+      content: {
+        'application/json': {
+          schema: z.object({
+            message: z.string(),
+          }),
         },
       },
     },
