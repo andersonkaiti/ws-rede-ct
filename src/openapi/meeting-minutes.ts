@@ -45,7 +45,7 @@ export const createMeetingMinuteRegistry: RouteConfig = {
     body: {
       content: {
         'multipart/form-data': {
-          schema: createMeetingMinuteSchema.omit({ meetingId: true }),
+          schema: createMeetingMinuteSchema.omit({ id: true }),
         },
       },
     },
@@ -169,7 +169,7 @@ export const updateMeetingMinuteRegistry: RouteConfig = {
       content: {
         'multipart/form-data': {
           schema: updateMeetingMinuteByMeetingIdSchema.omit({
-            meetingId: true,
+            id: true,
           }),
         },
       },

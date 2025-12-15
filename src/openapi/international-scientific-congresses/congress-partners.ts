@@ -26,7 +26,7 @@ export const createCongressPartnerRegistry: RouteConfig = {
       content: {
         'application/json': {
           schema: createInternationalScientificCongressPartnerSchema.omit({
-            congressId: true,
+            id: true,
           }),
         },
       },
