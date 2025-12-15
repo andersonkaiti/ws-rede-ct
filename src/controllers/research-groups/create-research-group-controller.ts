@@ -35,7 +35,7 @@ export const createResearchGroupSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'O logo deve ser uma imagem válida de no máximo 5MB.'
+      'O logo deve ser uma imagem válida de no máximo 5MB.',
     )
     .optional(),
 })
@@ -43,7 +43,7 @@ export const createResearchGroupSchema = z.object({
 export class CreateResearchGroupController {
   constructor(
     private readonly researchGroupRepository: IResearchGroupRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

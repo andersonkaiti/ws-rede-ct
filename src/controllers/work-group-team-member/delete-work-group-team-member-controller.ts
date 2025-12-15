@@ -14,7 +14,7 @@ export const deleteWorkGroupTeamMemberSchema = z.object({
 
 export class DeleteWorkGroupTeamMemberController {
   constructor(
-    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository
+    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

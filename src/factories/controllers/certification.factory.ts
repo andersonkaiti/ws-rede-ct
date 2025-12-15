@@ -12,7 +12,7 @@ export function makeRegisterCertificationController() {
     registerCertificationController: new RegisterCertificationController(
       makeUserRepository(),
       makeCertificationRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -20,7 +20,7 @@ export function makeRegisterCertificationController() {
 export function makeFindCertificationsController() {
   return {
     findCertificationsController: new FindCertificationsController(
-      makeCertificationRepository()
+      makeCertificationRepository(),
     ),
   }
 }
@@ -28,7 +28,7 @@ export function makeFindCertificationsController() {
 export function makeFindCertificationByIdController() {
   return {
     findCertificationByIdController: new FindCertificationByIdController(
-      makeCertificationRepository()
+      makeCertificationRepository(),
     ),
   }
 }
@@ -37,7 +37,7 @@ export function makeUpdateCertificationController() {
   return {
     updateCertificationController: new UpdateCertificationController(
       makeCertificationRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -46,7 +46,7 @@ export function makeDeleteCertificationController() {
   return {
     deleteCertificationController: new DeleteCertificationController(
       makeCertificationRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

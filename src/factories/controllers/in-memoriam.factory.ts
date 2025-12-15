@@ -11,7 +11,7 @@ export function makeCreateInMemoriamController() {
   return {
     createInMemoriamController: new CreateInMemoriamController(
       makeInMemoriamRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -19,7 +19,7 @@ export function makeCreateInMemoriamController() {
 export function makeFindInMemoriamController() {
   return {
     findInMemoriamsController: new FindInMemoriamController(
-      makeInMemoriamRepository()
+      makeInMemoriamRepository(),
     ),
   }
 }
@@ -27,7 +27,7 @@ export function makeFindInMemoriamController() {
 export function makeFindInMemoriamByIdController() {
   return {
     findInMemoriamByIdController: new FindInMemoriamByIdController(
-      makeInMemoriamRepository()
+      makeInMemoriamRepository(),
     ),
   }
 }
@@ -35,7 +35,7 @@ export function makeFindInMemoriamByIdController() {
 export function makeFindInMemoriamByRoleController() {
   return {
     findInMemoriamByRoleController: new FindInMemoriamByRoleController(
-      makeInMemoriamRepository()
+      makeInMemoriamRepository(),
     ),
   }
 }
@@ -44,7 +44,7 @@ export function makeUpdateInMemoriamController() {
   return {
     updateInMemoriamController: new UpdateInMemoriamController(
       makeInMemoriamRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -53,7 +53,7 @@ export function makeDeleteInMemoriamController() {
   return {
     deleteInMemoriamController: new DeleteInMemoriamController(
       makeInMemoriamRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

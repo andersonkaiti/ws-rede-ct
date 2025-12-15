@@ -8,7 +8,7 @@ import { makeSDHCTeamMemberRepository } from '../repositories/sdhc-team-member.f
 export function makeCreateSDHCTeamMemberController() {
   return {
     createSDHCTeamMemberController: new CreateSDHCTeamMemberController(
-      makeSDHCTeamMemberRepository()
+      makeSDHCTeamMemberRepository(),
     ),
   }
 }
@@ -16,7 +16,7 @@ export function makeCreateSDHCTeamMemberController() {
 export function makeFindSDHCTeamMembersController() {
   return {
     findSDHCTeamMembersController: new FindSDHCTeamMembersController(
-      makeSDHCTeamMemberRepository()
+      makeSDHCTeamMemberRepository(),
     ),
   }
 }
@@ -24,7 +24,7 @@ export function makeFindSDHCTeamMembersController() {
 export function makeFindSDHCTeamMemberByIdController() {
   return {
     findSDHCTeamMemberByIdController: new FindSDHCTeamMemberByIdController(
-      makeSDHCTeamMemberRepository()
+      makeSDHCTeamMemberRepository(),
     ),
   }
 }
@@ -32,7 +32,7 @@ export function makeFindSDHCTeamMemberByIdController() {
 export function makeUpdateSDHCTeamMemberController() {
   return {
     updateSDHCTeamMemberController: new UpdateSDHCTeamMemberController(
-      makeSDHCTeamMemberRepository()
+      makeSDHCTeamMemberRepository(),
     ),
   }
 }
@@ -40,8 +40,7 @@ export function makeUpdateSDHCTeamMemberController() {
 export function makeDeleteSDHCTeamMemberController() {
   return {
     deleteSDHCTeamMemberController: new DeleteSDHCTeamMemberController(
-      makeSDHCTeamMemberRepository()
+      makeSDHCTeamMemberRepository(),
     ),
   }
 }
-

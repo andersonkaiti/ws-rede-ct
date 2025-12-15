@@ -14,7 +14,7 @@ export const deleteRegionalCongressSchema = z.object({
 
 export class DeleteRegionalCongressController {
   constructor(
-    private readonly regionalCongressRepository: IRegionalCongressRepository
+    private readonly regionalCongressRepository: IRegionalCongressRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

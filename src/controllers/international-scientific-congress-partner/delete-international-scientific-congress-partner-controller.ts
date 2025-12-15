@@ -14,7 +14,7 @@ export const deleteInternationalScientificCongressPartnerSchema = z.object({
 
 export class DeleteInternationalScientificCongressPartnerController {
   constructor(
-    private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository
+    private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

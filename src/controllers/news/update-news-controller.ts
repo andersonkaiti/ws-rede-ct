@@ -32,14 +32,14 @@ const updateNewsSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A imagem deve ser uma imagem válida de no máximo 5MB.'
+      'A imagem deve ser uma imagem válida de no máximo 5MB.',
     ),
 })
 
 export class UpdateNewsController {
   constructor(
     private readonly newsRepository: INewsRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

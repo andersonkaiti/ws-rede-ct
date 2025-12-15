@@ -10,7 +10,7 @@ export function makeCreateResearchGroupController() {
   return {
     createResearchGroupController: new CreateResearchGroupController(
       makeResearchGroupRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -18,7 +18,7 @@ export function makeCreateResearchGroupController() {
 export function makeFindResearchGroupsController() {
   return {
     findResearchGroupsController: new FindResearchGroupsController(
-      makeResearchGroupRepository()
+      makeResearchGroupRepository(),
     ),
   }
 }
@@ -26,7 +26,7 @@ export function makeFindResearchGroupsController() {
 export function makeFindResearchGroupByIdController() {
   return {
     findResearchGroupByIdController: new FindResearchGroupByIdController(
-      makeResearchGroupRepository()
+      makeResearchGroupRepository(),
     ),
   }
 }
@@ -35,7 +35,7 @@ export function makeUpdateResearchGroupController() {
   return {
     updateResearchGroupController: new UpdateResearchGroupController(
       makeResearchGroupRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -44,7 +44,7 @@ export function makeDeleteResearchGroupController() {
   return {
     deleteResearchGroupController: new DeleteResearchGroupController(
       makeResearchGroupRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

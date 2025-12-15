@@ -14,7 +14,7 @@ export const deleteManagementTeamSchema = z.object({
 
 export class DeleteManagementTeamController {
   constructor(
-    private readonly managementTeamRepository: IManagementTeamRepository
+    private readonly managementTeamRepository: IManagementTeamRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

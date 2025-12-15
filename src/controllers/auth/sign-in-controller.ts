@@ -19,7 +19,7 @@ export class SignInController {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly bcrypt: IBcryptService,
-    private readonly jwtService: IJWTService
+    private readonly jwtService: IJWTService,
   ) {}
 
   async handle(req: Request, res: Response) {

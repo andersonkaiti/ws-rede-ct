@@ -46,7 +46,7 @@ export const updateResearchGroupSchema = z.object({
 export class UpdateResearchGroupController {
   constructor(
     private readonly researchGroupRepository: IResearchGroupRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

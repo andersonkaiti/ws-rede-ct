@@ -146,7 +146,7 @@ export const findResearchGroupsRegistry: RouteConfig = {
                   createdAt: z.date(),
                   updatedAt: z.date(),
                 }),
-              })
+              }),
             ),
           }),
         },

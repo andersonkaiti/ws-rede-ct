@@ -8,7 +8,7 @@ import { makeScientificArticlesRepository } from '../repositories/scientific-art
 export function makeCreateScientificArticleController() {
   return {
     createScientificArticleController: new CreateScientificArticleController(
-      makeScientificArticlesRepository()
+      makeScientificArticlesRepository(),
     ),
   }
 }
@@ -16,7 +16,7 @@ export function makeCreateScientificArticleController() {
 export function makeFindScientificArticlesController() {
   return {
     findScientificArticlesController: new FindScientificArticlesController(
-      makeScientificArticlesRepository()
+      makeScientificArticlesRepository(),
     ),
   }
 }
@@ -25,7 +25,7 @@ export function makeFindScientificArticleByIdController() {
   return {
     findScientificArticleByIdController:
       new FindScientificArticleByIdController(
-        makeScientificArticlesRepository()
+        makeScientificArticlesRepository(),
       ),
   }
 }
@@ -33,7 +33,7 @@ export function makeFindScientificArticleByIdController() {
 export function makeUpdateScientificArticleController() {
   return {
     updateScientificArticleController: new UpdateScientificArticleController(
-      makeScientificArticlesRepository()
+      makeScientificArticlesRepository(),
     ),
   }
 }
@@ -41,7 +41,7 @@ export function makeUpdateScientificArticleController() {
 export function makeDeleteScientificArticleController() {
   return {
     deleteScientificArticleController: new DeleteScientificArticleController(
-      makeScientificArticlesRepository()
+      makeScientificArticlesRepository(),
     ),
   }
 }

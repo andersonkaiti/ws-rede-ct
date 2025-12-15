@@ -16,7 +16,7 @@ export const deleteRegimentSchema = z.object({
 export class DeleteRegimentController {
   constructor(
     private readonly regimentRepository: IRegimentRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {
@@ -47,4 +47,3 @@ export class DeleteRegimentController {
     }
   }
 }
-

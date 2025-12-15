@@ -15,7 +15,7 @@ export interface ILegitimatorCommitteeMemberRepository {
   update(member: IUpdateLegitimatorCommitteeMemberDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
-    data: IFindAllLegitimatorCommitteeMembersDTO
+    data: IFindAllLegitimatorCommitteeMembersDTO,
   ): Promise<IReturnedLegitimatorCommitteeMember[] | null>
   findById(id: string): Promise<IReturnedLegitimatorCommitteeMember | null>
   count(data: ICountLegitimatorCommitteeMembersDTO): Promise<number>

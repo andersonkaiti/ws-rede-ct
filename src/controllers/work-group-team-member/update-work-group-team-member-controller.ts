@@ -17,7 +17,7 @@ export const updateWorkGroupTeamMemberSchema = z.object({
 
 export class UpdateWorkGroupTeamMemberController {
   constructor(
-    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository
+    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

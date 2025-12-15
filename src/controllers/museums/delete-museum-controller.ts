@@ -16,7 +16,7 @@ export const deleteMuseumSchema = z.object({
 export class DeleteMuseumController {
   constructor(
     private readonly museumRepository: IMuseumRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

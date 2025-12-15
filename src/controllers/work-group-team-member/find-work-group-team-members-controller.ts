@@ -19,13 +19,13 @@ export const findWorkGroupTeamMembersSchema = z.object({
 
 export class FindWorkGroupTeamMembersController {
   constructor(
-    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository
+    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
       const { page, limit, ...filter } = findWorkGroupTeamMembersSchema.parse(
-        req.query
+        req.query,
       )
 
       const offset = limit * page - limit

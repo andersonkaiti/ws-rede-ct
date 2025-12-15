@@ -116,9 +116,9 @@ export const findWebinarsRegistry: RouteConfig = {
                     avatarUrl: z.string().nullable(),
                     createdAt: z.date(),
                     updatedAt: z.date(),
-                  })
+                  }),
                 ),
-              })
+              }),
             ),
           }),
         },
@@ -182,7 +182,7 @@ export const findWebinarByIdRegistry: RouteConfig = {
                   avatarUrl: z.string().nullable(),
                   createdAt: z.date(),
                   updatedAt: z.date(),
-                })
+                }),
               ),
             })
             .nullable(),

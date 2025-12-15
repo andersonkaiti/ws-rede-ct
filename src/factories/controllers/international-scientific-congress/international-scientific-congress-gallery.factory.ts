@@ -13,7 +13,7 @@ export function makeCreateInternationalScientificCongressGalleryController() {
       new CreateInternationalScientificCongressGalleryController(
         makeInternationalScientificCongressGalleryRepository(),
         makeInternationalScientificCongressRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -22,7 +22,7 @@ export function makeFindInternationalScientificCongressGalleriesByCongressIdCont
   return {
     findInternationalScientificCongressGalleriesByCongressIdController:
       new FindInternationalScientificCongressGalleriesByCongressIdController(
-        makeInternationalScientificCongressGalleryRepository()
+        makeInternationalScientificCongressGalleryRepository(),
       ),
   }
 }
@@ -31,7 +31,7 @@ export function makeFindInternationalScientificCongressGalleryByIdController() {
   return {
     findInternationalScientificCongressGalleryByIdController:
       new FindInternationalScientificCongressGalleryByIdController(
-        makeInternationalScientificCongressGalleryRepository()
+        makeInternationalScientificCongressGalleryRepository(),
       ),
   }
 }
@@ -41,7 +41,7 @@ export function makeUpdateInternationalScientificCongressGalleryController() {
     updateInternationalScientificCongressGalleryController:
       new UpdateInternationalScientificCongressGalleryController(
         makeInternationalScientificCongressGalleryRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -50,7 +50,7 @@ export function makeDeleteInternationalScientificCongressGalleryController() {
   return {
     deleteInternationalScientificCongressGalleryController:
       new DeleteInternationalScientificCongressGalleryController(
-        makeInternationalScientificCongressGalleryRepository()
+        makeInternationalScientificCongressGalleryRepository(),
       ),
   }
 }

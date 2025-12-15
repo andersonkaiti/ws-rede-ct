@@ -17,7 +17,7 @@ export const deleteNewsSchema = z.object({
 export class DeleteNewsController {
   constructor(
     private readonly newsRepository: INewsRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

@@ -14,7 +14,7 @@ export const findManagementTeamByIdSchema = z.object({
 
 export class FindManagementTeamByIdController {
   constructor(
-    private readonly managementTeamRepository: IManagementTeamRepository
+    private readonly managementTeamRepository: IManagementTeamRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

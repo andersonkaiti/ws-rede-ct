@@ -14,7 +14,7 @@ export const deleteSDHCTeamMemberSchema = z.object({
 
 export class DeleteSDHCTeamMemberController {
   constructor(
-    private readonly sdhcTeamMemberRepository: ISDHCTeamMemberRepository
+    private readonly sdhcTeamMemberRepository: ISDHCTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

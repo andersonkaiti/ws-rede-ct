@@ -14,7 +14,7 @@ export const findPostGraduateProgramByIdSchema = z.object({
 
 export class FindPostGraduateProgramByIdController {
   constructor(
-    private readonly postGraduateProgramRepository: IPostGraduateProgramRepository
+    private readonly postGraduateProgramRepository: IPostGraduateProgramRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

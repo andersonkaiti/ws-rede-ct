@@ -9,7 +9,7 @@ import { makeMeetingRepository } from '../repositories/meeting.factory.ts'
 export function makeCreateMeetingController() {
   return {
     createMeetingController: new CreateMeetingController(
-      makeMeetingRepository()
+      makeMeetingRepository(),
     ),
   }
 }
@@ -23,7 +23,7 @@ export function makeFindMeetingsController() {
 export function makeFindMeetingByIdController() {
   return {
     findMeetingByIdController: new FindMeetingByIdController(
-      makeMeetingRepository()
+      makeMeetingRepository(),
     ),
   }
 }
@@ -31,7 +31,7 @@ export function makeFindMeetingByIdController() {
 export function makeFindMeetingByStatusController() {
   return {
     findMeetingByStatusController: new FindMeetingByStatusController(
-      makeMeetingRepository()
+      makeMeetingRepository(),
     ),
   }
 }
@@ -39,7 +39,7 @@ export function makeFindMeetingByStatusController() {
 export function makeUpdateMeetingController() {
   return {
     updateMeetingController: new UpdateMeetingController(
-      makeMeetingRepository()
+      makeMeetingRepository(),
     ),
   }
 }
@@ -47,7 +47,7 @@ export function makeUpdateMeetingController() {
 export function makeDeleteMeetingController() {
   return {
     deleteMeetingController: new DeleteMeetingController(
-      makeMeetingRepository()
+      makeMeetingRepository(),
     ),
   }
 }

@@ -16,7 +16,7 @@ export const deleteBookVolumeSchema = z.object({
 export class DeleteBookVolumeController {
   constructor(
     private readonly bookVolumeRepository: IBookVolumeRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

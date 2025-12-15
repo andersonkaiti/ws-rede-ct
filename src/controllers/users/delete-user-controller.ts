@@ -32,7 +32,7 @@ export class DeleteUserController {
 
       if (user.id !== authenticatedUserId) {
         throw new UnauthorizedError(
-          'Você não tem permissão para deletar o usuário'
+          'Você não tem permissão para deletar o usuário',
         )
       }
 

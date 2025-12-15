@@ -13,7 +13,7 @@ export class ErrorHandler {
     error: unknown,
     _request: Request,
     response: Response,
-    _next: NextFunction
+    _next: NextFunction,
   ) {
     if (error instanceof ZodValidationError) {
       return response.status(HttpStatus.BAD_REQUEST).json({

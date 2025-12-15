@@ -24,4 +24,3 @@ if (app.name) {
 }
 
 export { app }
-

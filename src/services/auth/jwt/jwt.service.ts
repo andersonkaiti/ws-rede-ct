@@ -5,7 +5,7 @@ import type { IJWTPayload, IJWTService } from './ijwt.ts'
 export class JWTService implements IJWTService {
   constructor(
     private readonly signFn: typeof jwtSign,
-    private readonly verifyFn: typeof jwtVerify
+    private readonly verifyFn: typeof jwtVerify,
   ) {}
 
   sign(payload: IJWTPayload): string | null {

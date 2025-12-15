@@ -17,7 +17,7 @@ export const findRegionalCongressByEditionSchema = z.object({
 
 export class FindRegionalCongressByEditionController {
   constructor(
-    private readonly regionalCongressRepository: IRegionalCongressRepository
+    private readonly regionalCongressRepository: IRegionalCongressRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

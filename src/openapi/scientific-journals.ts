@@ -110,7 +110,7 @@ export const findScientificJournalsRegistry: RouteConfig = {
                 editorialBoard: z.string().nullable(),
                 createdAt: z.date(),
                 updatedAt: z.date(),
-              })
+              }),
             ),
           }),
         },

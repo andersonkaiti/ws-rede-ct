@@ -43,7 +43,7 @@ export const createPartnerSchema = z.object({
 export class CreatePartnerController {
   constructor(
     private readonly partnerRepository: IPartnerRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

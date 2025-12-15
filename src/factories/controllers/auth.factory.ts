@@ -15,7 +15,7 @@ export function makeSignUpController() {
   return {
     signUpController: new SignUpController(
       makeUserRepository(),
-      makeBcryptService()
+      makeBcryptService(),
     ),
   }
 }
@@ -25,7 +25,7 @@ export function makeSignInController() {
     signInController: new SignInController(
       makeUserRepository(),
       makeBcryptService(),
-      makeJwtService()
+      makeJwtService(),
     ),
   }
 }
@@ -33,7 +33,7 @@ export function makeSignInController() {
 export function makeFindAuthenticatedUserController() {
   return {
     findAuthenticatedUserController: new FindAuthenticatedUserController(
-      makeUserRepository()
+      makeUserRepository(),
     ),
   }
 }
@@ -41,7 +41,7 @@ export function makeFindAuthenticatedUserController() {
 export function makeFindAuthenticatedUserNewsController() {
   return {
     findAuthenticatedUserController: new FindAuthenticatedUserNewsController(
-      makeNewsRepository()
+      makeNewsRepository(),
     ),
   }
 }
@@ -50,7 +50,7 @@ export function makeFindAuthenticatedUserCertificationsController() {
   return {
     findAuthenticatedUserCertificationsController:
       new FindAuthenticatedUserCertificationsController(
-        makeCertificationRepository()
+        makeCertificationRepository(),
       ),
   }
 }

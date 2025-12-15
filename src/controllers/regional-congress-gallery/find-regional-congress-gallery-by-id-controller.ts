@@ -14,7 +14,7 @@ export const findRegionalCongressGalleryByIdSchema = z.object({
 
 export class FindRegionalCongressGalleryByIdController {
   constructor(
-    private readonly regionalCongressGalleryRepository: IRegionalCongressGalleryRepository
+    private readonly regionalCongressGalleryRepository: IRegionalCongressGalleryRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

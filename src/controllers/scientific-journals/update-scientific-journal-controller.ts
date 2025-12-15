@@ -43,7 +43,7 @@ export const updateScientificJournalSchema = z.object({
 export class UpdateScientificJournalController {
   constructor(
     private readonly scientificJournalRepository: IScientificJournalRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

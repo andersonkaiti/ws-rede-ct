@@ -16,7 +16,7 @@ export const deleteInMemoriamSchema = z.object({
 export class DeleteInMemoriamController {
   constructor(
     private readonly inMemoriamRepository: IInMemoriamRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

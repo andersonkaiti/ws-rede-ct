@@ -35,7 +35,7 @@ export const createBookVolumeSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A imagem do autor deve ser uma imagem válida de no máximo 5MB.'
+      'A imagem do autor deve ser uma imagem válida de no máximo 5MB.',
     ),
   coverImage: z
     .any()
@@ -47,7 +47,7 @@ export const createBookVolumeSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A imagem da capa deve ser uma imagem válida de no máximo 5MB.'
+      'A imagem da capa deve ser uma imagem válida de no máximo 5MB.',
     ),
   catalogSheet: z
     .any()
@@ -58,14 +58,14 @@ export const createBookVolumeSchema = z.object({
           typeof file.mimetype === 'string' &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A ficha catalográfica deve ter no máximo 5MB.'
+      'A ficha catalográfica deve ter no máximo 5MB.',
     ),
 })
 
 export class CreateBookVolumeController {
   constructor(
     private readonly bookVolumeRepository: IBookVolumeRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

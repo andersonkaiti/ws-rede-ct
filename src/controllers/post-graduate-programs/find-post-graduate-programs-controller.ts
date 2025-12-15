@@ -22,7 +22,7 @@ export const findPostGraduateProgramsControllerSchema = z.object({
 
 export class FindPostGraduateProgramsController {
   constructor(
-    private readonly postGraduateProgramRepository: IPostGraduateProgramRepository
+    private readonly postGraduateProgramRepository: IPostGraduateProgramRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
@@ -49,7 +49,7 @@ export class FindPostGraduateProgramsController {
 
       const totalPages = Math.max(
         Math.ceil(totalPostGraduatePrograms / limit),
-        1
+        1,
       )
 
       return res.status(HttpStatus.OK).json({

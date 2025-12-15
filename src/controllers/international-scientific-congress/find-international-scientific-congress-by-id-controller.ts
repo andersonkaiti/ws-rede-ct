@@ -13,7 +13,9 @@ export const findInternationalScientificCongressByIdSchema = z.object({
 })
 
 export class FindInternationalScientificCongressByIdController {
-  constructor(private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository) {}
+  constructor(
+    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
+  ) {}
 
   async handle(req: Request, res: Response) {
     try {
@@ -21,7 +23,8 @@ export class FindInternationalScientificCongressByIdController {
         id: req.params.id,
       })
 
-      const congress = await this.internationalScientificCongressRepository.findById(id)
+      const congress =
+        await this.internationalScientificCongressRepository.findById(id)
 
       if (!congress) {
         throw new NotFoundError('O congresso não existe.')
@@ -35,4 +38,3 @@ export class FindInternationalScientificCongressByIdController {
     }
   }
 }
-

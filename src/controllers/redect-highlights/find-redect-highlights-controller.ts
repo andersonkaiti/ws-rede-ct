@@ -22,13 +22,13 @@ export const findRedeCTHighlightsSchema = z.object({
 
 export class FindRedeCTHighlightsController {
   constructor(
-    private readonly redectHighlightRepository: IRedeCTHighlightRepository
+    private readonly redectHighlightRepository: IRedeCTHighlightRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
     try {
       const { page, limit, ...filter } = findRedeCTHighlightsSchema.parse(
-        req.query
+        req.query,
       )
 
       const offset = limit * page - limit

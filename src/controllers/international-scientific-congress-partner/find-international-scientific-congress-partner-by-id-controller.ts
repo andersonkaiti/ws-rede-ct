@@ -14,7 +14,7 @@ export const findInternationalScientificCongressPartnerByIdSchema = z.object({
 
 export class FindInternationalScientificCongressPartnerByIdController {
   constructor(
-    private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository
+    private readonly internationalScientificCongressPartnerRepository: IInternationalScientificCongressPartnerRepository,
   ) {}
 
   async handle(req: Request, res: Response) {
@@ -22,7 +22,7 @@ export class FindInternationalScientificCongressPartnerByIdController {
       const { id } = findInternationalScientificCongressPartnerByIdSchema.parse(
         {
           id: req.params.id,
-        }
+        },
       )
 
       const partner =

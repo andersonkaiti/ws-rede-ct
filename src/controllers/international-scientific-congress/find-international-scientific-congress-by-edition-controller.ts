@@ -12,15 +12,21 @@ export const findInternationalScientificCongressByEditionSchema = z.object({
 })
 
 export class FindInternationalScientificCongressByEditionController {
-  constructor(private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository) {}
+  constructor(
+    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
+  ) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const { edition } = findInternationalScientificCongressByEditionSchema.parse({
-        edition: req.params.edition,
-      })
+      const { edition } =
+        findInternationalScientificCongressByEditionSchema.parse({
+          edition: req.params.edition,
+        })
 
-      const congresses = await this.internationalScientificCongressRepository.findByEdition(edition)
+      const congresses =
+        await this.internationalScientificCongressRepository.findByEdition(
+          edition,
+        )
 
       return res.status(HttpStatus.OK).json(congresses)
     } catch (err) {
@@ -30,4 +36,3 @@ export class FindInternationalScientificCongressByEditionController {
     }
   }
 }
-

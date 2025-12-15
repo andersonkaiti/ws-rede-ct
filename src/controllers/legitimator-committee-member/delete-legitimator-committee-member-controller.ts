@@ -14,7 +14,7 @@ export const deleteLegitimatorCommitteeMemberSchema = z.object({
 
 export class DeleteLegitimatorCommitteeMemberController {
   constructor(
-    private readonly legitimatorCommitteeMemberRepository: ILegitimatorCommitteeMemberRepository
+    private readonly legitimatorCommitteeMemberRepository: ILegitimatorCommitteeMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

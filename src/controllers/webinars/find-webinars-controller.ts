@@ -25,7 +25,7 @@ export class FindWebinarsController {
   async handle(req: Request, res: Response) {
     try {
       const { limit, page, ...filter } = findWebinarsControllerSchema.parse(
-        req.query
+        req.query,
       )
 
       const offset = page * limit - limit

@@ -14,7 +14,7 @@ interface CourseWithInstructorsAndCoordinator extends Course {
 export interface ICourseRepository {
   create(data: ICreateCourseDTO): Promise<Course>
   find(
-    data: IFindCoursesDTO
+    data: IFindCoursesDTO,
   ): Promise<CourseWithInstructorsAndCoordinator[] | null>
   findById(id: string): Promise<CourseWithInstructorsAndCoordinator | null>
   update(data: IUpdateCourseDTO): Promise<void>

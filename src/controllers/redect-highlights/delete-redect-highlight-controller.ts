@@ -16,7 +16,7 @@ export const deleteRedeCTHighlightSchema = z.object({
 export class DeleteRedeCTHighlightController {
   constructor(
     private readonly redectHighlightRepository: IRedeCTHighlightRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

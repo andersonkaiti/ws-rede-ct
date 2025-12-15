@@ -11,7 +11,7 @@ export function makeCreateNewsController() {
   return {
     createNewsController: new CreateNewsController(
       makeNewsRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -31,7 +31,7 @@ export function makeFindNewsByIdController() {
 export function makeFindNewsByAuthorIdController() {
   return {
     findNewsByAuthorIdController: new FindNewsByAuthorController(
-      makeNewsRepository()
+      makeNewsRepository(),
     ),
   }
 }
@@ -40,7 +40,7 @@ export function makeUpdateNewsController() {
   return {
     updateNewsController: new UpdateNewsController(
       makeNewsRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -49,7 +49,7 @@ export function makeDeleteNewsController() {
   return {
     deleteNewsController: new DeleteNewsController(
       makeNewsRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

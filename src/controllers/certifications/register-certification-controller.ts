@@ -19,7 +19,7 @@ export const registerCertificationSchema = z.object({
     .any()
     .refine(
       (file) => file && typeof file === 'object' && file.size > 0,
-      'Arquivo do certificado é obrigatório'
+      'Arquivo do certificado é obrigatório',
     ),
 })
 
@@ -27,7 +27,7 @@ export class RegisterCertificationController {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly certificationRepository: ICertificationRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

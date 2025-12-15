@@ -41,7 +41,7 @@ export const updateRedeCTHighlightSchema = z.object({
 export class UpdateRedeCTHighlightController {
   constructor(
     private readonly redectHighlightRepository: IRedeCTHighlightRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

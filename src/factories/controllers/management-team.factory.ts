@@ -8,7 +8,7 @@ import { makeManagementTeamRepository } from '../repositories/management-team.fa
 export function makeCreateManagementTeamController() {
   return {
     createManagementTeamController: new CreateManagementTeamController(
-      makeManagementTeamRepository()
+      makeManagementTeamRepository(),
     ),
   }
 }
@@ -16,7 +16,7 @@ export function makeCreateManagementTeamController() {
 export function makeFindManagementTeamsController() {
   return {
     findManagementTeamsController: new FindManagementTeamsController(
-      makeManagementTeamRepository()
+      makeManagementTeamRepository(),
     ),
   }
 }
@@ -24,7 +24,7 @@ export function makeFindManagementTeamsController() {
 export function makeFindManagementTeamByIdController() {
   return {
     findManagementTeamByIdController: new FindManagementTeamByIdController(
-      makeManagementTeamRepository()
+      makeManagementTeamRepository(),
     ),
   }
 }
@@ -32,7 +32,7 @@ export function makeFindManagementTeamByIdController() {
 export function makeUpdateManagementTeamController() {
   return {
     updateManagementTeamController: new UpdateManagementTeamController(
-      makeManagementTeamRepository()
+      makeManagementTeamRepository(),
     ),
   }
 }
@@ -40,8 +40,7 @@ export function makeUpdateManagementTeamController() {
 export function makeDeleteManagementTeamController() {
   return {
     deleteManagementTeamController: new DeleteManagementTeamController(
-      makeManagementTeamRepository()
+      makeManagementTeamRepository(),
     ),
   }
 }
-

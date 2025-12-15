@@ -11,6 +11,9 @@
     "indentWidth": 2,
     "lineWidth": 80
   },
+  "files": {
+    "includes": ["**", "!dist/*"]
+  },
   "javascript": {
     "formatter": {
       "semicolons": "asNeeded",

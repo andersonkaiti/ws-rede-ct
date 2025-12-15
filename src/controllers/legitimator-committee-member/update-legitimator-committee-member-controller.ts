@@ -18,7 +18,7 @@ export const updateLegitimatorCommitteeMemberSchema = z.object({
 
 export class UpdateLegitimatorCommitteeMemberController {
   constructor(
-    private readonly legitimatorCommitteeMemberRepository: ILegitimatorCommitteeMemberRepository
+    private readonly legitimatorCommitteeMemberRepository: ILegitimatorCommitteeMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

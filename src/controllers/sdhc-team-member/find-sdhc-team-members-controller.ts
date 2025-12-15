@@ -14,7 +14,7 @@ export const findSDHCTeamMembersSchema = z.object({
 
 export class FindSDHCTeamMembersController {
   constructor(
-    private readonly sdhcTeamMemberRepository: ISDHCTeamMemberRepository
+    private readonly sdhcTeamMemberRepository: ISDHCTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

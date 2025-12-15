@@ -21,13 +21,13 @@ export interface IInternationalScientificCongressRepository {
   update(congress: IUpdateInternationalScientificCongressDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
-    data: IFindAllInternationalScientificCongressDTO
+    data: IFindAllInternationalScientificCongressDTO,
   ): Promise<InternationalScientificCongressWithRelations[] | null>
   findById(
-    id: string
+    id: string,
   ): Promise<InternationalScientificCongressWithRelations | null>
   findByEdition(
-    edition: number
+    edition: number,
   ): Promise<InternationalScientificCongressWithRelations[] | null>
   count(data: ICountInternationalScientificCongressDTO): Promise<number>
 }

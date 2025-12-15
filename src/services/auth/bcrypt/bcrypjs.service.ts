@@ -6,7 +6,7 @@ const SALT_ROUNDS = 6
 export class BcryptService implements IBcryptService {
   constructor(
     private readonly hashFn: typeof HashFn,
-    private readonly compareFn: typeof CompareFn
+    private readonly compareFn: typeof CompareFn,
   ) {}
 
   async hash(password: string): Promise<string> {

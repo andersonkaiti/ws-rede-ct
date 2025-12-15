@@ -84,7 +84,7 @@ export const findAllNewsRegistry: RouteConfig = {
                 createdAt: z.date(),
                 updatedAt: z.date(),
                 imageUrl: z.string().nullable(),
-              })
+              }),
             ),
           }),
         },
@@ -213,7 +213,7 @@ export const findNewsByAuthorIdRegistry: RouteConfig = {
                 createdAt: z.date(),
                 updatedAt: z.date(),
                 imageUrl: z.string().nullable(),
-              })
+              }),
             ),
           }),
         },

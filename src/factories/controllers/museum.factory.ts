@@ -10,7 +10,7 @@ export function makeCreateMuseumController() {
   return {
     createMuseumController: new CreateMuseumController(
       makeMuseumRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -24,7 +24,7 @@ export function makeFindMuseumsController() {
 export function makeFindMuseumByIdController() {
   return {
     findMuseumByIdController: new FindMuseumByIdController(
-      makeMuseumRepository()
+      makeMuseumRepository(),
     ),
   }
 }
@@ -33,7 +33,7 @@ export function makeUpdateMuseumController() {
   return {
     updateMuseumController: new UpdateMuseumController(
       makeMuseumRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -42,7 +42,7 @@ export function makeDeleteMuseumController() {
   return {
     deleteMuseumController: new DeleteMuseumController(
       makeMuseumRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

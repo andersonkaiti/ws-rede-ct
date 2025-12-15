@@ -21,7 +21,7 @@ export const findInternationalScientificCongressSchema = z.object({
 
 export class FindInternationalScientificCongressesController {
   constructor(
-    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository
+    private readonly internationalScientificCongressRepository: IInternationalScientificCongressRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

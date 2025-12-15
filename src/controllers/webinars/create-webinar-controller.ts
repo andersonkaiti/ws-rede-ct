@@ -22,7 +22,7 @@ export const createWebinarSchema = z.object({
   webinarLink: z.url().optional(),
   guestIds: z
     .transform((value) =>
-      typeof value === 'string' ? value.split(',') : value
+      typeof value === 'string' ? value.split(',') : value,
     )
     .pipe(z.array(z.uuid())),
   thumbnail: z
@@ -35,14 +35,14 @@ export const createWebinarSchema = z.object({
           file.mimetype.startsWith('image/') &&
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A thumbnail deve ser uma imagem válida de no máximo 5MB.'
+      'A thumbnail deve ser uma imagem válida de no máximo 5MB.',
     ),
 })
 
 export class CreateWebinarController {
   constructor(
     private readonly webinarRepository: IWebinarRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

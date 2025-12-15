@@ -114,7 +114,7 @@ export const findPostGraduateProgramsRegistry: RouteConfig = {
                 registrationLink: z.string().nullable(),
                 createdAt: z.date(),
                 updatedAt: z.date(),
-              })
+              }),
             ),
           }),
         },

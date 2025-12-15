@@ -14,7 +14,7 @@ export const findScientificJournalByIdSchema = z.object({
 
 export class FindScientificJournalByIdController {
   constructor(
-    private readonly scientificJournalRepository: IScientificJournalRepository
+    private readonly scientificJournalRepository: IScientificJournalRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

@@ -9,7 +9,8 @@
     "build": "tsup",
     "start": "node ./dist/server.js",
     "db:studio": "npx prisma studio",
-    "postinstall": "npx prisma generate"
+    "postinstall": "npx prisma generate",
+    "format": "pnpm exec biome check --write"
   },
   "keywords": [],
   "author": "",

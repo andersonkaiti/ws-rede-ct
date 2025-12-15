@@ -4,4 +4,3 @@ import { LegitimatorCommitteeMemberRepository } from '../../repositories/legitim
 export function makeLegitimatorCommitteeMemberRepository() {
   return new LegitimatorCommitteeMemberRepository(prisma)
 }
-

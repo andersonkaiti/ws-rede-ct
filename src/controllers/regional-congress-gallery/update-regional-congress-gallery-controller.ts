@@ -37,7 +37,7 @@ export const updateRegionalCongressGallerySchema = z.object({
 export class UpdateRegionalCongressGalleryController {
   constructor(
     private readonly regionalCongressGalleryRepository: IRegionalCongressGalleryRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

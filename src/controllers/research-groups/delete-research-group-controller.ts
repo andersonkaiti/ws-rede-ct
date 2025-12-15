@@ -16,7 +16,7 @@ export const deleteResearchGroupSchema = z.object({
 export class DeleteResearchGroupController {
   constructor(
     private readonly researchGroupRepository: IResearchGroupRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

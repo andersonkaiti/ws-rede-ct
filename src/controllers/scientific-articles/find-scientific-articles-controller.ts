@@ -22,7 +22,7 @@ export const findScientificArticlesControllerSchema = z.object({
 
 export class FindScientificArticlesController {
   constructor(
-    private readonly scientificArticlesRepository: IScientificArticlesRepository
+    private readonly scientificArticlesRepository: IScientificArticlesRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

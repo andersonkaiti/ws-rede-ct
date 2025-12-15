@@ -11,7 +11,7 @@ export function makeCreateRegimentController() {
   return {
     createRegimentController: new CreateRegimentController(
       makeRegimentRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -19,7 +19,7 @@ export function makeCreateRegimentController() {
 export function makeFindRegimentsController() {
   return {
     findRegimentsController: new FindRegimentsController(
-      makeRegimentRepository()
+      makeRegimentRepository(),
     ),
   }
 }
@@ -27,7 +27,7 @@ export function makeFindRegimentsController() {
 export function makeFindRegimentByIdController() {
   return {
     findRegimentByIdController: new FindRegimentByIdController(
-      makeRegimentRepository()
+      makeRegimentRepository(),
     ),
   }
 }
@@ -35,7 +35,7 @@ export function makeFindRegimentByIdController() {
 export function makeFindRegimentByStatusController() {
   return {
     findRegimentByStatusController: new FindRegimentByStatusController(
-      makeRegimentRepository()
+      makeRegimentRepository(),
     ),
   }
 }
@@ -44,7 +44,7 @@ export function makeUpdateRegimentController() {
   return {
     updateRegimentController: new UpdateRegimentController(
       makeRegimentRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -53,7 +53,7 @@ export function makeDeleteRegimentController() {
   return {
     deleteRegimentController: new DeleteRegimentController(
       makeRegimentRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

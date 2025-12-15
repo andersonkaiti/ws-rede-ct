@@ -13,7 +13,7 @@ export function makeCreateInternationalScientificCongressPartnerController() {
       new CreateInternationalScientificCongressPartnerController(
         makeInternationalScientificCongressPartnerRepository(),
         makeInternationalScientificCongressRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -22,7 +22,7 @@ export function makeFindInternationalScientificCongressPartnersByCongressIdContr
   return {
     findInternationalScientificCongressPartnersByCongressIdController:
       new FindInternationalScientificCongressPartnersByCongressIdController(
-        makeInternationalScientificCongressPartnerRepository()
+        makeInternationalScientificCongressPartnerRepository(),
       ),
   }
 }
@@ -31,7 +31,7 @@ export function makeFindInternationalScientificCongressPartnerByIdController() {
   return {
     findInternationalScientificCongressPartnerByIdController:
       new FindInternationalScientificCongressPartnerByIdController(
-        makeInternationalScientificCongressPartnerRepository()
+        makeInternationalScientificCongressPartnerRepository(),
       ),
   }
 }
@@ -41,7 +41,7 @@ export function makeUpdateInternationalScientificCongressPartnerController() {
     updateInternationalScientificCongressPartnerController:
       new UpdateInternationalScientificCongressPartnerController(
         makeInternationalScientificCongressPartnerRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -50,7 +50,7 @@ export function makeDeleteInternationalScientificCongressPartnerController() {
   return {
     deleteInternationalScientificCongressPartnerController:
       new DeleteInternationalScientificCongressPartnerController(
-        makeInternationalScientificCongressPartnerRepository()
+        makeInternationalScientificCongressPartnerRepository(),
       ),
   }
 }

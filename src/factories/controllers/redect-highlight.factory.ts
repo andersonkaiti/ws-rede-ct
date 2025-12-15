@@ -10,7 +10,7 @@ export function makeCreateRedeCTHighlightController() {
   return {
     createRedeCTHighlightController: new CreateRedeCTHighlightController(
       makeRedeCTHighlightRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -18,7 +18,7 @@ export function makeCreateRedeCTHighlightController() {
 export function makeFindRedeCTHighlightsController() {
   return {
     findRedeCTHighlightsController: new FindRedeCTHighlightsController(
-      makeRedeCTHighlightRepository()
+      makeRedeCTHighlightRepository(),
     ),
   }
 }
@@ -26,7 +26,7 @@ export function makeFindRedeCTHighlightsController() {
 export function makeFindRedeCTHighlightByIdController() {
   return {
     findRedeCTHighlightByIdController: new FindRedeCTHighlightByIdController(
-      makeRedeCTHighlightRepository()
+      makeRedeCTHighlightRepository(),
     ),
   }
 }
@@ -35,7 +35,7 @@ export function makeUpdateRedeCTHighlightController() {
   return {
     updateRedeCTHighlightController: new UpdateRedeCTHighlightController(
       makeRedeCTHighlightRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -44,7 +44,7 @@ export function makeDeleteRedeCTHighlightController() {
   return {
     deleteRedeCTHighlightController: new DeleteRedeCTHighlightController(
       makeRedeCTHighlightRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

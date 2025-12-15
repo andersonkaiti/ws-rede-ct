@@ -14,7 +14,7 @@ export const findLegitimatorCommitteeMembersSchema = z.object({
 
 export class FindLegitimatorCommitteeMembersController {
   constructor(
-    private readonly legitimatorCommitteeMemberRepository: ILegitimatorCommitteeMemberRepository
+    private readonly legitimatorCommitteeMemberRepository: ILegitimatorCommitteeMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

@@ -143,7 +143,7 @@ export const findScientificArticlesRegistry: RouteConfig = {
                 accessUrl: z.string().nullable(),
                 createdAt: z.date(),
                 updatedAt: z.date(),
-              })
+              }),
             ),
           }),
         },

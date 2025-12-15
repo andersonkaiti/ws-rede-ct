@@ -24,7 +24,7 @@ export const updateWebinarSchema = z.object({
   webinarLink: z.url('URL do webinar deve ser válida').optional(),
   guestIds: z
     .transform((value) =>
-      typeof value === 'string' ? value.split(',') : value
+      typeof value === 'string' ? value.split(',') : value,
     )
     .pipe(z.array(z.uuid()))
     .optional(),
@@ -47,7 +47,7 @@ export const updateWebinarSchema = z.object({
 export class UpdateWebinarController {
   constructor(
     private readonly webinarRepository: IWebinarRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

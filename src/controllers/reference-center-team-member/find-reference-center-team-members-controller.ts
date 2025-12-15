@@ -19,7 +19,7 @@ export const findReferenceCenterTeamMembersSchema = z.object({
 
 export class FindReferenceCenterTeamMembersController {
   constructor(
-    private readonly referenceCenterTeamMemberRepository: IReferenceCenterTeamMemberRepository
+    private readonly referenceCenterTeamMemberRepository: IReferenceCenterTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

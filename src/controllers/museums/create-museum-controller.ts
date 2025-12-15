@@ -41,7 +41,7 @@ export const createMuseumSchema = z.object({
 export class CreateMuseumController {
   constructor(
     private readonly museumRepository: IMuseumRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

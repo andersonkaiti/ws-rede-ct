@@ -14,7 +14,7 @@ export const findRedeCTHighlightByIdSchema = z.object({
 
 export class FindRedeCTHighlightByIdController {
   constructor(
-    private readonly redectHighlightRepository: IRedeCTHighlightRepository
+    private readonly redectHighlightRepository: IRedeCTHighlightRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

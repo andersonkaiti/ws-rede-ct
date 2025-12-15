@@ -107,7 +107,7 @@ export class CourseRepository implements ICourseRepository {
   }
 
   async findById(
-    id: string
+    id: string,
   ): Promise<CourseWithInstructorsAndCoordinator | null> {
     return await this.prisma.course.findFirst({
       where: {

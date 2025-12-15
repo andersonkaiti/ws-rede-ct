@@ -75,7 +75,7 @@ export class ETPRepository implements IETPRepository {
   private async updateLeader(
     tx: Prisma.TransactionClient,
     etpId: string,
-    leaderId?: string
+    leaderId?: string,
   ) {
     if (leaderId === undefined) {
       return
@@ -100,7 +100,7 @@ export class ETPRepository implements IETPRepository {
   private async updateDeputyLeader(
     tx: Prisma.TransactionClient,
     etpId: string,
-    deputyLeaderId?: string
+    deputyLeaderId?: string,
   ) {
     if (deputyLeaderId === undefined) {
       return
@@ -124,7 +124,7 @@ export class ETPRepository implements IETPRepository {
   private async updateSecretary(
     tx: Prisma.TransactionClient,
     etpId: string,
-    secretaryId?: string
+    secretaryId?: string,
   ) {
     if (secretaryId === undefined) {
       return
@@ -148,7 +148,7 @@ export class ETPRepository implements IETPRepository {
   private async updateMembers(
     tx: Prisma.TransactionClient,
     etpId: string,
-    memberIds?: string[]
+    memberIds?: string[],
   ) {
     if (memberIds === undefined) {
       return

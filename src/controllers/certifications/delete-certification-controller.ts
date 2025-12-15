@@ -16,7 +16,7 @@ export const deleteCertificationSchema = z.object({
 export class DeleteCertificationController {
   constructor(
     private readonly certificationRepository: ICertificationRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

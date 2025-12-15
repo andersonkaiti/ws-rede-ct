@@ -30,7 +30,7 @@ export const updateScientificArticleSchema = z.object({
 
 export class UpdateScientificArticleController {
   constructor(
-    private readonly scientificArticlesRepository: IScientificArticlesRepository
+    private readonly scientificArticlesRepository: IScientificArticlesRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

@@ -27,7 +27,7 @@ export const updateCourseSchema = z.object({
   description: z.string().optional(),
   instructorIds: z
     .transform((value) =>
-      typeof value === 'string' ? value.split(',') : value
+      typeof value === 'string' ? value.split(',') : value,
     )
     .pipe(z.array(z.uuid()))
     .optional(),
@@ -50,7 +50,7 @@ export const updateCourseSchema = z.object({
 export class UpdateCourseController {
   constructor(
     private readonly courseRepository: ICourseRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

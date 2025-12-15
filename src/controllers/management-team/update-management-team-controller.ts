@@ -19,14 +19,14 @@ export const updateManagementTeamSchema = z.object({
         userId: z.uuid(),
         role: z.string().min(1),
         order: z.number().optional(),
-      })
+      }),
     )
     .optional(),
 })
 
 export class UpdateManagementTeamController {
   constructor(
-    private readonly managementTeamRepository: IManagementTeamRepository
+    private readonly managementTeamRepository: IManagementTeamRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

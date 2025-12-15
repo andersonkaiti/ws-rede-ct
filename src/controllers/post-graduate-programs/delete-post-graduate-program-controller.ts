@@ -16,7 +16,7 @@ export const deletePostGraduateProgramSchema = z.object({
 export class DeletePostGraduateProgramController {
   constructor(
     private readonly postGraduateProgramRepository: IPostGraduateProgramRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

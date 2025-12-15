@@ -14,7 +14,7 @@ export const findResearchGroupByIdSchema = z.object({
 
 export class FindResearchGroupByIdController {
   constructor(
-    private readonly researchGroupRepository: IResearchGroupRepository
+    private readonly researchGroupRepository: IResearchGroupRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

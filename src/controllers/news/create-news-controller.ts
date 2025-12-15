@@ -30,14 +30,14 @@ export const createNewsSchema = z.object({
           file.size <= MAX_IMAGE_SIZE_BYTES),
       {
         message: 'A imagem deve ser uma imagem válida de no máximo 5MB.',
-      }
+      },
     ),
 })
 
 export class CreateNewsController {
   constructor(
     private readonly newsRepository: INewsRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

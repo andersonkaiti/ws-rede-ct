@@ -11,7 +11,7 @@ export function makeCreatePostGraduateProgramController() {
     createPostGraduateProgramController:
       new CreatePostGraduateProgramController(
         makePostGraduateProgramRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -19,7 +19,7 @@ export function makeCreatePostGraduateProgramController() {
 export function makeFindPostGraduateProgramsController() {
   return {
     findPostGraduateProgramsController: new FindPostGraduateProgramsController(
-      makePostGraduateProgramRepository()
+      makePostGraduateProgramRepository(),
     ),
   }
 }
@@ -28,7 +28,7 @@ export function makeFindPostGraduateProgramByIdController() {
   return {
     findPostGraduateProgramByIdController:
       new FindPostGraduateProgramByIdController(
-        makePostGraduateProgramRepository()
+        makePostGraduateProgramRepository(),
       ),
   }
 }
@@ -38,7 +38,7 @@ export function makeUpdatePostGraduateProgramController() {
     updatePostGraduateProgramController:
       new UpdatePostGraduateProgramController(
         makePostGraduateProgramRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }
@@ -48,7 +48,7 @@ export function makeDeletePostGraduateProgramController() {
     deletePostGraduateProgramController:
       new DeletePostGraduateProgramController(
         makePostGraduateProgramRepository(),
-        makeFirebaseStorageService()
+        makeFirebaseStorageService(),
       ),
   }
 }

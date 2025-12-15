@@ -56,12 +56,12 @@ export const updateRegionalCongressSchema = z
     {
       message: 'Data de término deve ser posterior ou igual à data de início',
       path: ['endDate'],
-    }
+    },
   )
 
 export class UpdateRegionalCongressController {
   constructor(
-    private readonly regionalCongressRepository: IRegionalCongressRepository
+    private readonly regionalCongressRepository: IRegionalCongressRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

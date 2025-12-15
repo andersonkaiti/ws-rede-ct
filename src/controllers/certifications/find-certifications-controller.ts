@@ -22,7 +22,7 @@ export const findCertificationsControllerSchema = z.object({
 
 export class FindCertificationsController {
   constructor(
-    private readonly certificationRepository: ICertificationRepository
+    private readonly certificationRepository: ICertificationRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

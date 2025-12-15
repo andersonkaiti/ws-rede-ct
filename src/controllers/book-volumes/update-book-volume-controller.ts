@@ -71,7 +71,7 @@ export const updateBookVolumeSchema = z.object({
 export class UpdateBookVolumeController {
   constructor(
     private readonly bookVolumeRepository: IBookVolumeRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

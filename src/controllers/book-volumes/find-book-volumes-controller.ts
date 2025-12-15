@@ -26,7 +26,7 @@ export class FindBookVolumesController {
   async handle(req: Request, res: Response) {
     try {
       const { limit, page, ...filter } = findBookVolumesControllerSchema.parse(
-        req.query
+        req.query,
       )
 
       const offset = page * limit - limit

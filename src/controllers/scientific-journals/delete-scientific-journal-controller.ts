@@ -16,7 +16,7 @@ export const deleteScientificJournalSchema = z.object({
 export class DeleteScientificJournalController {
   constructor(
     private readonly scientificJournalRepository: IScientificJournalRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

@@ -16,7 +16,7 @@ export const deleteCourseSchema = z.object({
 export class DeleteCourseController {
   constructor(
     private readonly courseRepository: ICourseRepository,
-    private readonly firebaseStorageService: IFirebaseStorageService
+    private readonly firebaseStorageService: IFirebaseStorageService,
   ) {}
 
   async handle(req: Request, res: Response) {

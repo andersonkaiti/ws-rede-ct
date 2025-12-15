@@ -12,7 +12,7 @@ export function makeCreatePendencyController() {
     createPendencyController: new CreatePendencyController(
       makeUserRepository(),
       makePendencyRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -20,7 +20,7 @@ export function makeCreatePendencyController() {
 export function makeFindPendenciesController() {
   return {
     findPendenciesController: new FindPendenciesController(
-      makePendencyRepository()
+      makePendencyRepository(),
     ),
   }
 }
@@ -28,7 +28,7 @@ export function makeFindPendenciesController() {
 export function makeFindPendencyByIdController() {
   return {
     findPendencyByIdController: new FindPendencyByIdController(
-      makePendencyRepository()
+      makePendencyRepository(),
     ),
   }
 }
@@ -37,7 +37,7 @@ export function makeUpdatePendencyController() {
   return {
     updatePendencyController: new UpdatePendencyController(
       makePendencyRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }
@@ -46,7 +46,7 @@ export function makeDeletePendencyController() {
   return {
     deletePendencyController: new DeletePendencyController(
       makePendencyRepository(),
-      makeFirebaseStorageService()
+      makeFirebaseStorageService(),
     ),
   }
 }

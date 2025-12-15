@@ -14,7 +14,7 @@ export const findWorkGroupTeamMemberByIdSchema = z.object({
 
 export class FindWorkGroupTeamMemberByIdController {
   constructor(
-    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository
+    private readonly workGroupTeamMemberRepository: IWorkGroupTeamMemberRepository,
   ) {}
 
   async handle(req: Request, res: Response) {

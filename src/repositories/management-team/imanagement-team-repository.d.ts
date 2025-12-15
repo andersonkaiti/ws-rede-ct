@@ -22,7 +22,7 @@ export interface IManagementTeamRepository {
   update(team: IUpdateManagementTeamDTO): Promise<void>
   deleteById(id: string): Promise<void>
   find(
-    data: IFindAllManagementTeamsDTO
+    data: IFindAllManagementTeamsDTO,
   ): Promise<ReturnedManagementTeam[] | null>
   findById(id: string): Promise<ReturnedManagementTeam | null>
   findByName(name: string): Promise<ReturnedManagementTeam | null>
