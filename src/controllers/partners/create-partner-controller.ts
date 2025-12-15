@@ -3,7 +3,7 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IPartnerRepository } from '../../repositories/partner/ipartner-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 

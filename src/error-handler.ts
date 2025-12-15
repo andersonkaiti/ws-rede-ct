@@ -1,12 +1,12 @@
 import type { NextFunction, Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from './@types/status-code.ts'
-import { BadRequestError } from './errrors/bad-request-error.ts'
-import { ConflictError } from './errrors/conflict-error.ts'
-import { InternalServerError } from './errrors/internal-server-error.ts'
-import { NotFoundError } from './errrors/not-found-error.ts'
-import { UnauthorizedError } from './errrors/unauthorized-error.ts'
-import { ZodValidationError } from './errrors/zod-validation-error.ts'
+import { BadRequestError } from './errors/bad-request-error.ts'
+import { ConflictError } from './errors/conflict-error.ts'
+import { InternalServerError } from './errors/internal-server-error.ts'
+import { NotFoundError } from './errors/not-found-error.ts'
+import { UnauthorizedError } from './errors/unauthorized-error.ts'
+import { ZodValidationError } from './errors/zod-validation-error.ts'
 
 export class ErrorHandler {
   handle(

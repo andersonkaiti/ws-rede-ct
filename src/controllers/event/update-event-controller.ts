@@ -7,8 +7,8 @@ import {
 } from '../../../config/database/generated/enums.ts'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
-import { NotFoundError } from '../../errrors/not-found-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
+import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IEventRepository } from '../../repositories/event/ievent-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 

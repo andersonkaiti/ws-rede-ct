@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ILawRepository } from '../../repositories/law/ilaw-repository.d.ts'
 
 const DEFAULT_PAGE = 1

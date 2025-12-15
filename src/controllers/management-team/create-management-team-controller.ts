@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { ConflictError } from '../../errrors/conflict-error.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { ConflictError } from '../../errors/conflict-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IManagementTeamRepository } from '../../repositories/management-team/imanagement-team-repository.d.ts'
 
 extendZodWithOpenApi(z)

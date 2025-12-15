@@ -4,7 +4,7 @@ import z from 'zod'
 import { RedeCTHighlightType } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IRedeCTHighlightRepository } from '../../repositories/redect-highlight/iredect-highlight-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 

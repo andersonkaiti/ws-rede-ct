@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errrors/internal-server-error.ts'
+import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { UserRepository } from '../../repositories/user/user-repository.ts'
 
 export class FindUsersController {
