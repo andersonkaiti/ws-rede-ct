@@ -39,7 +39,13 @@ export class FindUsersController {
       })
 
       if (!hasPagination) {
-        return res.status(HttpStatus.OK).json(users)
+        return res.status(HttpStatus.OK).json({
+          page: null,
+          totalPages: null,
+          offset: null,
+          limit: null,
+          users,
+        })
       }
 
       const totalUsers = await this.userRepository.count({
