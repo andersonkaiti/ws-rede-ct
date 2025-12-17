@@ -204,34 +204,16 @@ export const findUsersRegistry: RouteConfig = {
   responses: {
     200: {
       description:
-        'Users retrieved successfully. Returns paginated object when page and limit are provided, or simple array otherwise.',
+        'Users retrieved successfully. When page and limit query parameters are provided, pagination fields contain numeric values. Otherwise, pagination fields are null.',
       summary: 'Users Retrieved',
       content: {
         'application/json': {
-          schema: z.union([
-            // Paginated response
-            z.object({
-              page: z.number(),
-              totalPages: z.number(),
-              offset: z.number(),
-              limit: z.number(),
-              users: z.array(
-                z.object({
-                  id: z.string(),
-                  name: z.string(),
-                  createdAt: z.date(),
-                  updatedAt: z.date(),
-                  role: z.nativeEnum(UserRole),
-                  lattesUrl: z.url().nullable(),
-                  orcid: z.string().nullable(),
-                  phone: z.string().nullable(),
-                  avatarUrl: z.string().nullable(),
-                  emailAddress: z.email(),
-                }),
-              ),
-            }),
-            // Simple array response
-            z.array(
+          schema: z.object({
+            page: z.number().nullable(),
+            totalPages: z.number().nullable(),
+            offset: z.number().nullable(),
+            limit: z.number().nullable(),
+            users: z.array(
               z.object({
                 id: z.string(),
                 name: z.string(),
@@ -245,7 +227,18 @@ export const findUsersRegistry: RouteConfig = {
                 emailAddress: z.email(),
               }),
             ),
-          ]),
+          }),
+        },
+      },
+    },
+    400: {
+      description: 'Invalid query parameters',
+      summary: 'Validation Error',
+      content: {
+        'application/json': {
+          schema: z.object({
+            errors: z.record(z.string(), z.string()),
+          }),
         },
       },
     },
