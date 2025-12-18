@@ -41,50 +41,44 @@ export class CreateMeetingMinuteController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { title, publishedAt, id, document } =
-        createMeetingMinuteSchema.parse({
-          ...req.body,
-          ...req.params,
-          document: req.file,
-        })
-
-      const existingMeeting = await this.meetingRepository.findById(id)
-
-      if (!existingMeeting) {
-        throw new NotFoundError('A reunião não existe.')
-      }
-
-      const existingMinute =
-        await this.meetingMinuteRepository.findByMeetingId(id)
-
-      if (existingMinute) {
-        throw new InternalServerError('Esta reunião já possui uma ata.')
-      }
-
-      const meetingMinute = await this.meetingMinuteRepository.create({
-        title,
-        publishedAt,
-        meetingId: id,
-        documentUrl: '',
+    const { title, publishedAt, id, document } =
+      createMeetingMinuteSchema.parse({
+        ...req.body,
+        ...req.params,
+        document: req.file,
       })
 
-      const documentUrl = await this.firebaseStorageService.uploadFile({
-        file: document,
-        id: meetingMinute.id,
-        folder: FileType.MEETING_MINUTE,
-      })
+    const existingMeeting = await this.meetingRepository.findById(id)
 
-      await this.meetingMinuteRepository.update({
-        id: meetingMinute.id,
-        documentUrl,
-      })
-
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingMeeting) {
+      throw new NotFoundError('A reunião não existe.')
     }
+
+    const existingMinute =
+      await this.meetingMinuteRepository.findByMeetingId(id)
+
+    if (existingMinute) {
+      throw new InternalServerError('Esta reunião já possui uma ata.')
+    }
+
+    const meetingMinute = await this.meetingMinuteRepository.create({
+      title,
+      publishedAt,
+      meetingId: id,
+      documentUrl: '',
+    })
+
+    const documentUrl = await this.firebaseStorageService.uploadFile({
+      file: document,
+      id: meetingMinute.id,
+      folder: FileType.MEETING_MINUTE,
+    })
+
+    await this.meetingMinuteRepository.update({
+      id: meetingMinute.id,
+      documentUrl,
+    })
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IPostGraduateProgramRepository } from '../../repositories/post-graduate-program/ipost-graduate-program-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -26,43 +25,35 @@ export class FindPostGraduateProgramsController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { limit, page, ...filter } =
-        findPostGraduateProgramsControllerSchema.parse(req.query)
+    const { limit, page, ...filter } =
+      findPostGraduateProgramsControllerSchema.parse(req.query)
 
-      const offset = page * limit - limit
+    const offset = page * limit - limit
 
-      const [postGraduatePrograms, totalPostGraduatePrograms] =
-        await Promise.all([
-          this.postGraduateProgramRepository.find({
-            pagination: {
-              offset,
-              limit,
-            },
-            filter,
-          }),
+    const [postGraduatePrograms, totalPostGraduatePrograms] = await Promise.all(
+      [
+        this.postGraduateProgramRepository.find({
+          pagination: {
+            offset,
+            limit,
+          },
+          filter,
+        }),
 
-          this.postGraduateProgramRepository.count({
-            filter,
-          }),
-        ])
+        this.postGraduateProgramRepository.count({
+          filter,
+        }),
+      ],
+    )
 
-      const totalPages = Math.max(
-        Math.ceil(totalPostGraduatePrograms / limit),
-        1,
-      )
+    const totalPages = Math.max(Math.ceil(totalPostGraduatePrograms / limit), 1)
 
-      return res.status(HttpStatus.OK).json({
-        page,
-        totalPages,
-        offset,
-        limit,
-        postGraduatePrograms,
-      })
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.status(HttpStatus.OK).json({
+      page,
+      totalPages,
+      offset,
+      limit,
+      postGraduatePrograms,
+    })
   }
 }

@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IScientificJournalRepository } from '../../repositories/scientific-journal/iscientific-journal-repository.ts'
 
@@ -18,23 +17,17 @@ export class FindScientificJournalByIdController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id } = findScientificJournalByIdSchema.parse({
-        id: req.params.id,
-      })
+    const { id } = findScientificJournalByIdSchema.parse({
+      id: req.params.id,
+    })
 
-      const scientificJournal =
-        await this.scientificJournalRepository.findById(id)
+    const scientificJournal =
+      await this.scientificJournalRepository.findById(id)
 
-      if (!scientificJournal) {
-        throw new NotFoundError('Revista científica não encontrada.')
-      }
-
-      return res.status(HttpStatus.OK).json(scientificJournal)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!scientificJournal) {
+      throw new NotFoundError('Revista científica não encontrada.')
     }
+
+    return res.status(HttpStatus.OK).json(scientificJournal)
   }
 }

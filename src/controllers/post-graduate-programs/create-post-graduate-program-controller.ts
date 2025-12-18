@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IPostGraduateProgramRepository } from '../../repositories/post-graduate-program/ipost-graduate-program-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -43,46 +42,41 @@ export class CreatePostGraduateProgramController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
+    const {
+      title,
+      description,
+      startDate,
+      endDate,
+      contact,
+      registrationLink,
+      image,
+    } = createPostGraduateProgramSchema.parse({
+      ...req.body,
+      image: req.file,
+    })
+
+    const postGraduateProgram = await this.postGraduateProgramRepository.create(
+      {
         title,
         description,
         startDate,
         endDate,
         contact,
-        registrationLink,
-        image,
-      } = createPostGraduateProgramSchema.parse({
-        ...req.body,
-        image: req.file,
-      })
+        registrationLink: registrationLink || undefined,
+      },
+    )
 
-      const postGraduateProgram =
-        await this.postGraduateProgramRepository.create({
-          title,
-          description,
-          startDate,
-          endDate,
-          contact,
-          registrationLink: registrationLink || undefined,
-        })
+    const imageUrl = await this.firebaseStorageService.uploadFile({
+      file: image,
+      folder: File.POST_GRADUATE_PROGRAM,
+      id: postGraduateProgram.id,
+    })
 
-      const imageUrl = await this.firebaseStorageService.uploadFile({
-        file: image,
-        folder: File.POST_GRADUATE_PROGRAM,
-        id: postGraduateProgram.id,
-      })
+    await this.postGraduateProgramRepository.update({
+      id: postGraduateProgram.id,
+      imageUrl,
+    })
 
-      await this.postGraduateProgramRepository.update({
-        id: postGraduateProgram.id,
-        imageUrl,
-      })
-
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IInternationalScientificCongressGalleryRepository } from '../../repositories/international-scientific-congress/gallery/iinternational-scientific-congress-gallery-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -41,42 +40,36 @@ export class UpdateInternationalScientificCongressGalleryController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, image, caption } =
-        updateInternationalScientificCongressGallerySchema.parse({
-          id: req.params.id,
-          ...req.body,
-          image: req.file,
-        })
-
-      const existingGallery =
-        await this.internationalScientificCongressGalleryRepository.findById(id)
-
-      if (!existingGallery) {
-        throw new NotFoundError('A imagem da galeria não existe.')
-      }
-
-      let imageUrl = existingGallery.imageUrl
-
-      if (image) {
-        imageUrl = await this.firebaseStorageService.uploadFile({
-          file: image,
-          id,
-          folder: FileType.INTERNATIONAL_SCIENTIFIC_CONGRESS_GALLERY,
-        })
-      }
-
-      await this.internationalScientificCongressGalleryRepository.update({
-        id,
-        imageUrl: imageUrl ?? undefined,
-        caption: caption || undefined,
+    const { id, image, caption } =
+      updateInternationalScientificCongressGallerySchema.parse({
+        id: req.params.id,
+        ...req.body,
+        image: req.file,
       })
 
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    const existingGallery =
+      await this.internationalScientificCongressGalleryRepository.findById(id)
+
+    if (!existingGallery) {
+      throw new NotFoundError('A imagem da galeria não existe.')
     }
+
+    let imageUrl = existingGallery.imageUrl
+
+    if (image) {
+      imageUrl = await this.firebaseStorageService.uploadFile({
+        file: image,
+        id,
+        folder: FileType.INTERNATIONAL_SCIENTIFIC_CONGRESS_GALLERY,
+      })
+    }
+
+    await this.internationalScientificCongressGalleryRepository.update({
+      id,
+      imageUrl: imageUrl ?? undefined,
+      caption: caption || undefined,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

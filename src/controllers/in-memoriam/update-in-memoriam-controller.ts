@@ -4,7 +4,6 @@ import z from 'zod'
 import { InMemoriamRole } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IInMemoriamRepository } from '../../repositories/in-memoriam/iin-memoriam-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -59,45 +58,39 @@ export class UpdateInMemoriamController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, name, birthDate, deathDate, biography, photo, role } =
-        updateInMemoriamSchema.parse({
-          id: req.params.id,
-          ...req.body,
-          photo: req.file,
-        })
-
-      const existingInMemoriam = await this.inMemoriamRepository.findById(id)
-
-      if (!existingInMemoriam) {
-        throw new NotFoundError('O registro in memoriam não existe.')
-      }
-
-      let photoUrl = existingInMemoriam.photoUrl
-
-      if (photo) {
-        photoUrl = await this.firebaseStorageService.uploadFile({
-          file: photo,
-          id,
-          folder: FileType.IN_MEMORIAM,
-        })
-      }
-
-      await this.inMemoriamRepository.update({
-        id,
-        name,
-        birthDate,
-        deathDate,
-        biography,
-        photoUrl: photoUrl ?? undefined,
-        role,
+    const { id, name, birthDate, deathDate, biography, photo, role } =
+      updateInMemoriamSchema.parse({
+        id: req.params.id,
+        ...req.body,
+        photo: req.file,
       })
 
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    const existingInMemoriam = await this.inMemoriamRepository.findById(id)
+
+    if (!existingInMemoriam) {
+      throw new NotFoundError('O registro in memoriam não existe.')
     }
+
+    let photoUrl = existingInMemoriam.photoUrl
+
+    if (photo) {
+      photoUrl = await this.firebaseStorageService.uploadFile({
+        file: photo,
+        id,
+        folder: FileType.IN_MEMORIAM,
+      })
+    }
+
+    await this.inMemoriamRepository.update({
+      id,
+      name,
+      birthDate,
+      deathDate,
+      biography,
+      photoUrl: photoUrl ?? undefined,
+      role,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IScientificJournalRepository } from '../../repositories/scientific-journal/iscientific-journal-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -47,55 +46,49 @@ export class UpdateScientificJournalController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        logo,
-        name,
-        issn,
-        description,
-        journalUrl,
-        directors,
-        editorialBoard,
-      } = updateScientificJournalSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        logo: req.file,
-      })
+    const {
+      id,
+      logo,
+      name,
+      issn,
+      description,
+      journalUrl,
+      directors,
+      editorialBoard,
+    } = updateScientificJournalSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      logo: req.file,
+    })
 
-      const existingScientificJournal =
-        await this.scientificJournalRepository.findById(id)
+    const existingScientificJournal =
+      await this.scientificJournalRepository.findById(id)
 
-      if (!existingScientificJournal) {
-        throw new NotFoundError('A revista científica não existe.')
-      }
-
-      let logoUrl = existingScientificJournal.logoUrl
-
-      if (logo) {
-        logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          id,
-          folder: File.SCIENTIFIC_JOURNAL,
-        })
-      }
-
-      await this.scientificJournalRepository.update({
-        id,
-        name,
-        issn,
-        description,
-        journalUrl,
-        directors,
-        editorialBoard,
-        logoUrl,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingScientificJournal) {
+      throw new NotFoundError('A revista científica não existe.')
     }
+
+    let logoUrl = existingScientificJournal.logoUrl
+
+    if (logo) {
+      logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        id,
+        folder: File.SCIENTIFIC_JOURNAL,
+      })
+    }
+
+    await this.scientificJournalRepository.update({
+      id,
+      name,
+      issn,
+      description,
+      journalUrl,
+      directors,
+      editorialBoard,
+      logoUrl,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

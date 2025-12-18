@@ -4,7 +4,6 @@ import z from 'zod'
 import { RedeCTHighlightType } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IRedeCTHighlightRepository } from '../../repositories/redect-highlight/iredect-highlight-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
@@ -42,45 +41,39 @@ export class CreateRedeCTHighlightController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        type,
-        name,
-        image,
-        description,
-        honorableMention,
-        honoredAt,
-        meritUrl,
-      } = createRedeCTHighlightSchema.parse({
-        ...req.body,
-        image: req.file,
-      })
+    const {
+      type,
+      name,
+      image,
+      description,
+      honorableMention,
+      honoredAt,
+      meritUrl,
+    } = createRedeCTHighlightSchema.parse({
+      ...req.body,
+      image: req.file,
+    })
 
-      const highlight = await this.redectHighlightRepository.create({
-        type,
-        name,
-        description,
-        honorableMention,
-        honoredAt,
-        meritUrl,
-      })
+    const highlight = await this.redectHighlightRepository.create({
+      type,
+      name,
+      description,
+      honorableMention,
+      honoredAt,
+      meritUrl,
+    })
 
-      const imageUrl = await this.firebaseStorageService.uploadFile({
-        file: image,
-        id: highlight.id,
-        folder: FileType.REDECT_HIGHLIGHT,
-      })
+    const imageUrl = await this.firebaseStorageService.uploadFile({
+      file: image,
+      id: highlight.id,
+      folder: FileType.REDECT_HIGHLIGHT,
+    })
 
-      await this.redectHighlightRepository.update({
-        id: highlight.id,
-        imageUrl,
-      })
+    await this.redectHighlightRepository.update({
+      id: highlight.id,
+      imageUrl,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

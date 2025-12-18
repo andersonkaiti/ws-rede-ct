@@ -47,59 +47,53 @@ export class UpdatePostGraduateProgramController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        image,
-        title,
-        description,
-        startDate,
-        endDate,
-        contact,
-        registrationLink,
-      } = updatePostGraduateProgramSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        image: req.file,
-      })
+    const {
+      id,
+      image,
+      title,
+      description,
+      startDate,
+      endDate,
+      contact,
+      registrationLink,
+    } = updatePostGraduateProgramSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      image: req.file,
+    })
 
-      const existingPostGraduateProgram =
-        await this.postGraduateProgramRepository.findById(id)
+    const existingPostGraduateProgram =
+      await this.postGraduateProgramRepository.findById(id)
 
-      if (!existingPostGraduateProgram) {
-        throw new NotFoundError('O programa de pós-graduação não existe.')
-      }
-
-      let imageUrl = existingPostGraduateProgram.imageUrl
-
-      if (image) {
-        imageUrl = await this.firebaseStorageService.uploadFile({
-          file: image,
-          id,
-          folder: File.POST_GRADUATE_PROGRAM,
-        })
-      }
-
-      if (!imageUrl) {
-        throw new InternalServerError('URL da imagem é obrigatório')
-      }
-
-      await this.postGraduateProgramRepository.update({
-        id,
-        title,
-        description,
-        startDate,
-        endDate,
-        contact,
-        registrationLink,
-        imageUrl,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingPostGraduateProgram) {
+      throw new NotFoundError('O programa de pós-graduação não existe.')
     }
+
+    let imageUrl = existingPostGraduateProgram.imageUrl
+
+    if (image) {
+      imageUrl = await this.firebaseStorageService.uploadFile({
+        file: image,
+        id,
+        folder: File.POST_GRADUATE_PROGRAM,
+      })
+    }
+
+    if (!imageUrl) {
+      throw new InternalServerError('URL da imagem é obrigatório')
+    }
+
+    await this.postGraduateProgramRepository.update({
+      id,
+      title,
+      description,
+      startDate,
+      endDate,
+      contact,
+      registrationLink,
+      imageUrl,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

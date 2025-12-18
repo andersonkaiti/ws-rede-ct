@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IScientificJournalRepository } from '../../repositories/scientific-journal/iscientific-journal-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -28,39 +27,33 @@ export class FindScientificJournalsController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { limit, page, ...filter } =
-        findScientificJournalsControllerSchema.parse(req.query)
+    const { limit, page, ...filter } =
+      findScientificJournalsControllerSchema.parse(req.query)
 
-      const offset = page * limit - limit
+    const offset = page * limit - limit
 
-      const [scientificJournals, totalScientificJournals] = await Promise.all([
-        this.scientificJournalRepository.find({
-          pagination: {
-            offset,
-            limit,
-          },
-          filter,
-        }),
+    const [scientificJournals, totalScientificJournals] = await Promise.all([
+      this.scientificJournalRepository.find({
+        pagination: {
+          offset,
+          limit,
+        },
+        filter,
+      }),
 
-        this.scientificJournalRepository.count({
-          filter,
-        }),
-      ])
+      this.scientificJournalRepository.count({
+        filter,
+      }),
+    ])
 
-      const totalPages = Math.max(Math.ceil(totalScientificJournals / limit), 1)
+    const totalPages = Math.max(Math.ceil(totalScientificJournals / limit), 1)
 
-      return res.status(HttpStatus.OK).json({
-        page,
-        totalPages,
-        offset,
-        limit,
-        scientificJournals,
-      })
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.status(HttpStatus.OK).json({
+      page,
+      totalPages,
+      offset,
+      limit,
+      scientificJournals,
+    })
   }
 }

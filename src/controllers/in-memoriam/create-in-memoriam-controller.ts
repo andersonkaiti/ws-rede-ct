@@ -4,7 +4,6 @@ import z from 'zod'
 import { InMemoriamRole } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IInMemoriamRepository } from '../../repositories/in-memoriam/iin-memoriam-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
@@ -49,41 +48,35 @@ export class CreateInMemoriamController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { name, birthDate, deathDate, biography, role, photo } =
-        createInMemoriamSchema.parse({
-          ...req.body,
-          photo: req.file,
-        })
-
-      const InMemoriam = await this.inMemoriamRepository.create({
-        name,
-        birthDate,
-        deathDate,
-        biography: biography ?? undefined,
-        role,
+    const { name, birthDate, deathDate, biography, role, photo } =
+      createInMemoriamSchema.parse({
+        ...req.body,
+        photo: req.file,
       })
 
-      let photoUrl: string | undefined
+    const InMemoriam = await this.inMemoriamRepository.create({
+      name,
+      birthDate,
+      deathDate,
+      biography: biography ?? undefined,
+      role,
+    })
 
-      if (photo) {
-        photoUrl = await this.firebaseStorageService.uploadFile({
-          file: photo,
-          id: InMemoriam.id,
-          folder: FileType.IN_MEMORIAM,
-        })
+    let photoUrl: string | undefined
 
-        await this.inMemoriamRepository.update({
-          id: InMemoriam.id,
-          photoUrl,
-        })
-      }
+    if (photo) {
+      photoUrl = await this.firebaseStorageService.uploadFile({
+        file: photo,
+        id: InMemoriam.id,
+        folder: FileType.IN_MEMORIAM,
+      })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+      await this.inMemoriamRepository.update({
+        id: InMemoriam.id,
+        photoUrl,
+      })
     }
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

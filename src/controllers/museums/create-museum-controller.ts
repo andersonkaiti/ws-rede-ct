@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IMuseumRepository } from '../../repositories/museum/imuseum-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
@@ -45,53 +44,47 @@ export class CreateMuseumController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        name,
-        logo,
-        city,
-        state,
-        country,
-        description,
-        website,
-        email,
-        phone,
-        address,
-        functioning,
-      } = createMuseumSchema.parse({
-        ...req.body,
-        logo: req.file,
-      })
+    const {
+      name,
+      logo,
+      city,
+      state,
+      country,
+      description,
+      website,
+      email,
+      phone,
+      address,
+      functioning,
+    } = createMuseumSchema.parse({
+      ...req.body,
+      logo: req.file,
+    })
 
-      const museum = await this.museumRepository.create({
-        name,
-        city,
-        state,
-        country,
-        description,
-        website,
-        email,
-        phone,
-        address,
-        functioning,
-      })
+    const museum = await this.museumRepository.create({
+      name,
+      city,
+      state,
+      country,
+      description,
+      website,
+      email,
+      phone,
+      address,
+      functioning,
+    })
 
-      const logoUrl = await this.firebaseStorageService.uploadFile({
-        file: logo,
-        id: museum.id,
-        folder: FileType.MUSEUM,
-      })
+    const logoUrl = await this.firebaseStorageService.uploadFile({
+      file: logo,
+      id: museum.id,
+      folder: FileType.MUSEUM,
+    })
 
-      await this.museumRepository.update({
-        id: museum.id,
-        logoUrl,
-      })
+    await this.museumRepository.update({
+      id: museum.id,
+      logoUrl,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

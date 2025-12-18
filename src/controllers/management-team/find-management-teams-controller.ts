@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IManagementTeamRepository } from '../../repositories/management-team/imanagement-team-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -19,20 +18,14 @@ export class FindManagementTeamsController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const filter = findManagementTeamsSchema.parse(req.query)
+    const filter = findManagementTeamsSchema.parse(req.query)
 
-      const teams = await this.managementTeamRepository.find({
-        filter,
-      })
+    const teams = await this.managementTeamRepository.find({
+      filter,
+    })
 
-      res.status(HttpStatus.OK).json({
-        teams,
-      })
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new InternalServerError(error.message)
-      }
-    }
+    res.status(HttpStatus.OK).json({
+      teams,
+    })
   }
 }

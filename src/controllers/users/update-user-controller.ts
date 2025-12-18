@@ -4,7 +4,6 @@ import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -57,50 +56,44 @@ export class UpdateUserController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { avatarImage, ...rest } = updateUserSchema.parse({
-        ...req.body,
-        avatarImage: req.file,
-      })
+    const { avatarImage, ...rest } = updateUserSchema.parse({
+      ...req.body,
+      avatarImage: req.file,
+    })
 
-      const authenticatedUserId = req.user.id
+    const authenticatedUserId = req.user.id
 
-      const user = await this.userRepository.findById(authenticatedUserId)
+    const user = await this.userRepository.findById(authenticatedUserId)
 
-      if (!user) {
-        throw new BadRequestError('O usuário não existe')
-      }
+    if (!user) {
+      throw new BadRequestError('O usuário não existe')
+    }
 
-      let avatarUrl = user.avatarUrl
+    let avatarUrl = user.avatarUrl
 
-      if (avatarImage) {
-        if (user.avatarUrl) {
-          avatarUrl = await this.firebaseStorageService.updateFile({
-            file: avatarImage,
-            id: authenticatedUserId,
-            folder: FileType.USER,
-            fileUrl: user.avatarUrl,
-          })
-        } else {
-          avatarUrl = await this.firebaseStorageService.uploadFile({
-            file: avatarImage,
-            id: authenticatedUserId,
-            folder: FileType.USER,
-          })
-        }
-      }
-
-      await this.userRepository.update({
-        ...rest,
-        id: authenticatedUserId,
-        avatarUrl: avatarUrl || undefined,
-      })
-
-      return res.sendStatus(HttpStatus.NO_CONTENT)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
+    if (avatarImage) {
+      if (user.avatarUrl) {
+        avatarUrl = await this.firebaseStorageService.updateFile({
+          file: avatarImage,
+          id: authenticatedUserId,
+          folder: FileType.USER,
+          fileUrl: user.avatarUrl,
+        })
+      } else {
+        avatarUrl = await this.firebaseStorageService.uploadFile({
+          file: avatarImage,
+          id: authenticatedUserId,
+          folder: FileType.USER,
+        })
       }
     }
+
+    await this.userRepository.update({
+      ...rest,
+      id: authenticatedUserId,
+      avatarUrl: avatarUrl || undefined,
+    })
+
+    return res.sendStatus(HttpStatus.NO_CONTENT)
   }
 }

@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressGalleryRepository } from '../../repositories/regional-congress/gallery/iregional-congress-gallery-repository.js'
 import type { IRegionalCongressRepository } from '../../repositories/regional-congress/iregional-congress-repository.d.ts'
@@ -40,42 +39,35 @@ export class CreateRegionalCongressGalleryController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { caption, image, id } = createRegionalCongressGallerySchema.parse({
-        ...req.body,
-        ...req.params,
-        image: req.file,
-      })
+    const { caption, image, id } = createRegionalCongressGallerySchema.parse({
+      ...req.body,
+      ...req.params,
+      image: req.file,
+    })
 
-      const existingCongress =
-        await this.regionalCongressRepository.findById(id)
+    const existingCongress = await this.regionalCongressRepository.findById(id)
 
-      if (!existingCongress) {
-        throw new NotFoundError('O congresso não existe.')
-      }
-
-      const galleryItem = await this.regionalCongressGalleryRepository.create({
-        caption,
-        congressId: id,
-        imageUrl: '',
-      })
-
-      const imageUrl = await this.firebaseStorageService.uploadFile({
-        file: image,
-        id: galleryItem.id,
-        folder: FileType.GALLERY,
-      })
-
-      await this.regionalCongressGalleryRepository.update({
-        id: galleryItem.id,
-        imageUrl,
-      })
-
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingCongress) {
+      throw new NotFoundError('O congresso não existe.')
     }
+
+    const galleryItem = await this.regionalCongressGalleryRepository.create({
+      caption,
+      congressId: id,
+      imageUrl: '',
+    })
+
+    const imageUrl = await this.firebaseStorageService.uploadFile({
+      file: image,
+      id: galleryItem.id,
+      folder: FileType.GALLERY,
+    })
+
+    await this.regionalCongressGalleryRepository.update({
+      id: galleryItem.id,
+      imageUrl,
+    })
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

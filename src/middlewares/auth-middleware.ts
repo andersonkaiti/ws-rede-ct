@@ -37,7 +37,6 @@ export class AuthMiddleware {
 
       next()
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
         return res.status(HttpStatus.UNAUTHORIZED).json({
           message: err.message,
@@ -84,7 +83,6 @@ export class AuthMiddleware {
 
       next()
     } catch (err) {
-      console.log(err)
       if (err instanceof Error) {
         return res.status(HttpStatus.UNAUTHORIZED).json({
           message: err.message,

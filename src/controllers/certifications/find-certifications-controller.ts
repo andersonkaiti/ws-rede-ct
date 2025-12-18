@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -26,39 +25,34 @@ export class FindCertificationsController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { limit, page, ...filter } =
-        findCertificationsControllerSchema.parse(req.query)
+    const { limit, page, ...filter } = findCertificationsControllerSchema.parse(
+      req.query,
+    )
 
-      const offset = page * limit - limit
+    const offset = page * limit - limit
 
-      const [certifications, totalCertifications] = await Promise.all([
-        this.certificationRepository.find({
-          pagination: {
-            offset,
-            limit,
-          },
-          filter,
-        }),
+    const [certifications, totalCertifications] = await Promise.all([
+      this.certificationRepository.find({
+        pagination: {
+          offset,
+          limit,
+        },
+        filter,
+      }),
 
-        this.certificationRepository.count({
-          filter,
-        }),
-      ])
+      this.certificationRepository.count({
+        filter,
+      }),
+    ])
 
-      const totalPages = Math.max(Math.ceil(totalCertifications / limit), 1)
+    const totalPages = Math.max(Math.ceil(totalCertifications / limit), 1)
 
-      return res.status(HttpStatus.OK).json({
-        page,
-        totalPages,
-        offset,
-        limit,
-        certifications,
-      })
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.status(HttpStatus.OK).json({
+      page,
+      totalPages,
+      offset,
+      limit,
+      certifications,
+    })
   }
 }

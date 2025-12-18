@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ILegitimatorCommitteeMemberRepository } from '../../repositories/legitimator-committee-member/ilegitimator-committee-member-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -18,20 +17,14 @@ export class FindLegitimatorCommitteeMembersController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const filter = findLegitimatorCommitteeMembersSchema.parse(req.query)
+    const filter = findLegitimatorCommitteeMembersSchema.parse(req.query)
 
-      const members = await this.legitimatorCommitteeMemberRepository.find({
-        filter,
-      })
+    const members = await this.legitimatorCommitteeMemberRepository.find({
+      filter,
+    })
 
-      res.status(HttpStatus.OK).json({
-        members,
-      })
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new InternalServerError(error.message)
-      }
-    }
+    res.status(HttpStatus.OK).json({
+      members,
+    })
   }
 }

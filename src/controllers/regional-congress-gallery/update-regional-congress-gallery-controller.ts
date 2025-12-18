@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressGalleryRepository } from '../../repositories/regional-congress/gallery/iregional-congress-gallery-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -41,41 +40,35 @@ export class UpdateRegionalCongressGalleryController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, caption, image } = updateRegionalCongressGallerySchema.parse({
-        ...req.params,
-        ...req.body,
-        image: req.file,
-      })
+    const { id, caption, image } = updateRegionalCongressGallerySchema.parse({
+      ...req.params,
+      ...req.body,
+      image: req.file,
+    })
 
-      const existingGallery =
-        await this.regionalCongressGalleryRepository.findById(id)
+    const existingGallery =
+      await this.regionalCongressGalleryRepository.findById(id)
 
-      if (!existingGallery) {
-        throw new NotFoundError('Item de galeria não encontrado')
-      }
-
-      let imageUrl: string | undefined
-
-      if (image) {
-        imageUrl = await this.firebaseStorageService.uploadFile({
-          file: image,
-          id,
-          folder: FileType.GALLERY,
-        })
-      }
-
-      await this.regionalCongressGalleryRepository.update({
-        id,
-        caption,
-        ...(imageUrl && { imageUrl }),
-      })
-
-      return res.sendStatus(HttpStatus.NO_CONTENT)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingGallery) {
+      throw new NotFoundError('Item de galeria não encontrado')
     }
+
+    let imageUrl: string | undefined
+
+    if (image) {
+      imageUrl = await this.firebaseStorageService.uploadFile({
+        file: image,
+        id,
+        folder: FileType.GALLERY,
+      })
+    }
+
+    await this.regionalCongressGalleryRepository.update({
+      id,
+      caption,
+      ...(imageUrl && { imageUrl }),
+    })
+
+    return res.sendStatus(HttpStatus.NO_CONTENT)
   }
 }

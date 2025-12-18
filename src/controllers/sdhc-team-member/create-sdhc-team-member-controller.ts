@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ISDHCTeamMemberRepository } from '../../repositories/sdhc-team-member/isdhc-team-member-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -20,22 +19,16 @@ export class CreateSDHCTeamMemberController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { role, description, userId, order } =
-        createSDHCTeamMemberSchema.parse(req.body)
+    const { role, description, userId, order } =
+      createSDHCTeamMemberSchema.parse(req.body)
 
-      await this.sdhcTeamMemberRepository.create({
-        role,
-        description,
-        userId,
-        order: order ?? 0,
-      })
+    await this.sdhcTeamMemberRepository.create({
+      role,
+      description,
+      userId,
+      order: order ?? 0,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

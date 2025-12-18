@@ -6,7 +6,6 @@ import {
   MeetingStatus,
 } from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IMeetingRepository } from '../../repositories/meeting/imeeting-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -45,32 +44,26 @@ export class CreateMeetingController {
   constructor(private readonly meetingRepository: IMeetingRepository) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        title,
-        scheduledAt,
-        format,
-        agenda,
-        meetingLink,
-        location,
-        status,
-      } = createMeetingSchema.parse(req.body)
+    const {
+      title,
+      scheduledAt,
+      format,
+      agenda,
+      meetingLink,
+      location,
+      status,
+    } = createMeetingSchema.parse(req.body)
 
-      await this.meetingRepository.create({
-        title,
-        scheduledAt,
-        format,
-        agenda,
-        meetingLink: meetingLink || undefined,
-        location: location || undefined,
-        status: status ?? MeetingStatus.PENDING,
-      })
+    await this.meetingRepository.create({
+      title,
+      scheduledAt,
+      format,
+      agenda,
+      meetingLink: meetingLink || undefined,
+      location: location || undefined,
+      status: status ?? MeetingStatus.PENDING,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

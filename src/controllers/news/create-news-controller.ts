@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -41,32 +40,26 @@ export class CreateNewsController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { title, content, image } = createNewsSchema.parse({
-        ...req.body,
-        image: req.file,
-      })
+    const { title, content, image } = createNewsSchema.parse({
+      ...req.body,
+      image: req.file,
+    })
 
-      const authenticatedUserId = req.user.id
+    const authenticatedUserId = req.user.id
 
-      const imageUrl = await this.firebaseStorageService.uploadFile({
-        file: image,
-        folder: File.NEWS,
-        id: authenticatedUserId,
-      })
+    const imageUrl = await this.firebaseStorageService.uploadFile({
+      file: image,
+      folder: File.NEWS,
+      id: authenticatedUserId,
+    })
 
-      await this.newsRepository.create({
-        title,
-        content,
-        authorId: authenticatedUserId,
-        imageUrl,
-      })
+    await this.newsRepository.create({
+      title,
+      content,
+      authorId: authenticatedUserId,
+      imageUrl,
+    })
 
-      res.sendStatus(HttpStatus.CREATED)
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new InternalServerError(error.message)
-      }
-    }
+    res.sendStatus(HttpStatus.CREATED)
   }
 }

@@ -4,7 +4,6 @@ import z from 'zod'
 import { RegimentStatus } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegimentRepository } from '../../repositories/regiment/iregiment-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -45,50 +44,44 @@ export class UpdateRegimentController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, title, version, publishedAt, document, status } =
-        updateRegimentSchema.parse({
-          id: req.params.id,
-          ...req.body,
-          document: req.file,
-        })
-
-      const existingRegiment = await this.regimentRepository.findById(id)
-
-      if (!existingRegiment) {
-        throw new NotFoundError('O regimento não existe.')
-      }
-
-      let documentUrl = existingRegiment.documentUrl
-
-      if (document) {
-        if (existingRegiment.documentUrl) {
-          await this.firebaseStorageService.deleteFile({
-            fileUrl: existingRegiment.documentUrl,
-          })
-        }
-
-        documentUrl = await this.firebaseStorageService.uploadFile({
-          file: document,
-          id,
-          folder: FileType.REGIMENT,
-        })
-      }
-
-      await this.regimentRepository.update({
-        id,
-        title,
-        version,
-        publishedAt,
-        documentUrl: documentUrl ?? undefined,
-        status,
+    const { id, title, version, publishedAt, document, status } =
+      updateRegimentSchema.parse({
+        id: req.params.id,
+        ...req.body,
+        document: req.file,
       })
 
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    const existingRegiment = await this.regimentRepository.findById(id)
+
+    if (!existingRegiment) {
+      throw new NotFoundError('O regimento não existe.')
     }
+
+    let documentUrl = existingRegiment.documentUrl
+
+    if (document) {
+      if (existingRegiment.documentUrl) {
+        await this.firebaseStorageService.deleteFile({
+          fileUrl: existingRegiment.documentUrl,
+        })
+      }
+
+      documentUrl = await this.firebaseStorageService.uploadFile({
+        file: document,
+        id,
+        folder: FileType.REGIMENT,
+      })
+    }
+
+    await this.regimentRepository.update({
+      id,
+      title,
+      version,
+      publishedAt,
+      documentUrl: documentUrl ?? undefined,
+      status,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

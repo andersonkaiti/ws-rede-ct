@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IScientificJournalRepository } from '../../repositories/scientific-journal/iscientific-journal-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -44,47 +43,41 @@ export class CreateScientificJournalController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        name,
-        issn,
-        description,
-        journalUrl,
-        directors,
-        editorialBoard,
-        logo,
-      } = createScientificJournalSchema.parse({
-        ...req.body,
-        logo: req.file,
+    const {
+      name,
+      issn,
+      description,
+      journalUrl,
+      directors,
+      editorialBoard,
+      logo,
+    } = createScientificJournalSchema.parse({
+      ...req.body,
+      logo: req.file,
+    })
+
+    const scientificJournal = await this.scientificJournalRepository.create({
+      name,
+      issn,
+      description,
+      journalUrl,
+      directors,
+      editorialBoard,
+    })
+
+    if (logo) {
+      const logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        folder: File.SCIENTIFIC_JOURNAL,
+        id: scientificJournal.id,
       })
 
-      const scientificJournal = await this.scientificJournalRepository.create({
-        name,
-        issn,
-        description,
-        journalUrl,
-        directors,
-        editorialBoard,
+      await this.scientificJournalRepository.update({
+        id: scientificJournal.id,
+        logoUrl,
       })
-
-      if (logo) {
-        const logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          folder: File.SCIENTIFIC_JOURNAL,
-          id: scientificJournal.id,
-        })
-
-        await this.scientificJournalRepository.update({
-          id: scientificJournal.id,
-          logoUrl,
-        })
-      }
-
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
     }
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

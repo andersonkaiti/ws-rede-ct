@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IReferenceCenterTeamMemberRepository } from '../../repositories/reference-center-team-member/ireference-center-team-member-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -19,21 +18,15 @@ export class CreateReferenceCenterTeamMemberController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { role, description, userId } =
-        createReferenceCenterTeamMemberSchema.parse(req.body)
+    const { role, description, userId } =
+      createReferenceCenterTeamMemberSchema.parse(req.body)
 
-      await this.referenceCenterTeamMemberRepository.create({
-        role,
-        description,
-        userId,
-      })
+    await this.referenceCenterTeamMemberRepository.create({
+      role,
+      description,
+      userId,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

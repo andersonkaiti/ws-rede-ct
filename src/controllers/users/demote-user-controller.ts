@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -16,31 +15,25 @@ export class DemoteUserController {
   constructor(private readonly userRepository: IUserRepository) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id } = demoteUserSchema.parse({
-        ...req.params,
-      })
+    const { id } = demoteUserSchema.parse({
+      ...req.params,
+    })
 
-      const user = await this.userRepository.findById(id)
+    const user = await this.userRepository.findById(id)
 
-      if (!user) {
-        throw new BadRequestError('O usuário não existe')
-      }
-
-      if (user.role !== 'ADMIN') {
-        throw new BadRequestError('O usuário não é um administrador')
-      }
-
-      await this.userRepository.update({
-        id,
-        role: 'USER',
-      })
-
-      return res.sendStatus(HttpStatus.NO_CONTENT)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!user) {
+      throw new BadRequestError('O usuário não existe')
     }
+
+    if (user.role !== 'ADMIN') {
+      throw new BadRequestError('O usuário não é um administrador')
+    }
+
+    await this.userRepository.update({
+      id,
+      role: 'USER',
+    })
+
+    return res.sendStatus(HttpStatus.NO_CONTENT)
   }
 }

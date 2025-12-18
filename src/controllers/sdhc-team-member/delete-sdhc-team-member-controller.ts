@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { ISDHCTeamMemberRepository } from '../../repositories/sdhc-team-member/isdhc-team-member-repository.d.ts'
 
@@ -18,24 +17,18 @@ export class DeleteSDHCTeamMemberController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id } = deleteSDHCTeamMemberSchema.parse({
-        id: req.params.id,
-      })
+    const { id } = deleteSDHCTeamMemberSchema.parse({
+      id: req.params.id,
+    })
 
-      const existingMember = await this.sdhcTeamMemberRepository.findById(id)
+    const existingMember = await this.sdhcTeamMemberRepository.findById(id)
 
-      if (!existingMember) {
-        throw new NotFoundError('O membro da equipe SDHC não existe.')
-      }
-
-      await this.sdhcTeamMemberRepository.deleteById(id)
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingMember) {
+      throw new NotFoundError('O membro da equipe SDHC não existe.')
     }
+
+    await this.sdhcTeamMemberRepository.deleteById(id)
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

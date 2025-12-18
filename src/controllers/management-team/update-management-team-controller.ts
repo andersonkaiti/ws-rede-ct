@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { ConflictError } from '../../errors/conflict-error.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IManagementTeamRepository } from '../../repositories/management-team/imanagement-team-repository.d.ts'
 
@@ -30,46 +29,41 @@ export class UpdateManagementTeamController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, name, description, members } =
-        updateManagementTeamSchema.parse({
-          id: req.params.id,
-          ...req.body,
-        })
+    const { id, name, description, members } = updateManagementTeamSchema.parse(
+      {
+        id: req.params.id,
+        ...req.body,
+      },
+    )
 
-      const existingTeam = await this.managementTeamRepository.findById(id)
+    const existingTeam = await this.managementTeamRepository.findById(id)
 
-      if (!existingTeam) {
-        throw new NotFoundError('O time de gestão não existe.')
-      }
+    if (!existingTeam) {
+      throw new NotFoundError('O time de gestão não existe.')
+    }
 
-      if (name && name !== existingTeam.name) {
-        const teamWithSameName =
-          await this.managementTeamRepository.findByName(name)
+    if (name && name !== existingTeam.name) {
+      const teamWithSameName =
+        await this.managementTeamRepository.findByName(name)
 
-        if (teamWithSameName && teamWithSameName.id !== id) {
-          throw new ConflictError('Já existe um time de gestão com este nome.')
-        }
-      }
-
-      await this.managementTeamRepository.update({
-        id,
-        name,
-        description,
-        members: members
-          ? members.map((member) => ({
-              userId: member.userId,
-              role: member.role,
-              order: member.order ?? 0,
-            }))
-          : undefined,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
+      if (teamWithSameName && teamWithSameName.id !== id) {
+        throw new ConflictError('Já existe um time de gestão com este nome.')
       }
     }
+
+    await this.managementTeamRepository.update({
+      id,
+      name,
+      description,
+      members: members
+        ? members.map((member) => ({
+            userId: member.userId,
+            role: member.role,
+            order: member.order ?? 0,
+          }))
+        : undefined,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

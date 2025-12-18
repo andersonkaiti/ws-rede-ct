@@ -7,7 +7,6 @@ import {
 } from '../../../config/database/generated/enums.ts'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IEventRepository } from '../../repositories/event/ievent-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -69,49 +68,43 @@ export class CreateEventController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        title,
-        description,
-        startDate,
-        endDate,
-        location,
-        format,
-        eventLink,
-        status,
-        image,
-      } = createEventSchema.parse({
-        ...req.body,
-        image: req.file,
-      })
+    const {
+      title,
+      description,
+      startDate,
+      endDate,
+      location,
+      format,
+      eventLink,
+      status,
+      image,
+    } = createEventSchema.parse({
+      ...req.body,
+      image: req.file,
+    })
 
-      const event = await this.eventRepository.create({
-        title,
-        description,
-        startDate,
-        endDate,
-        location: location || undefined,
-        format,
-        eventLink: eventLink || undefined,
-        status: status ?? EventStatus.PENDING,
-      })
+    const event = await this.eventRepository.create({
+      title,
+      description,
+      startDate,
+      endDate,
+      location: location || undefined,
+      format,
+      eventLink: eventLink || undefined,
+      status: status ?? EventStatus.PENDING,
+    })
 
-      const imageUrl = await this.firebaseStorageService.uploadFile({
-        file: image,
-        folder: File.EVENT,
-        id: event.id,
-      })
+    const imageUrl = await this.firebaseStorageService.uploadFile({
+      file: image,
+      folder: File.EVENT,
+      id: event.id,
+    })
 
-      await this.eventRepository.update({
-        id: event.id,
-        imageUrl,
-      })
+    await this.eventRepository.update({
+      id: event.id,
+      imageUrl,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

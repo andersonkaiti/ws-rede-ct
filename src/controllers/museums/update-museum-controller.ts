@@ -49,66 +49,60 @@ export class UpdateMuseumController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        name,
-        logo,
-        city,
-        state,
-        country,
-        description,
-        website,
-        email,
-        phone,
-        address,
-        functioning,
-      } = updateMuseumSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        logo: req.file,
-      })
+    const {
+      id,
+      name,
+      logo,
+      city,
+      state,
+      country,
+      description,
+      website,
+      email,
+      phone,
+      address,
+      functioning,
+    } = updateMuseumSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      logo: req.file,
+    })
 
-      const existingMuseum = await this.museumRepository.findById(id)
+    const existingMuseum = await this.museumRepository.findById(id)
 
-      if (!existingMuseum) {
-        throw new NotFoundError('O museu não existe.')
-      }
-
-      let logoUrl = existingMuseum.logoUrl
-
-      if (logo) {
-        logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          id,
-          folder: 'images/museums',
-        })
-      }
-
-      if (!logoUrl) {
-        throw new InternalServerError('Logo URL é obrigatório')
-      }
-
-      await this.museumRepository.update({
-        id,
-        name,
-        logoUrl,
-        city,
-        state,
-        country,
-        description,
-        website,
-        email,
-        phone,
-        address,
-        functioning,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingMuseum) {
+      throw new NotFoundError('O museu não existe.')
     }
+
+    let logoUrl = existingMuseum.logoUrl
+
+    if (logo) {
+      logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        id,
+        folder: 'images/museums',
+      })
+    }
+
+    if (!logoUrl) {
+      throw new InternalServerError('Logo URL é obrigatório')
+    }
+
+    await this.museumRepository.update({
+      id,
+      name,
+      logoUrl,
+      city,
+      state,
+      country,
+      description,
+      website,
+      email,
+      phone,
+      address,
+      functioning,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

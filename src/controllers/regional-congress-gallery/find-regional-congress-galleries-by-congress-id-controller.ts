@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressGalleryRepository } from '../../repositories/regional-congress/gallery/iregional-congress-gallery-repository.js'
 
@@ -21,51 +20,45 @@ export class FindRegionalCongressGalleriesByCongressIdController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { page, limit, caption, id } =
-        findRegionalCongressGalleriesByCongressIdSchema.parse({
-          ...req.params,
-          ...req.query,
-        })
+    const { page, limit, caption, id } =
+      findRegionalCongressGalleriesByCongressIdSchema.parse({
+        ...req.params,
+        ...req.query,
+      })
 
-      const offset = (page - 1) * limit
+    const offset = (page - 1) * limit
 
-      const galleries =
-        await this.regionalCongressGalleryRepository.findByCongressId({
-          pagination: {
-            offset,
-            limit,
-          },
-          filter: {
-            caption,
-            congressId: id,
-          },
-        })
-
-      if (!galleries) {
-        throw new NotFoundError('Itens de galeria não encontrados')
-      }
-
-      const total = await this.regionalCongressGalleryRepository.count({
+    const galleries =
+      await this.regionalCongressGalleryRepository.findByCongressId({
+        pagination: {
+          offset,
+          limit,
+        },
         filter: {
           caption,
           congressId: id,
         },
       })
 
-      return res.status(HttpStatus.OK).json({
-        data: galleries,
-        pagination: {
-          page,
-          limit,
-          total,
-          totalPages: Math.ceil(total / limit),
-        },
-      })
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!galleries) {
+      throw new NotFoundError('Itens de galeria não encontrados')
     }
+
+    const total = await this.regionalCongressGalleryRepository.count({
+      filter: {
+        caption,
+        congressId: id,
+      },
+    })
+
+    return res.status(HttpStatus.OK).json({
+      data: galleries,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    })
   }
 }
