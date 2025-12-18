@@ -1,4 +1,7 @@
-import type { ManagementTeamMember, User } from '@prisma/client'
+import type {
+  ManagementTeamMember,
+  User,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountManagementTeamsDTO,
   ICreateManagementTeamDTO,

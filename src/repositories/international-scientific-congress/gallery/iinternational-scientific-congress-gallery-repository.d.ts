@@ -1,4 +1,4 @@
-import type { CongressGalleryItem } from '@prisma/client'
+import type { CongressGalleryItem } from '../../../config/database/generated/client.ts'
 import type {
   ICountCongressGalleryDTO,
   ICreateCongressGalleryDTO,

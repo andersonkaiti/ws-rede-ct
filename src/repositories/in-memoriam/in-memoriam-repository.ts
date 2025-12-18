@@ -1,4 +1,8 @@
-import type { InMemoriamRole, Prisma, PrismaClient } from '@prisma/client'
+import type {
+  InMemoriamRole,
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountInMemoriamDTO,
   ICreateInMemoriamDTO,
