@@ -89,16 +89,9 @@ export const updateUserRegistry: RouteConfig = {
     },
   },
   responses: {
-    200: {
+    204: {
       description: 'User profile updated successfully',
       summary: 'User Updated',
-      content: {
-        'application/json': {
-          schema: z.object({
-            message: z.string(),
-          }),
-        },
-      },
     },
     400: {
       description: 'Invalid input data or file format',
