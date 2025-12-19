@@ -27,33 +27,34 @@ export class FindRegionalCongressesController {
 
     const offset = (page - 1) * limit
 
-    const congresses = await this.regionalCongressRepository.find({
-      pagination: {
-        offset,
-        limit,
-      },
-      filter: {
-        ...filter,
-        orderBy,
-      },
-    })
+    const [congresses, totalCongresses] = await Promise.all([
+      this.regionalCongressRepository.find({
+        pagination: {
+          offset,
+          limit,
+        },
+        filter: {
+          ...filter,
+          orderBy,
+        },
+      }),
+      this.regionalCongressRepository.count({
+        filter,
+      }),
+    ])
 
     if (!congresses) {
       throw new NotFoundError('Congressos regionais não encontrados')
     }
 
-    const total = await this.regionalCongressRepository.count({
-      filter,
-    })
+    const totalPages = Math.max(Math.ceil(totalCongresses / limit), 1)
 
     return res.status(HttpStatus.OK).json({
-      data: congresses,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
+      page,
+      totalPages,
+      limit,
+      offset,
+      congresses,
     })
   }
 }
