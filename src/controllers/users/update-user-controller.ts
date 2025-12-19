@@ -21,18 +21,22 @@ extendZodWithOpenApi(z)
 export const updateUserSchema = z.object({
   name: z.string().optional(),
   lattesUrl: z.string().optional(),
-  orcid: z.union([
-    z.string().regex(ORCID_REGEX, {
-      message: 'ORCID inválido. Deve estar no formato 0000-0000-0000-0000',
-    }),
-    z.literal(''),
-  ]),
-  phone: z.union([
-    z.string().regex(PHONE_REGEX, {
-      message: 'Telefone inválido. Deve estar no formato (99) 99999-9999',
-    }),
-    z.literal(''),
-  ]),
+  orcid: z
+    .union([
+      z.string().regex(ORCID_REGEX, {
+        message: 'ORCID inválido. Deve estar no formato 0000-0000-0000-0000',
+      }),
+      z.literal(''),
+    ])
+    .optional(),
+  phone: z
+    .union([
+      z.string().regex(PHONE_REGEX, {
+        message: 'Telefone inválido. Deve estar no formato (99) 99999-9999',
+      }),
+      z.literal(''),
+    ])
+    .optional(),
   avatarImage: z
     .any()
     .refine((value) => {
