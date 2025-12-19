@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IResearchGroupRepository } from '../../repositories/research-group/iresearch-group-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -50,61 +49,55 @@ export class UpdateResearchGroupController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        logo,
-        name,
-        acronym,
-        description,
-        url,
-        foundedAt,
-        scope,
-        email,
-        leaderId,
-        deputyLeaderId,
-      } = updateResearchGroupSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        logo: req.file,
-      })
+    const {
+      id,
+      logo,
+      name,
+      acronym,
+      description,
+      url,
+      foundedAt,
+      scope,
+      email,
+      leaderId,
+      deputyLeaderId,
+    } = updateResearchGroupSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      logo: req.file,
+    })
 
-      const existingResearchGroup =
-        await this.researchGroupRepository.findById(id)
+    const existingResearchGroup =
+      await this.researchGroupRepository.findById(id)
 
-      if (!existingResearchGroup) {
-        throw new NotFoundError('O grupo de pesquisa não existe.')
-      }
-
-      let logoUrl = existingResearchGroup.logoUrl
-
-      if (logo) {
-        logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          id,
-          folder: File.RESEARCH_GROUP_LOGO,
-        })
-      }
-
-      await this.researchGroupRepository.update({
-        id,
-        name,
-        acronym,
-        description,
-        url,
-        foundedAt,
-        scope,
-        email,
-        leaderId,
-        deputyLeaderId,
-        logoUrl,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingResearchGroup) {
+      throw new NotFoundError('O grupo de pesquisa não existe.')
     }
+
+    let logoUrl = existingResearchGroup.logoUrl
+
+    if (logo) {
+      logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        id,
+        folder: File.RESEARCH_GROUP_LOGO,
+      })
+    }
+
+    await this.researchGroupRepository.update({
+      id,
+      name,
+      acronym,
+      description,
+      url,
+      foundedAt,
+      scope,
+      email,
+      leaderId,
+      deputyLeaderId,
+      logoUrl,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

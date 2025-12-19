@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { ConflictError } from '../../errors/conflict-error.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IETPRepository } from '../../repositories/etp/ietp-repository.d.ts'
 
@@ -25,53 +24,47 @@ export class UpdateETPController {
   constructor(private readonly etpRepository: IETPRepository) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        code,
-        title,
-        description,
-        notes,
-        leaderId,
-        deputyLeaderId,
-        secretaryId,
-        memberIds,
-      } = updateETPSchema.parse({
-        id: req.params.id,
-        ...req.body,
-      })
+    const {
+      id,
+      code,
+      title,
+      description,
+      notes,
+      leaderId,
+      deputyLeaderId,
+      secretaryId,
+      memberIds,
+    } = updateETPSchema.parse({
+      id: req.params.id,
+      ...req.body,
+    })
 
-      const existingETP = await this.etpRepository.findById(id)
+    const existingETP = await this.etpRepository.findById(id)
 
-      if (!existingETP) {
-        throw new NotFoundError('O ETP não existe.')
-      }
+    if (!existingETP) {
+      throw new NotFoundError('O ETP não existe.')
+    }
 
-      if (code) {
-        const etpWithSameCode = await this.etpRepository.findByCode(code)
+    if (code) {
+      const etpWithSameCode = await this.etpRepository.findByCode(code)
 
-        if (etpWithSameCode && etpWithSameCode.id !== id) {
-          throw new ConflictError('Já existe um ETP com este código.')
-        }
-      }
-
-      await this.etpRepository.update({
-        id,
-        code,
-        title,
-        description,
-        notes,
-        leaderId,
-        deputyLeaderId,
-        secretaryId,
-        memberIds,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
+      if (etpWithSameCode && etpWithSameCode.id !== id) {
+        throw new ConflictError('Já existe um ETP com este código.')
       }
     }
+
+    await this.etpRepository.update({
+      id,
+      code,
+      title,
+      description,
+      notes,
+      leaderId,
+      deputyLeaderId,
+      secretaryId,
+      memberIds,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

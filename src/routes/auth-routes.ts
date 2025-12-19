@@ -58,17 +58,9 @@ router.get(
     authMiddleware.isAdmin(req, res, next)
   },
   (_req: Request, res: Response) => {
-    try {
-      res.status(HttpStatus.OK).json({
-        success: true,
-      })
-    } catch (err) {
-      if (err instanceof Error) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-          message: err.message,
-        })
-      }
-    }
+    res.status(HttpStatus.OK).json({
+      success: true,
+    })
   },
 )
 

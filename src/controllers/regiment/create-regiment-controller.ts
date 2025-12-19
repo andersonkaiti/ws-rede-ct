@@ -4,7 +4,6 @@ import z from 'zod'
 import { RegimentStatus } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IRegimentRepository } from '../../repositories/regiment/iregiment-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
@@ -40,37 +39,31 @@ export class CreateRegimentController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { title, version, publishedAt, document, status } =
-        createRegimentSchema.parse({
-          ...req.body,
-          document: req.file,
-        })
-
-      const regiment = await this.regimentRepository.create({
-        title,
-        version,
-        publishedAt,
-        documentUrl: '',
-        status: status ?? RegimentStatus.IN_FORCE,
+    const { title, version, publishedAt, document, status } =
+      createRegimentSchema.parse({
+        ...req.body,
+        document: req.file,
       })
 
-      const documentUrl = await this.firebaseStorageService.uploadFile({
-        file: document,
-        id: regiment.id,
-        folder: FileType.REGIMENT,
-      })
+    const regiment = await this.regimentRepository.create({
+      title,
+      version,
+      publishedAt,
+      documentUrl: '',
+      status: status ?? RegimentStatus.IN_FORCE,
+    })
 
-      await this.regimentRepository.update({
-        id: regiment.id,
-        documentUrl,
-      })
+    const documentUrl = await this.firebaseStorageService.uploadFile({
+      file: document,
+      id: regiment.id,
+      folder: FileType.REGIMENT,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    await this.regimentRepository.update({
+      id: regiment.id,
+      documentUrl,
+    })
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IWebinarRepository } from '../../repositories/webinar/iwebinar-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -46,43 +45,37 @@ export class CreateWebinarController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        title,
-        description,
-        scheduledAt,
-        webinarLink,
-        guestIds,
-        thumbnail,
-      } = createWebinarSchema.parse({
-        ...req.body,
-        thumbnail: req.file,
-      })
+    const {
+      title,
+      description,
+      scheduledAt,
+      webinarLink,
+      guestIds,
+      thumbnail,
+    } = createWebinarSchema.parse({
+      ...req.body,
+      thumbnail: req.file,
+    })
 
-      const webinar = await this.webinarRepository.create({
-        title,
-        description,
-        scheduledAt,
-        webinarLink: webinarLink || undefined,
-        guestIds,
-      })
+    const webinar = await this.webinarRepository.create({
+      title,
+      description,
+      scheduledAt,
+      webinarLink: webinarLink || undefined,
+      guestIds,
+    })
 
-      const thumbnailUrl = await this.firebaseStorageService.uploadFile({
-        file: thumbnail,
-        folder: File.WEBINAR,
-        id: webinar.id,
-      })
+    const thumbnailUrl = await this.firebaseStorageService.uploadFile({
+      file: thumbnail,
+      folder: File.WEBINAR,
+      id: webinar.id,
+    })
 
-      await this.webinarRepository.update({
-        id: webinar.id,
-        thumbnailUrl,
-      })
+    await this.webinarRepository.update({
+      id: webinar.id,
+      thumbnailUrl,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

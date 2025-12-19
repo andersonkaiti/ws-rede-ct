@@ -1,4 +1,8 @@
-import type { MeetingStatus, Prisma, PrismaClient } from '@prisma/client'
+import type {
+  MeetingStatus,
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountMeetingDTO,
   ICreateMeetingDTO,

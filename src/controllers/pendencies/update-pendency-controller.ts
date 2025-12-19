@@ -5,7 +5,6 @@ import { PendencyStatus } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IPendencyRepository } from '../../repositories/pendency/ipendency-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -37,41 +36,35 @@ export class UpdatePendencyController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { document, id, ...rest } = updatePendencySchema.parse({
-        ...req.body,
-        id: req.params.id,
-        document: req.file,
-      })
+    const { document, id, ...rest } = updatePendencySchema.parse({
+      ...req.body,
+      id: req.params.id,
+      document: req.file,
+    })
 
-      const pendencyExists = await this.pendencyRepository.findById(id)
+    const pendencyExists = await this.pendencyRepository.findById(id)
 
-      if (!pendencyExists) {
-        throw new BadRequestError('A pendência não existe')
-      }
-
-      let documentUrl = pendencyExists.documentUrl
-
-      if (document && document.size > 0) {
-        documentUrl = await this.firebaseStorageService.updateFile({
-          file: document,
-          id: pendencyExists.userId,
-          folder: FileType.PENDENCY,
-          fileUrl: pendencyExists.documentUrl,
-        })
-      }
-
-      await this.pendencyRepository.update({
-        ...rest,
-        id,
-        documentUrl,
-      })
-
-      return res.sendStatus(HttpStatus.NO_CONTENT)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!pendencyExists) {
+      throw new BadRequestError('A pendência não existe')
     }
+
+    let documentUrl = pendencyExists.documentUrl
+
+    if (document && document.size > 0) {
+      documentUrl = await this.firebaseStorageService.updateFile({
+        file: document,
+        id: pendencyExists.userId,
+        folder: FileType.PENDENCY,
+        fileUrl: pendencyExists.documentUrl,
+      })
+    }
+
+    await this.pendencyRepository.update({
+      ...rest,
+      id,
+      documentUrl,
+    })
+
+    return res.sendStatus(HttpStatus.NO_CONTENT)
   }
 }

@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressRepository } from '../../repositories/regional-congress/iregional-congress-repository.d.ts'
 
@@ -23,44 +22,38 @@ export class FindRegionalCongressesController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { page, limit, orderBy, ...filter } =
-        findRegionalCongressesSchema.parse(req.query)
+    const { page, limit, orderBy, ...filter } =
+      findRegionalCongressesSchema.parse(req.query)
 
-      const offset = (page - 1) * limit
+    const offset = (page - 1) * limit
 
-      const congresses = await this.regionalCongressRepository.find({
-        pagination: {
-          offset,
-          limit,
-        },
-        filter: {
-          ...filter,
-          orderBy,
-        },
-      })
+    const congresses = await this.regionalCongressRepository.find({
+      pagination: {
+        offset,
+        limit,
+      },
+      filter: {
+        ...filter,
+        orderBy,
+      },
+    })
 
-      if (!congresses) {
-        throw new NotFoundError('Congressos regionais não encontrados')
-      }
-
-      const total = await this.regionalCongressRepository.count({
-        filter,
-      })
-
-      return res.status(HttpStatus.OK).json({
-        data: congresses,
-        pagination: {
-          page,
-          limit,
-          total,
-          totalPages: Math.ceil(total / limit),
-        },
-      })
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!congresses) {
+      throw new NotFoundError('Congressos regionais não encontrados')
     }
+
+    const total = await this.regionalCongressRepository.count({
+      filter,
+    })
+
+    return res.status(HttpStatus.OK).json({
+      data: congresses,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    })
   }
 }

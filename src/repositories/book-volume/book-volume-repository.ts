@@ -1,4 +1,8 @@
-import type { BookVolume, Prisma, PrismaClient } from '@prisma/client'
+import type {
+  BookVolume,
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountBookVolumesDTO,
   ICreateBookVolumeDTO,

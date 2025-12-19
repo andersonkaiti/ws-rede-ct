@@ -51,58 +51,52 @@ export class UpdatePartnerController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        name,
-        logo,
-        websiteUrl,
-        description,
-        category,
-        since,
-        isActive,
-      } = updatePartnerSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        logo: req.file,
-      })
+    const {
+      id,
+      name,
+      logo,
+      websiteUrl,
+      description,
+      category,
+      since,
+      isActive,
+    } = updatePartnerSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      logo: req.file,
+    })
 
-      const existingPartner = await this.partnerRepository.findById(id)
+    const existingPartner = await this.partnerRepository.findById(id)
 
-      if (!existingPartner) {
-        throw new NotFoundError('O parceiro não existe.')
-      }
-
-      let logoUrl = existingPartner.logoUrl
-
-      if (logo) {
-        logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          id,
-          folder: 'images/partners',
-        })
-      }
-
-      if (!logoUrl) {
-        throw new InternalServerError('Logo URL é obrigatório')
-      }
-
-      await this.partnerRepository.update({
-        id,
-        name,
-        logoUrl,
-        websiteUrl,
-        description,
-        category,
-        since,
-        isActive,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingPartner) {
+      throw new NotFoundError('O parceiro não existe.')
     }
+
+    let logoUrl = existingPartner.logoUrl
+
+    if (logo) {
+      logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        id,
+        folder: 'images/partners',
+      })
+    }
+
+    if (!logoUrl) {
+      throw new InternalServerError('Logo URL é obrigatório')
+    }
+
+    await this.partnerRepository.update({
+      id,
+      name,
+      logoUrl,
+      websiteUrl,
+      description,
+      category,
+      since,
+      isActive,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

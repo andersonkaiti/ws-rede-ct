@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IInternationalScientificCongressRepository } from '../../repositories/international-scientific-congress/iinternational-scientific-congress-repository.d.ts'
 
@@ -18,25 +17,19 @@ export class DeleteInternationalScientificCongressController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id } = deleteInternationalScientificCongressSchema.parse({
-        id: req.params.id,
-      })
+    const { id } = deleteInternationalScientificCongressSchema.parse({
+      id: req.params.id,
+    })
 
-      const existingCongress =
-        await this.internationalScientificCongressRepository.findById(id)
+    const existingCongress =
+      await this.internationalScientificCongressRepository.findById(id)
 
-      if (!existingCongress) {
-        throw new NotFoundError('O congresso não existe.')
-      }
-
-      await this.internationalScientificCongressRepository.deleteById(id)
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingCongress) {
+      throw new NotFoundError('O congresso não existe.')
     }
+
+    await this.internationalScientificCongressRepository.deleteById(id)
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

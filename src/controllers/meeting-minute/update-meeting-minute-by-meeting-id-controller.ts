@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IMeetingMinuteRepository } from '../../repositories/meeting-minute/imeeting-minute-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -42,49 +41,43 @@ export class UpdateMeetingMinuteByMeetingIdController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, title, publishedAt, document } =
-        updateMeetingMinuteByMeetingIdSchema.parse({
-          ...req.params,
-          ...req.body,
-          document: req.file,
-        })
-
-      const existingMeetingMinute =
-        await this.meetingMinuteRepository.findByMeetingId(id)
-
-      if (!existingMeetingMinute) {
-        throw new NotFoundError('A ata não existe para esta reunião.')
-      }
-
-      let documentUrl = existingMeetingMinute.documentUrl
-
-      if (document) {
-        if (existingMeetingMinute.documentUrl) {
-          await this.firebaseStorageService.deleteFile({
-            fileUrl: existingMeetingMinute.documentUrl,
-          })
-        }
-
-        documentUrl = await this.firebaseStorageService.uploadFile({
-          file: document,
-          id: existingMeetingMinute.id,
-          folder: FileType.MEETING_MINUTE,
-        })
-      }
-
-      await this.meetingMinuteRepository.update({
-        id: existingMeetingMinute.id,
-        title,
-        publishedAt,
-        documentUrl: documentUrl ?? undefined,
+    const { id, title, publishedAt, document } =
+      updateMeetingMinuteByMeetingIdSchema.parse({
+        ...req.params,
+        ...req.body,
+        document: req.file,
       })
 
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    const existingMeetingMinute =
+      await this.meetingMinuteRepository.findByMeetingId(id)
+
+    if (!existingMeetingMinute) {
+      throw new NotFoundError('A ata não existe para esta reunião.')
     }
+
+    let documentUrl = existingMeetingMinute.documentUrl
+
+    if (document) {
+      if (existingMeetingMinute.documentUrl) {
+        await this.firebaseStorageService.deleteFile({
+          fileUrl: existingMeetingMinute.documentUrl,
+        })
+      }
+
+      documentUrl = await this.firebaseStorageService.uploadFile({
+        file: document,
+        id: existingMeetingMinute.id,
+        folder: FileType.MEETING_MINUTE,
+      })
+    }
+
+    await this.meetingMinuteRepository.update({
+      id: existingMeetingMinute.id,
+      title,
+      publishedAt,
+      documentUrl: documentUrl ?? undefined,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

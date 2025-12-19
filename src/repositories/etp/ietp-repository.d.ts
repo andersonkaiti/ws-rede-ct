@@ -1,4 +1,8 @@
-import type { ETP, Researcher, User } from '@prisma/client'
+import type {
+  ETP,
+  Researcher,
+  User,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountETPsDTO,
   ICreateETPDTO,

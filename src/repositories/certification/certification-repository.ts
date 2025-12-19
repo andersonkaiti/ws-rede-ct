@@ -1,4 +1,8 @@
-import type { Certification, Prisma, PrismaClient } from '@prisma/client'
+import type {
+  Certification,
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountCertificationsDTO,
   IFindByUserIdDTO,

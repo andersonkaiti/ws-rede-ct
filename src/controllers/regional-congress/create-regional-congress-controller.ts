@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IRegionalCongressRepository } from '../../repositories/regional-congress/iregional-congress-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -59,16 +58,10 @@ export class CreateRegionalCongressController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const congress = createRegionalCongressSchema.parse(req.body)
+    const congress = createRegionalCongressSchema.parse(req.body)
 
-      await this.regionalCongressRepository.create(congress)
+    await this.regionalCongressRepository.create(congress)
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

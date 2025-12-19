@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IBookVolumeRepository } from '../../repositories/book-volume/ibook-volume-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -75,84 +74,76 @@ export class UpdateBookVolumeController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        volumeNumber,
-        year,
-        title,
-        author,
-        accessUrl,
-        description,
-        authorImage,
-        coverImage,
-        catalogSheet,
-      } = updateBookVolumeSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        authorImage: (
-          req.files as { [fieldname: string]: Express.Multer.File[] }
-        )?.authorImage?.[0],
-        coverImage: (
-          req.files as { [fieldname: string]: Express.Multer.File[] }
-        )?.coverImage?.[0],
-        catalogSheet: (
-          req.files as { [fieldname: string]: Express.Multer.File[] }
-        )?.catalogSheet?.[0],
-      })
+    const {
+      id,
+      volumeNumber,
+      year,
+      title,
+      author,
+      accessUrl,
+      description,
+      authorImage,
+      coverImage,
+      catalogSheet,
+    } = updateBookVolumeSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      authorImage: (req.files as { [fieldname: string]: Express.Multer.File[] })
+        ?.authorImage?.[0],
+      coverImage: (req.files as { [fieldname: string]: Express.Multer.File[] })
+        ?.coverImage?.[0],
+      catalogSheet: (
+        req.files as { [fieldname: string]: Express.Multer.File[] }
+      )?.catalogSheet?.[0],
+    })
 
-      const existingBookVolume = await this.bookVolumeRepository.findById(id)
+    const existingBookVolume = await this.bookVolumeRepository.findById(id)
 
-      if (!existingBookVolume) {
-        throw new NotFoundError('O volume de livro não existe.')
-      }
-
-      let authorImageUrl = existingBookVolume.authorImageUrl
-      let coverImageUrl = existingBookVolume.coverImageUrl
-      let catalogSheetUrl = existingBookVolume.catalogSheetUrl
-
-      if (authorImage) {
-        authorImageUrl = await this.firebaseStorageService.uploadFile({
-          file: authorImage,
-          id,
-          folder: File.BOOK_VOLUME_AUTHOR_IMAGE,
-        })
-      }
-
-      if (coverImage) {
-        coverImageUrl = await this.firebaseStorageService.uploadFile({
-          file: coverImage,
-          id,
-          folder: File.BOOK_VOLUME_COVER,
-        })
-      }
-
-      if (catalogSheet) {
-        catalogSheetUrl = await this.firebaseStorageService.uploadFile({
-          file: catalogSheet,
-          id,
-          folder: File.BOOK_VOLUME_CATALOG_SHEET,
-        })
-      }
-
-      await this.bookVolumeRepository.update({
-        id,
-        volumeNumber,
-        year,
-        title,
-        author,
-        accessUrl,
-        description,
-        authorImageUrl,
-        coverImageUrl,
-        catalogSheetUrl,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingBookVolume) {
+      throw new NotFoundError('O volume de livro não existe.')
     }
+
+    let authorImageUrl = existingBookVolume.authorImageUrl
+    let coverImageUrl = existingBookVolume.coverImageUrl
+    let catalogSheetUrl = existingBookVolume.catalogSheetUrl
+
+    if (authorImage) {
+      authorImageUrl = await this.firebaseStorageService.uploadFile({
+        file: authorImage,
+        id,
+        folder: File.BOOK_VOLUME_AUTHOR_IMAGE,
+      })
+    }
+
+    if (coverImage) {
+      coverImageUrl = await this.firebaseStorageService.uploadFile({
+        file: coverImage,
+        id,
+        folder: File.BOOK_VOLUME_COVER,
+      })
+    }
+
+    if (catalogSheet) {
+      catalogSheetUrl = await this.firebaseStorageService.uploadFile({
+        file: catalogSheet,
+        id,
+        folder: File.BOOK_VOLUME_CATALOG_SHEET,
+      })
+    }
+
+    await this.bookVolumeRepository.update({
+      id,
+      volumeNumber,
+      year,
+      title,
+      author,
+      accessUrl,
+      description,
+      authorImageUrl,
+      coverImageUrl,
+      catalogSheetUrl,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

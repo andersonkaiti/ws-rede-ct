@@ -6,7 +6,6 @@ import {
   MeetingStatus,
 } from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IMeetingRepository } from '../../repositories/meeting/imeeting-repository.d.ts'
 
@@ -30,43 +29,37 @@ export class UpdateMeetingController {
   constructor(private readonly meetingRepository: IMeetingRepository) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        title,
-        scheduledAt,
-        format,
-        agenda,
-        meetingLink,
-        location,
-        status,
-      } = updateMeetingSchema.parse({
-        id: req.params.id,
-        ...req.body,
-      })
+    const {
+      id,
+      title,
+      scheduledAt,
+      format,
+      agenda,
+      meetingLink,
+      location,
+      status,
+    } = updateMeetingSchema.parse({
+      id: req.params.id,
+      ...req.body,
+    })
 
-      const existingMeeting = await this.meetingRepository.findById(id)
+    const existingMeeting = await this.meetingRepository.findById(id)
 
-      if (!existingMeeting) {
-        throw new NotFoundError('A reunião não existe.')
-      }
-
-      await this.meetingRepository.update({
-        id,
-        title,
-        scheduledAt,
-        format,
-        agenda,
-        meetingLink: meetingLink || undefined,
-        location: location || undefined,
-        status,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingMeeting) {
+      throw new NotFoundError('A reunião não existe.')
     }
+
+    await this.meetingRepository.update({
+      id,
+      title,
+      scheduledAt,
+      format,
+      agenda,
+      meetingLink: meetingLink || undefined,
+      location: location || undefined,
+      status,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

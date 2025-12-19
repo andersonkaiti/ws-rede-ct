@@ -4,7 +4,6 @@ import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -34,42 +33,35 @@ export class UpdateCertificationController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { certification, id, ...rest } = updateCertificationSchema.parse({
-        ...req.body,
-        id: req.params.id,
-        certification: req.file,
-      })
+    const { certification, id, ...rest } = updateCertificationSchema.parse({
+      ...req.body,
+      id: req.params.id,
+      certification: req.file,
+    })
 
-      const certificationExists =
-        await this.certificationRepository.findById(id)
+    const certificationExists = await this.certificationRepository.findById(id)
 
-      if (!certificationExists) {
-        throw new BadRequestError('A certificação não existe')
-      }
-
-      let certificationUrl = certificationExists.certificationUrl
-
-      if (certification && certification.size > 0) {
-        certificationUrl = await this.firebaseStorageService.updateFile({
-          file: certification,
-          id: certificationExists.userId,
-          folder: FileType.CERTIFICATION,
-          fileUrl: certificationExists.certificationUrl,
-        })
-      }
-
-      await this.certificationRepository.update({
-        ...rest,
-        id,
-        certificationUrl,
-      })
-
-      return res.sendStatus(HttpStatus.NO_CONTENT)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!certificationExists) {
+      throw new BadRequestError('A certificação não existe')
     }
+
+    let certificationUrl = certificationExists.certificationUrl
+
+    if (certification && certification.size > 0) {
+      certificationUrl = await this.firebaseStorageService.updateFile({
+        file: certification,
+        id: certificationExists.userId,
+        folder: FileType.CERTIFICATION,
+        fileUrl: certificationExists.certificationUrl,
+      })
+    }
+
+    await this.certificationRepository.update({
+      ...rest,
+      id,
+      certificationUrl,
+    })
+
+    return res.sendStatus(HttpStatus.NO_CONTENT)
   }
 }

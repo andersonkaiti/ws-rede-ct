@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IResearchGroupRepository } from '../../repositories/research-group/iresearch-group-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -47,53 +46,47 @@ export class CreateResearchGroupController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        name,
-        acronym,
-        description,
-        url,
-        foundedAt,
-        scope,
-        email,
-        leaderId,
-        deputyLeaderId,
-        logo,
-      } = createResearchGroupSchema.parse({
-        ...req.body,
-        logo: req.file,
+    const {
+      name,
+      acronym,
+      description,
+      url,
+      foundedAt,
+      scope,
+      email,
+      leaderId,
+      deputyLeaderId,
+      logo,
+    } = createResearchGroupSchema.parse({
+      ...req.body,
+      logo: req.file,
+    })
+
+    const researchGroup = await this.researchGroupRepository.create({
+      name,
+      acronym,
+      description,
+      url,
+      foundedAt,
+      scope,
+      email,
+      leaderId,
+      deputyLeaderId,
+    })
+
+    if (logo) {
+      const logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        folder: File.RESEARCH_GROUP_LOGO,
+        id: researchGroup.id,
       })
 
-      const researchGroup = await this.researchGroupRepository.create({
-        name,
-        acronym,
-        description,
-        url,
-        foundedAt,
-        scope,
-        email,
-        leaderId,
-        deputyLeaderId,
+      await this.researchGroupRepository.update({
+        id: researchGroup.id,
+        logoUrl,
       })
-
-      if (logo) {
-        const logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          folder: File.RESEARCH_GROUP_LOGO,
-          id: researchGroup.id,
-        })
-
-        await this.researchGroupRepository.update({
-          id: researchGroup.id,
-          logoUrl,
-        })
-      }
-
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
     }
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

@@ -1,4 +1,7 @@
-import type { SDHCTeamMember, User } from '@prisma/client'
+import type {
+  SDHCTeamMember,
+  User,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountLegitimatorCommitteeMembersDTO,
   ICreateLegitimatorCommitteeMemberDTO,

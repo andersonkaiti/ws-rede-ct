@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressPartnerRepository } from '../../repositories/regional-congress/partner/iregional-congress-partner-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -41,41 +40,35 @@ export class UpdateRegionalCongressPartnerController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, name, logo } = updateRegionalCongressPartnerSchema.parse({
-        ...req.params,
-        ...req.body,
-        logo: req.file,
-      })
+    const { id, name, logo } = updateRegionalCongressPartnerSchema.parse({
+      ...req.params,
+      ...req.body,
+      logo: req.file,
+    })
 
-      const existingPartner =
-        await this.regionalCongressPartnerRepository.findById(id)
+    const existingPartner =
+      await this.regionalCongressPartnerRepository.findById(id)
 
-      if (!existingPartner) {
-        throw new NotFoundError('Parceiro não encontrado')
-      }
-
-      let logoUrl: string | undefined
-
-      if (logo) {
-        logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          id,
-          folder: FileType.PARTNER,
-        })
-      }
-
-      await this.regionalCongressPartnerRepository.update({
-        id,
-        name,
-        ...(logoUrl && { logoUrl }),
-      })
-
-      return res.sendStatus(HttpStatus.NO_CONTENT)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingPartner) {
+      throw new NotFoundError('Parceiro não encontrado')
     }
+
+    let logoUrl: string | undefined
+
+    if (logo) {
+      logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        id,
+        folder: FileType.PARTNER,
+      })
+    }
+
+    await this.regionalCongressPartnerRepository.update({
+      id,
+      name,
+      ...(logoUrl && { logoUrl }),
+    })
+
+    return res.sendStatus(HttpStatus.NO_CONTENT)
   }
 }

@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { MeetingStatus } from '../../../config/database/generated/enums.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IMeetingRepository } from '../../repositories/meeting/imeeting-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -16,18 +15,12 @@ export class FindMeetingByStatusController {
   constructor(private readonly meetingRepository: IMeetingRepository) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { status } = findMeetingByStatusSchema.parse({
-        status: req.params.status,
-      })
+    const { status } = findMeetingByStatusSchema.parse({
+      status: req.params.status,
+    })
 
-      const meetings = await this.meetingRepository.findByStatus(status)
+    const meetings = await this.meetingRepository.findByStatus(status)
 
-      return res.status(HttpStatus.OK).json(meetings)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.status(HttpStatus.OK).json(meetings)
   }
 }

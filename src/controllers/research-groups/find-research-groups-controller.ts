@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IResearchGroupRepository } from '../../repositories/research-group/iresearch-group-repository.ts'
 
 const DEFAULT_PAGE = 1
@@ -27,39 +26,34 @@ export class FindResearchGroupsController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { limit, page, ...filter } =
-        findResearchGroupsControllerSchema.parse(req.query)
+    const { limit, page, ...filter } = findResearchGroupsControllerSchema.parse(
+      req.query,
+    )
 
-      const offset = page * limit - limit
+    const offset = page * limit - limit
 
-      const [researchGroups, totalResearchGroups] = await Promise.all([
-        this.researchGroupRepository.find({
-          pagination: {
-            offset,
-            limit,
-          },
-          filter,
-        }),
+    const [researchGroups, totalResearchGroups] = await Promise.all([
+      this.researchGroupRepository.find({
+        pagination: {
+          offset,
+          limit,
+        },
+        filter,
+      }),
 
-        this.researchGroupRepository.count({
-          filter,
-        }),
-      ])
+      this.researchGroupRepository.count({
+        filter,
+      }),
+    ])
 
-      const totalPages = Math.max(Math.ceil(totalResearchGroups / limit), 1)
+    const totalPages = Math.max(Math.ceil(totalResearchGroups / limit), 1)
 
-      return res.status(HttpStatus.OK).json({
-        page,
-        totalPages,
-        offset,
-        limit,
-        researchGroups,
-      })
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.status(HttpStatus.OK).json({
+      page,
+      totalPages,
+      offset,
+      limit,
+      researchGroups,
+    })
   }
 }

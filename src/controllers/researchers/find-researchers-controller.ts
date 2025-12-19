@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IResearcherRepository } from '../../repositories/researcher/iresearcher-repository.d.ts'
 
 const DEFAULT_PAGE = 1
@@ -30,43 +29,37 @@ export class FindResearchersController {
   constructor(private readonly researcherRepository: IResearcherRepository) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { page, limit, ...filter } = findResearchersSchema.parse(req.query)
+    const { page, limit, ...filter } = findResearchersSchema.parse(req.query)
 
-      const offset = limit * page - limit
+    const offset = limit * page - limit
 
-      const [researchers, totalResearchers] = await Promise.all([
-        this.researcherRepository.find({
-          pagination: {
-            offset,
-            limit,
-          },
-          filter: {
-            userName: filter.name,
-            ...filter,
-          },
-        }),
-        this.researcherRepository.count({
-          filter: {
-            userName: filter.name,
-            ...filter,
-          },
-        }),
-      ])
+    const [researchers, totalResearchers] = await Promise.all([
+      this.researcherRepository.find({
+        pagination: {
+          offset,
+          limit,
+        },
+        filter: {
+          userName: filter.name,
+          ...filter,
+        },
+      }),
+      this.researcherRepository.count({
+        filter: {
+          userName: filter.name,
+          ...filter,
+        },
+      }),
+    ])
 
-      const totalPages = Math.max(Math.ceil(totalResearchers / limit), 1)
+    const totalPages = Math.max(Math.ceil(totalResearchers / limit), 1)
 
-      res.status(HttpStatus.OK).json({
-        page,
-        totalPages,
-        offset,
-        limit,
-        researchers,
-      })
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new InternalServerError(error.message)
-      }
-    }
+    res.status(HttpStatus.OK).json({
+      page,
+      totalPages,
+      offset,
+      limit,
+      researchers,
+    })
   }
 }

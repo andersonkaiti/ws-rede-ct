@@ -51,56 +51,50 @@ export class UpdateWebinarController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        thumbnail,
-        title,
-        description,
-        scheduledAt,
-        webinarLink,
-        guestIds,
-      } = updateWebinarSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        thumbnail: req.file,
-      })
+    const {
+      id,
+      thumbnail,
+      title,
+      description,
+      scheduledAt,
+      webinarLink,
+      guestIds,
+    } = updateWebinarSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      thumbnail: req.file,
+    })
 
-      const existingWebinar = await this.webinarRepository.findById(id)
+    const existingWebinar = await this.webinarRepository.findById(id)
 
-      if (!existingWebinar) {
-        throw new NotFoundError('O webinar não existe.')
-      }
-
-      let thumbnailUrl = existingWebinar.thumbnailUrl
-
-      if (thumbnail) {
-        thumbnailUrl = await this.firebaseStorageService.uploadFile({
-          file: thumbnail,
-          id,
-          folder: File.WEBINAR,
-        })
-      }
-
-      if (!thumbnailUrl) {
-        throw new InternalServerError('Thumbnail URL é obrigatório')
-      }
-
-      await this.webinarRepository.update({
-        id,
-        title,
-        description,
-        scheduledAt,
-        webinarLink,
-        thumbnailUrl,
-        guestIds,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingWebinar) {
+      throw new NotFoundError('O webinar não existe.')
     }
+
+    let thumbnailUrl = existingWebinar.thumbnailUrl
+
+    if (thumbnail) {
+      thumbnailUrl = await this.firebaseStorageService.uploadFile({
+        file: thumbnail,
+        id,
+        folder: File.WEBINAR,
+      })
+    }
+
+    if (!thumbnailUrl) {
+      throw new InternalServerError('Thumbnail URL é obrigatório')
+    }
+
+    await this.webinarRepository.update({
+      id,
+      title,
+      description,
+      scheduledAt,
+      webinarLink,
+      thumbnailUrl,
+      guestIds,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

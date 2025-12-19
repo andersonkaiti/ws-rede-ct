@@ -54,62 +54,56 @@ export class UpdateCourseController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        image,
-        title,
-        coordinatorId,
-        email,
-        location,
-        scheduledAt,
-        registrationLink,
-        description,
-        instructorIds,
-      } = updateCourseSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        image: req.file,
-      })
+    const {
+      id,
+      image,
+      title,
+      coordinatorId,
+      email,
+      location,
+      scheduledAt,
+      registrationLink,
+      description,
+      instructorIds,
+    } = updateCourseSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      image: req.file,
+    })
 
-      const existingCourse = await this.courseRepository.findById(id)
+    const existingCourse = await this.courseRepository.findById(id)
 
-      if (!existingCourse) {
-        throw new NotFoundError('O curso não existe.')
-      }
-
-      let imageUrl = existingCourse.imageUrl
-
-      if (image) {
-        imageUrl = await this.firebaseStorageService.uploadFile({
-          file: image,
-          id,
-          folder: File.COURSE,
-        })
-      }
-
-      if (!imageUrl) {
-        throw new InternalServerError('URL da imagem é obrigatório')
-      }
-
-      await this.courseRepository.update({
-        id,
-        title,
-        coordinatorId,
-        email,
-        location,
-        scheduledAt,
-        registrationLink,
-        description,
-        imageUrl,
-        instructorIds,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingCourse) {
+      throw new NotFoundError('O curso não existe.')
     }
+
+    let imageUrl = existingCourse.imageUrl
+
+    if (image) {
+      imageUrl = await this.firebaseStorageService.uploadFile({
+        file: image,
+        id,
+        folder: File.COURSE,
+      })
+    }
+
+    if (!imageUrl) {
+      throw new InternalServerError('URL da imagem é obrigatório')
+    }
+
+    await this.courseRepository.update({
+      id,
+      title,
+      coordinatorId,
+      email,
+      location,
+      scheduledAt,
+      registrationLink,
+      description,
+      imageUrl,
+      instructorIds,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

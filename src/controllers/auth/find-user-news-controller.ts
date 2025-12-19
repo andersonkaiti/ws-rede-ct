@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.js'
 
 const DEFAULT_PAGE = 1
@@ -22,50 +21,44 @@ export class FindAuthenticatedUserNewsController {
   constructor(private readonly newsRepository: INewsRepository) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { page, limit, content, orderBy, title } =
-        findByAuthenticatedUserSchema.parse(req.query)
+    const { page, limit, content, orderBy, title } =
+      findByAuthenticatedUserSchema.parse(req.query)
 
-      const offset = limit * page - limit
+    const offset = limit * page - limit
 
-      const authenticatedUserId = req.user.id
+    const authenticatedUserId = req.user.id
 
-      const [news, totalUserNews] = await Promise.all([
-        this.newsRepository.findByAuthorId({
+    const [news, totalUserNews] = await Promise.all([
+      this.newsRepository.findByAuthorId({
+        authorId: authenticatedUserId,
+        pagination: {
+          offset,
+          limit,
+        },
+        filter: {
+          orderBy,
+          title,
+          content,
+        },
+      }),
+
+      this.newsRepository.count({
+        filter: {
           authorId: authenticatedUserId,
-          pagination: {
-            offset,
-            limit,
-          },
-          filter: {
-            orderBy,
-            title,
-            content,
-          },
-        }),
+          content,
+          title,
+        },
+      }),
+    ])
 
-        this.newsRepository.count({
-          filter: {
-            authorId: authenticatedUserId,
-            content,
-            title,
-          },
-        }),
-      ])
+    const totalPages = Math.ceil(totalUserNews / limit)
 
-      const totalPages = Math.ceil(totalUserNews / limit)
-
-      res.status(HttpStatus.OK).json({
-        page,
-        totalPages,
-        offset,
-        limit,
-        news,
-      })
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new InternalServerError(error.message)
-      }
-    }
+    res.status(HttpStatus.OK).json({
+      page,
+      totalPages,
+      offset,
+      limit,
+      news,
+    })
   }
 }

@@ -5,7 +5,6 @@ import { PendencyStatus } from '../../../config/database/generated/enums.ts'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IPendencyRepository } from '../../repositories/pendency/ipendency-repository.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -34,40 +33,34 @@ export class CreatePendencyController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, title, description, status, dueDate, document } =
-        createPendencySchema.parse({
-          ...req.body,
-          ...req.params,
-          document: req.file,
-        })
-
-      const user = await this.userRepository.findById(id)
-
-      if (!user) {
-        throw new BadRequestError('O usuário não existe.')
-      }
-
-      const documentUrl = await this.firebaseStorageService.uploadFile({
-        file: document,
-        id,
-        folder: FileType.PENDENCY,
+    const { id, title, description, status, dueDate, document } =
+      createPendencySchema.parse({
+        ...req.body,
+        ...req.params,
+        document: req.file,
       })
 
-      await this.pendencyRepository.create({
-        userId: id,
-        title,
-        description,
-        status,
-        dueDate,
-        documentUrl,
-      })
+    const user = await this.userRepository.findById(id)
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!user) {
+      throw new BadRequestError('O usuário não existe.')
     }
+
+    const documentUrl = await this.firebaseStorageService.uploadFile({
+      file: document,
+      id,
+      folder: FileType.PENDENCY,
+    })
+
+    await this.pendencyRepository.create({
+      userId: id,
+      title,
+      description,
+      status,
+      dueDate,
+      documentUrl,
+    })
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

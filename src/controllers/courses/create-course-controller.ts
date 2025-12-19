@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { ICourseRepository } from '../../repositories/course/icourse-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -49,49 +48,43 @@ export class CreateCourseController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        title,
-        coordinatorId,
-        email,
-        location,
-        scheduledAt,
-        registrationLink,
-        description,
-        instructorIds,
-        image,
-      } = createCourseSchema.parse({
-        ...req.body,
-        image: req.file,
-      })
+    const {
+      title,
+      coordinatorId,
+      email,
+      location,
+      scheduledAt,
+      registrationLink,
+      description,
+      instructorIds,
+      image,
+    } = createCourseSchema.parse({
+      ...req.body,
+      image: req.file,
+    })
 
-      const course = await this.courseRepository.create({
-        title,
-        coordinatorId,
-        email,
-        location,
-        scheduledAt,
-        registrationLink: registrationLink || undefined,
-        description,
-        instructorIds,
-      })
+    const course = await this.courseRepository.create({
+      title,
+      coordinatorId,
+      email,
+      location,
+      scheduledAt,
+      registrationLink: registrationLink || undefined,
+      description,
+      instructorIds,
+    })
 
-      const imageUrl = await this.firebaseStorageService.uploadFile({
-        file: image,
-        folder: File.COURSE,
-        id: course.id,
-      })
+    const imageUrl = await this.firebaseStorageService.uploadFile({
+      file: image,
+      folder: File.COURSE,
+      id: course.id,
+    })
 
-      await this.courseRepository.update({
-        id: course.id,
-        imageUrl,
-      })
+    await this.courseRepository.update({
+      id: course.id,
+      imageUrl,
+    })
 
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
-    }
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

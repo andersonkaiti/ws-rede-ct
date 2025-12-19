@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IWorkGroupTeamMemberRepository } from '../../repositories/work-group-team-member/iwork-group-team-member-repository.d.ts'
 
@@ -21,32 +20,25 @@ export class UpdateWorkGroupTeamMemberController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, role, description, userId } =
-        updateWorkGroupTeamMemberSchema.parse({
-          id: req.params.id,
-          ...req.body,
-        })
-
-      const existingMember =
-        await this.workGroupTeamMemberRepository.findById(id)
-
-      if (!existingMember) {
-        throw new NotFoundError('O membro do grupo de trabalho não existe.')
-      }
-
-      await this.workGroupTeamMemberRepository.update({
-        id,
-        role,
-        description,
-        userId,
+    const { id, role, description, userId } =
+      updateWorkGroupTeamMemberSchema.parse({
+        id: req.params.id,
+        ...req.body,
       })
 
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    const existingMember = await this.workGroupTeamMemberRepository.findById(id)
+
+    if (!existingMember) {
+      throw new NotFoundError('O membro do grupo de trabalho não existe.')
     }
+
+    await this.workGroupTeamMemberRepository.update({
+      id,
+      role,
+      description,
+      userId,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

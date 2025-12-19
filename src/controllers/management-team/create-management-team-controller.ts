@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { ConflictError } from '../../errors/conflict-error.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import type { IManagementTeamRepository } from '../../repositories/management-team/imanagement-team-repository.d.ts'
 
 extendZodWithOpenApi(z)
@@ -26,34 +25,28 @@ export class CreateManagementTeamController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { name, description, members } = createManagementTeamSchema.parse(
-        req.body,
+    const { name, description, members } = createManagementTeamSchema.parse(
+      req.body,
+    )
+
+    const existingTeam = await this.managementTeamRepository.findByName(name)
+
+    if (existingTeam) {
+      throw new ConflictError(
+        'Já existe um time de gestão cadastrado com este nome.',
       )
-
-      const existingTeam = await this.managementTeamRepository.findByName(name)
-
-      if (existingTeam) {
-        throw new ConflictError(
-          'Já existe um time de gestão cadastrado com este nome.',
-        )
-      }
-
-      await this.managementTeamRepository.create({
-        name,
-        description,
-        members: members.map((member) => ({
-          userId: member.userId,
-          role: member.role,
-          order: member.order ?? 0,
-        })),
-      })
-
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
     }
+
+    await this.managementTeamRepository.create({
+      name,
+      description,
+      members: members.map((member) => ({
+        userId: member.userId,
+        role: member.role,
+        order: member.order ?? 0,
+      })),
+    })
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

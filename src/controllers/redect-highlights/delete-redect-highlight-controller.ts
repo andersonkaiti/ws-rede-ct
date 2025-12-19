@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRedeCTHighlightRepository } from '../../repositories/redect-highlight/iredect-highlight-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -20,29 +19,22 @@ export class DeleteRedeCTHighlightController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id } = deleteRedeCTHighlightSchema.parse(req.params)
+    const { id } = deleteRedeCTHighlightSchema.parse(req.params)
 
-      const existingHighlight =
-        await this.redectHighlightRepository.findById(id)
+    const existingHighlight = await this.redectHighlightRepository.findById(id)
 
-      if (!existingHighlight) {
-        throw new NotFoundError('O destaque não existe.')
-      }
-
-      if (existingHighlight.imageUrl) {
-        await this.firebaseStorageService.deleteFile({
-          fileUrl: existingHighlight.imageUrl,
-        })
-      }
-
-      await this.redectHighlightRepository.deleteById(id)
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingHighlight) {
+      throw new NotFoundError('O destaque não existe.')
     }
+
+    if (existingHighlight.imageUrl) {
+      await this.firebaseStorageService.deleteFile({
+        fileUrl: existingHighlight.imageUrl,
+      })
+    }
+
+    await this.redectHighlightRepository.deleteById(id)
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

@@ -2,7 +2,7 @@ import type {
   CongressGalleryItem,
   CongressPartner,
   InternationalScientificCongress,
-} from '@prisma/client'
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountInternationalScientificCongressDTO,
   ICreateInternationalScientificCongressDTO,

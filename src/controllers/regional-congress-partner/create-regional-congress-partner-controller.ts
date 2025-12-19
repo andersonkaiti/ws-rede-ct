@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressRepository } from '../../repositories/regional-congress/iregional-congress-repository.d.ts'
 import type { IRegionalCongressPartnerRepository } from '../../repositories/regional-congress/partner/iregional-congress-partner-repository.js'
@@ -43,45 +42,38 @@ export class CreateRegionalCongressPartnerController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { name, logo, id } = createRegionalCongressPartnerSchema.parse({
-        ...req.body,
-        ...req.params,
-        logo: req.file,
-      })
+    const { name, logo, id } = createRegionalCongressPartnerSchema.parse({
+      ...req.body,
+      ...req.params,
+      logo: req.file,
+    })
 
-      const existingCongress =
-        await this.regionalCongressRepository.findById(id)
+    const existingCongress = await this.regionalCongressRepository.findById(id)
 
-      if (!existingCongress) {
-        throw new NotFoundError('O congresso não existe.')
-      }
-
-      const partner = await this.regionalCongressPartnerRepository.create({
-        name,
-        congressId: id,
-      })
-
-      let logoUrl: string | undefined
-
-      if (logo) {
-        logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          id: partner.id,
-          folder: FileType.PARTNER,
-        })
-
-        await this.regionalCongressPartnerRepository.update({
-          id: partner.id,
-          logoUrl,
-        })
-      }
-
-      return res.sendStatus(HttpStatus.CREATED)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingCongress) {
+      throw new NotFoundError('O congresso não existe.')
     }
+
+    const partner = await this.regionalCongressPartnerRepository.create({
+      name,
+      congressId: id,
+    })
+
+    let logoUrl: string | undefined
+
+    if (logo) {
+      logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        id: partner.id,
+        folder: FileType.PARTNER,
+      })
+
+      await this.regionalCongressPartnerRepository.update({
+        id: partner.id,
+        logoUrl,
+      })
+    }
+
+    return res.sendStatus(HttpStatus.CREATED)
   }
 }

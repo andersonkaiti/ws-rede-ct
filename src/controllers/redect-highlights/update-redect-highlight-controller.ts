@@ -45,59 +45,52 @@ export class UpdateRedeCTHighlightController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        type,
-        name,
-        image,
-        description,
-        honorableMention,
-        honoredAt,
-        meritUrl,
-      } = updateRedeCTHighlightSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        image: req.file,
-      })
+    const {
+      id,
+      type,
+      name,
+      image,
+      description,
+      honorableMention,
+      honoredAt,
+      meritUrl,
+    } = updateRedeCTHighlightSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      image: req.file,
+    })
 
-      const existingHighlight =
-        await this.redectHighlightRepository.findById(id)
+    const existingHighlight = await this.redectHighlightRepository.findById(id)
 
-      if (!existingHighlight) {
-        throw new NotFoundError('O destaque não existe.')
-      }
-
-      let imageUrl = existingHighlight.imageUrl
-
-      if (image) {
-        imageUrl = await this.firebaseStorageService.uploadFile({
-          file: image,
-          id,
-          folder: 'images/redect-highlights',
-        })
-      }
-
-      if (!imageUrl) {
-        throw new InternalServerError('URL da imagem é obrigatória')
-      }
-
-      await this.redectHighlightRepository.update({
-        id,
-        type,
-        name,
-        imageUrl,
-        description,
-        honorableMention,
-        honoredAt,
-        meritUrl,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingHighlight) {
+      throw new NotFoundError('O destaque não existe.')
     }
+
+    let imageUrl = existingHighlight.imageUrl
+
+    if (image) {
+      imageUrl = await this.firebaseStorageService.uploadFile({
+        file: image,
+        id,
+        folder: 'images/redect-highlights',
+      })
+    }
+
+    if (!imageUrl) {
+      throw new InternalServerError('URL da imagem é obrigatória')
+    }
+
+    await this.redectHighlightRepository.update({
+      id,
+      type,
+      name,
+      imageUrl,
+      description,
+      honorableMention,
+      honoredAt,
+      meritUrl,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

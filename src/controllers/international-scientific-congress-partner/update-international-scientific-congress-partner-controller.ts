@@ -3,7 +3,6 @@ import type { Request, Response } from 'express'
 import z from 'zod'
 import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IInternationalScientificCongressPartnerRepository } from '../../repositories/international-scientific-congress/partner/international-scientific-congress-gallery-repository-partner-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -41,42 +40,36 @@ export class UpdateInternationalScientificCongressPartnerController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const { id, name, logo } =
-        updateInternationalScientificCongressPartnerSchema.parse({
-          id: req.params.id,
-          ...req.body,
-          logo: req.file,
-        })
-
-      const existingPartner =
-        await this.internationalScientificCongressPartnerRepository.findById(id)
-
-      if (!existingPartner) {
-        throw new NotFoundError('O parceiro não existe.')
-      }
-
-      let logoUrl = existingPartner.logoUrl
-
-      if (logo) {
-        logoUrl = await this.firebaseStorageService.uploadFile({
-          file: logo,
-          id,
-          folder: FileType.PARTNER,
-        })
-      }
-
-      await this.internationalScientificCongressPartnerRepository.update({
-        id,
-        name,
-        logoUrl: logoUrl ?? undefined,
+    const { id, name, logo } =
+      updateInternationalScientificCongressPartnerSchema.parse({
+        id: req.params.id,
+        ...req.body,
+        logo: req.file,
       })
 
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    const existingPartner =
+      await this.internationalScientificCongressPartnerRepository.findById(id)
+
+    if (!existingPartner) {
+      throw new NotFoundError('O parceiro não existe.')
     }
+
+    let logoUrl = existingPartner.logoUrl
+
+    if (logo) {
+      logoUrl = await this.firebaseStorageService.uploadFile({
+        file: logo,
+        id,
+        folder: FileType.PARTNER,
+      })
+    }
+
+    await this.internationalScientificCongressPartnerRepository.update({
+      id,
+      name,
+      logoUrl: logoUrl ?? undefined,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

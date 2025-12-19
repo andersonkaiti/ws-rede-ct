@@ -7,7 +7,6 @@ import {
 } from '../../../config/database/generated/enums.ts'
 import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IEventRepository } from '../../repositories/event/ievent-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -55,58 +54,52 @@ export class UpdateEventController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    try {
-      const {
-        id,
-        title,
-        description,
-        startDate,
-        endDate,
-        location,
-        format,
-        eventLink,
-        status,
-        image,
-      } = updateEventSchema.parse({
-        id: req.params.id,
-        ...req.body,
-        image: req.file,
-      })
+    const {
+      id,
+      title,
+      description,
+      startDate,
+      endDate,
+      location,
+      format,
+      eventLink,
+      status,
+      image,
+    } = updateEventSchema.parse({
+      id: req.params.id,
+      ...req.body,
+      image: req.file,
+    })
 
-      const existingEvent = await this.eventRepository.findById(id)
+    const existingEvent = await this.eventRepository.findById(id)
 
-      if (!existingEvent) {
-        throw new NotFoundError('O evento não existe.')
-      }
-
-      let imageUrl: string | undefined
-
-      if (image) {
-        imageUrl = await this.firebaseStorageService.uploadFile({
-          file: image,
-          folder: File.EVENT,
-          id,
-        })
-      }
-
-      await this.eventRepository.update({
-        id,
-        title,
-        description,
-        startDate,
-        endDate,
-        location: location || undefined,
-        format,
-        eventLink: eventLink || undefined,
-        status,
-        imageUrl,
-      })
-
-      return res.sendStatus(HttpStatus.OK)
-    } catch (err) {
-      if (err instanceof Error) {
-        throw new InternalServerError(err.message)
-      }
+    if (!existingEvent) {
+      throw new NotFoundError('O evento não existe.')
     }
+
+    let imageUrl: string | undefined
+
+    if (image) {
+      imageUrl = await this.firebaseStorageService.uploadFile({
+        file: image,
+        folder: File.EVENT,
+        id,
+      })
+    }
+
+    await this.eventRepository.update({
+      id,
+      title,
+      description,
+      startDate,
+      endDate,
+      location: location || undefined,
+      format,
+      eventLink: eventLink || undefined,
+      status,
+      imageUrl,
+    })
+
+    return res.sendStatus(HttpStatus.OK)
   }
 }

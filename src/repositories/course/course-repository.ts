@@ -1,4 +1,8 @@
-import type { Course, Prisma, PrismaClient } from '@prisma/client'
+import type {
+  Course,
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICountCoursesDTO,
   ICreateCourseDTO,
