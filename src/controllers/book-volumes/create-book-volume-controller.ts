@@ -21,21 +21,10 @@ export const createBookVolumeSchema = z.object({
     .positive('Número do volume é obrigatório.'),
   year: z.coerce.number().int().positive('Ano é obrigatório.'),
   title: z.string().min(1, 'Título é obrigatório.'),
-  author: z.string().min(1, 'Autor é obrigatório.'),
+  authorId: z.uuid('ID do autor deve ser um UUID válido.'),
   accessUrl: z.url().optional(),
+  catalogSheetUrl: z.url().optional(),
   description: z.string().optional(),
-  authorImage: z
-    .any()
-    .refine(
-      (file) =>
-        !file ||
-        (typeof file === 'object' &&
-          typeof file.mimetype === 'string' &&
-          file.mimetype.startsWith('image/') &&
-          typeof file.size === 'number' &&
-          file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A imagem do autor deve ser uma imagem válida de no máximo 5MB.',
-    ),
   coverImage: z
     .any()
     .refine(
@@ -47,17 +36,6 @@ export const createBookVolumeSchema = z.object({
           typeof file.size === 'number' &&
           file.size <= MAX_IMAGE_SIZE_BYTES),
       'A imagem da capa deve ser uma imagem válida de no máximo 5MB.',
-    ),
-  catalogSheet: z
-    .any()
-    .refine(
-      (file) =>
-        !file ||
-        (typeof file === 'object' &&
-          typeof file.mimetype === 'string' &&
-          typeof file.size === 'number' &&
-          file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A ficha catalográfica deve ter no máximo 5MB.',
     ),
 })
 
@@ -72,41 +50,28 @@ export class CreateBookVolumeController {
       volumeNumber,
       year,
       title,
-      author,
+      authorId,
       accessUrl,
+      catalogSheetUrl,
       description,
-      authorImage,
       coverImage,
-      catalogSheet,
     } = createBookVolumeSchema.parse({
       ...req.body,
-      authorImage: (req.files as { [fieldname: string]: Express.Multer.File[] })
-        ?.authorImage?.[0],
       coverImage: (req.files as { [fieldname: string]: Express.Multer.File[] })
         ?.coverImage?.[0],
-      catalogSheet: (
-        req.files as { [fieldname: string]: Express.Multer.File[] }
-      )?.catalogSheet?.[0],
     })
 
     const bookVolume = await this.bookVolumeRepository.create({
       volumeNumber,
       year,
       title,
-      author,
+      authorId,
       accessUrl,
+      catalogSheetUrl,
       description,
     })
 
-    let authorImageUrl = bookVolume.authorImageUrl
     let coverImageUrl = bookVolume.coverImageUrl
-    let catalogSheetUrl = bookVolume.catalogSheetUrl
-
-    authorImageUrl = await this.firebaseStorageService.uploadFile({
-      file: authorImage,
-      folder: File.BOOK_VOLUME_AUTHOR_IMAGE,
-      id: bookVolume.id,
-    })
 
     coverImageUrl = await this.firebaseStorageService.uploadFile({
       file: coverImage,
@@ -114,17 +79,9 @@ export class CreateBookVolumeController {
       id: bookVolume.id,
     })
 
-    catalogSheetUrl = await this.firebaseStorageService.uploadFile({
-      file: catalogSheet,
-      folder: File.BOOK_VOLUME_CATALOG_SHEET,
-      id: bookVolume.id,
-    })
-
     await this.bookVolumeRepository.update({
       id: bookVolume.id,
-      authorImageUrl,
       coverImageUrl,
-      catalogSheetUrl,
     })
 
     return res.sendStatus(HttpStatus.CREATED)

@@ -4,9 +4,8 @@ export interface ICreateBookVolumeDTO {
   volumeNumber: number
   year: number
   title: string
-  author: string
+  authorId: string
   accessUrl?: string
-  authorImageUrl?: string
   coverImageUrl?: string
   catalogSheetUrl?: string
   description?: string

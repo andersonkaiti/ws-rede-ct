@@ -9,7 +9,10 @@ import type {
   IFindBookVolumesDTO,
   IUpdateBookVolumeDTO,
 } from '../../dto/book-volume.ts'
-import type { IBookVolumeRepository } from './ibook-volume-repository.ts'
+import type {
+  BookVolumeWithAuthor,
+  IBookVolumeRepository,
+} from './ibook-volume-repository.ts'
 
 export class BookVolumeRepository implements IBookVolumeRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -18,9 +21,8 @@ export class BookVolumeRepository implements IBookVolumeRepository {
     volumeNumber,
     year,
     title,
-    author,
+    authorId,
     accessUrl,
-    authorImageUrl,
     coverImageUrl,
     catalogSheetUrl,
     description,
@@ -30,9 +32,8 @@ export class BookVolumeRepository implements IBookVolumeRepository {
         volumeNumber,
         year,
         title,
-        author,
+        authorId,
         accessUrl,
-        authorImageUrl,
         coverImageUrl,
         catalogSheetUrl,
         description,
@@ -43,7 +44,7 @@ export class BookVolumeRepository implements IBookVolumeRepository {
   async find({
     pagination: { offset, limit },
     filter: { title, author, description, orderBy },
-  }: IFindBookVolumesDTO): Promise<BookVolume[]> {
+  }: IFindBookVolumesDTO): Promise<BookVolumeWithAuthor[]> {
     const where: Prisma.BookVolumeWhereInput = {}
 
     const or: Prisma.BookVolumeWhereInput[] = []
@@ -60,8 +61,10 @@ export class BookVolumeRepository implements IBookVolumeRepository {
     if (author) {
       or.push({
         author: {
-          contains: author,
-          mode: 'insensitive',
+          name: {
+            contains: author,
+            mode: 'insensitive',
+          },
         },
       })
     }
@@ -81,6 +84,12 @@ export class BookVolumeRepository implements IBookVolumeRepository {
 
     return await this.prisma.bookVolume.findMany({
       where,
+      omit: {
+        authorId: true,
+      },
+      include: {
+        author: true,
+      },
       orderBy: {
         updatedAt: orderBy,
       },
@@ -89,10 +98,16 @@ export class BookVolumeRepository implements IBookVolumeRepository {
     })
   }
 
-  async findById(id: string): Promise<BookVolume | null> {
+  async findById(id: string): Promise<BookVolumeWithAuthor | null> {
     return await this.prisma.bookVolume.findFirst({
       where: {
         id,
+      },
+      omit: {
+        authorId: true,
+      },
+      include: {
+        author: true,
       },
     })
   }
@@ -102,9 +117,8 @@ export class BookVolumeRepository implements IBookVolumeRepository {
     volumeNumber,
     year,
     title,
-    author,
+    authorId,
     accessUrl,
-    authorImageUrl,
     coverImageUrl,
     catalogSheetUrl,
     description,
@@ -117,9 +131,8 @@ export class BookVolumeRepository implements IBookVolumeRepository {
         volumeNumber,
         year,
         title,
-        author,
+        authorId,
         accessUrl,
-        authorImageUrl,
         coverImageUrl,
         catalogSheetUrl,
         description,
@@ -154,8 +167,10 @@ export class BookVolumeRepository implements IBookVolumeRepository {
     if (author) {
       or.push({
         author: {
-          contains: author,
-          mode: 'insensitive',
+          name: {
+            contains: author,
+            mode: 'insensitive',
+          },
         },
       })
     }
