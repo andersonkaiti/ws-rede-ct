@@ -3777,14 +3777,13 @@ export const BookVolumeScalarFieldEnum = {
   volumeNumber: 'volumeNumber',
   year: 'year',
   title: 'title',
-  author: 'author',
   accessUrl: 'accessUrl',
-  authorImageUrl: 'authorImageUrl',
   coverImageUrl: 'coverImageUrl',
   catalogSheetUrl: 'catalogSheetUrl',
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  authorId: 'authorId',
 } as const
 
 export type BookVolumeScalarFieldEnum =

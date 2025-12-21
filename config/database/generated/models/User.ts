@@ -247,6 +247,7 @@ export type UserWhereInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberListRelationFilter
   researchGroupsLeader?: Prisma.ResearchGroupListRelationFilter
   researchGroupsDeputyLeader?: Prisma.ResearchGroupListRelationFilter
+  bookVolumes?: Prisma.BookVolumeListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -275,6 +276,7 @@ export type UserOrderByWithRelationInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberOrderByRelationAggregateInput
   researchGroupsLeader?: Prisma.ResearchGroupOrderByRelationAggregateInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupOrderByRelationAggregateInput
+  bookVolumes?: Prisma.BookVolumeOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<
@@ -307,6 +309,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<
     referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberListRelationFilter
     researchGroupsLeader?: Prisma.ResearchGroupListRelationFilter
     researchGroupsDeputyLeader?: Prisma.ResearchGroupListRelationFilter
+    bookVolumes?: Prisma.BookVolumeListRelationFilter
   },
   'id' | 'emailAddress'
 >
@@ -375,6 +378,7 @@ export type UserCreateInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -403,6 +407,7 @@ export type UserUncheckedCreateInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUpdateInput = {
@@ -431,6 +436,7 @@ export type UserUpdateInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -459,6 +465,7 @@ export type UserUncheckedUpdateInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -949,6 +956,32 @@ export type UserUncheckedUpdateManyWithoutCoursesInstructedNestedInput = {
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
+export type UserCreateNestedOneWithoutBookVolumesInput = {
+  create?: Prisma.XOR<
+    Prisma.UserCreateWithoutBookVolumesInput,
+    Prisma.UserUncheckedCreateWithoutBookVolumesInput
+  >
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBookVolumesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBookVolumesNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.UserCreateWithoutBookVolumesInput,
+    Prisma.UserUncheckedCreateWithoutBookVolumesInput
+  >
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBookVolumesInput
+  upsert?: Prisma.UserUpsertWithoutBookVolumesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.UserUpdateToOneWithWhereWithoutBookVolumesInput,
+      Prisma.UserUpdateWithoutBookVolumesInput
+    >,
+    Prisma.UserUncheckedUpdateWithoutBookVolumesInput
+  >
+}
+
 export type UserCreateNestedOneWithoutWorkGroupTeamMembersInput = {
   create?: Prisma.XOR<
     Prisma.UserCreateWithoutWorkGroupTeamMembersInput,
@@ -1080,6 +1113,7 @@ export type UserCreateWithoutNewsInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutNewsInput = {
@@ -1107,6 +1141,7 @@ export type UserUncheckedCreateWithoutNewsInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutNewsInput = {
@@ -1162,6 +1197,7 @@ export type UserUpdateWithoutNewsInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNewsInput = {
@@ -1189,6 +1225,7 @@ export type UserUncheckedUpdateWithoutNewsInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutManagementTeamMemberInput = {
@@ -1216,6 +1253,7 @@ export type UserCreateWithoutManagementTeamMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutManagementTeamMemberInput = {
@@ -1243,6 +1281,7 @@ export type UserUncheckedCreateWithoutManagementTeamMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutManagementTeamMemberInput = {
@@ -1298,6 +1337,7 @@ export type UserUpdateWithoutManagementTeamMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutManagementTeamMemberInput = {
@@ -1325,6 +1365,7 @@ export type UserUncheckedUpdateWithoutManagementTeamMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutSDHCTeamMemberInput = {
@@ -1352,6 +1393,7 @@ export type UserCreateWithoutSDHCTeamMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutSDHCTeamMemberInput = {
@@ -1379,6 +1421,7 @@ export type UserUncheckedCreateWithoutSDHCTeamMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutSDHCTeamMemberInput = {
@@ -1434,6 +1477,7 @@ export type UserUpdateWithoutSDHCTeamMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSDHCTeamMemberInput = {
@@ -1461,6 +1505,7 @@ export type UserUncheckedUpdateWithoutSDHCTeamMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutLegitimatorCommitteeMemberInput = {
@@ -1488,6 +1533,7 @@ export type UserCreateWithoutLegitimatorCommitteeMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutLegitimatorCommitteeMemberInput = {
@@ -1515,6 +1561,7 @@ export type UserUncheckedCreateWithoutLegitimatorCommitteeMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutLegitimatorCommitteeMemberInput = {
@@ -1570,6 +1617,7 @@ export type UserUpdateWithoutLegitimatorCommitteeMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLegitimatorCommitteeMemberInput = {
@@ -1597,6 +1645,7 @@ export type UserUncheckedUpdateWithoutLegitimatorCommitteeMemberInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutCertificationInput = {
@@ -1624,6 +1673,7 @@ export type UserCreateWithoutCertificationInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutCertificationInput = {
@@ -1651,6 +1701,7 @@ export type UserUncheckedCreateWithoutCertificationInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutCertificationInput = {
@@ -1706,6 +1757,7 @@ export type UserUpdateWithoutCertificationInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCertificationInput = {
@@ -1733,6 +1785,7 @@ export type UserUncheckedUpdateWithoutCertificationInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutPendenciesInput = {
@@ -1760,6 +1813,7 @@ export type UserCreateWithoutPendenciesInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutPendenciesInput = {
@@ -1787,6 +1841,7 @@ export type UserUncheckedCreateWithoutPendenciesInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutPendenciesInput = {
@@ -1842,6 +1897,7 @@ export type UserUpdateWithoutPendenciesInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPendenciesInput = {
@@ -1869,6 +1925,7 @@ export type UserUncheckedUpdateWithoutPendenciesInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutResearcherInput = {
@@ -1896,6 +1953,7 @@ export type UserCreateWithoutResearcherInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutResearcherInput = {
@@ -1923,6 +1981,7 @@ export type UserUncheckedCreateWithoutResearcherInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutResearcherInput = {
@@ -1978,6 +2037,7 @@ export type UserUpdateWithoutResearcherInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResearcherInput = {
@@ -2005,6 +2065,7 @@ export type UserUncheckedUpdateWithoutResearcherInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutWebinarsInput = {
@@ -2032,6 +2093,7 @@ export type UserCreateWithoutWebinarsInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutWebinarsInput = {
@@ -2059,6 +2121,7 @@ export type UserUncheckedCreateWithoutWebinarsInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutWebinarsInput = {
@@ -2139,6 +2202,7 @@ export type UserCreateWithoutCoursesCoordinatedInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutCoursesCoordinatedInput = {
@@ -2166,6 +2230,7 @@ export type UserUncheckedCreateWithoutCoursesCoordinatedInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutCoursesCoordinatedInput = {
@@ -2201,6 +2266,7 @@ export type UserCreateWithoutCoursesInstructedInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutCoursesInstructedInput = {
@@ -2228,6 +2294,7 @@ export type UserUncheckedCreateWithoutCoursesInstructedInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutCoursesInstructedInput = {
@@ -2283,6 +2350,7 @@ export type UserUpdateWithoutCoursesCoordinatedInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCoursesCoordinatedInput = {
@@ -2310,6 +2378,7 @@ export type UserUncheckedUpdateWithoutCoursesCoordinatedInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutCoursesInstructedInput = {
@@ -2340,6 +2409,146 @@ export type UserUpdateManyWithWhereWithoutCoursesInstructedInput = {
   >
 }
 
+export type UserCreateWithoutBookVolumesInput = {
+  id?: string
+  name: string
+  passwordHash: string
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  emailAddress: string
+  orcid?: string | null
+  phone?: string | null
+  lattesUrl?: string | null
+  role?: $Enums.UserRole
+  news?: Prisma.NewsCreateNestedManyWithoutAuthorInput
+  ManagementTeamMember?: Prisma.ManagementTeamMemberCreateNestedManyWithoutUserInput
+  SDHCTeamMember?: Prisma.SDHCTeamMemberCreateNestedManyWithoutUserInput
+  LegitimatorCommitteeMember?: Prisma.LegitimatorCommitteeMemberCreateNestedManyWithoutUserInput
+  certification?: Prisma.CertificationCreateNestedManyWithoutUserInput
+  pendencies?: Prisma.PendencyCreateNestedManyWithoutUserInput
+  Researcher?: Prisma.ResearcherCreateNestedManyWithoutUserInput
+  webinars?: Prisma.WebinarCreateNestedManyWithoutGuestsInput
+  coursesCoordinated?: Prisma.CourseCreateNestedManyWithoutCoordinatorInput
+  coursesInstructed?: Prisma.CourseCreateNestedManyWithoutInstructorsInput
+  workGroupTeamMembers?: Prisma.WorkGroupTeamMemberCreateNestedManyWithoutUserInput
+  referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
+  researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
+  researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+}
+
+export type UserUncheckedCreateWithoutBookVolumesInput = {
+  id?: string
+  name: string
+  passwordHash: string
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  emailAddress: string
+  orcid?: string | null
+  phone?: string | null
+  lattesUrl?: string | null
+  role?: $Enums.UserRole
+  news?: Prisma.NewsUncheckedCreateNestedManyWithoutAuthorInput
+  ManagementTeamMember?: Prisma.ManagementTeamMemberUncheckedCreateNestedManyWithoutUserInput
+  SDHCTeamMember?: Prisma.SDHCTeamMemberUncheckedCreateNestedManyWithoutUserInput
+  LegitimatorCommitteeMember?: Prisma.LegitimatorCommitteeMemberUncheckedCreateNestedManyWithoutUserInput
+  certification?: Prisma.CertificationUncheckedCreateNestedManyWithoutUserInput
+  pendencies?: Prisma.PendencyUncheckedCreateNestedManyWithoutUserInput
+  Researcher?: Prisma.ResearcherUncheckedCreateNestedManyWithoutUserInput
+  webinars?: Prisma.WebinarUncheckedCreateNestedManyWithoutGuestsInput
+  coursesCoordinated?: Prisma.CourseUncheckedCreateNestedManyWithoutCoordinatorInput
+  coursesInstructed?: Prisma.CourseUncheckedCreateNestedManyWithoutInstructorsInput
+  workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUncheckedCreateNestedManyWithoutUserInput
+  referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
+  researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
+  researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+}
+
+export type UserCreateOrConnectWithoutBookVolumesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<
+    Prisma.UserCreateWithoutBookVolumesInput,
+    Prisma.UserUncheckedCreateWithoutBookVolumesInput
+  >
+}
+
+export type UserUpsertWithoutBookVolumesInput = {
+  update: Prisma.XOR<
+    Prisma.UserUpdateWithoutBookVolumesInput,
+    Prisma.UserUncheckedUpdateWithoutBookVolumesInput
+  >
+  create: Prisma.XOR<
+    Prisma.UserCreateWithoutBookVolumesInput,
+    Prisma.UserUncheckedCreateWithoutBookVolumesInput
+  >
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBookVolumesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<
+    Prisma.UserUpdateWithoutBookVolumesInput,
+    Prisma.UserUncheckedUpdateWithoutBookVolumesInput
+  >
+}
+
+export type UserUpdateWithoutBookVolumesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  emailAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  orcid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lattesUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  news?: Prisma.NewsUpdateManyWithoutAuthorNestedInput
+  ManagementTeamMember?: Prisma.ManagementTeamMemberUpdateManyWithoutUserNestedInput
+  SDHCTeamMember?: Prisma.SDHCTeamMemberUpdateManyWithoutUserNestedInput
+  LegitimatorCommitteeMember?: Prisma.LegitimatorCommitteeMemberUpdateManyWithoutUserNestedInput
+  certification?: Prisma.CertificationUpdateManyWithoutUserNestedInput
+  pendencies?: Prisma.PendencyUpdateManyWithoutUserNestedInput
+  Researcher?: Prisma.ResearcherUpdateManyWithoutUserNestedInput
+  webinars?: Prisma.WebinarUpdateManyWithoutGuestsNestedInput
+  coursesCoordinated?: Prisma.CourseUpdateManyWithoutCoordinatorNestedInput
+  coursesInstructed?: Prisma.CourseUpdateManyWithoutInstructorsNestedInput
+  workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUpdateManyWithoutUserNestedInput
+  referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
+  researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
+  researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBookVolumesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  emailAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  orcid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lattesUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  news?: Prisma.NewsUncheckedUpdateManyWithoutAuthorNestedInput
+  ManagementTeamMember?: Prisma.ManagementTeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  SDHCTeamMember?: Prisma.SDHCTeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  LegitimatorCommitteeMember?: Prisma.LegitimatorCommitteeMemberUncheckedUpdateManyWithoutUserNestedInput
+  certification?: Prisma.CertificationUncheckedUpdateManyWithoutUserNestedInput
+  pendencies?: Prisma.PendencyUncheckedUpdateManyWithoutUserNestedInput
+  Researcher?: Prisma.ResearcherUncheckedUpdateManyWithoutUserNestedInput
+  webinars?: Prisma.WebinarUncheckedUpdateManyWithoutGuestsNestedInput
+  coursesCoordinated?: Prisma.CourseUncheckedUpdateManyWithoutCoordinatorNestedInput
+  coursesInstructed?: Prisma.CourseUncheckedUpdateManyWithoutInstructorsNestedInput
+  workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
+  researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+}
+
 export type UserCreateWithoutWorkGroupTeamMembersInput = {
   id?: string
   name: string
@@ -2365,6 +2574,7 @@ export type UserCreateWithoutWorkGroupTeamMembersInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutWorkGroupTeamMembersInput = {
@@ -2392,6 +2602,7 @@ export type UserUncheckedCreateWithoutWorkGroupTeamMembersInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutWorkGroupTeamMembersInput = {
@@ -2447,6 +2658,7 @@ export type UserUpdateWithoutWorkGroupTeamMembersInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkGroupTeamMembersInput = {
@@ -2474,6 +2686,7 @@ export type UserUncheckedUpdateWithoutWorkGroupTeamMembersInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutReferenceCenterTeamMembersInput = {
@@ -2501,6 +2714,7 @@ export type UserCreateWithoutReferenceCenterTeamMembersInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutReferenceCenterTeamMembersInput = {
@@ -2528,6 +2742,7 @@ export type UserUncheckedCreateWithoutReferenceCenterTeamMembersInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutReferenceCenterTeamMembersInput = {
@@ -2583,6 +2798,7 @@ export type UserUpdateWithoutReferenceCenterTeamMembersInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferenceCenterTeamMembersInput = {
@@ -2610,6 +2826,7 @@ export type UserUncheckedUpdateWithoutReferenceCenterTeamMembersInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutResearchGroupsLeaderInput = {
@@ -2637,6 +2854,7 @@ export type UserCreateWithoutResearchGroupsLeaderInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberCreateNestedManyWithoutUserInput
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutResearchGroupsLeaderInput = {
@@ -2664,6 +2882,7 @@ export type UserUncheckedCreateWithoutResearchGroupsLeaderInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUncheckedCreateNestedManyWithoutUserInput
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutDeputyLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutResearchGroupsLeaderInput = {
@@ -2699,6 +2918,7 @@ export type UserCreateWithoutResearchGroupsDeputyLeaderInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberCreateNestedManyWithoutUserInput
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupCreateNestedManyWithoutLeaderInput
+  bookVolumes?: Prisma.BookVolumeCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutResearchGroupsDeputyLeaderInput = {
@@ -2726,6 +2946,7 @@ export type UserUncheckedCreateWithoutResearchGroupsDeputyLeaderInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUncheckedCreateNestedManyWithoutUserInput
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedCreateNestedManyWithoutUserInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedCreateNestedManyWithoutLeaderInput
+  bookVolumes?: Prisma.BookVolumeUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutResearchGroupsDeputyLeaderInput = {
@@ -2781,6 +3002,7 @@ export type UserUpdateWithoutResearchGroupsLeaderInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUpdateManyWithoutUserNestedInput
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResearchGroupsLeaderInput = {
@@ -2808,6 +3030,7 @@ export type UserUncheckedUpdateWithoutResearchGroupsLeaderInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUpsertWithoutResearchGroupsDeputyLeaderInput = {
@@ -2855,6 +3078,7 @@ export type UserUpdateWithoutResearchGroupsDeputyLeaderInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUpdateManyWithoutUserNestedInput
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResearchGroupsDeputyLeaderInput = {
@@ -2882,6 +3106,7 @@ export type UserUncheckedUpdateWithoutResearchGroupsDeputyLeaderInput = {
   workGroupTeamMembers?: Prisma.WorkGroupTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUpdateWithoutWebinarsInput = {
@@ -2909,6 +3134,7 @@ export type UserUpdateWithoutWebinarsInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWebinarsInput = {
@@ -2936,6 +3162,7 @@ export type UserUncheckedUpdateWithoutWebinarsInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutWebinarsInput = {
@@ -2977,6 +3204,7 @@ export type UserUpdateWithoutCoursesInstructedInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCoursesInstructedInput = {
@@ -3004,6 +3232,7 @@ export type UserUncheckedUpdateWithoutCoursesInstructedInput = {
   referenceCenterTeamMembers?: Prisma.ReferenceCenterTeamMemberUncheckedUpdateManyWithoutUserNestedInput
   researchGroupsLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutLeaderNestedInput
   researchGroupsDeputyLeader?: Prisma.ResearchGroupUncheckedUpdateManyWithoutDeputyLeaderNestedInput
+  bookVolumes?: Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutCoursesInstructedInput = {
@@ -3039,6 +3268,7 @@ export type UserCountOutputType = {
   referenceCenterTeamMembers: number
   researchGroupsLeader: number
   researchGroupsDeputyLeader: number
+  bookVolumes: number
 }
 
 export type UserCountOutputTypeSelect<
@@ -3071,6 +3301,7 @@ export type UserCountOutputTypeSelect<
   researchGroupsDeputyLeader?:
     | boolean
     | UserCountOutputTypeCountResearchGroupsDeputyLeaderArgs
+  bookVolumes?: boolean | UserCountOutputTypeCountBookVolumesArgs
 }
 
 /**
@@ -3226,6 +3457,16 @@ export type UserCountOutputTypeCountResearchGroupsDeputyLeaderArgs<
   where?: Prisma.ResearchGroupWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBookVolumesArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  where?: Prisma.BookVolumeWhereInput
+}
+
 export type UserSelect<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
@@ -3268,6 +3509,7 @@ export type UserSelect<
     researchGroupsDeputyLeader?:
       | boolean
       | Prisma.User$researchGroupsDeputyLeaderArgs<ExtArgs>
+    bookVolumes?: boolean | Prisma.User$bookVolumesArgs<ExtArgs>
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['user']
@@ -3368,6 +3610,7 @@ export type UserInclude<
   researchGroupsDeputyLeader?:
     | boolean
     | Prisma.User$researchGroupsDeputyLeaderArgs<ExtArgs>
+  bookVolumes?: boolean | Prisma.User$bookVolumesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<
@@ -3399,6 +3642,7 @@ export type $UserPayload<
     referenceCenterTeamMembers: Prisma.$ReferenceCenterTeamMemberPayload<ExtArgs>[]
     researchGroupsLeader: Prisma.$ResearchGroupPayload<ExtArgs>[]
     researchGroupsDeputyLeader: Prisma.$ResearchGroupPayload<ExtArgs>[]
+    bookVolumes: Prisma.$BookVolumePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -4134,6 +4378,17 @@ export interface Prisma__UserClient<
   ): Prisma.PrismaPromise<
     | runtime.Types.Result.GetResult<
         Prisma.$ResearchGroupPayload<ExtArgs>,
+        T,
+        'findMany',
+        GlobalOmitOptions
+      >
+    | Null
+  >
+  bookVolumes<T extends Prisma.User$bookVolumesArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.User$bookVolumesArgs<ExtArgs>>,
+  ): Prisma.PrismaPromise<
+    | runtime.Types.Result.GetResult<
+        Prisma.$BookVolumePayload<ExtArgs>,
         T,
         'findMany',
         GlobalOmitOptions
@@ -5055,6 +5310,37 @@ export type User$researchGroupsDeputyLeaderArgs<
   distinct?:
     | Prisma.ResearchGroupScalarFieldEnum
     | Prisma.ResearchGroupScalarFieldEnum[]
+}
+
+/**
+ * User.bookVolumes
+ */
+export type User$bookVolumesArgs<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  /**
+   * Select specific fields to fetch from the BookVolume
+   */
+  select?: Prisma.BookVolumeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BookVolume
+   */
+  omit?: Prisma.BookVolumeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
+  where?: Prisma.BookVolumeWhereInput
+  orderBy?:
+    | Prisma.BookVolumeOrderByWithRelationInput
+    | Prisma.BookVolumeOrderByWithRelationInput[]
+  cursor?: Prisma.BookVolumeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?:
+    | Prisma.BookVolumeScalarFieldEnum
+    | Prisma.BookVolumeScalarFieldEnum[]
 }
 
 /**

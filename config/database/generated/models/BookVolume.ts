@@ -41,14 +41,13 @@ export type BookVolumeMinAggregateOutputType = {
   volumeNumber: number | null
   year: number | null
   title: string | null
-  author: string | null
   accessUrl: string | null
-  authorImageUrl: string | null
   coverImageUrl: string | null
   catalogSheetUrl: string | null
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  authorId: string | null
 }
 
 export type BookVolumeMaxAggregateOutputType = {
@@ -56,14 +55,13 @@ export type BookVolumeMaxAggregateOutputType = {
   volumeNumber: number | null
   year: number | null
   title: string | null
-  author: string | null
   accessUrl: string | null
-  authorImageUrl: string | null
   coverImageUrl: string | null
   catalogSheetUrl: string | null
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  authorId: string | null
 }
 
 export type BookVolumeCountAggregateOutputType = {
@@ -71,14 +69,13 @@ export type BookVolumeCountAggregateOutputType = {
   volumeNumber: number
   year: number
   title: number
-  author: number
   accessUrl: number
-  authorImageUrl: number
   coverImageUrl: number
   catalogSheetUrl: number
   description: number
   createdAt: number
   updatedAt: number
+  authorId: number
   _all: number
 }
 
@@ -97,14 +94,13 @@ export type BookVolumeMinAggregateInputType = {
   volumeNumber?: true
   year?: true
   title?: true
-  author?: true
   accessUrl?: true
-  authorImageUrl?: true
   coverImageUrl?: true
   catalogSheetUrl?: true
   description?: true
   createdAt?: true
   updatedAt?: true
+  authorId?: true
 }
 
 export type BookVolumeMaxAggregateInputType = {
@@ -112,14 +108,13 @@ export type BookVolumeMaxAggregateInputType = {
   volumeNumber?: true
   year?: true
   title?: true
-  author?: true
   accessUrl?: true
-  authorImageUrl?: true
   coverImageUrl?: true
   catalogSheetUrl?: true
   description?: true
   createdAt?: true
   updatedAt?: true
+  authorId?: true
 }
 
 export type BookVolumeCountAggregateInputType = {
@@ -127,14 +122,13 @@ export type BookVolumeCountAggregateInputType = {
   volumeNumber?: true
   year?: true
   title?: true
-  author?: true
   accessUrl?: true
-  authorImageUrl?: true
   coverImageUrl?: true
   catalogSheetUrl?: true
   description?: true
   createdAt?: true
   updatedAt?: true
+  authorId?: true
   _all?: true
 }
 
@@ -236,14 +230,13 @@ export type BookVolumeGroupByOutputType = {
   volumeNumber: number
   year: number
   title: string
-  author: string
   accessUrl: string | null
-  authorImageUrl: string | null
   coverImageUrl: string | null
   catalogSheetUrl: string | null
   description: string | null
   createdAt: Date
   updatedAt: Date
+  authorId: string
   _count: BookVolumeCountAggregateOutputType | null
   _avg: BookVolumeAvgAggregateOutputType | null
   _sum: BookVolumeSumAggregateOutputType | null
@@ -272,14 +265,14 @@ export type BookVolumeWhereInput = {
   volumeNumber?: Prisma.IntFilter<'BookVolume'> | number
   year?: Prisma.IntFilter<'BookVolume'> | number
   title?: Prisma.StringFilter<'BookVolume'> | string
-  author?: Prisma.StringFilter<'BookVolume'> | string
   accessUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
-  authorImageUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
   coverImageUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
   catalogSheetUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
   description?: Prisma.StringNullableFilter<'BookVolume'> | string | null
   createdAt?: Prisma.DateTimeFilter<'BookVolume'> | Date | string
   updatedAt?: Prisma.DateTimeFilter<'BookVolume'> | Date | string
+  authorId?: Prisma.StringFilter<'BookVolume'> | string
+  author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type BookVolumeOrderByWithRelationInput = {
@@ -287,14 +280,14 @@ export type BookVolumeOrderByWithRelationInput = {
   volumeNumber?: Prisma.SortOrder
   year?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  author?: Prisma.SortOrder
   accessUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  authorImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   catalogSheetUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  authorId?: Prisma.SortOrder
+  author?: Prisma.UserOrderByWithRelationInput
 }
 
 export type BookVolumeWhereUniqueInput = Prisma.AtLeast<
@@ -306,14 +299,14 @@ export type BookVolumeWhereUniqueInput = Prisma.AtLeast<
     volumeNumber?: Prisma.IntFilter<'BookVolume'> | number
     year?: Prisma.IntFilter<'BookVolume'> | number
     title?: Prisma.StringFilter<'BookVolume'> | string
-    author?: Prisma.StringFilter<'BookVolume'> | string
     accessUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
-    authorImageUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
     coverImageUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
     catalogSheetUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
     description?: Prisma.StringNullableFilter<'BookVolume'> | string | null
     createdAt?: Prisma.DateTimeFilter<'BookVolume'> | Date | string
     updatedAt?: Prisma.DateTimeFilter<'BookVolume'> | Date | string
+    authorId?: Prisma.StringFilter<'BookVolume'> | string
+    author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   },
   'id'
 >
@@ -323,14 +316,13 @@ export type BookVolumeOrderByWithAggregationInput = {
   volumeNumber?: Prisma.SortOrder
   year?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  author?: Prisma.SortOrder
   accessUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  authorImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   catalogSheetUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  authorId?: Prisma.SortOrder
   _count?: Prisma.BookVolumeCountOrderByAggregateInput
   _avg?: Prisma.BookVolumeAvgOrderByAggregateInput
   _max?: Prisma.BookVolumeMaxOrderByAggregateInput
@@ -350,12 +342,7 @@ export type BookVolumeScalarWhereWithAggregatesInput = {
   volumeNumber?: Prisma.IntWithAggregatesFilter<'BookVolume'> | number
   year?: Prisma.IntWithAggregatesFilter<'BookVolume'> | number
   title?: Prisma.StringWithAggregatesFilter<'BookVolume'> | string
-  author?: Prisma.StringWithAggregatesFilter<'BookVolume'> | string
   accessUrl?:
-    | Prisma.StringNullableWithAggregatesFilter<'BookVolume'>
-    | string
-    | null
-  authorImageUrl?:
     | Prisma.StringNullableWithAggregatesFilter<'BookVolume'>
     | string
     | null
@@ -373,6 +360,7 @@ export type BookVolumeScalarWhereWithAggregatesInput = {
     | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<'BookVolume'> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<'BookVolume'> | Date | string
+  authorId?: Prisma.StringWithAggregatesFilter<'BookVolume'> | string
 }
 
 export type BookVolumeCreateInput = {
@@ -380,14 +368,13 @@ export type BookVolumeCreateInput = {
   volumeNumber: number
   year: number
   title: string
-  author: string
   accessUrl?: string | null
-  authorImageUrl?: string | null
   coverImageUrl?: string | null
   catalogSheetUrl?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  author: Prisma.UserCreateNestedOneWithoutBookVolumesInput
 }
 
 export type BookVolumeUncheckedCreateInput = {
@@ -395,14 +382,13 @@ export type BookVolumeUncheckedCreateInput = {
   volumeNumber: number
   year: number
   title: string
-  author: string
   accessUrl?: string | null
-  authorImageUrl?: string | null
   coverImageUrl?: string | null
   catalogSheetUrl?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  authorId: string
 }
 
 export type BookVolumeUpdateInput = {
@@ -410,12 +396,7 @@ export type BookVolumeUpdateInput = {
   volumeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  author?: Prisma.StringFieldUpdateOperationsInput | string
   accessUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  authorImageUrl?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null
   coverImageUrl?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
@@ -427,6 +408,7 @@ export type BookVolumeUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  author?: Prisma.UserUpdateOneRequiredWithoutBookVolumesNestedInput
 }
 
 export type BookVolumeUncheckedUpdateInput = {
@@ -434,12 +416,7 @@ export type BookVolumeUncheckedUpdateInput = {
   volumeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  author?: Prisma.StringFieldUpdateOperationsInput | string
   accessUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  authorImageUrl?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null
   coverImageUrl?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
@@ -451,6 +428,7 @@ export type BookVolumeUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type BookVolumeCreateManyInput = {
@@ -458,14 +436,13 @@ export type BookVolumeCreateManyInput = {
   volumeNumber: number
   year: number
   title: string
-  author: string
   accessUrl?: string | null
-  authorImageUrl?: string | null
   coverImageUrl?: string | null
   catalogSheetUrl?: string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  authorId: string
 }
 
 export type BookVolumeUpdateManyMutationInput = {
@@ -473,12 +450,7 @@ export type BookVolumeUpdateManyMutationInput = {
   volumeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  author?: Prisma.StringFieldUpdateOperationsInput | string
   accessUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  authorImageUrl?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
-    | null
   coverImageUrl?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
@@ -497,12 +469,294 @@ export type BookVolumeUncheckedUpdateManyInput = {
   volumeNumber?: Prisma.IntFieldUpdateOperationsInput | number
   year?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  author?: Prisma.StringFieldUpdateOperationsInput | string
   accessUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  authorImageUrl?:
+  coverImageUrl?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
     | null
+  catalogSheetUrl?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authorId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type BookVolumeListRelationFilter = {
+  every?: Prisma.BookVolumeWhereInput
+  some?: Prisma.BookVolumeWhereInput
+  none?: Prisma.BookVolumeWhereInput
+}
+
+export type BookVolumeOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type BookVolumeCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  volumeNumber?: Prisma.SortOrder
+  year?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  accessUrl?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  catalogSheetUrl?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  authorId?: Prisma.SortOrder
+}
+
+export type BookVolumeAvgOrderByAggregateInput = {
+  volumeNumber?: Prisma.SortOrder
+  year?: Prisma.SortOrder
+}
+
+export type BookVolumeMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  volumeNumber?: Prisma.SortOrder
+  year?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  accessUrl?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  catalogSheetUrl?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  authorId?: Prisma.SortOrder
+}
+
+export type BookVolumeMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  volumeNumber?: Prisma.SortOrder
+  year?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+  accessUrl?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  catalogSheetUrl?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  authorId?: Prisma.SortOrder
+}
+
+export type BookVolumeSumOrderByAggregateInput = {
+  volumeNumber?: Prisma.SortOrder
+  year?: Prisma.SortOrder
+}
+
+export type BookVolumeCreateNestedManyWithoutAuthorInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.BookVolumeCreateWithoutAuthorInput,
+        Prisma.BookVolumeUncheckedCreateWithoutAuthorInput
+      >
+    | Prisma.BookVolumeCreateWithoutAuthorInput[]
+    | Prisma.BookVolumeUncheckedCreateWithoutAuthorInput[]
+  connectOrCreate?:
+    | Prisma.BookVolumeCreateOrConnectWithoutAuthorInput
+    | Prisma.BookVolumeCreateOrConnectWithoutAuthorInput[]
+  createMany?: Prisma.BookVolumeCreateManyAuthorInputEnvelope
+  connect?:
+    | Prisma.BookVolumeWhereUniqueInput
+    | Prisma.BookVolumeWhereUniqueInput[]
+}
+
+export type BookVolumeUncheckedCreateNestedManyWithoutAuthorInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.BookVolumeCreateWithoutAuthorInput,
+        Prisma.BookVolumeUncheckedCreateWithoutAuthorInput
+      >
+    | Prisma.BookVolumeCreateWithoutAuthorInput[]
+    | Prisma.BookVolumeUncheckedCreateWithoutAuthorInput[]
+  connectOrCreate?:
+    | Prisma.BookVolumeCreateOrConnectWithoutAuthorInput
+    | Prisma.BookVolumeCreateOrConnectWithoutAuthorInput[]
+  createMany?: Prisma.BookVolumeCreateManyAuthorInputEnvelope
+  connect?:
+    | Prisma.BookVolumeWhereUniqueInput
+    | Prisma.BookVolumeWhereUniqueInput[]
+}
+
+export type BookVolumeUpdateManyWithoutAuthorNestedInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.BookVolumeCreateWithoutAuthorInput,
+        Prisma.BookVolumeUncheckedCreateWithoutAuthorInput
+      >
+    | Prisma.BookVolumeCreateWithoutAuthorInput[]
+    | Prisma.BookVolumeUncheckedCreateWithoutAuthorInput[]
+  connectOrCreate?:
+    | Prisma.BookVolumeCreateOrConnectWithoutAuthorInput
+    | Prisma.BookVolumeCreateOrConnectWithoutAuthorInput[]
+  upsert?:
+    | Prisma.BookVolumeUpsertWithWhereUniqueWithoutAuthorInput
+    | Prisma.BookVolumeUpsertWithWhereUniqueWithoutAuthorInput[]
+  createMany?: Prisma.BookVolumeCreateManyAuthorInputEnvelope
+  set?: Prisma.BookVolumeWhereUniqueInput | Prisma.BookVolumeWhereUniqueInput[]
+  disconnect?:
+    | Prisma.BookVolumeWhereUniqueInput
+    | Prisma.BookVolumeWhereUniqueInput[]
+  delete?:
+    | Prisma.BookVolumeWhereUniqueInput
+    | Prisma.BookVolumeWhereUniqueInput[]
+  connect?:
+    | Prisma.BookVolumeWhereUniqueInput
+    | Prisma.BookVolumeWhereUniqueInput[]
+  update?:
+    | Prisma.BookVolumeUpdateWithWhereUniqueWithoutAuthorInput
+    | Prisma.BookVolumeUpdateWithWhereUniqueWithoutAuthorInput[]
+  updateMany?:
+    | Prisma.BookVolumeUpdateManyWithWhereWithoutAuthorInput
+    | Prisma.BookVolumeUpdateManyWithWhereWithoutAuthorInput[]
+  deleteMany?:
+    | Prisma.BookVolumeScalarWhereInput
+    | Prisma.BookVolumeScalarWhereInput[]
+}
+
+export type BookVolumeUncheckedUpdateManyWithoutAuthorNestedInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.BookVolumeCreateWithoutAuthorInput,
+        Prisma.BookVolumeUncheckedCreateWithoutAuthorInput
+      >
+    | Prisma.BookVolumeCreateWithoutAuthorInput[]
+    | Prisma.BookVolumeUncheckedCreateWithoutAuthorInput[]
+  connectOrCreate?:
+    | Prisma.BookVolumeCreateOrConnectWithoutAuthorInput
+    | Prisma.BookVolumeCreateOrConnectWithoutAuthorInput[]
+  upsert?:
+    | Prisma.BookVolumeUpsertWithWhereUniqueWithoutAuthorInput
+    | Prisma.BookVolumeUpsertWithWhereUniqueWithoutAuthorInput[]
+  createMany?: Prisma.BookVolumeCreateManyAuthorInputEnvelope
+  set?: Prisma.BookVolumeWhereUniqueInput | Prisma.BookVolumeWhereUniqueInput[]
+  disconnect?:
+    | Prisma.BookVolumeWhereUniqueInput
+    | Prisma.BookVolumeWhereUniqueInput[]
+  delete?:
+    | Prisma.BookVolumeWhereUniqueInput
+    | Prisma.BookVolumeWhereUniqueInput[]
+  connect?:
+    | Prisma.BookVolumeWhereUniqueInput
+    | Prisma.BookVolumeWhereUniqueInput[]
+  update?:
+    | Prisma.BookVolumeUpdateWithWhereUniqueWithoutAuthorInput
+    | Prisma.BookVolumeUpdateWithWhereUniqueWithoutAuthorInput[]
+  updateMany?:
+    | Prisma.BookVolumeUpdateManyWithWhereWithoutAuthorInput
+    | Prisma.BookVolumeUpdateManyWithWhereWithoutAuthorInput[]
+  deleteMany?:
+    | Prisma.BookVolumeScalarWhereInput
+    | Prisma.BookVolumeScalarWhereInput[]
+}
+
+export type BookVolumeCreateWithoutAuthorInput = {
+  id?: string
+  volumeNumber: number
+  year: number
+  title: string
+  accessUrl?: string | null
+  coverImageUrl?: string | null
+  catalogSheetUrl?: string | null
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BookVolumeUncheckedCreateWithoutAuthorInput = {
+  id?: string
+  volumeNumber: number
+  year: number
+  title: string
+  accessUrl?: string | null
+  coverImageUrl?: string | null
+  catalogSheetUrl?: string | null
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BookVolumeCreateOrConnectWithoutAuthorInput = {
+  where: Prisma.BookVolumeWhereUniqueInput
+  create: Prisma.XOR<
+    Prisma.BookVolumeCreateWithoutAuthorInput,
+    Prisma.BookVolumeUncheckedCreateWithoutAuthorInput
+  >
+}
+
+export type BookVolumeCreateManyAuthorInputEnvelope = {
+  data:
+    | Prisma.BookVolumeCreateManyAuthorInput
+    | Prisma.BookVolumeCreateManyAuthorInput[]
+  skipDuplicates?: boolean
+}
+
+export type BookVolumeUpsertWithWhereUniqueWithoutAuthorInput = {
+  where: Prisma.BookVolumeWhereUniqueInput
+  update: Prisma.XOR<
+    Prisma.BookVolumeUpdateWithoutAuthorInput,
+    Prisma.BookVolumeUncheckedUpdateWithoutAuthorInput
+  >
+  create: Prisma.XOR<
+    Prisma.BookVolumeCreateWithoutAuthorInput,
+    Prisma.BookVolumeUncheckedCreateWithoutAuthorInput
+  >
+}
+
+export type BookVolumeUpdateWithWhereUniqueWithoutAuthorInput = {
+  where: Prisma.BookVolumeWhereUniqueInput
+  data: Prisma.XOR<
+    Prisma.BookVolumeUpdateWithoutAuthorInput,
+    Prisma.BookVolumeUncheckedUpdateWithoutAuthorInput
+  >
+}
+
+export type BookVolumeUpdateManyWithWhereWithoutAuthorInput = {
+  where: Prisma.BookVolumeScalarWhereInput
+  data: Prisma.XOR<
+    Prisma.BookVolumeUpdateManyMutationInput,
+    Prisma.BookVolumeUncheckedUpdateManyWithoutAuthorInput
+  >
+}
+
+export type BookVolumeScalarWhereInput = {
+  AND?: Prisma.BookVolumeScalarWhereInput | Prisma.BookVolumeScalarWhereInput[]
+  OR?: Prisma.BookVolumeScalarWhereInput[]
+  NOT?: Prisma.BookVolumeScalarWhereInput | Prisma.BookVolumeScalarWhereInput[]
+  id?: Prisma.StringFilter<'BookVolume'> | string
+  volumeNumber?: Prisma.IntFilter<'BookVolume'> | number
+  year?: Prisma.IntFilter<'BookVolume'> | number
+  title?: Prisma.StringFilter<'BookVolume'> | string
+  accessUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
+  coverImageUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
+  catalogSheetUrl?: Prisma.StringNullableFilter<'BookVolume'> | string | null
+  description?: Prisma.StringNullableFilter<'BookVolume'> | string | null
+  createdAt?: Prisma.DateTimeFilter<'BookVolume'> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<'BookVolume'> | Date | string
+  authorId?: Prisma.StringFilter<'BookVolume'> | string
+}
+
+export type BookVolumeCreateManyAuthorInput = {
+  id?: string
+  volumeNumber: number
+  year: number
+  title: string
+  accessUrl?: string | null
+  coverImageUrl?: string | null
+  catalogSheetUrl?: string | null
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BookVolumeUpdateWithoutAuthorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  volumeNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  accessUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverImageUrl?:
     | Prisma.NullableStringFieldUpdateOperationsInput
     | string
@@ -516,59 +770,42 @@ export type BookVolumeUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type BookVolumeCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  volumeNumber?: Prisma.SortOrder
-  year?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  author?: Prisma.SortOrder
-  accessUrl?: Prisma.SortOrder
-  authorImageUrl?: Prisma.SortOrder
-  coverImageUrl?: Prisma.SortOrder
-  catalogSheetUrl?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+export type BookVolumeUncheckedUpdateWithoutAuthorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  volumeNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  accessUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null
+  catalogSheetUrl?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type BookVolumeAvgOrderByAggregateInput = {
-  volumeNumber?: Prisma.SortOrder
-  year?: Prisma.SortOrder
-}
-
-export type BookVolumeMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  volumeNumber?: Prisma.SortOrder
-  year?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  author?: Prisma.SortOrder
-  accessUrl?: Prisma.SortOrder
-  authorImageUrl?: Prisma.SortOrder
-  coverImageUrl?: Prisma.SortOrder
-  catalogSheetUrl?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-}
-
-export type BookVolumeMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  volumeNumber?: Prisma.SortOrder
-  year?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  author?: Prisma.SortOrder
-  accessUrl?: Prisma.SortOrder
-  authorImageUrl?: Prisma.SortOrder
-  coverImageUrl?: Prisma.SortOrder
-  catalogSheetUrl?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-}
-
-export type BookVolumeSumOrderByAggregateInput = {
-  volumeNumber?: Prisma.SortOrder
-  year?: Prisma.SortOrder
+export type BookVolumeUncheckedUpdateManyWithoutAuthorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  volumeNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  accessUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null
+  catalogSheetUrl?:
+    | Prisma.NullableStringFieldUpdateOperationsInput
+    | string
+    | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BookVolumeSelect<
@@ -580,14 +817,14 @@ export type BookVolumeSelect<
     volumeNumber?: boolean
     year?: boolean
     title?: boolean
-    author?: boolean
     accessUrl?: boolean
-    authorImageUrl?: boolean
     coverImageUrl?: boolean
     catalogSheetUrl?: boolean
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    authorId?: boolean
+    author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['bookVolume']
 >
@@ -601,14 +838,14 @@ export type BookVolumeSelectCreateManyAndReturn<
     volumeNumber?: boolean
     year?: boolean
     title?: boolean
-    author?: boolean
     accessUrl?: boolean
-    authorImageUrl?: boolean
     coverImageUrl?: boolean
     catalogSheetUrl?: boolean
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    authorId?: boolean
+    author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['bookVolume']
 >
@@ -622,14 +859,14 @@ export type BookVolumeSelectUpdateManyAndReturn<
     volumeNumber?: boolean
     year?: boolean
     title?: boolean
-    author?: boolean
     accessUrl?: boolean
-    authorImageUrl?: boolean
     coverImageUrl?: boolean
     catalogSheetUrl?: boolean
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    authorId?: boolean
+    author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['bookVolume']
 >
@@ -639,14 +876,13 @@ export type BookVolumeSelectScalar = {
   volumeNumber?: boolean
   year?: boolean
   title?: boolean
-  author?: boolean
   accessUrl?: boolean
-  authorImageUrl?: boolean
   coverImageUrl?: boolean
   catalogSheetUrl?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  authorId?: boolean
 }
 
 export type BookVolumeOmit<
@@ -657,37 +893,55 @@ export type BookVolumeOmit<
   | 'volumeNumber'
   | 'year'
   | 'title'
-  | 'author'
   | 'accessUrl'
-  | 'authorImageUrl'
   | 'coverImageUrl'
   | 'catalogSheetUrl'
   | 'description'
   | 'createdAt'
-  | 'updatedAt',
+  | 'updatedAt'
+  | 'authorId',
   ExtArgs['result']['bookVolume']
 >
+export type BookVolumeInclude<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type BookVolumeIncludeCreateManyAndReturn<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type BookVolumeIncludeUpdateManyAndReturn<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
 
 export type $BookVolumePayload<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   name: 'BookVolume'
-  objects: {}
+  objects: {
+    author: Prisma.$UserPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string
       volumeNumber: number
       year: number
       title: string
-      author: string
       accessUrl: string | null
-      authorImageUrl: string | null
       coverImageUrl: string | null
       catalogSheetUrl: string | null
       description: string | null
       createdAt: Date
       updatedAt: Date
+      authorId: string
     },
     ExtArgs['result']['bookVolume']
   >
@@ -1238,6 +1492,20 @@ export interface Prisma__BookVolumeClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise'
+  author<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>,
+  ): Prisma.Prisma__UserClient<
+    | runtime.Types.Result.GetResult<
+        Prisma.$UserPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      >
+    | Null,
+    Null,
+    ExtArgs,
+    GlobalOmitOptions
+  >
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1284,14 +1552,13 @@ export interface BookVolumeFieldRefs {
   readonly volumeNumber: Prisma.FieldRef<'BookVolume', 'Int'>
   readonly year: Prisma.FieldRef<'BookVolume', 'Int'>
   readonly title: Prisma.FieldRef<'BookVolume', 'String'>
-  readonly author: Prisma.FieldRef<'BookVolume', 'String'>
   readonly accessUrl: Prisma.FieldRef<'BookVolume', 'String'>
-  readonly authorImageUrl: Prisma.FieldRef<'BookVolume', 'String'>
   readonly coverImageUrl: Prisma.FieldRef<'BookVolume', 'String'>
   readonly catalogSheetUrl: Prisma.FieldRef<'BookVolume', 'String'>
   readonly description: Prisma.FieldRef<'BookVolume', 'String'>
   readonly createdAt: Prisma.FieldRef<'BookVolume', 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<'BookVolume', 'DateTime'>
+  readonly authorId: Prisma.FieldRef<'BookVolume', 'String'>
 }
 
 // Custom InputTypes
@@ -1310,6 +1577,10 @@ export type BookVolumeFindUniqueArgs<
    * Omit specific fields from the BookVolume
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
   /**
    * Filter, which BookVolume to fetch.
    */
@@ -1332,6 +1603,10 @@ export type BookVolumeFindUniqueOrThrowArgs<
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
+  /**
    * Filter, which BookVolume to fetch.
    */
   where: Prisma.BookVolumeWhereUniqueInput
@@ -1352,6 +1627,10 @@ export type BookVolumeFindFirstArgs<
    * Omit specific fields from the BookVolume
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
   /**
    * Filter, which BookVolume to fetch.
    */
@@ -1408,6 +1687,10 @@ export type BookVolumeFindFirstOrThrowArgs<
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
+  /**
    * Filter, which BookVolume to fetch.
    */
   where?: Prisma.BookVolumeWhereInput
@@ -1463,6 +1746,10 @@ export type BookVolumeFindManyArgs<
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
+  /**
    * Filter, which BookVolumes to fetch.
    */
   where?: Prisma.BookVolumeWhereInput
@@ -1513,6 +1800,10 @@ export type BookVolumeCreateArgs<
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
+  /**
    * The data needed to create a BookVolume.
    */
   data: Prisma.XOR<
@@ -1555,6 +1846,10 @@ export type BookVolumeCreateManyAndReturnArgs<
    */
   data: Prisma.BookVolumeCreateManyInput | Prisma.BookVolumeCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1572,6 +1867,10 @@ export type BookVolumeUpdateArgs<
    * Omit specific fields from the BookVolume
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
   /**
    * The data needed to update a BookVolume.
    */
@@ -1639,6 +1938,10 @@ export type BookVolumeUpdateManyAndReturnArgs<
    * Limit how many BookVolumes to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1656,6 +1959,10 @@ export type BookVolumeUpsertArgs<
    * Omit specific fields from the BookVolume
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
   /**
    * The filter to search for the BookVolume to update in case it exists.
    */
@@ -1691,6 +1998,10 @@ export type BookVolumeDeleteArgs<
    * Omit specific fields from the BookVolume
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
   /**
    * Filter which BookVolume to delete.
    */
@@ -1729,4 +2040,8 @@ export type BookVolumeDefaultArgs<
    * Omit specific fields from the BookVolume
    */
   omit?: Prisma.BookVolumeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookVolumeInclude<ExtArgs> | null
 }

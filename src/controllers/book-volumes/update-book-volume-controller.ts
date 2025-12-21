@@ -20,23 +20,13 @@ export const updateBookVolumeSchema = z.object({
   volumeNumber: z.coerce.number().int().positive().optional(),
   year: z.coerce.number().int().positive().optional(),
   title: z.string().min(1, 'Título é obrigatório.').optional(),
-  author: z.string().min(1, 'Autor é obrigatório.').optional(),
+  authorId: z.string().uuid('ID do autor deve ser um UUID válido.').optional(),
   accessUrl: z.string().url('URL de acesso deve ser válida').optional(),
-  description: z.string().optional(),
-  authorImage: z
-    .any()
-    .refine((value) => {
-      if (value === undefined || value === null) {
-        return true
-      }
-
-      if (typeof value !== 'object' || typeof value.size !== 'number') {
-        return false
-      }
-
-      return value.size <= MAX_IMAGE_SIZE_BYTES
-    }, `A imagem do autor deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`)
+  catalogSheetUrl: z
+    .string()
+    .url('URL da ficha catalográfica deve ser válida')
     .optional(),
+  description: z.string().optional(),
   coverImage: z
     .any()
     .refine((value) => {
@@ -50,20 +40,6 @@ export const updateBookVolumeSchema = z.object({
 
       return value.size <= MAX_IMAGE_SIZE_BYTES
     }, `A imagem da capa deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`)
-    .optional(),
-  catalogSheet: z
-    .any()
-    .refine((value) => {
-      if (value === undefined || value === null) {
-        return true
-      }
-
-      if (typeof value !== 'object' || typeof value.size !== 'number') {
-        return false
-      }
-
-      return value.size <= MAX_IMAGE_SIZE_BYTES
-    }, `A ficha catalográfica deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`)
     .optional(),
 })
 
@@ -79,22 +55,16 @@ export class UpdateBookVolumeController {
       volumeNumber,
       year,
       title,
-      author,
+      authorId,
       accessUrl,
+      catalogSheetUrl,
       description,
-      authorImage,
       coverImage,
-      catalogSheet,
     } = updateBookVolumeSchema.parse({
       id: req.params.id,
       ...req.body,
-      authorImage: (req.files as { [fieldname: string]: Express.Multer.File[] })
-        ?.authorImage?.[0],
       coverImage: (req.files as { [fieldname: string]: Express.Multer.File[] })
         ?.coverImage?.[0],
-      catalogSheet: (
-        req.files as { [fieldname: string]: Express.Multer.File[] }
-      )?.catalogSheet?.[0],
     })
 
     const existingBookVolume = await this.bookVolumeRepository.findById(id)
@@ -103,17 +73,7 @@ export class UpdateBookVolumeController {
       throw new NotFoundError('O volume de livro não existe.')
     }
 
-    let authorImageUrl = existingBookVolume.authorImageUrl
     let coverImageUrl = existingBookVolume.coverImageUrl
-    let catalogSheetUrl = existingBookVolume.catalogSheetUrl
-
-    if (authorImage) {
-      authorImageUrl = await this.firebaseStorageService.uploadFile({
-        file: authorImage,
-        id,
-        folder: File.BOOK_VOLUME_AUTHOR_IMAGE,
-      })
-    }
 
     if (coverImage) {
       coverImageUrl = await this.firebaseStorageService.uploadFile({
@@ -123,25 +83,16 @@ export class UpdateBookVolumeController {
       })
     }
 
-    if (catalogSheet) {
-      catalogSheetUrl = await this.firebaseStorageService.uploadFile({
-        file: catalogSheet,
-        id,
-        folder: File.BOOK_VOLUME_CATALOG_SHEET,
-      })
-    }
-
     await this.bookVolumeRepository.update({
       id,
       volumeNumber,
       year,
       title,
-      author,
+      authorId,
       accessUrl,
-      description,
-      authorImageUrl,
-      coverImageUrl,
       catalogSheetUrl,
+      description,
+      coverImageUrl,
     })
 
     return res.sendStatus(HttpStatus.OK)

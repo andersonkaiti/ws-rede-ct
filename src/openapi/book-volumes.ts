@@ -30,7 +30,10 @@ export const createBookVolumeRegistry: RouteConfig = {
               .string()
               .min(1)
               .openapi({ description: 'Título do livro' }),
-            author: z.string().min(1).openapi({ description: 'Nome do autor' }),
+            author: z
+              .string()
+              .uuid()
+              .openapi({ description: 'ID do autor (UUID)' }),
             accessUrl: z
               .string()
               .url()
@@ -116,7 +119,15 @@ export const findBookVolumesRegistry: RouteConfig = {
                 volumeNumber: z.number(),
                 year: z.number(),
                 title: z.string(),
-                author: z.string(),
+                author: z.object({
+                  id: z.string(),
+                  name: z.string(),
+                  emailAddress: z.string(),
+                  avatarUrl: z.string().nullable(),
+                  orcid: z.string().nullable(),
+                  lattesUrl: z.string().nullable(),
+                  role: z.string(),
+                }),
                 accessUrl: z.string().nullable(),
                 authorImageUrl: z.string().nullable(),
                 coverImageUrl: z.string().nullable(),
@@ -176,7 +187,15 @@ export const findBookVolumeByIdRegistry: RouteConfig = {
               volumeNumber: z.number(),
               year: z.number(),
               title: z.string(),
-              author: z.string(),
+              author: z.object({
+                id: z.string(),
+                name: z.string(),
+                emailAddress: z.string(),
+                avatarUrl: z.string().nullable(),
+                orcid: z.string().nullable(),
+                lattesUrl: z.string().nullable(),
+                role: z.string(),
+              }),
               accessUrl: z.string().nullable(),
               authorImageUrl: z.string().nullable(),
               coverImageUrl: z.string().nullable(),
@@ -254,11 +273,11 @@ export const updateBookVolumeRegistry: RouteConfig = {
               .min(1)
               .optional()
               .openapi({ description: 'Título do livro' }),
-            author: z
+            authorId: z
               .string()
-              .min(1)
+              .uuid()
               .optional()
-              .openapi({ description: 'Nome do autor' }),
+              .openapi({ description: 'ID do autor (UUID)' }),
             accessUrl: z
               .string()
               .url()

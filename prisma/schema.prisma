@@ -41,6 +41,7 @@ model User {
   referenceCenterTeamMembers ReferenceCenterTeamMember[]
   researchGroupsLeader       ResearchGroup[]             @relation("LeaderRelation")
   researchGroupsDeputyLeader ResearchGroup[]             @relation("DeputyLeaderRelation")
+  bookVolumes                BookVolume[]
 
   @@map("users")
 }
@@ -539,14 +540,15 @@ model BookVolume {
   volumeNumber    Int      @map("volume_number")
   year            Int
   title           String
-  author          String
   accessUrl       String?  @map("access_url")
-  authorImageUrl  String?  @map("author_image_url")
   coverImageUrl   String?  @map("cover_image_url")
   catalogSheetUrl String?  @map("catalog_sheet_url")
   description     String?
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @map("author_id")
 
   @@index([id], name: "book_volume_id")
   @@map("book_volumes")
