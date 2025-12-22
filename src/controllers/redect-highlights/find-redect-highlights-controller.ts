@@ -12,10 +12,8 @@ extendZodWithOpenApi(z)
 export const findRedeCTHighlightsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
   limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-  name: z.string().optional(),
   type: z.enum(['PERSON', 'INSTITUTION']).optional(),
   description: z.string().optional(),
-  honorableMention: z.string().optional(),
   orderBy: z.enum(['asc', 'desc']).optional(),
 })
 

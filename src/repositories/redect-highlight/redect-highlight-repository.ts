@@ -36,7 +36,7 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
 
   async find({
     pagination,
-    filter: { name, type, description, honorableMention, orderBy },
+    filter: { type, description, orderBy },
   }: IFindAllRedeCTHighlightDTO) {
     const where: Prisma.RedeCTHighlightWhereInput = {}
 
@@ -44,15 +44,6 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
 
     if (type) {
       where.type = type
-    }
-
-    if (name) {
-      or.push({
-        name: {
-          contains: name,
-          mode: 'insensitive',
-        },
-      })
     }
 
     if (description) {
@@ -64,21 +55,15 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
       })
     }
 
-    if (honorableMention) {
-      or.push({
-        honorableMention: {
-          contains: honorableMention,
-          mode: 'insensitive',
-        },
-      })
-    }
-
     if (or.length > 0) {
       where.OR = or
     }
 
     return await this.prisma.redeCTHighlight.findMany({
       where,
+      include: {
+        user: true,
+      },
       orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
       ...(pagination && {
         skip: pagination.offset,
@@ -92,12 +77,13 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
       where: {
         id,
       },
+      include: {
+        user: true,
+      },
     })
   }
 
-  async count({
-    filter: { name, type, description, honorableMention },
-  }: ICountRedeCTHighlightDTO) {
+  async count({ filter: { type, description } }: ICountRedeCTHighlightDTO) {
     const where: Prisma.RedeCTHighlightWhereInput = {}
 
     const or: Prisma.RedeCTHighlightWhereInput[] = []
@@ -106,28 +92,10 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
       where.type = type
     }
 
-    if (name) {
-      or.push({
-        name: {
-          contains: name,
-          mode: 'insensitive',
-        },
-      })
-    }
-
     if (description) {
       or.push({
         description: {
           contains: description,
-          mode: 'insensitive',
-        },
-      })
-    }
-
-    if (honorableMention) {
-      or.push({
-        honorableMention: {
-          contains: honorableMention,
           mode: 'insensitive',
         },
       })

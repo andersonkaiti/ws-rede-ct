@@ -502,6 +502,11 @@ export type EnumRedeCTHighlightTypeFilter<$PrismaModel = never> = {
     | $Enums.RedeCTHighlightType
 }
 
+export type BoolNullableFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedBoolNullableFilter<$PrismaModel> | boolean | null
+}
+
 export type EnumRedeCTHighlightTypeWithAggregatesFilter<$PrismaModel = never> =
   {
     equals?:
@@ -520,6 +525,17 @@ export type EnumRedeCTHighlightTypeWithAggregatesFilter<$PrismaModel = never> =
     _min?: Prisma.NestedEnumRedeCTHighlightTypeFilter<$PrismaModel>
     _max?: Prisma.NestedEnumRedeCTHighlightTypeFilter<$PrismaModel>
   }
+
+export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
+  not?:
+    | Prisma.NestedBoolNullableWithAggregatesFilter<$PrismaModel>
+    | boolean
+    | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedBoolNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
+}
 
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
@@ -1029,6 +1045,11 @@ export type NestedEnumRedeCTHighlightTypeFilter<$PrismaModel = never> = {
     | $Enums.RedeCTHighlightType
 }
 
+export type NestedBoolNullableFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedBoolNullableFilter<$PrismaModel> | boolean | null
+}
+
 export type NestedEnumRedeCTHighlightTypeWithAggregatesFilter<
   $PrismaModel = never,
 > = {
@@ -1047,4 +1068,15 @@ export type NestedEnumRedeCTHighlightTypeWithAggregatesFilter<
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRedeCTHighlightTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRedeCTHighlightTypeFilter<$PrismaModel>
+}
+
+export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel> | null
+  not?:
+    | Prisma.NestedBoolNullableWithAggregatesFilter<$PrismaModel>
+    | boolean
+    | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedBoolNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
 }

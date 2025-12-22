@@ -5,12 +5,11 @@ import type {
 
 export interface ICreateRedeCTHighlightDTO {
   type: RedeCTHighlightType
-  name: string
   description?: string
-  honorableMention?: string
-  imageUrl?: string
+  honorableMention?: boolean
   honoredAt: Date
   meritUrl?: string
+  userId: string
 }
 
 export interface IFindAllRedeCTHighlightDTO {
@@ -19,10 +18,8 @@ export interface IFindAllRedeCTHighlightDTO {
     limit: number
   }
   filter: {
-    name?: string
     type?: RedeCTHighlightType
     description?: string
-    honorableMention?: string
     orderBy?: 'asc' | 'desc'
   }
 }
@@ -34,9 +31,7 @@ export interface IUpdateRedeCTHighlightDTO
 
 export interface ICountRedeCTHighlightDTO {
   filter: {
-    name?: string
     type?: RedeCTHighlightType
     description?: string
-    honorableMention?: string
   }
 }
