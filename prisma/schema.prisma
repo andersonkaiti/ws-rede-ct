@@ -42,6 +42,7 @@ model User {
   researchGroupsLeader       ResearchGroup[]             @relation("LeaderRelation")
   researchGroupsDeputyLeader ResearchGroup[]             @relation("DeputyLeaderRelation")
   bookVolumes                BookVolume[]
+  redeCTHighlights           RedeCTHighlight[]
 
   @@map("users")
 }
@@ -680,12 +681,13 @@ enum RedeCTHighlightType {
 model RedeCTHighlight {
   id               String              @id @default(uuid())
   type             RedeCTHighlightType
-  name             String
   description      String?
-  honorableMention String?             @map("honorable_mention")
-  imageUrl         String?             @map("image_url")
+  honorableMention Boolean?            @default(false) @map("honorable_mention")
   honoredAt        DateTime            @map("honored_at")
   meritUrl         String?             @map("merit_url")
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

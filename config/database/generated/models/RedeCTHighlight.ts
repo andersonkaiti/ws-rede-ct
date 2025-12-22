@@ -27,12 +27,11 @@ export type AggregateRedeCTHighlight = {
 export type RedeCTHighlightMinAggregateOutputType = {
   id: string | null
   type: $Enums.RedeCTHighlightType | null
-  name: string | null
   description: string | null
-  honorableMention: string | null
-  imageUrl: string | null
+  honorableMention: boolean | null
   honoredAt: Date | null
   meritUrl: string | null
+  userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,12 +39,11 @@ export type RedeCTHighlightMinAggregateOutputType = {
 export type RedeCTHighlightMaxAggregateOutputType = {
   id: string | null
   type: $Enums.RedeCTHighlightType | null
-  name: string | null
   description: string | null
-  honorableMention: string | null
-  imageUrl: string | null
+  honorableMention: boolean | null
   honoredAt: Date | null
   meritUrl: string | null
+  userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,12 +51,11 @@ export type RedeCTHighlightMaxAggregateOutputType = {
 export type RedeCTHighlightCountAggregateOutputType = {
   id: number
   type: number
-  name: number
   description: number
   honorableMention: number
-  imageUrl: number
   honoredAt: number
   meritUrl: number
+  userId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -67,12 +64,11 @@ export type RedeCTHighlightCountAggregateOutputType = {
 export type RedeCTHighlightMinAggregateInputType = {
   id?: true
   type?: true
-  name?: true
   description?: true
   honorableMention?: true
-  imageUrl?: true
   honoredAt?: true
   meritUrl?: true
+  userId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -80,12 +76,11 @@ export type RedeCTHighlightMinAggregateInputType = {
 export type RedeCTHighlightMaxAggregateInputType = {
   id?: true
   type?: true
-  name?: true
   description?: true
   honorableMention?: true
-  imageUrl?: true
   honoredAt?: true
   meritUrl?: true
+  userId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -93,12 +88,11 @@ export type RedeCTHighlightMaxAggregateInputType = {
 export type RedeCTHighlightCountAggregateInputType = {
   id?: true
   type?: true
-  name?: true
   description?: true
   honorableMention?: true
-  imageUrl?: true
   honoredAt?: true
   meritUrl?: true
+  userId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -190,12 +184,11 @@ export type RedeCTHighlightGroupByArgs<
 export type RedeCTHighlightGroupByOutputType = {
   id: string
   type: $Enums.RedeCTHighlightType
-  name: string
   description: string | null
-  honorableMention: string | null
-  imageUrl: string | null
+  honorableMention: boolean | null
   honoredAt: Date
   meritUrl: string | null
+  userId: string
   createdAt: Date
   updatedAt: Date
   _count: RedeCTHighlightCountAggregateOutputType | null
@@ -225,30 +218,30 @@ export type RedeCTHighlightWhereInput = {
   type?:
     | Prisma.EnumRedeCTHighlightTypeFilter<'RedeCTHighlight'>
     | $Enums.RedeCTHighlightType
-  name?: Prisma.StringFilter<'RedeCTHighlight'> | string
   description?: Prisma.StringNullableFilter<'RedeCTHighlight'> | string | null
   honorableMention?:
-    | Prisma.StringNullableFilter<'RedeCTHighlight'>
-    | string
+    | Prisma.BoolNullableFilter<'RedeCTHighlight'>
+    | boolean
     | null
-  imageUrl?: Prisma.StringNullableFilter<'RedeCTHighlight'> | string | null
   honoredAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
   meritUrl?: Prisma.StringNullableFilter<'RedeCTHighlight'> | string | null
+  userId?: Prisma.StringFilter<'RedeCTHighlight'> | string
   createdAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
   updatedAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type RedeCTHighlightOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   honorableMention?: Prisma.SortOrderInput | Prisma.SortOrder
-  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   honoredAt?: Prisma.SortOrder
   meritUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type RedeCTHighlightWhereUniqueInput = Prisma.AtLeast<
@@ -260,17 +253,17 @@ export type RedeCTHighlightWhereUniqueInput = Prisma.AtLeast<
     type?:
       | Prisma.EnumRedeCTHighlightTypeFilter<'RedeCTHighlight'>
       | $Enums.RedeCTHighlightType
-    name?: Prisma.StringFilter<'RedeCTHighlight'> | string
     description?: Prisma.StringNullableFilter<'RedeCTHighlight'> | string | null
     honorableMention?:
-      | Prisma.StringNullableFilter<'RedeCTHighlight'>
-      | string
+      | Prisma.BoolNullableFilter<'RedeCTHighlight'>
+      | boolean
       | null
-    imageUrl?: Prisma.StringNullableFilter<'RedeCTHighlight'> | string | null
     honoredAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
     meritUrl?: Prisma.StringNullableFilter<'RedeCTHighlight'> | string | null
+    userId?: Prisma.StringFilter<'RedeCTHighlight'> | string
     createdAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
     updatedAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   },
   'id'
 >
@@ -278,12 +271,11 @@ export type RedeCTHighlightWhereUniqueInput = Prisma.AtLeast<
 export type RedeCTHighlightOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   honorableMention?: Prisma.SortOrderInput | Prisma.SortOrder
-  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   honoredAt?: Prisma.SortOrder
   meritUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.RedeCTHighlightCountOrderByAggregateInput
@@ -303,18 +295,13 @@ export type RedeCTHighlightScalarWhereWithAggregatesInput = {
   type?:
     | Prisma.EnumRedeCTHighlightTypeWithAggregatesFilter<'RedeCTHighlight'>
     | $Enums.RedeCTHighlightType
-  name?: Prisma.StringWithAggregatesFilter<'RedeCTHighlight'> | string
   description?:
     | Prisma.StringNullableWithAggregatesFilter<'RedeCTHighlight'>
     | string
     | null
   honorableMention?:
-    | Prisma.StringNullableWithAggregatesFilter<'RedeCTHighlight'>
-    | string
-    | null
-  imageUrl?:
-    | Prisma.StringNullableWithAggregatesFilter<'RedeCTHighlight'>
-    | string
+    | Prisma.BoolNullableWithAggregatesFilter<'RedeCTHighlight'>
+    | boolean
     | null
   honoredAt?:
     | Prisma.DateTimeWithAggregatesFilter<'RedeCTHighlight'>
@@ -324,6 +311,7 @@ export type RedeCTHighlightScalarWhereWithAggregatesInput = {
     | Prisma.StringNullableWithAggregatesFilter<'RedeCTHighlight'>
     | string
     | null
+  userId?: Prisma.StringWithAggregatesFilter<'RedeCTHighlight'> | string
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'RedeCTHighlight'>
     | Date
@@ -337,25 +325,23 @@ export type RedeCTHighlightScalarWhereWithAggregatesInput = {
 export type RedeCTHighlightCreateInput = {
   id?: string
   type: $Enums.RedeCTHighlightType
-  name: string
   description?: string | null
-  honorableMention?: string | null
-  imageUrl?: string | null
+  honorableMention?: boolean | null
   honoredAt: Date | string
   meritUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutRedeCTHighlightsInput
 }
 
 export type RedeCTHighlightUncheckedCreateInput = {
   id?: string
   type: $Enums.RedeCTHighlightType
-  name: string
   description?: string | null
-  honorableMention?: string | null
-  imageUrl?: string | null
+  honorableMention?: boolean | null
   honoredAt: Date | string
   meritUrl?: string | null
+  userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -365,17 +351,16 @@ export type RedeCTHighlightUpdateInput = {
   type?:
     | Prisma.EnumRedeCTHighlightTypeFieldUpdateOperationsInput
     | $Enums.RedeCTHighlightType
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   honorableMention?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
     | null
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   honoredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meritUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutRedeCTHighlightsNestedInput
 }
 
 export type RedeCTHighlightUncheckedUpdateInput = {
@@ -383,15 +368,14 @@ export type RedeCTHighlightUncheckedUpdateInput = {
   type?:
     | Prisma.EnumRedeCTHighlightTypeFieldUpdateOperationsInput
     | $Enums.RedeCTHighlightType
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   honorableMention?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
     | null
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   honoredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meritUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -399,12 +383,11 @@ export type RedeCTHighlightUncheckedUpdateInput = {
 export type RedeCTHighlightCreateManyInput = {
   id?: string
   type: $Enums.RedeCTHighlightType
-  name: string
   description?: string | null
-  honorableMention?: string | null
-  imageUrl?: string | null
+  honorableMention?: boolean | null
   honoredAt: Date | string
   meritUrl?: string | null
+  userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -414,13 +397,11 @@ export type RedeCTHighlightUpdateManyMutationInput = {
   type?:
     | Prisma.EnumRedeCTHighlightTypeFieldUpdateOperationsInput
     | $Enums.RedeCTHighlightType
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   honorableMention?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
     | null
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   honoredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meritUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,28 +413,36 @@ export type RedeCTHighlightUncheckedUpdateManyInput = {
   type?:
     | Prisma.EnumRedeCTHighlightTypeFieldUpdateOperationsInput
     | $Enums.RedeCTHighlightType
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   honorableMention?:
-    | Prisma.NullableStringFieldUpdateOperationsInput
-    | string
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
     | null
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   honoredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meritUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RedeCTHighlightListRelationFilter = {
+  every?: Prisma.RedeCTHighlightWhereInput
+  some?: Prisma.RedeCTHighlightWhereInput
+  none?: Prisma.RedeCTHighlightWhereInput
+}
+
+export type RedeCTHighlightOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type RedeCTHighlightCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   honorableMention?: Prisma.SortOrder
-  imageUrl?: Prisma.SortOrder
   honoredAt?: Prisma.SortOrder
   meritUrl?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -461,12 +450,11 @@ export type RedeCTHighlightCountOrderByAggregateInput = {
 export type RedeCTHighlightMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   honorableMention?: Prisma.SortOrder
-  imageUrl?: Prisma.SortOrder
   honoredAt?: Prisma.SortOrder
   meritUrl?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -474,18 +462,279 @@ export type RedeCTHighlightMaxOrderByAggregateInput = {
 export type RedeCTHighlightMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   honorableMention?: Prisma.SortOrder
-  imageUrl?: Prisma.SortOrder
   honoredAt?: Prisma.SortOrder
   meritUrl?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
+export type RedeCTHighlightCreateNestedManyWithoutUserInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.RedeCTHighlightCreateWithoutUserInput,
+        Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput
+      >
+    | Prisma.RedeCTHighlightCreateWithoutUserInput[]
+    | Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput[]
+  connectOrCreate?:
+    | Prisma.RedeCTHighlightCreateOrConnectWithoutUserInput
+    | Prisma.RedeCTHighlightCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.RedeCTHighlightCreateManyUserInputEnvelope
+  connect?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+}
+
+export type RedeCTHighlightUncheckedCreateNestedManyWithoutUserInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.RedeCTHighlightCreateWithoutUserInput,
+        Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput
+      >
+    | Prisma.RedeCTHighlightCreateWithoutUserInput[]
+    | Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput[]
+  connectOrCreate?:
+    | Prisma.RedeCTHighlightCreateOrConnectWithoutUserInput
+    | Prisma.RedeCTHighlightCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.RedeCTHighlightCreateManyUserInputEnvelope
+  connect?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+}
+
+export type RedeCTHighlightUpdateManyWithoutUserNestedInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.RedeCTHighlightCreateWithoutUserInput,
+        Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput
+      >
+    | Prisma.RedeCTHighlightCreateWithoutUserInput[]
+    | Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput[]
+  connectOrCreate?:
+    | Prisma.RedeCTHighlightCreateOrConnectWithoutUserInput
+    | Prisma.RedeCTHighlightCreateOrConnectWithoutUserInput[]
+  upsert?:
+    | Prisma.RedeCTHighlightUpsertWithWhereUniqueWithoutUserInput
+    | Prisma.RedeCTHighlightUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.RedeCTHighlightCreateManyUserInputEnvelope
+  set?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+  disconnect?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+  delete?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+  connect?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+  update?:
+    | Prisma.RedeCTHighlightUpdateWithWhereUniqueWithoutUserInput
+    | Prisma.RedeCTHighlightUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?:
+    | Prisma.RedeCTHighlightUpdateManyWithWhereWithoutUserInput
+    | Prisma.RedeCTHighlightUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?:
+    | Prisma.RedeCTHighlightScalarWhereInput
+    | Prisma.RedeCTHighlightScalarWhereInput[]
+}
+
+export type RedeCTHighlightUncheckedUpdateManyWithoutUserNestedInput = {
+  create?:
+    | Prisma.XOR<
+        Prisma.RedeCTHighlightCreateWithoutUserInput,
+        Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput
+      >
+    | Prisma.RedeCTHighlightCreateWithoutUserInput[]
+    | Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput[]
+  connectOrCreate?:
+    | Prisma.RedeCTHighlightCreateOrConnectWithoutUserInput
+    | Prisma.RedeCTHighlightCreateOrConnectWithoutUserInput[]
+  upsert?:
+    | Prisma.RedeCTHighlightUpsertWithWhereUniqueWithoutUserInput
+    | Prisma.RedeCTHighlightUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.RedeCTHighlightCreateManyUserInputEnvelope
+  set?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+  disconnect?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+  delete?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+  connect?:
+    | Prisma.RedeCTHighlightWhereUniqueInput
+    | Prisma.RedeCTHighlightWhereUniqueInput[]
+  update?:
+    | Prisma.RedeCTHighlightUpdateWithWhereUniqueWithoutUserInput
+    | Prisma.RedeCTHighlightUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?:
+    | Prisma.RedeCTHighlightUpdateManyWithWhereWithoutUserInput
+    | Prisma.RedeCTHighlightUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?:
+    | Prisma.RedeCTHighlightScalarWhereInput
+    | Prisma.RedeCTHighlightScalarWhereInput[]
+}
+
 export type EnumRedeCTHighlightTypeFieldUpdateOperationsInput = {
   set?: $Enums.RedeCTHighlightType
+}
+
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
+export type RedeCTHighlightCreateWithoutUserInput = {
+  id?: string
+  type: $Enums.RedeCTHighlightType
+  description?: string | null
+  honorableMention?: boolean | null
+  honoredAt: Date | string
+  meritUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type RedeCTHighlightUncheckedCreateWithoutUserInput = {
+  id?: string
+  type: $Enums.RedeCTHighlightType
+  description?: string | null
+  honorableMention?: boolean | null
+  honoredAt: Date | string
+  meritUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type RedeCTHighlightCreateOrConnectWithoutUserInput = {
+  where: Prisma.RedeCTHighlightWhereUniqueInput
+  create: Prisma.XOR<
+    Prisma.RedeCTHighlightCreateWithoutUserInput,
+    Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput
+  >
+}
+
+export type RedeCTHighlightCreateManyUserInputEnvelope = {
+  data:
+    | Prisma.RedeCTHighlightCreateManyUserInput
+    | Prisma.RedeCTHighlightCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type RedeCTHighlightUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.RedeCTHighlightWhereUniqueInput
+  update: Prisma.XOR<
+    Prisma.RedeCTHighlightUpdateWithoutUserInput,
+    Prisma.RedeCTHighlightUncheckedUpdateWithoutUserInput
+  >
+  create: Prisma.XOR<
+    Prisma.RedeCTHighlightCreateWithoutUserInput,
+    Prisma.RedeCTHighlightUncheckedCreateWithoutUserInput
+  >
+}
+
+export type RedeCTHighlightUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.RedeCTHighlightWhereUniqueInput
+  data: Prisma.XOR<
+    Prisma.RedeCTHighlightUpdateWithoutUserInput,
+    Prisma.RedeCTHighlightUncheckedUpdateWithoutUserInput
+  >
+}
+
+export type RedeCTHighlightUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.RedeCTHighlightScalarWhereInput
+  data: Prisma.XOR<
+    Prisma.RedeCTHighlightUpdateManyMutationInput,
+    Prisma.RedeCTHighlightUncheckedUpdateManyWithoutUserInput
+  >
+}
+
+export type RedeCTHighlightScalarWhereInput = {
+  AND?:
+    | Prisma.RedeCTHighlightScalarWhereInput
+    | Prisma.RedeCTHighlightScalarWhereInput[]
+  OR?: Prisma.RedeCTHighlightScalarWhereInput[]
+  NOT?:
+    | Prisma.RedeCTHighlightScalarWhereInput
+    | Prisma.RedeCTHighlightScalarWhereInput[]
+  id?: Prisma.StringFilter<'RedeCTHighlight'> | string
+  type?:
+    | Prisma.EnumRedeCTHighlightTypeFilter<'RedeCTHighlight'>
+    | $Enums.RedeCTHighlightType
+  description?: Prisma.StringNullableFilter<'RedeCTHighlight'> | string | null
+  honorableMention?:
+    | Prisma.BoolNullableFilter<'RedeCTHighlight'>
+    | boolean
+    | null
+  honoredAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
+  meritUrl?: Prisma.StringNullableFilter<'RedeCTHighlight'> | string | null
+  userId?: Prisma.StringFilter<'RedeCTHighlight'> | string
+  createdAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<'RedeCTHighlight'> | Date | string
+}
+
+export type RedeCTHighlightCreateManyUserInput = {
+  id?: string
+  type: $Enums.RedeCTHighlightType
+  description?: string | null
+  honorableMention?: boolean | null
+  honoredAt: Date | string
+  meritUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type RedeCTHighlightUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?:
+    | Prisma.EnumRedeCTHighlightTypeFieldUpdateOperationsInput
+    | $Enums.RedeCTHighlightType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  honorableMention?:
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
+    | null
+  honoredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  meritUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RedeCTHighlightUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?:
+    | Prisma.EnumRedeCTHighlightTypeFieldUpdateOperationsInput
+    | $Enums.RedeCTHighlightType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  honorableMention?:
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
+    | null
+  honoredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  meritUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RedeCTHighlightUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?:
+    | Prisma.EnumRedeCTHighlightTypeFieldUpdateOperationsInput
+    | $Enums.RedeCTHighlightType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  honorableMention?:
+    | Prisma.NullableBoolFieldUpdateOperationsInput
+    | boolean
+    | null
+  honoredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  meritUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RedeCTHighlightSelect<
@@ -495,14 +744,14 @@ export type RedeCTHighlightSelect<
   {
     id?: boolean
     type?: boolean
-    name?: boolean
     description?: boolean
     honorableMention?: boolean
-    imageUrl?: boolean
     honoredAt?: boolean
     meritUrl?: boolean
+    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['redeCTHighlight']
 >
@@ -514,14 +763,14 @@ export type RedeCTHighlightSelectCreateManyAndReturn<
   {
     id?: boolean
     type?: boolean
-    name?: boolean
     description?: boolean
     honorableMention?: boolean
-    imageUrl?: boolean
     honoredAt?: boolean
     meritUrl?: boolean
+    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['redeCTHighlight']
 >
@@ -533,14 +782,14 @@ export type RedeCTHighlightSelectUpdateManyAndReturn<
   {
     id?: boolean
     type?: boolean
-    name?: boolean
     description?: boolean
     honorableMention?: boolean
-    imageUrl?: boolean
     honoredAt?: boolean
     meritUrl?: boolean
+    userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['redeCTHighlight']
 >
@@ -548,12 +797,11 @@ export type RedeCTHighlightSelectUpdateManyAndReturn<
 export type RedeCTHighlightSelectScalar = {
   id?: boolean
   type?: boolean
-  name?: boolean
   description?: boolean
   honorableMention?: boolean
-  imageUrl?: boolean
   honoredAt?: boolean
   meritUrl?: boolean
+  userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
@@ -564,33 +812,51 @@ export type RedeCTHighlightOmit<
 > = runtime.Types.Extensions.GetOmit<
   | 'id'
   | 'type'
-  | 'name'
   | 'description'
   | 'honorableMention'
-  | 'imageUrl'
   | 'honoredAt'
   | 'meritUrl'
+  | 'userId'
   | 'createdAt'
   | 'updatedAt',
   ExtArgs['result']['redeCTHighlight']
 >
+export type RedeCTHighlightInclude<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type RedeCTHighlightIncludeCreateManyAndReturn<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type RedeCTHighlightIncludeUpdateManyAndReturn<
+  ExtArgs extends
+    runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
+> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
 
 export type $RedeCTHighlightPayload<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = {
   name: 'RedeCTHighlight'
-  objects: {}
+  objects: {
+    user: Prisma.$UserPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string
       type: $Enums.RedeCTHighlightType
-      name: string
       description: string | null
-      honorableMention: string | null
-      imageUrl: string | null
+      honorableMention: boolean | null
       honoredAt: Date
       meritUrl: string | null
+      userId: string
       createdAt: Date
       updatedAt: Date
     },
@@ -1155,6 +1421,20 @@ export interface Prisma__RedeCTHighlightClient<
   GlobalOmitOptions = {},
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise'
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>,
+  ): Prisma.Prisma__UserClient<
+    | runtime.Types.Result.GetResult<
+        Prisma.$UserPayload<ExtArgs>,
+        T,
+        'findUniqueOrThrow',
+        GlobalOmitOptions
+      >
+    | Null,
+    Null,
+    ExtArgs,
+    GlobalOmitOptions
+  >
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1199,12 +1479,11 @@ export interface Prisma__RedeCTHighlightClient<
 export interface RedeCTHighlightFieldRefs {
   readonly id: Prisma.FieldRef<'RedeCTHighlight', 'String'>
   readonly type: Prisma.FieldRef<'RedeCTHighlight', 'RedeCTHighlightType'>
-  readonly name: Prisma.FieldRef<'RedeCTHighlight', 'String'>
   readonly description: Prisma.FieldRef<'RedeCTHighlight', 'String'>
-  readonly honorableMention: Prisma.FieldRef<'RedeCTHighlight', 'String'>
-  readonly imageUrl: Prisma.FieldRef<'RedeCTHighlight', 'String'>
+  readonly honorableMention: Prisma.FieldRef<'RedeCTHighlight', 'Boolean'>
   readonly honoredAt: Prisma.FieldRef<'RedeCTHighlight', 'DateTime'>
   readonly meritUrl: Prisma.FieldRef<'RedeCTHighlight', 'String'>
+  readonly userId: Prisma.FieldRef<'RedeCTHighlight', 'String'>
   readonly createdAt: Prisma.FieldRef<'RedeCTHighlight', 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<'RedeCTHighlight', 'DateTime'>
 }
@@ -1225,6 +1504,10 @@ export type RedeCTHighlightFindUniqueArgs<
    * Omit specific fields from the RedeCTHighlight
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
   /**
    * Filter, which RedeCTHighlight to fetch.
    */
@@ -1247,6 +1530,10 @@ export type RedeCTHighlightFindUniqueOrThrowArgs<
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
+  /**
    * Filter, which RedeCTHighlight to fetch.
    */
   where: Prisma.RedeCTHighlightWhereUniqueInput
@@ -1267,6 +1554,10 @@ export type RedeCTHighlightFindFirstArgs<
    * Omit specific fields from the RedeCTHighlight
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
   /**
    * Filter, which RedeCTHighlight to fetch.
    */
@@ -1323,6 +1614,10 @@ export type RedeCTHighlightFindFirstOrThrowArgs<
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
+  /**
    * Filter, which RedeCTHighlight to fetch.
    */
   where?: Prisma.RedeCTHighlightWhereInput
@@ -1378,6 +1673,10 @@ export type RedeCTHighlightFindManyArgs<
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
+  /**
    * Filter, which RedeCTHighlights to fetch.
    */
   where?: Prisma.RedeCTHighlightWhereInput
@@ -1428,6 +1727,10 @@ export type RedeCTHighlightCreateArgs<
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
+  /**
    * The data needed to create a RedeCTHighlight.
    */
   data: Prisma.XOR<
@@ -1474,6 +1777,10 @@ export type RedeCTHighlightCreateManyAndReturnArgs<
     | Prisma.RedeCTHighlightCreateManyInput
     | Prisma.RedeCTHighlightCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1491,6 +1798,10 @@ export type RedeCTHighlightUpdateArgs<
    * Omit specific fields from the RedeCTHighlight
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
   /**
    * The data needed to update a RedeCTHighlight.
    */
@@ -1558,6 +1869,10 @@ export type RedeCTHighlightUpdateManyAndReturnArgs<
    * Limit how many RedeCTHighlights to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1575,6 +1890,10 @@ export type RedeCTHighlightUpsertArgs<
    * Omit specific fields from the RedeCTHighlight
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
   /**
    * The filter to search for the RedeCTHighlight to update in case it exists.
    */
@@ -1610,6 +1929,10 @@ export type RedeCTHighlightDeleteArgs<
    * Omit specific fields from the RedeCTHighlight
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
   /**
    * Filter which RedeCTHighlight to delete.
    */
@@ -1648,4 +1971,8 @@ export type RedeCTHighlightDefaultArgs<
    * Omit specific fields from the RedeCTHighlight
    */
   omit?: Prisma.RedeCTHighlightOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RedeCTHighlightInclude<ExtArgs> | null
 }

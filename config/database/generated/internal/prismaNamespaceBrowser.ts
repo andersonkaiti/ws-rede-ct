@@ -635,12 +635,11 @@ export type MuseumScalarFieldEnum =
 export const RedeCTHighlightScalarFieldEnum = {
   id: 'id',
   type: 'type',
-  name: 'name',
   description: 'description',
   honorableMention: 'honorableMention',
-  imageUrl: 'imageUrl',
   honoredAt: 'honoredAt',
   meritUrl: 'meritUrl',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
 } as const
