@@ -5,18 +5,17 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IMuseumRepository } from '../../repositories/museum/imuseum-repository.d.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
 
 extendZodWithOpenApi(z)
 
 export const findMuseumsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
+  limit: z.coerce.number().optional(),
   name: z.string().optional(),
   city: z.string().optional(),
   state: z.string().optional(),
   country: z.string().optional(),
-  orderBy: z.enum(['asc', 'desc']).optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindMuseumsController {
@@ -25,7 +24,7 @@ export class FindMuseumsController {
   async handle(req: Request, res: Response) {
     const { page, limit, ...filter } = findMuseumsSchema.parse(req.query)
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [museums, totalMuseums] = await Promise.all([
       this.museumRepository.find({
@@ -40,7 +39,7 @@ export class FindMuseumsController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalMuseums / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(totalMuseums / limit), 1) : 1
 
     res.status(HttpStatus.OK).json({
       page,

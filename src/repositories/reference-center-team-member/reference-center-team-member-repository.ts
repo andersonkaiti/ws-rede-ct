@@ -43,7 +43,7 @@ export class ReferenceCenterTeamMemberRepository
   }
 
   async find({
-    pagination,
+    pagination: { offset, limit },
     filter: { role, orderBy },
   }: IFindAllReferenceCenterTeamMembersDTO) {
     const where: Prisma.ReferenceCenterTeamMemberWhereInput = {}
@@ -65,12 +65,10 @@ export class ReferenceCenterTeamMemberRepository
         },
       },
       orderBy: {
-        updatedAt: orderBy ?? 'desc',
+        updatedAt: orderBy,
       },
-      ...(pagination && {
-        skip: pagination.offset,
-        take: pagination.limit,
-      }),
+      skip: offset,
+      take: limit,
     })
   }
 

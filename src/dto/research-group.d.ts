@@ -15,8 +15,8 @@ export interface ICreateResearchGroupDTO {
 
 export interface IFindResearchGroupsDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     name?: string

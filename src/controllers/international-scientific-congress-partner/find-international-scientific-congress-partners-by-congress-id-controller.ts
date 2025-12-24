@@ -5,14 +5,13 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IInternationalScientificCongressPartnerRepository } from '../../repositories/international-scientific-congress/partner/international-scientific-congress-gallery-repository-partner-repository.js'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
 
 extendZodWithOpenApi(z)
 
 export const findInternationalScientificCongressPartnersByCongressIdSchema =
   z.object({
     id: z.uuid(),
-    page: z.coerce.number().min(1).optional(),
+    page: z.coerce.number().min(1).default(DEFAULT_PAGE),
     limit: z.coerce.number().min(1).optional(),
     name: z.string().optional(),
   })
@@ -29,51 +28,35 @@ export class FindInternationalScientificCongressPartnersByCongressIdController {
         ...req.query,
       })
 
-    if (page !== undefined && limit !== undefined) {
-      const actualPage = page || DEFAULT_PAGE
-      const actualLimit = limit || DEFAULT_LIMIT
-      const offset = actualLimit * actualPage - actualLimit
+    const offset = limit ? limit * page - limit : undefined
 
-      const [partners, totalPartners] = await Promise.all([
-        this.internationalScientificCongressPartnerRepository.findByCongressId({
-          pagination: {
-            offset,
-            limit: actualLimit,
-          },
-          filter: {
-            congressId: id,
-            ...filter,
-          },
-        }),
-        this.internationalScientificCongressPartnerRepository.count({
-          filter: {
-            congressId: id,
-            name: filter.name,
-          },
-        }),
-      ])
-
-      const totalPages = Math.max(Math.ceil(totalPartners / actualLimit), 1)
-
-      return res.status(HttpStatus.OK).json({
-        page: actualPage,
-        totalPages,
-        offset,
-        limit: actualLimit,
-        partners,
-      })
-    }
-
-    const allPartners =
-      await this.internationalScientificCongressPartnerRepository.findByCongressId(
-        {
-          filter: {
-            congressId: id,
-            ...filter,
-          },
+    const [partners, totalPartners] = await Promise.all([
+      this.internationalScientificCongressPartnerRepository.findByCongressId({
+        pagination: {
+          offset,
+          limit,
         },
-      )
+        filter: {
+          congressId: id,
+          ...filter,
+        },
+      }),
+      this.internationalScientificCongressPartnerRepository.count({
+        filter: {
+          congressId: id,
+          name: filter.name,
+        },
+      }),
+    ])
 
-    return res.status(HttpStatus.OK).json(allPartners)
+    const totalPages = limit ? Math.max(Math.ceil(totalPartners / limit), 1) : 1
+
+    return res.status(HttpStatus.OK).json({
+      page,
+      totalPages,
+      offset,
+      limit,
+      partners,
+    })
   }
 }

@@ -9,8 +9,8 @@ export interface IRegisterCertificationDTO {
 
 export interface IFindCertificationsDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string
@@ -23,8 +23,8 @@ export interface IFindCertificationsDTO {
 export interface IFindByUserIdDTO {
   userId: string
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string

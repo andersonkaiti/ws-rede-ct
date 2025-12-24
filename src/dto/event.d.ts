@@ -18,8 +18,8 @@ export interface ICreateEventDTO {
 
 export interface IFindAllEventDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string

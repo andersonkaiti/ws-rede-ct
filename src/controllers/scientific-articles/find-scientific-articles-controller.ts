@@ -5,14 +5,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IScientificArticlesRepository } from '../../repositories/scientific-articles/iscientific-articles-repository.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 6
 
 extendZodWithOpenApi(z)
 
 export const findScientificArticlesControllerSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   author: z.string().optional(),
   journal: z.string().optional(),
@@ -28,7 +26,7 @@ export class FindScientificArticlesController {
     const { limit, page, ...filter } =
       findScientificArticlesControllerSchema.parse(req.query)
 
-    const offset = page * limit - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [scientificArticles, totalScientificArticles] = await Promise.all([
       this.scientificArticlesRepository.find({
@@ -44,7 +42,9 @@ export class FindScientificArticlesController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalScientificArticles / limit), 1)
+    const totalPages = limit
+      ? Math.max(Math.ceil(totalScientificArticles / limit), 1)
+      : 1
 
     return res.status(HttpStatus.OK).json({
       page,

@@ -6,14 +6,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IPendencyRepository } from '../../repositories/pendency/ipendency-repository.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 6
 
 extendZodWithOpenApi(z)
 
 export const findPendenciesControllerSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   description: z.string().optional(),
   status: z.enum(PendencyStatus).default('PENDING'),
@@ -25,10 +23,10 @@ export class FindPendenciesController {
   constructor(private readonly pendencyRepository: IPendencyRepository) {}
 
   async handle(req: Request, res: Response) {
-    const { description, limit, orderBy, page, title, status, userId } =
+    const { limit, orderBy, page, ...filter } =
       findPendenciesControllerSchema.parse(req.query)
 
-    const offset = page * limit - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [pendencies, totalPendencies] = await Promise.all([
       this.pendencyRepository.find({
@@ -37,25 +35,19 @@ export class FindPendenciesController {
           limit,
         },
         filter: {
-          title,
-          description,
-          status,
           orderBy,
-          userId,
+          ...filter,
         },
       }),
 
       this.pendencyRepository.count({
-        filter: {
-          title,
-          description,
-          status,
-          userId,
-        },
+        filter,
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalPendencies / limit), 1)
+    const totalPages = limit
+      ? Math.max(Math.ceil(totalPendencies / limit), 1)
+      : 1
 
     return res.status(HttpStatus.OK).json({
       page,

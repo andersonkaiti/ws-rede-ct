@@ -6,14 +6,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IInMemoriamRepository } from '../../repositories/in-memoriam/iin-memoriam-repository.js'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
 
 extendZodWithOpenApi(z)
 
 export const findInMemoriamSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   name: z.string().optional(),
   biography: z.string().optional(),
   role: z.enum(InMemoriamRole).optional(),
@@ -26,7 +24,7 @@ export class FindInMemoriamController {
   async handle(req: Request, res: Response) {
     const { page, limit, ...filter } = findInMemoriamSchema.parse(req.query)
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [inMemoriam, totalInMemoriams] = await Promise.all([
       this.inMemoriamRepository.find({
@@ -41,7 +39,9 @@ export class FindInMemoriamController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalInMemoriams / limit), 1)
+    const totalPages = limit
+      ? Math.max(Math.ceil(totalInMemoriams / limit), 1)
+      : 1
 
     res.status(HttpStatus.OK).json({
       page,

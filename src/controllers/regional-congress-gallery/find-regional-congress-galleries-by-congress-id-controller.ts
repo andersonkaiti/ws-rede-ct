@@ -2,16 +2,18 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
-import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressGalleryRepository } from '../../repositories/regional-congress/gallery/iregional-congress-gallery-repository.js'
+
+const DEFAULT_PAGE = 1
 
 extendZodWithOpenApi(z)
 
 export const findRegionalCongressGalleriesByCongressIdSchema = z.object({
-  id: z.uuid('ID do congresso inválido'),
-  page: z.coerce.number().int().positive().default(1),
-  limit: z.coerce.number().int().positive().default(10),
+  id: z.uuid(),
+  page: z.coerce.number().default(DEFAULT_PAGE),
+  limit: z.coerce.number().optional(),
   caption: z.string().optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindRegionalCongressGalleriesByCongressIdController {
@@ -26,10 +28,10 @@ export class FindRegionalCongressGalleriesByCongressIdController {
         ...req.query,
       })
 
-    const offset = (page - 1) * limit
+    const offset = limit ? limit * page - limit : undefined
 
-    const galleries =
-      await this.regionalCongressGalleryRepository.findByCongressId({
+    const [galleryImages, total] = await Promise.all([
+      this.regionalCongressGalleryRepository.findByCongressId({
         pagination: {
           offset,
           limit,
@@ -38,27 +40,24 @@ export class FindRegionalCongressGalleriesByCongressIdController {
           caption,
           congressId: id,
         },
-      })
+      }),
 
-    if (!galleries) {
-      throw new NotFoundError('Itens de galeria não encontrados')
-    }
+      this.regionalCongressGalleryRepository.count({
+        filter: {
+          caption,
+          congressId: id,
+        },
+      }),
+    ])
 
-    const total = await this.regionalCongressGalleryRepository.count({
-      filter: {
-        caption,
-        congressId: id,
-      },
-    })
+    const totalPages = limit ? Math.ceil(total / limit) : 1
 
     return res.status(HttpStatus.OK).json({
-      data: galleries,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
+      page,
+      limit,
+      total,
+      totalPages,
+      galleryImages,
     })
   }
 }

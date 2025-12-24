@@ -1,4 +1,7 @@
-import type { PrismaClient } from '../../../config/database/generated/client.ts'
+import type {
+  Prisma,
+  PrismaClient,
+} from '../../../../config/database/generated/client.ts'
 import type {
   ICountCongressGalleryDTO,
   ICreateCongressGalleryDTO,
@@ -35,22 +38,26 @@ export class InternationalScientificCongressGalleryRepository
     })
   }
 
-  async findByCongressId(data: IFindAllGalleryByCongressIdDTO) {
-    const { pagination, filter } = data
+  async findByCongressId({
+    pagination: { offset, limit },
+    filter: { congressId, caption },
+  }: IFindAllGalleryByCongressIdDTO) {
+    const where: Prisma.InternationalScientificCongressGalleryItemWhereInput = {
+      congressId,
+    }
+
+    if (caption) {
+      where.caption = {
+        contains: caption,
+        mode: 'insensitive',
+      }
+    }
 
     return await this.prisma.internationalScientificCongressGalleryItem.findMany(
       {
-        where: {
-          congressId: filter.congressId,
-          ...(filter.caption && {
-            caption: {
-              contains: filter.caption,
-              mode: 'insensitive',
-            },
-          }),
-        },
-        skip: pagination.offset,
-        take: pagination.limit,
+        where,
+        skip: offset,
+        take: limit,
       },
     )
   }
@@ -65,19 +72,20 @@ export class InternationalScientificCongressGalleryRepository
     )
   }
 
-  async count(data: ICountCongressGalleryDTO) {
-    const { filter } = data
+  async count({ filter: { congressId, caption } }: ICountCongressGalleryDTO) {
+    const where: Prisma.InternationalScientificCongressGalleryItemWhereInput = {
+      congressId,
+    }
+
+    if (caption) {
+      where.caption = {
+        contains: caption,
+        mode: 'insensitive',
+      }
+    }
 
     return await this.prisma.internationalScientificCongressGalleryItem.count({
-      where: {
-        congressId: filter.congressId,
-        ...(filter.caption && {
-          caption: {
-            contains: filter.caption,
-            mode: 'insensitive',
-          },
-        }),
-      },
+      where,
     })
   }
 }

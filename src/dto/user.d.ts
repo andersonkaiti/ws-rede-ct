@@ -12,11 +12,12 @@ export interface IUpdateUserDTO
 }
 
 export interface IFindUsersDTO {
-  pagination?: {
-    offset: number
-    limit: number
+  pagination: {
+    offset?: number
+    limit?: number
   }
   filter: {
+    orderBy: 'asc' | 'desc'
     name?: string
     emailAddress?: string
     phone?: string

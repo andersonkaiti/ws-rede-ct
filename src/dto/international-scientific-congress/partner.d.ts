@@ -7,9 +7,9 @@ export interface ICreateCongressPartnerDTO {
 }
 
 export interface IFindAllPartnersByCongressIdDTO {
-  pagination?: {
-    offset: number
-    limit: number
+  pagination: {
+    offset?: number
+    limit?: number
   }
   filter: {
     name?: string

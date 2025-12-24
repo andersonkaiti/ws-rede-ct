@@ -43,7 +43,7 @@ export class UserRepository implements IUserRepository {
 
   async find({
     pagination,
-    filter: { emailAddress, name, phone, lattesUrl, orcid },
+    filter: { emailAddress, name, phone, lattesUrl, orcid, orderBy },
   }: IFindUsersDTO) {
     const where: Prisma.UserWhereInput = {}
 
@@ -87,10 +87,11 @@ export class UserRepository implements IUserRepository {
       omit: {
         passwordHash: true,
       },
-      ...(pagination && {
-        skip: pagination.offset,
-        take: pagination.limit,
-      }),
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: pagination.offset,
+      take: pagination.limit,
     })
   }
 

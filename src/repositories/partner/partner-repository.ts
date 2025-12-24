@@ -35,7 +35,7 @@ export class PartnerRepository implements IPartnerRepository {
   }
 
   async find({
-    pagination,
+    pagination: { offset, limit },
     filter: { name, description, category, isActive, orderBy },
   }: IFindAllPartnerDTO) {
     const where: Prisma.PartnerWhereInput = {}
@@ -79,11 +79,11 @@ export class PartnerRepository implements IPartnerRepository {
 
     return await this.prisma.partner.findMany({
       where,
-      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
-      ...(pagination && {
-        skip: pagination.offset,
-        take: pagination.limit,
-      }),
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
     })
   }
 

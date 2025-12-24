@@ -35,7 +35,7 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
   }
 
   async find({
-    pagination,
+    pagination: { offset, limit },
     filter: { type, description, orderBy },
   }: IFindAllRedeCTHighlightDTO) {
     const where: Prisma.RedeCTHighlightWhereInput = {}
@@ -64,11 +64,11 @@ export class RedeCTHighlightRepository implements IRedeCTHighlightRepository {
       include: {
         user: true,
       },
-      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
-      ...(pagination && {
-        skip: pagination.offset,
-        take: pagination.limit,
-      }),
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
     })
   }
 

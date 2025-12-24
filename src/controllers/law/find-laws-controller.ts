@@ -5,16 +5,15 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { ILawRepository } from '../../repositories/law/ilaw-repository.d.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 10
 
 extendZodWithOpenApi(z)
 
 export const findLawsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   country: z.string().optional(),
-  orderBy: z.enum(['asc', 'desc']).optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindLawsController {
@@ -23,7 +22,7 @@ export class FindLawsController {
   async handle(req: Request, res: Response) {
     const { page, limit, ...filter } = findLawsSchema.parse(req.query)
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [laws, totalLaws] = await Promise.all([
       this.lawRepository.find({
@@ -38,7 +37,7 @@ export class FindLawsController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalLaws / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(totalLaws / limit), 1) : 1
 
     res.status(HttpStatus.OK).json({
       page,

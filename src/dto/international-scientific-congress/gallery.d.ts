@@ -8,8 +8,8 @@ export interface ICreateCongressGalleryDTO {
 
 export interface IFindAllGalleryByCongressIdDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     caption?: string

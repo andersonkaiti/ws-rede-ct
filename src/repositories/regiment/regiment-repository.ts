@@ -62,7 +62,9 @@ export class RegimentRepository implements IRegimentRepository {
 
     return await this.prisma.regiment.findMany({
       where,
-      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
+      orderBy: {
+        updatedAt: orderBy,
+      },
       skip: offset,
       take: limit,
     })

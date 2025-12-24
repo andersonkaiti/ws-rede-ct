@@ -82,7 +82,9 @@ export class InternationalScientificCongressRepository
         partners: true,
         galleries: true,
       },
-      orderBy: orderBy ? { startDate: orderBy } : { startDate: 'desc' },
+      orderBy: {
+        startDate: orderBy,
+      },
       skip: offset,
       take: limit,
     })

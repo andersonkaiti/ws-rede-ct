@@ -67,7 +67,9 @@ export class EventRepository implements IEventRepository {
 
     return await this.prisma.event.findMany({
       where,
-      orderBy: orderBy ? { startDate: orderBy } : { startDate: 'desc' },
+      orderBy: {
+        startDate: orderBy,
+      },
       skip: offset,
       take: limit,
     })

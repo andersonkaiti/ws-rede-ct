@@ -1,3 +1,4 @@
+import type { Prisma } from '../../../../config/database/generated/client.ts'
 import type { PrismaClient } from '../../../config/database/generated/client.ts'
 import type {
   ICountCongressPartnerDTO,
@@ -35,19 +36,25 @@ export class InternationalScientificCongressPartnerRepository
     })
   }
 
-  async findByCongressId(data: IFindAllPartnersByCongressIdDTO) {
+  async findByCongressId({
+    pagination: { offset, limit },
+    filter: { congressId, name },
+  }: IFindAllPartnersByCongressIdDTO) {
+    const where: Prisma.InternationalScientificCongressPartnerWhereInput = {
+      congressId,
+    }
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
     return await this.prisma.internationalScientificCongressPartner.findMany({
-      where: {
-        congressId: data.filter.congressId,
-        name: data.filter.name
-          ? {
-              contains: data.filter.name,
-              mode: 'insensitive',
-            }
-          : undefined,
-      },
-      skip: data.pagination?.offset,
-      take: data.pagination?.limit,
+      where,
+      skip: offset,
+      take: limit,
     })
   }
 
@@ -60,16 +67,19 @@ export class InternationalScientificCongressPartnerRepository
   }
 
   async count(data: ICountCongressPartnerDTO) {
+    const where: Prisma.InternationalScientificCongressPartnerWhereInput = {
+      congressId: data.filter.congressId,
+    }
+
+    if (data.filter.name) {
+      where.name = {
+        contains: data.filter.name,
+        mode: 'insensitive',
+      }
+    }
+
     return await this.prisma.internationalScientificCongressPartner.count({
-      where: {
-        congressId: data.filter.congressId,
-        name: data.filter.name
-          ? {
-              contains: data.filter.name,
-              mode: 'insensitive',
-            }
-          : undefined,
-      },
+      where,
     })
   }
 }

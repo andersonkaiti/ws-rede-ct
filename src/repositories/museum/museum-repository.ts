@@ -84,11 +84,11 @@ export class MuseumRepository implements IMuseumRepository {
 
     return await this.prisma.museum.findMany({
       where,
-      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
-      ...(pagination && {
-        skip: pagination.offset,
-        take: pagination.limit,
-      }),
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: pagination?.offset,
+      take: pagination?.limit,
     })
   }
 

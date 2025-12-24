@@ -43,7 +43,7 @@ export class WorkGroupTeamMemberRepository
   }
 
   async find({
-    pagination,
+    pagination: { offset, limit },
     filter: { role, orderBy },
   }: IFindAllWorkGroupTeamMembersDTO) {
     const where: Prisma.WorkGroupTeamMemberWhereInput = {}
@@ -65,12 +65,10 @@ export class WorkGroupTeamMemberRepository
         },
       },
       orderBy: {
-        updatedAt: orderBy ?? 'desc',
+        updatedAt: orderBy,
       },
-      ...(pagination && {
-        skip: pagination.offset,
-        take: pagination.limit,
-      }),
+      skip: offset,
+      take: limit,
     })
   }
 

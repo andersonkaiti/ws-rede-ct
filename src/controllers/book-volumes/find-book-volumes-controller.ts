@@ -5,14 +5,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IBookVolumeRepository } from '../../repositories/book-volume/ibook-volume-repository.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 6
 
 extendZodWithOpenApi(z)
 
 export const findBookVolumesControllerSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   author: z.string().optional(),
   description: z.string().optional(),
@@ -27,7 +25,7 @@ export class FindBookVolumesController {
       req.query,
     )
 
-    const offset = page * limit - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [bookVolumes, totalBookVolumes] = await Promise.all([
       this.bookVolumeRepository.find({
@@ -43,7 +41,9 @@ export class FindBookVolumesController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalBookVolumes / limit), 1)
+    const totalPages = limit
+      ? Math.max(Math.ceil(totalBookVolumes / limit), 1)
+      : 1
 
     return res.status(HttpStatus.OK).json({
       page,

@@ -16,8 +16,8 @@ export interface ICreateMeetingDTO {
 
 export interface IFindAllMeetingDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string

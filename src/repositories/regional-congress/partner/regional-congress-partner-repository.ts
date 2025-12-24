@@ -1,4 +1,7 @@
-import type { PrismaClient } from '../../../../config/database/generated/client.ts'
+import type {
+  Prisma,
+  PrismaClient,
+} from '../../../../config/database/generated/client.ts'
 import type {
   ICountRegionalCongressPartnerDTO,
   ICreateRegionalCongressPartnerDTO,
@@ -35,21 +38,28 @@ export class RegionalCongressPartnerRepository
     })
   }
 
-  async findByCongressId(
-    data: IFindAllRegionalCongressPartnersByCongressIdDTO,
-  ) {
+  async findByCongressId({
+    pagination: { offset, limit },
+    filter: { congressId, name, orderBy },
+  }: IFindAllRegionalCongressPartnersByCongressIdDTO) {
+    const where: Prisma.RegionalCongressPartnerWhereInput = {
+      congressId,
+    }
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
     return await this.prisma.regionalCongressPartner.findMany({
-      where: {
-        congressId: data.filter.congressId,
-        name: data.filter.name
-          ? {
-              contains: data.filter.name,
-              mode: 'insensitive',
-            }
-          : undefined,
+      where,
+      skip: offset,
+      take: limit,
+      orderBy: {
+        updatedAt: orderBy,
       },
-      skip: data.pagination?.offset,
-      take: data.pagination?.limit,
     })
   }
 
@@ -61,17 +71,22 @@ export class RegionalCongressPartnerRepository
     })
   }
 
-  async count(data: ICountRegionalCongressPartnerDTO) {
+  async count({
+    filter: { congressId, name },
+  }: ICountRegionalCongressPartnerDTO) {
+    const where: Prisma.RegionalCongressPartnerWhereInput = {
+      congressId,
+    }
+
+    if (name) {
+      where.name = {
+        contains: name,
+        mode: 'insensitive',
+      }
+    }
+
     return await this.prisma.regionalCongressPartner.count({
-      where: {
-        congressId: data.filter.congressId,
-        name: data.filter.name
-          ? {
-              contains: data.filter.name,
-              mode: 'insensitive',
-            }
-          : undefined,
-      },
+      where,
     })
   }
 }

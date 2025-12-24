@@ -9,17 +9,16 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IMeetingRepository } from '../../repositories/meeting/imeeting-repository.js'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 10
 
 extendZodWithOpenApi(z)
 
 export const findMeetingSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   format: z.enum(MeetingFormat).optional(),
   status: z.enum(MeetingStatus).optional(),
-  orderBy: z.enum(['asc', 'desc']).optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindMeetingsController {
@@ -28,7 +27,7 @@ export class FindMeetingsController {
   async handle(req: Request, res: Response) {
     const { page, limit, ...filter } = findMeetingSchema.parse(req.query)
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [meetings, totalMeetings] = await Promise.all([
       this.meetingRepository.find({
@@ -43,7 +42,7 @@ export class FindMeetingsController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalMeetings / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(totalMeetings / limit), 1) : 1
 
     res.status(HttpStatus.OK).json({
       page,

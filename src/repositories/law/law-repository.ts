@@ -41,7 +41,7 @@ export class LawRepository implements ILawRepository {
   }
 
   async find({
-    pagination,
+    pagination: { offset, limit },
     filter: { title, country, orderBy },
   }: IFindAllLawsDTO) {
     const where: Prisma.LawWhereInput = {}
@@ -65,10 +65,8 @@ export class LawRepository implements ILawRepository {
       orderBy: {
         updatedAt: orderBy ?? 'desc',
       },
-      ...(pagination && {
-        skip: pagination.offset,
-        take: pagination.limit,
-      }),
+      skip: offset,
+      take: limit,
     })
   }
 

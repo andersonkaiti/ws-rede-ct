@@ -1,4 +1,7 @@
-import type { PrismaClient } from '../../../../config/database/generated/client.ts'
+import type {
+  Prisma,
+  PrismaClient,
+} from '../../../../config/database/generated/client.ts'
 import type {
   ICountRegionalCongressGalleryDTO,
   ICreateRegionalCongressGalleryDTO,
@@ -36,21 +39,27 @@ export class RegionalCongressGalleryRepository
   }
 
   async findByCongressId({
-    pagination,
-    filter,
+    pagination: { offset, limit },
+    filter: { congressId, caption, orderBy },
   }: IFindAllRegionalCongressGalleryByCongressIdDTO) {
+    const where: Prisma.RegionalCongressGalleryItemWhereInput = {
+      congressId,
+    }
+
+    if (caption) {
+      where.caption = {
+        contains: caption,
+        mode: 'insensitive',
+      }
+    }
+
     return await this.prisma.regionalCongressGalleryItem.findMany({
-      where: {
-        congressId: filter.congressId,
-        ...(filter.caption && {
-          caption: {
-            contains: filter.caption,
-            mode: 'insensitive',
-          },
-        }),
+      where,
+      orderBy: {
+        updatedAt: orderBy,
       },
-      skip: pagination.offset,
-      take: pagination.limit,
+      skip: offset,
+      take: limit,
     })
   }
 
@@ -62,17 +71,22 @@ export class RegionalCongressGalleryRepository
     })
   }
 
-  async count({ filter }: ICountRegionalCongressGalleryDTO) {
+  async count({
+    filter: { congressId, caption },
+  }: ICountRegionalCongressGalleryDTO) {
+    const where: Prisma.RegionalCongressGalleryItemWhereInput = {
+      congressId,
+    }
+
+    if (caption) {
+      where.caption = {
+        contains: caption,
+        mode: 'insensitive',
+      }
+    }
+
     return await this.prisma.regionalCongressGalleryItem.count({
-      where: {
-        congressId: filter.congressId,
-        ...(filter.caption && {
-          caption: {
-            contains: filter.caption,
-            mode: 'insensitive',
-          },
-        }),
-      },
+      where,
     })
   }
 }
