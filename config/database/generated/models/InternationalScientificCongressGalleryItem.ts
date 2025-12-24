@@ -29,6 +29,8 @@ export type InternationalScientificCongressGalleryItemMinAggregateOutputType = {
   imageUrl: string | null
   caption: string | null
   congressId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type InternationalScientificCongressGalleryItemMaxAggregateOutputType = {
@@ -36,6 +38,8 @@ export type InternationalScientificCongressGalleryItemMaxAggregateOutputType = {
   imageUrl: string | null
   caption: string | null
   congressId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type InternationalScientificCongressGalleryItemCountAggregateOutputType =
@@ -44,6 +48,8 @@ export type InternationalScientificCongressGalleryItemCountAggregateOutputType =
     imageUrl: number
     caption: number
     congressId: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -52,6 +58,8 @@ export type InternationalScientificCongressGalleryItemMinAggregateInputType = {
   imageUrl?: true
   caption?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type InternationalScientificCongressGalleryItemMaxAggregateInputType = {
@@ -59,6 +67,8 @@ export type InternationalScientificCongressGalleryItemMaxAggregateInputType = {
   imageUrl?: true
   caption?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type InternationalScientificCongressGalleryItemCountAggregateInputType =
@@ -67,6 +77,8 @@ export type InternationalScientificCongressGalleryItemCountAggregateInputType =
     imageUrl?: true
     caption?: true
     congressId?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -171,6 +183,8 @@ export type InternationalScientificCongressGalleryItemGroupByOutputType = {
   imageUrl: string
   caption: string | null
   congressId: string
+  createdAt: Date
+  updatedAt: Date
   _count: InternationalScientificCongressGalleryItemCountAggregateOutputType | null
   _min: InternationalScientificCongressGalleryItemMinAggregateOutputType | null
   _max: InternationalScientificCongressGalleryItemMaxAggregateOutputType | null
@@ -221,6 +235,14 @@ export type InternationalScientificCongressGalleryItemWhereInput = {
   congressId?:
     | Prisma.StringFilter<'InternationalScientificCongressGalleryItem'>
     | string
+  createdAt?:
+    | Prisma.DateTimeFilter<'InternationalScientificCongressGalleryItem'>
+    | Date
+    | string
+  updatedAt?:
+    | Prisma.DateTimeFilter<'InternationalScientificCongressGalleryItem'>
+    | Date
+    | string
   congress?: Prisma.XOR<
     Prisma.InternationalScientificCongressScalarRelationFilter,
     Prisma.InternationalScientificCongressWhereInput
@@ -233,6 +255,8 @@ export type InternationalScientificCongressGalleryItemOrderByWithRelationInput =
     imageUrl?: Prisma.SortOrder
     caption?: Prisma.SortOrderInput | Prisma.SortOrder
     congressId?: Prisma.SortOrder
+    createdAt?: Prisma.SortOrder
+    updatedAt?: Prisma.SortOrder
     congress?: Prisma.InternationalScientificCongressOrderByWithRelationInput
   }
 
@@ -257,6 +281,14 @@ export type InternationalScientificCongressGalleryItemWhereUniqueInput =
       congressId?:
         | Prisma.StringFilter<'InternationalScientificCongressGalleryItem'>
         | string
+      createdAt?:
+        | Prisma.DateTimeFilter<'InternationalScientificCongressGalleryItem'>
+        | Date
+        | string
+      updatedAt?:
+        | Prisma.DateTimeFilter<'InternationalScientificCongressGalleryItem'>
+        | Date
+        | string
       congress?: Prisma.XOR<
         Prisma.InternationalScientificCongressScalarRelationFilter,
         Prisma.InternationalScientificCongressWhereInput
@@ -271,6 +303,8 @@ export type InternationalScientificCongressGalleryItemOrderByWithAggregationInpu
     imageUrl?: Prisma.SortOrder
     caption?: Prisma.SortOrderInput | Prisma.SortOrder
     congressId?: Prisma.SortOrder
+    createdAt?: Prisma.SortOrder
+    updatedAt?: Prisma.SortOrder
     _count?: Prisma.InternationalScientificCongressGalleryItemCountOrderByAggregateInput
     _max?: Prisma.InternationalScientificCongressGalleryItemMaxOrderByAggregateInput
     _min?: Prisma.InternationalScientificCongressGalleryItemMinOrderByAggregateInput
@@ -298,12 +332,22 @@ export type InternationalScientificCongressGalleryItemScalarWhereWithAggregatesI
     congressId?:
       | Prisma.StringWithAggregatesFilter<'InternationalScientificCongressGalleryItem'>
       | string
+    createdAt?:
+      | Prisma.DateTimeWithAggregatesFilter<'InternationalScientificCongressGalleryItem'>
+      | Date
+      | string
+    updatedAt?:
+      | Prisma.DateTimeWithAggregatesFilter<'InternationalScientificCongressGalleryItem'>
+      | Date
+      | string
   }
 
 export type InternationalScientificCongressGalleryItemCreateInput = {
   id?: string
   imageUrl: string
   caption?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   congress: Prisma.InternationalScientificCongressCreateNestedOneWithoutGalleriesInput
 }
 
@@ -312,12 +356,16 @@ export type InternationalScientificCongressGalleryItemUncheckedCreateInput = {
   imageUrl: string
   caption?: string | null
   congressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type InternationalScientificCongressGalleryItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   congress?: Prisma.InternationalScientificCongressUpdateOneRequiredWithoutGalleriesNestedInput
 }
 
@@ -326,6 +374,8 @@ export type InternationalScientificCongressGalleryItemUncheckedUpdateInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   congressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InternationalScientificCongressGalleryItemCreateManyInput = {
@@ -333,6 +383,8 @@ export type InternationalScientificCongressGalleryItemCreateManyInput = {
   imageUrl: string
   caption?: string | null
   congressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type InternationalScientificCongressGalleryItemUpdateManyMutationInput =
@@ -340,6 +392,8 @@ export type InternationalScientificCongressGalleryItemUpdateManyMutationInput =
     id?: Prisma.StringFieldUpdateOperationsInput | string
     imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
     caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 export type InternationalScientificCongressGalleryItemUncheckedUpdateManyInput =
@@ -348,6 +402,8 @@ export type InternationalScientificCongressGalleryItemUncheckedUpdateManyInput =
     imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
     caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
     congressId?: Prisma.StringFieldUpdateOperationsInput | string
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 export type InternationalScientificCongressGalleryItemListRelationFilter = {
@@ -367,6 +423,8 @@ export type InternationalScientificCongressGalleryItemCountOrderByAggregateInput
     imageUrl?: Prisma.SortOrder
     caption?: Prisma.SortOrder
     congressId?: Prisma.SortOrder
+    createdAt?: Prisma.SortOrder
+    updatedAt?: Prisma.SortOrder
   }
 
 export type InternationalScientificCongressGalleryItemMaxOrderByAggregateInput =
@@ -375,6 +433,8 @@ export type InternationalScientificCongressGalleryItemMaxOrderByAggregateInput =
     imageUrl?: Prisma.SortOrder
     caption?: Prisma.SortOrder
     congressId?: Prisma.SortOrder
+    createdAt?: Prisma.SortOrder
+    updatedAt?: Prisma.SortOrder
   }
 
 export type InternationalScientificCongressGalleryItemMinOrderByAggregateInput =
@@ -383,6 +443,8 @@ export type InternationalScientificCongressGalleryItemMinOrderByAggregateInput =
     imageUrl?: Prisma.SortOrder
     caption?: Prisma.SortOrder
     congressId?: Prisma.SortOrder
+    createdAt?: Prisma.SortOrder
+    updatedAt?: Prisma.SortOrder
   }
 
 export type InternationalScientificCongressGalleryItemCreateNestedManyWithoutCongressInput =
@@ -504,6 +566,8 @@ export type InternationalScientificCongressGalleryItemCreateWithoutCongressInput
     id?: string
     imageUrl: string
     caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
 export type InternationalScientificCongressGalleryItemUncheckedCreateWithoutCongressInput =
@@ -511,6 +575,8 @@ export type InternationalScientificCongressGalleryItemUncheckedCreateWithoutCong
     id?: string
     imageUrl: string
     caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
 export type InternationalScientificCongressGalleryItemCreateOrConnectWithoutCongressInput =
@@ -582,6 +648,14 @@ export type InternationalScientificCongressGalleryItemScalarWhereInput = {
   congressId?:
     | Prisma.StringFilter<'InternationalScientificCongressGalleryItem'>
     | string
+  createdAt?:
+    | Prisma.DateTimeFilter<'InternationalScientificCongressGalleryItem'>
+    | Date
+    | string
+  updatedAt?:
+    | Prisma.DateTimeFilter<'InternationalScientificCongressGalleryItem'>
+    | Date
+    | string
 }
 
 export type InternationalScientificCongressGalleryItemCreateManyCongressInput =
@@ -589,6 +663,8 @@ export type InternationalScientificCongressGalleryItemCreateManyCongressInput =
     id?: string
     imageUrl: string
     caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
 export type InternationalScientificCongressGalleryItemUpdateWithoutCongressInput =
@@ -596,6 +672,8 @@ export type InternationalScientificCongressGalleryItemUpdateWithoutCongressInput
     id?: Prisma.StringFieldUpdateOperationsInput | string
     imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
     caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 export type InternationalScientificCongressGalleryItemUncheckedUpdateWithoutCongressInput =
@@ -603,6 +681,8 @@ export type InternationalScientificCongressGalleryItemUncheckedUpdateWithoutCong
     id?: Prisma.StringFieldUpdateOperationsInput | string
     imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
     caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 export type InternationalScientificCongressGalleryItemUncheckedUpdateManyWithoutCongressInput =
@@ -610,6 +690,8 @@ export type InternationalScientificCongressGalleryItemUncheckedUpdateManyWithout
     id?: Prisma.StringFieldUpdateOperationsInput | string
     imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
     caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 export type InternationalScientificCongressGalleryItemSelect<
@@ -621,6 +703,8 @@ export type InternationalScientificCongressGalleryItemSelect<
     imageUrl?: boolean
     caption?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?:
       | boolean
       | Prisma.InternationalScientificCongressDefaultArgs<ExtArgs>
@@ -637,6 +721,8 @@ export type InternationalScientificCongressGalleryItemSelectCreateManyAndReturn<
     imageUrl?: boolean
     caption?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?:
       | boolean
       | Prisma.InternationalScientificCongressDefaultArgs<ExtArgs>
@@ -653,6 +739,8 @@ export type InternationalScientificCongressGalleryItemSelectUpdateManyAndReturn<
     imageUrl?: boolean
     caption?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?:
       | boolean
       | Prisma.InternationalScientificCongressDefaultArgs<ExtArgs>
@@ -665,13 +753,15 @@ export type InternationalScientificCongressGalleryItemSelectScalar = {
   imageUrl?: boolean
   caption?: boolean
   congressId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
 export type InternationalScientificCongressGalleryItemOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  'id' | 'imageUrl' | 'caption' | 'congressId',
+  'id' | 'imageUrl' | 'caption' | 'congressId' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['internationalScientificCongressGalleryItem']
 >
 export type InternationalScientificCongressGalleryItemInclude<
@@ -713,6 +803,8 @@ export type $InternationalScientificCongressGalleryItemPayload<
       imageUrl: string
       caption: string | null
       congressId: string
+      createdAt: Date
+      updatedAt: Date
     },
     ExtArgs['result']['internationalScientificCongressGalleryItem']
   >
@@ -1428,6 +1520,14 @@ export interface InternationalScientificCongressGalleryItemFieldRefs {
   readonly congressId: Prisma.FieldRef<
     'InternationalScientificCongressGalleryItem',
     'String'
+  >
+  readonly createdAt: Prisma.FieldRef<
+    'InternationalScientificCongressGalleryItem',
+    'DateTime'
+  >
+  readonly updatedAt: Prisma.FieldRef<
+    'InternationalScientificCongressGalleryItem',
+    'DateTime'
   >
 }
 

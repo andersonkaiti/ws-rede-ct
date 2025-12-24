@@ -29,6 +29,8 @@ export type RegionalCongressPartnerMinAggregateOutputType = {
   name: string | null
   logoUrl: string | null
   congressId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RegionalCongressPartnerMaxAggregateOutputType = {
@@ -36,6 +38,8 @@ export type RegionalCongressPartnerMaxAggregateOutputType = {
   name: string | null
   logoUrl: string | null
   congressId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RegionalCongressPartnerCountAggregateOutputType = {
@@ -43,6 +47,8 @@ export type RegionalCongressPartnerCountAggregateOutputType = {
   name: number
   logoUrl: number
   congressId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -51,6 +57,8 @@ export type RegionalCongressPartnerMinAggregateInputType = {
   name?: true
   logoUrl?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type RegionalCongressPartnerMaxAggregateInputType = {
@@ -58,6 +66,8 @@ export type RegionalCongressPartnerMaxAggregateInputType = {
   name?: true
   logoUrl?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type RegionalCongressPartnerCountAggregateInputType = {
@@ -65,6 +75,8 @@ export type RegionalCongressPartnerCountAggregateInputType = {
   name?: true
   logoUrl?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -158,6 +170,8 @@ export type RegionalCongressPartnerGroupByOutputType = {
   name: string
   logoUrl: string | null
   congressId: string
+  createdAt: Date
+  updatedAt: Date
   _count: RegionalCongressPartnerCountAggregateOutputType | null
   _min: RegionalCongressPartnerMinAggregateOutputType | null
   _max: RegionalCongressPartnerMaxAggregateOutputType | null
@@ -199,6 +213,8 @@ export type RegionalCongressPartnerWhereInput = {
     | string
     | null
   congressId?: Prisma.StringFilter<'RegionalCongressPartner'> | string
+  createdAt?: Prisma.DateTimeFilter<'RegionalCongressPartner'> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<'RegionalCongressPartner'> | Date | string
   congress?: Prisma.XOR<
     Prisma.RegionalCongressScalarRelationFilter,
     Prisma.RegionalCongressWhereInput
@@ -210,6 +226,8 @@ export type RegionalCongressPartnerOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   congress?: Prisma.RegionalCongressOrderByWithRelationInput
 }
 
@@ -229,6 +247,8 @@ export type RegionalCongressPartnerWhereUniqueInput = Prisma.AtLeast<
       | string
       | null
     congressId?: Prisma.StringFilter<'RegionalCongressPartner'> | string
+    createdAt?: Prisma.DateTimeFilter<'RegionalCongressPartner'> | Date | string
+    updatedAt?: Prisma.DateTimeFilter<'RegionalCongressPartner'> | Date | string
     congress?: Prisma.XOR<
       Prisma.RegionalCongressScalarRelationFilter,
       Prisma.RegionalCongressWhereInput
@@ -242,6 +262,8 @@ export type RegionalCongressPartnerOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.RegionalCongressPartnerCountOrderByAggregateInput
   _max?: Prisma.RegionalCongressPartnerMaxOrderByAggregateInput
   _min?: Prisma.RegionalCongressPartnerMinOrderByAggregateInput
@@ -264,12 +286,22 @@ export type RegionalCongressPartnerScalarWhereWithAggregatesInput = {
   congressId?:
     | Prisma.StringWithAggregatesFilter<'RegionalCongressPartner'>
     | string
+  createdAt?:
+    | Prisma.DateTimeWithAggregatesFilter<'RegionalCongressPartner'>
+    | Date
+    | string
+  updatedAt?:
+    | Prisma.DateTimeWithAggregatesFilter<'RegionalCongressPartner'>
+    | Date
+    | string
 }
 
 export type RegionalCongressPartnerCreateInput = {
   id?: string
   name: string
   logoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   congress: Prisma.RegionalCongressCreateNestedOneWithoutRegionalCongressPartnersInput
 }
 
@@ -278,12 +310,16 @@ export type RegionalCongressPartnerUncheckedCreateInput = {
   name: string
   logoUrl?: string | null
   congressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressPartnerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   congress?: Prisma.RegionalCongressUpdateOneRequiredWithoutRegionalCongressPartnersNestedInput
 }
 
@@ -292,6 +328,8 @@ export type RegionalCongressPartnerUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   congressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressPartnerCreateManyInput = {
@@ -299,12 +337,16 @@ export type RegionalCongressPartnerCreateManyInput = {
   name: string
   logoUrl?: string | null
   congressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressPartnerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressPartnerUncheckedUpdateManyInput = {
@@ -312,6 +354,8 @@ export type RegionalCongressPartnerUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   congressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressPartnerListRelationFilter = {
@@ -329,6 +373,8 @@ export type RegionalCongressPartnerCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RegionalCongressPartnerMaxOrderByAggregateInput = {
@@ -336,6 +382,8 @@ export type RegionalCongressPartnerMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RegionalCongressPartnerMinOrderByAggregateInput = {
@@ -343,6 +391,8 @@ export type RegionalCongressPartnerMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RegionalCongressPartnerCreateNestedManyWithoutCongressInput = {
@@ -461,12 +511,16 @@ export type RegionalCongressPartnerCreateWithoutCongressInput = {
   id?: string
   name: string
   logoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressPartnerUncheckedCreateWithoutCongressInput = {
   id?: string
   name: string
   logoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressPartnerCreateOrConnectWithoutCongressInput = {
@@ -527,30 +581,40 @@ export type RegionalCongressPartnerScalarWhereInput = {
     | string
     | null
   congressId?: Prisma.StringFilter<'RegionalCongressPartner'> | string
+  createdAt?: Prisma.DateTimeFilter<'RegionalCongressPartner'> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<'RegionalCongressPartner'> | Date | string
 }
 
 export type RegionalCongressPartnerCreateManyCongressInput = {
   id?: string
   name: string
   logoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressPartnerUpdateWithoutCongressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressPartnerUncheckedUpdateWithoutCongressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressPartnerUncheckedUpdateManyWithoutCongressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressPartnerSelect<
@@ -562,6 +626,8 @@ export type RegionalCongressPartnerSelect<
     name?: boolean
     logoUrl?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?: boolean | Prisma.RegionalCongressDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['regionalCongressPartner']
@@ -576,6 +642,8 @@ export type RegionalCongressPartnerSelectCreateManyAndReturn<
     name?: boolean
     logoUrl?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?: boolean | Prisma.RegionalCongressDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['regionalCongressPartner']
@@ -590,6 +658,8 @@ export type RegionalCongressPartnerSelectUpdateManyAndReturn<
     name?: boolean
     logoUrl?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?: boolean | Prisma.RegionalCongressDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['regionalCongressPartner']
@@ -600,13 +670,15 @@ export type RegionalCongressPartnerSelectScalar = {
   name?: boolean
   logoUrl?: boolean
   congressId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
 export type RegionalCongressPartnerOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  'id' | 'name' | 'logoUrl' | 'congressId',
+  'id' | 'name' | 'logoUrl' | 'congressId' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['regionalCongressPartner']
 >
 export type RegionalCongressPartnerInclude<
@@ -642,6 +714,8 @@ export type $RegionalCongressPartnerPayload<
       name: string
       logoUrl: string | null
       congressId: string
+      createdAt: Date
+      updatedAt: Date
     },
     ExtArgs['result']['regionalCongressPartner']
   >
@@ -1289,6 +1363,8 @@ export interface RegionalCongressPartnerFieldRefs {
   readonly name: Prisma.FieldRef<'RegionalCongressPartner', 'String'>
   readonly logoUrl: Prisma.FieldRef<'RegionalCongressPartner', 'String'>
   readonly congressId: Prisma.FieldRef<'RegionalCongressPartner', 'String'>
+  readonly createdAt: Prisma.FieldRef<'RegionalCongressPartner', 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<'RegionalCongressPartner', 'DateTime'>
 }
 
 // Custom InputTypes

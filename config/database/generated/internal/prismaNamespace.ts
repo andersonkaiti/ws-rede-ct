@@ -3635,6 +3635,8 @@ export const InternationalScientificCongressPartnerScalarFieldEnum = {
   name: 'name',
   logoUrl: 'logoUrl',
   congressId: 'congressId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
 } as const
 
 export type InternationalScientificCongressPartnerScalarFieldEnum =
@@ -3645,6 +3647,8 @@ export const InternationalScientificCongressGalleryItemScalarFieldEnum = {
   imageUrl: 'imageUrl',
   caption: 'caption',
   congressId: 'congressId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
 } as const
 
 export type InternationalScientificCongressGalleryItemScalarFieldEnum =
@@ -3676,6 +3680,8 @@ export const RegionalCongressPartnerScalarFieldEnum = {
   name: 'name',
   logoUrl: 'logoUrl',
   congressId: 'congressId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
 } as const
 
 export type RegionalCongressPartnerScalarFieldEnum =
@@ -3686,6 +3692,8 @@ export const RegionalCongressGalleryItemScalarFieldEnum = {
   imageUrl: 'imageUrl',
   caption: 'caption',
   congressId: 'congressId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
 } as const
 
 export type RegionalCongressGalleryItemScalarFieldEnum =

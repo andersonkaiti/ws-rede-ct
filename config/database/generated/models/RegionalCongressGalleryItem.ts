@@ -29,6 +29,8 @@ export type RegionalCongressGalleryItemMinAggregateOutputType = {
   imageUrl: string | null
   caption: string | null
   congressId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RegionalCongressGalleryItemMaxAggregateOutputType = {
@@ -36,6 +38,8 @@ export type RegionalCongressGalleryItemMaxAggregateOutputType = {
   imageUrl: string | null
   caption: string | null
   congressId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RegionalCongressGalleryItemCountAggregateOutputType = {
@@ -43,6 +47,8 @@ export type RegionalCongressGalleryItemCountAggregateOutputType = {
   imageUrl: number
   caption: number
   congressId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -51,6 +57,8 @@ export type RegionalCongressGalleryItemMinAggregateInputType = {
   imageUrl?: true
   caption?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type RegionalCongressGalleryItemMaxAggregateInputType = {
@@ -58,6 +66,8 @@ export type RegionalCongressGalleryItemMaxAggregateInputType = {
   imageUrl?: true
   caption?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type RegionalCongressGalleryItemCountAggregateInputType = {
@@ -65,6 +75,8 @@ export type RegionalCongressGalleryItemCountAggregateInputType = {
   imageUrl?: true
   caption?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -158,6 +170,8 @@ export type RegionalCongressGalleryItemGroupByOutputType = {
   imageUrl: string
   caption: string | null
   congressId: string
+  createdAt: Date
+  updatedAt: Date
   _count: RegionalCongressGalleryItemCountAggregateOutputType | null
   _min: RegionalCongressGalleryItemMinAggregateOutputType | null
   _max: RegionalCongressGalleryItemMaxAggregateOutputType | null
@@ -202,6 +216,14 @@ export type RegionalCongressGalleryItemWhereInput = {
     | string
     | null
   congressId?: Prisma.StringFilter<'RegionalCongressGalleryItem'> | string
+  createdAt?:
+    | Prisma.DateTimeFilter<'RegionalCongressGalleryItem'>
+    | Date
+    | string
+  updatedAt?:
+    | Prisma.DateTimeFilter<'RegionalCongressGalleryItem'>
+    | Date
+    | string
   congress?: Prisma.XOR<
     Prisma.RegionalCongressScalarRelationFilter,
     Prisma.RegionalCongressWhereInput
@@ -213,6 +235,8 @@ export type RegionalCongressGalleryItemOrderByWithRelationInput = {
   imageUrl?: Prisma.SortOrder
   caption?: Prisma.SortOrderInput | Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   congress?: Prisma.RegionalCongressOrderByWithRelationInput
 }
 
@@ -232,6 +256,14 @@ export type RegionalCongressGalleryItemWhereUniqueInput = Prisma.AtLeast<
       | string
       | null
     congressId?: Prisma.StringFilter<'RegionalCongressGalleryItem'> | string
+    createdAt?:
+      | Prisma.DateTimeFilter<'RegionalCongressGalleryItem'>
+      | Date
+      | string
+    updatedAt?:
+      | Prisma.DateTimeFilter<'RegionalCongressGalleryItem'>
+      | Date
+      | string
     congress?: Prisma.XOR<
       Prisma.RegionalCongressScalarRelationFilter,
       Prisma.RegionalCongressWhereInput
@@ -245,6 +277,8 @@ export type RegionalCongressGalleryItemOrderByWithAggregationInput = {
   imageUrl?: Prisma.SortOrder
   caption?: Prisma.SortOrderInput | Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.RegionalCongressGalleryItemCountOrderByAggregateInput
   _max?: Prisma.RegionalCongressGalleryItemMaxOrderByAggregateInput
   _min?: Prisma.RegionalCongressGalleryItemMinOrderByAggregateInput
@@ -269,12 +303,22 @@ export type RegionalCongressGalleryItemScalarWhereWithAggregatesInput = {
   congressId?:
     | Prisma.StringWithAggregatesFilter<'RegionalCongressGalleryItem'>
     | string
+  createdAt?:
+    | Prisma.DateTimeWithAggregatesFilter<'RegionalCongressGalleryItem'>
+    | Date
+    | string
+  updatedAt?:
+    | Prisma.DateTimeWithAggregatesFilter<'RegionalCongressGalleryItem'>
+    | Date
+    | string
 }
 
 export type RegionalCongressGalleryItemCreateInput = {
   id?: string
   imageUrl: string
   caption?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   congress: Prisma.RegionalCongressCreateNestedOneWithoutRegionalCongressGalleryItemsInput
 }
 
@@ -283,12 +327,16 @@ export type RegionalCongressGalleryItemUncheckedCreateInput = {
   imageUrl: string
   caption?: string | null
   congressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressGalleryItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   congress?: Prisma.RegionalCongressUpdateOneRequiredWithoutRegionalCongressGalleryItemsNestedInput
 }
 
@@ -297,6 +345,8 @@ export type RegionalCongressGalleryItemUncheckedUpdateInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   congressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressGalleryItemCreateManyInput = {
@@ -304,12 +354,16 @@ export type RegionalCongressGalleryItemCreateManyInput = {
   imageUrl: string
   caption?: string | null
   congressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressGalleryItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressGalleryItemUncheckedUpdateManyInput = {
@@ -317,6 +371,8 @@ export type RegionalCongressGalleryItemUncheckedUpdateManyInput = {
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   congressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressGalleryItemListRelationFilter = {
@@ -334,6 +390,8 @@ export type RegionalCongressGalleryItemCountOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   caption?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RegionalCongressGalleryItemMaxOrderByAggregateInput = {
@@ -341,6 +399,8 @@ export type RegionalCongressGalleryItemMaxOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   caption?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RegionalCongressGalleryItemMinOrderByAggregateInput = {
@@ -348,6 +408,8 @@ export type RegionalCongressGalleryItemMinOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   caption?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RegionalCongressGalleryItemCreateNestedManyWithoutCongressInput = {
@@ -466,12 +528,16 @@ export type RegionalCongressGalleryItemCreateWithoutCongressInput = {
   id?: string
   imageUrl: string
   caption?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressGalleryItemUncheckedCreateWithoutCongressInput = {
   id?: string
   imageUrl: string
   caption?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressGalleryItemCreateOrConnectWithoutCongressInput = {
@@ -535,24 +601,38 @@ export type RegionalCongressGalleryItemScalarWhereInput = {
     | string
     | null
   congressId?: Prisma.StringFilter<'RegionalCongressGalleryItem'> | string
+  createdAt?:
+    | Prisma.DateTimeFilter<'RegionalCongressGalleryItem'>
+    | Date
+    | string
+  updatedAt?:
+    | Prisma.DateTimeFilter<'RegionalCongressGalleryItem'>
+    | Date
+    | string
 }
 
 export type RegionalCongressGalleryItemCreateManyCongressInput = {
   id?: string
   imageUrl: string
   caption?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RegionalCongressGalleryItemUpdateWithoutCongressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressGalleryItemUncheckedUpdateWithoutCongressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RegionalCongressGalleryItemUncheckedUpdateManyWithoutCongressInput =
@@ -560,6 +640,8 @@ export type RegionalCongressGalleryItemUncheckedUpdateManyWithoutCongressInput =
     id?: Prisma.StringFieldUpdateOperationsInput | string
     imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
     caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 export type RegionalCongressGalleryItemSelect<
@@ -571,6 +653,8 @@ export type RegionalCongressGalleryItemSelect<
     imageUrl?: boolean
     caption?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?: boolean | Prisma.RegionalCongressDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['regionalCongressGalleryItem']
@@ -585,6 +669,8 @@ export type RegionalCongressGalleryItemSelectCreateManyAndReturn<
     imageUrl?: boolean
     caption?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?: boolean | Prisma.RegionalCongressDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['regionalCongressGalleryItem']
@@ -599,6 +685,8 @@ export type RegionalCongressGalleryItemSelectUpdateManyAndReturn<
     imageUrl?: boolean
     caption?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?: boolean | Prisma.RegionalCongressDefaultArgs<ExtArgs>
   },
   ExtArgs['result']['regionalCongressGalleryItem']
@@ -609,13 +697,15 @@ export type RegionalCongressGalleryItemSelectScalar = {
   imageUrl?: boolean
   caption?: boolean
   congressId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
 export type RegionalCongressGalleryItemOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  'id' | 'imageUrl' | 'caption' | 'congressId',
+  'id' | 'imageUrl' | 'caption' | 'congressId' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['regionalCongressGalleryItem']
 >
 export type RegionalCongressGalleryItemInclude<
@@ -651,6 +741,8 @@ export type $RegionalCongressGalleryItemPayload<
       imageUrl: string
       caption: string | null
       congressId: string
+      createdAt: Date
+      updatedAt: Date
     },
     ExtArgs['result']['regionalCongressGalleryItem']
   >
@@ -1320,6 +1412,8 @@ export interface RegionalCongressGalleryItemFieldRefs {
   readonly imageUrl: Prisma.FieldRef<'RegionalCongressGalleryItem', 'String'>
   readonly caption: Prisma.FieldRef<'RegionalCongressGalleryItem', 'String'>
   readonly congressId: Prisma.FieldRef<'RegionalCongressGalleryItem', 'String'>
+  readonly createdAt: Prisma.FieldRef<'RegionalCongressGalleryItem', 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<'RegionalCongressGalleryItem', 'DateTime'>
 }
 
 // Custom InputTypes

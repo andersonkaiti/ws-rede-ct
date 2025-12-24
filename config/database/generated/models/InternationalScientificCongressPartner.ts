@@ -29,6 +29,8 @@ export type InternationalScientificCongressPartnerMinAggregateOutputType = {
   name: string | null
   logoUrl: string | null
   congressId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type InternationalScientificCongressPartnerMaxAggregateOutputType = {
@@ -36,6 +38,8 @@ export type InternationalScientificCongressPartnerMaxAggregateOutputType = {
   name: string | null
   logoUrl: string | null
   congressId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type InternationalScientificCongressPartnerCountAggregateOutputType = {
@@ -43,6 +47,8 @@ export type InternationalScientificCongressPartnerCountAggregateOutputType = {
   name: number
   logoUrl: number
   congressId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -51,6 +57,8 @@ export type InternationalScientificCongressPartnerMinAggregateInputType = {
   name?: true
   logoUrl?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type InternationalScientificCongressPartnerMaxAggregateInputType = {
@@ -58,6 +66,8 @@ export type InternationalScientificCongressPartnerMaxAggregateInputType = {
   name?: true
   logoUrl?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type InternationalScientificCongressPartnerCountAggregateInputType = {
@@ -65,6 +75,8 @@ export type InternationalScientificCongressPartnerCountAggregateInputType = {
   name?: true
   logoUrl?: true
   congressId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -165,6 +177,8 @@ export type InternationalScientificCongressPartnerGroupByOutputType = {
   name: string
   logoUrl: string | null
   congressId: string
+  createdAt: Date
+  updatedAt: Date
   _count: InternationalScientificCongressPartnerCountAggregateOutputType | null
   _min: InternationalScientificCongressPartnerMinAggregateOutputType | null
   _max: InternationalScientificCongressPartnerMaxAggregateOutputType | null
@@ -211,6 +225,14 @@ export type InternationalScientificCongressPartnerWhereInput = {
   congressId?:
     | Prisma.StringFilter<'InternationalScientificCongressPartner'>
     | string
+  createdAt?:
+    | Prisma.DateTimeFilter<'InternationalScientificCongressPartner'>
+    | Date
+    | string
+  updatedAt?:
+    | Prisma.DateTimeFilter<'InternationalScientificCongressPartner'>
+    | Date
+    | string
   congress?: Prisma.XOR<
     Prisma.InternationalScientificCongressScalarRelationFilter,
     Prisma.InternationalScientificCongressWhereInput
@@ -222,6 +244,8 @@ export type InternationalScientificCongressPartnerOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   congress?: Prisma.InternationalScientificCongressOrderByWithRelationInput
 }
 
@@ -246,6 +270,14 @@ export type InternationalScientificCongressPartnerWhereUniqueInput =
       congressId?:
         | Prisma.StringFilter<'InternationalScientificCongressPartner'>
         | string
+      createdAt?:
+        | Prisma.DateTimeFilter<'InternationalScientificCongressPartner'>
+        | Date
+        | string
+      updatedAt?:
+        | Prisma.DateTimeFilter<'InternationalScientificCongressPartner'>
+        | Date
+        | string
       congress?: Prisma.XOR<
         Prisma.InternationalScientificCongressScalarRelationFilter,
         Prisma.InternationalScientificCongressWhereInput
@@ -260,6 +292,8 @@ export type InternationalScientificCongressPartnerOrderByWithAggregationInput =
     name?: Prisma.SortOrder
     logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
     congressId?: Prisma.SortOrder
+    createdAt?: Prisma.SortOrder
+    updatedAt?: Prisma.SortOrder
     _count?: Prisma.InternationalScientificCongressPartnerCountOrderByAggregateInput
     _max?: Prisma.InternationalScientificCongressPartnerMaxOrderByAggregateInput
     _min?: Prisma.InternationalScientificCongressPartnerMinOrderByAggregateInput
@@ -287,12 +321,22 @@ export type InternationalScientificCongressPartnerScalarWhereWithAggregatesInput
     congressId?:
       | Prisma.StringWithAggregatesFilter<'InternationalScientificCongressPartner'>
       | string
+    createdAt?:
+      | Prisma.DateTimeWithAggregatesFilter<'InternationalScientificCongressPartner'>
+      | Date
+      | string
+    updatedAt?:
+      | Prisma.DateTimeWithAggregatesFilter<'InternationalScientificCongressPartner'>
+      | Date
+      | string
   }
 
 export type InternationalScientificCongressPartnerCreateInput = {
   id?: string
   name: string
   logoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   congress: Prisma.InternationalScientificCongressCreateNestedOneWithoutPartnersInput
 }
 
@@ -301,12 +345,16 @@ export type InternationalScientificCongressPartnerUncheckedCreateInput = {
   name: string
   logoUrl?: string | null
   congressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type InternationalScientificCongressPartnerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   congress?: Prisma.InternationalScientificCongressUpdateOneRequiredWithoutPartnersNestedInput
 }
 
@@ -315,6 +363,8 @@ export type InternationalScientificCongressPartnerUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   congressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InternationalScientificCongressPartnerCreateManyInput = {
@@ -322,12 +372,16 @@ export type InternationalScientificCongressPartnerCreateManyInput = {
   name: string
   logoUrl?: string | null
   congressId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type InternationalScientificCongressPartnerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InternationalScientificCongressPartnerUncheckedUpdateManyInput = {
@@ -335,6 +389,8 @@ export type InternationalScientificCongressPartnerUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   congressId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InternationalScientificCongressPartnerListRelationFilter = {
@@ -353,6 +409,8 @@ export type InternationalScientificCongressPartnerCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type InternationalScientificCongressPartnerMaxOrderByAggregateInput = {
@@ -360,6 +418,8 @@ export type InternationalScientificCongressPartnerMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type InternationalScientificCongressPartnerMinOrderByAggregateInput = {
@@ -367,6 +427,8 @@ export type InternationalScientificCongressPartnerMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   congressId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type InternationalScientificCongressPartnerCreateNestedManyWithoutCongressInput =
@@ -487,6 +549,8 @@ export type InternationalScientificCongressPartnerCreateWithoutCongressInput = {
   id?: string
   name: string
   logoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type InternationalScientificCongressPartnerUncheckedCreateWithoutCongressInput =
@@ -494,6 +558,8 @@ export type InternationalScientificCongressPartnerUncheckedCreateWithoutCongress
     id?: string
     name: string
     logoUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
 export type InternationalScientificCongressPartnerCreateOrConnectWithoutCongressInput =
@@ -561,18 +627,30 @@ export type InternationalScientificCongressPartnerScalarWhereInput = {
   congressId?:
     | Prisma.StringFilter<'InternationalScientificCongressPartner'>
     | string
+  createdAt?:
+    | Prisma.DateTimeFilter<'InternationalScientificCongressPartner'>
+    | Date
+    | string
+  updatedAt?:
+    | Prisma.DateTimeFilter<'InternationalScientificCongressPartner'>
+    | Date
+    | string
 }
 
 export type InternationalScientificCongressPartnerCreateManyCongressInput = {
   id?: string
   name: string
   logoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type InternationalScientificCongressPartnerUpdateWithoutCongressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InternationalScientificCongressPartnerUncheckedUpdateWithoutCongressInput =
@@ -580,6 +658,8 @@ export type InternationalScientificCongressPartnerUncheckedUpdateWithoutCongress
     id?: Prisma.StringFieldUpdateOperationsInput | string
     name?: Prisma.StringFieldUpdateOperationsInput | string
     logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 export type InternationalScientificCongressPartnerUncheckedUpdateManyWithoutCongressInput =
@@ -587,6 +667,8 @@ export type InternationalScientificCongressPartnerUncheckedUpdateManyWithoutCong
     id?: Prisma.StringFieldUpdateOperationsInput | string
     name?: Prisma.StringFieldUpdateOperationsInput | string
     logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 export type InternationalScientificCongressPartnerSelect<
@@ -598,6 +680,8 @@ export type InternationalScientificCongressPartnerSelect<
     name?: boolean
     logoUrl?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?:
       | boolean
       | Prisma.InternationalScientificCongressDefaultArgs<ExtArgs>
@@ -614,6 +698,8 @@ export type InternationalScientificCongressPartnerSelectCreateManyAndReturn<
     name?: boolean
     logoUrl?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?:
       | boolean
       | Prisma.InternationalScientificCongressDefaultArgs<ExtArgs>
@@ -630,6 +716,8 @@ export type InternationalScientificCongressPartnerSelectUpdateManyAndReturn<
     name?: boolean
     logoUrl?: boolean
     congressId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     congress?:
       | boolean
       | Prisma.InternationalScientificCongressDefaultArgs<ExtArgs>
@@ -642,13 +730,15 @@ export type InternationalScientificCongressPartnerSelectScalar = {
   name?: boolean
   logoUrl?: boolean
   congressId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
 export type InternationalScientificCongressPartnerOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  'id' | 'name' | 'logoUrl' | 'congressId',
+  'id' | 'name' | 'logoUrl' | 'congressId' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['internationalScientificCongressPartner']
 >
 export type InternationalScientificCongressPartnerInclude<
@@ -690,6 +780,8 @@ export type $InternationalScientificCongressPartnerPayload<
       name: string
       logoUrl: string | null
       congressId: string
+      createdAt: Date
+      updatedAt: Date
     },
     ExtArgs['result']['internationalScientificCongressPartner']
   >
@@ -1389,6 +1481,14 @@ export interface InternationalScientificCongressPartnerFieldRefs {
   readonly congressId: Prisma.FieldRef<
     'InternationalScientificCongressPartner',
     'String'
+  >
+  readonly createdAt: Prisma.FieldRef<
+    'InternationalScientificCongressPartner',
+    'DateTime'
+  >
+  readonly updatedAt: Prisma.FieldRef<
+    'InternationalScientificCongressPartner',
+    'DateTime'
   >
 }
 
