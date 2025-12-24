@@ -139,9 +139,11 @@ export class CertificationRepository implements ICertificationRepository {
           },
         },
       },
+      orderBy: {
+        updatedAt: orderBy,
+      },
       skip: offset,
       take: limit,
-      orderBy: orderBy ? { updatedAt: orderBy } : { updatedAt: 'desc' },
     })
   }
 

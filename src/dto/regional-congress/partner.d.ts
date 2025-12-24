@@ -7,13 +7,14 @@ export interface ICreateRegionalCongressPartnerDTO {
 }
 
 export interface IFindAllRegionalCongressPartnersByCongressIdDTO {
-  pagination?: {
-    offset: number
-    limit: number
+  pagination: {
+    offset?: number
+    limit?: number
   }
   filter: {
     name?: string
     congressId: string
+    orderBy?: 'asc' | 'desc'
   }
 }
 

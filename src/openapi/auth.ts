@@ -157,7 +157,7 @@ export const authUserRegistry: RouteConfig = {
               orcid: z.string().nullable(),
               phone: z.string().nullable(),
               lattesUrl: z.string().nullable(),
-              role: z.nativeEnum(UserRole),
+              role: z.enum(UserRole),
             })
             .nullable(),
         },
@@ -218,8 +218,8 @@ export const authUserNewsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             news: z.object({
               content: z.string(),
               id: z.string(),
@@ -308,8 +308,8 @@ export const authUserCertificationsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             certifications: z.object({
               description: z.string(),
               id: z.string(),
@@ -367,13 +367,13 @@ export const authUserPendenciesRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             pendencies: z.object({
               id: z.string(),
               title: z.string(),
               description: z.string(),
-              status: z.nativeEnum(PendencyStatus),
+              status: z.enum(PendencyStatus),
               createdAt: z.date(),
               updatedAt: z.date(),
               userId: z.string(),

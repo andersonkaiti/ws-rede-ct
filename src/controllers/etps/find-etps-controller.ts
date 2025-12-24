@@ -5,14 +5,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IETPRepository } from '../../repositories/etp/ietp-repository.d.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
 
 extendZodWithOpenApi(z)
 
 export const findETPsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   code: z.string().optional(),
   title: z.string().optional(),
   description: z.string().optional(),
@@ -26,7 +24,7 @@ export class FindETPsController {
   async handle(req: Request, res: Response) {
     const { page, limit, ...filter } = findETPsSchema.parse(req.query)
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [etps, totalETPs] = await Promise.all([
       this.etpRepository.find({
@@ -41,7 +39,7 @@ export class FindETPsController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalETPs / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(totalETPs / limit), 1) : 1
 
     res.status(HttpStatus.OK).json({
       page,

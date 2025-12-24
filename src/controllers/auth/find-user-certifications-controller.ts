@@ -5,13 +5,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 6
 
 extendZodWithOpenApi(z)
 
 export const findAuthenticatedUserCertificationsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
+  limit: z.coerce.number().optional(),
 
   title: z.string().optional(),
   description: z.string().optional(),
@@ -27,7 +26,7 @@ export class FindAuthenticatedUserCertificationsController {
     const { title, description, limit, orderBy, page } =
       findAuthenticatedUserCertificationsSchema.parse(req.query)
 
-    const offset = page * limit - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const authenticatedUserId = req.user.id
 
@@ -53,7 +52,7 @@ export class FindAuthenticatedUserCertificationsController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(count / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(count / limit), 1) : 1
 
     return res.status(HttpStatus.OK).json({
       page,

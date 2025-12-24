@@ -5,14 +5,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { ICourseRepository } from '../../repositories/course/icourse-repository.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 6
 
 extendZodWithOpenApi(z)
 
 export const findCoursesControllerSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   description: z.string().optional(),
   coordinator: z.string().optional(),
@@ -27,7 +25,7 @@ export class FindCoursesController {
       req.query,
     )
 
-    const offset = page * limit - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [courses, totalCourses] = await Promise.all([
       this.courseRepository.find({
@@ -43,7 +41,7 @@ export class FindCoursesController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalCourses / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(totalCourses / limit), 1) : 1
 
     return res.status(HttpStatus.OK).json({
       page,

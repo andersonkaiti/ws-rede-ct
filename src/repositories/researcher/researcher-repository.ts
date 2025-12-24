@@ -35,7 +35,7 @@ export class ResearcherRepository implements IResearcherRepository {
   }
 
   async find({
-    pagination,
+    pagination: { offset, limit },
     filter: {
       biography,
       degrees,
@@ -43,11 +43,11 @@ export class ResearcherRepository implements IResearcherRepository {
       institutions,
       mainEtps,
       occupations,
-      orderBy,
       registrationNumber,
       seniority,
       userId,
       userName,
+      orderBy,
     },
   }: IFindAllResearchersDTO) {
     const where: Prisma.ResearcherWhereInput = {}
@@ -154,10 +154,8 @@ export class ResearcherRepository implements IResearcherRepository {
       orderBy: {
         updatedAt: orderBy,
       },
-      ...(pagination && {
-        skip: pagination.offset,
-        take: pagination.limit,
-      }),
+      skip: offset,
+      take: limit,
     })
   }
 

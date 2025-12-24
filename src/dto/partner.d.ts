@@ -12,8 +12,8 @@ export interface ICreatePartnerDTO {
 
 export interface IFindAllPartnerDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     name?: string

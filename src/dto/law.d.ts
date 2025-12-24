@@ -7,9 +7,9 @@ export interface ICreateLawDTO {
 }
 
 export interface IFindAllLawsDTO {
-  pagination?: {
-    offset: number
-    limit: number
+  pagination: {
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string

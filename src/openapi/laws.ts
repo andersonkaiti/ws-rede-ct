@@ -81,7 +81,7 @@ export const findLawsRegistry: RouteConfig = {
       limit: z.coerce.number().optional(),
       title: z.string().optional(),
       country: z.string().optional(),
-      orderBy: z.enum(['asc', 'desc']).optional(),
+      orderBy: z.enum(['asc', 'desc']).default('desc'),
     }),
   },
   responses: {
@@ -93,8 +93,8 @@ export const findLawsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             laws: z.array(lawSchema),
           }),
         },

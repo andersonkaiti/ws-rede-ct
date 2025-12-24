@@ -16,8 +16,8 @@ export interface ICreateMuseumDTO {
 
 export interface IFindAllMuseumDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     name?: string

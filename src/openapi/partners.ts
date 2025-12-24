@@ -103,8 +103,8 @@ export const findPartnersRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             partners: z.array(partnerSchema),
           }),
         },

@@ -14,8 +14,8 @@ export interface IUpdateNewsDTO
 
 export interface IFindAllDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string
@@ -28,8 +28,8 @@ export interface IFindAllDTO {
 export interface IFindNewsByAuthorIdDTO {
   authorId: string
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     orderBy?: 'asc' | 'desc'

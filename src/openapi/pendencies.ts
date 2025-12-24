@@ -85,14 +85,14 @@ export const findPendenciesRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             pendencies: z.array(
               z.object({
                 id: z.string(),
                 title: z.string(),
                 description: z.string().nullable(),
-                status: z.nativeEnum(PendencyStatus),
+                status: z.enum(PendencyStatus),
                 dueDate: z.date().nullable(),
                 documentUrl: z.string(),
                 userId: z.string(),
@@ -149,7 +149,7 @@ export const findPendencyByIdRegistry: RouteConfig = {
               id: z.string(),
               title: z.string(),
               description: z.string().nullable(),
-              status: z.nativeEnum(PendencyStatus),
+              status: z.enum(PendencyStatus),
               dueDate: z.date().nullable(),
               documentUrl: z.string(),
               userId: z.string(),

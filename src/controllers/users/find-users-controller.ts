@@ -4,11 +4,14 @@ import z from 'zod'
 import { HttpStatus } from '../../@types/status-code.ts'
 import type { UserRepository } from '../../repositories/user/user-repository.ts'
 
+const DEFAULT_PAGE = 1
+
 extendZodWithOpenApi(z)
 
 export const findUsersQuerySchema = z.object({
-  page: z.coerce.number().min(1).optional(),
-  limit: z.coerce.number().min(1).optional(),
+  page: z.coerce.number().min(1).default(DEFAULT_PAGE),
+  limit: z.coerce.number().optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
   name: z.string().optional(),
   emailAddress: z.string().optional(),
   phone: z.string().optional(),
@@ -22,40 +25,26 @@ export class FindUsersController {
   async handle(req: Request, res: Response) {
     const { page, limit, ...filter } = findUsersQuerySchema.parse(req.query)
 
-    const hasPagination = page !== undefined && limit !== undefined
-
-    const pagination = hasPagination
-      ? {
-          offset: (page - 1) * limit,
-          limit,
-        }
-      : undefined
+    const offset = limit ? limit * page - limit : undefined
 
     const users = await this.userRepository.find({
-      pagination,
+      pagination: {
+        offset,
+        limit,
+      },
       filter,
     })
-
-    if (!hasPagination) {
-      return res.status(HttpStatus.OK).json({
-        page: null,
-        totalPages: null,
-        offset: null,
-        limit: null,
-        users,
-      })
-    }
 
     const totalUsers = await this.userRepository.count({
       filter,
     })
 
-    const totalPages = Math.max(Math.ceil(totalUsers / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(totalUsers / limit), 1) : 1
 
     res.status(HttpStatus.OK).json({
       page,
       totalPages,
-      offset: (page - 1) * limit,
+      offset,
       limit,
       users,
     })

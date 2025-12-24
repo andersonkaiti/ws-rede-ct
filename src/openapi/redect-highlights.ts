@@ -94,8 +94,8 @@ export const findRedeCTHighlightsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             highlights: z.array(redectHighlightSchema),
           }),
         },

@@ -5,14 +5,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IResearcherRepository } from '../../repositories/researcher/iresearcher-repository.d.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
 
 extendZodWithOpenApi(z)
 
 export const findResearchersSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   userId: z.string().optional(),
   registrationNumber: z.string().optional(),
   name: z.string().optional(),
@@ -31,7 +29,7 @@ export class FindResearchersController {
   async handle(req: Request, res: Response) {
     const { page, limit, ...filter } = findResearchersSchema.parse(req.query)
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [researchers, totalResearchers] = await Promise.all([
       this.researcherRepository.find({
@@ -52,7 +50,9 @@ export class FindResearchersController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalResearchers / limit), 1)
+    const totalPages = limit
+      ? Math.max(Math.ceil(totalResearchers / limit), 1)
+      : 1
 
     res.status(HttpStatus.OK).json({
       page,

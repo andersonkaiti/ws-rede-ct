@@ -5,17 +5,16 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IInternationalScientificCongressRepository } from '../../repositories/international-scientific-congress/iinternational-scientific-congress-repository.d.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 10
 
 extendZodWithOpenApi(z)
 
 export const findInternationalScientificCongressSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   edition: z.coerce.number().int().positive().optional(),
   location: z.string().optional(),
-  orderBy: z.enum(['asc', 'desc']).optional(),
+  orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
 export class FindInternationalScientificCongressesController {
@@ -27,7 +26,7 @@ export class FindInternationalScientificCongressesController {
     const { page, limit, ...filter } =
       findInternationalScientificCongressSchema.parse(req.query)
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [congresses, totalCongresses] = await Promise.all([
       this.internationalScientificCongressRepository.find({
@@ -42,7 +41,9 @@ export class FindInternationalScientificCongressesController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalCongresses / limit), 1)
+    const totalPages = limit
+      ? Math.max(Math.ceil(totalCongresses / limit), 1)
+      : 1
 
     res.status(HttpStatus.OK).json({
       page,

@@ -98,7 +98,13 @@ export const findCongressPartnersByCongressIdRegistry: RouteConfig = {
       summary: 'Congress Partners Retrieved',
       content: {
         'application/json': {
-          schema: z.array(congressPartnerSchema),
+          schema: z.object({
+            page: z.number(),
+            totalPages: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
+            partners: z.array(congressPartnerSchema),
+          }),
         },
       },
     },

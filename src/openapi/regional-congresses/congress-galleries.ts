@@ -99,7 +99,13 @@ export const findCongressGalleriesByCongressIdRegistry: RouteConfig = {
       summary: 'Congress Galleries Retrieved',
       content: {
         'application/json': {
-          schema: z.array(congressGallerySchema),
+          schema: z.object({
+            page: z.number(),
+            limit: z.number().optional(),
+            total: z.number(),
+            totalPages: z.number(),
+            galleryImages: z.array(congressGallerySchema),
+          }),
         },
       },
     },

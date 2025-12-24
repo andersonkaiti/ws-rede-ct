@@ -11,8 +11,8 @@ export interface ICreatePendencyDTO {
 
 export interface IFindPendenciesDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string
@@ -26,8 +26,8 @@ export interface IFindPendenciesDTO {
 export interface IFindByUserIdDTO {
   userId: string
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string

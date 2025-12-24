@@ -13,8 +13,8 @@ export interface ICreateETPDTO {
 
 export interface IFindAllETPsDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     code?: string

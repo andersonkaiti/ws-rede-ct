@@ -11,8 +11,8 @@ export interface ICreateWebinarDTO {
 
 export interface IFindWebinarsDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string
@@ -24,6 +24,7 @@ export interface IFindWebinarsDTO {
 export interface IUpdateWebinarDTO
   extends Partial<Omit<Webinar, 'createdAt' | 'updatedAt'>> {
   id: string
+  guestIds?: string[]
 }
 
 export interface ICountWebinarsDTO {

@@ -7,9 +7,9 @@ export interface ICreateWorkGroupTeamMemberDTO {
 }
 
 export interface IFindAllWorkGroupTeamMembersDTO {
-  pagination?: {
-    offset: number
-    limit: number
+  pagination: {
+    offset?: number
+    limit?: number
   }
   filter: {
     role?: string

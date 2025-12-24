@@ -15,7 +15,7 @@ const inMemoriamSchema = z.object({
   deathDate: z.date(),
   biography: z.string().nullable(),
   photoUrl: z.string().nullable(),
-  role: z.nativeEnum(InMemoriamRole),
+  role: z.enum(InMemoriamRole),
   createdAt: z.date(),
   updatedAt: z.date(),
 })
@@ -106,8 +106,8 @@ export const findInMemoriamsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             inMemoriam: z.array(inMemoriamSchema),
           }),
         },

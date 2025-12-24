@@ -41,7 +41,10 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
     })
   }
 
-  async find({ filter: { role, orderBy } }: IFindAllSDHCTeamMembersDTO) {
+  async find({
+    pagination: { offset, limit },
+    filter: { role, orderBy },
+  }: IFindAllSDHCTeamMembersDTO) {
     const where: Prisma.SDHCTeamMemberWhereInput = {}
 
     if (role) {
@@ -60,23 +63,11 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
           },
         },
       },
-      orderBy: orderBy
-        ? [
-            {
-              order: 'asc',
-            },
-            {
-              updatedAt: orderBy,
-            },
-          ]
-        : [
-            {
-              order: 'asc',
-            },
-            {
-              updatedAt: 'desc',
-            },
-          ],
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
     })
   }
 

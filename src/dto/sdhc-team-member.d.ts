@@ -8,6 +8,10 @@ export interface ICreateSDHCTeamMemberDTO {
 }
 
 export interface IFindAllSDHCTeamMembersDTO {
+  pagination: {
+    offset?: number
+    limit?: number
+  }
   filter: {
     role?: string
     orderBy?: 'asc' | 'desc'

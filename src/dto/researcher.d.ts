@@ -17,9 +17,9 @@ export interface ICreateResearcherDTO {
 }
 
 export interface IFindAllResearchersDTO {
-  pagination?: {
-    offset: number
-    limit: number
+  pagination: {
+    offset?: number
+    limit?: number
   }
   filter: {
     registrationNumber?: string

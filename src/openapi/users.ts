@@ -27,7 +27,7 @@ export const findUserRegistry: RouteConfig = {
             name: z.string(),
             createdAt: z.date(),
             updatedAt: z.date(),
-            role: z.nativeEnum(UserRole),
+            role: z.enum(UserRole),
             lattesUrl: z.string().nullable(),
             orcid: z.string().nullable(),
             phone: z.string().nullable(),
@@ -204,15 +204,15 @@ export const findUsersRegistry: RouteConfig = {
           schema: z.object({
             page: z.number().nullable(),
             totalPages: z.number().nullable(),
-            offset: z.number().nullable(),
-            limit: z.number().nullable(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             users: z.array(
               z.object({
                 id: z.string(),
                 name: z.string(),
                 createdAt: z.date(),
                 updatedAt: z.date(),
-                role: z.nativeEnum(UserRole),
+                role: z.enum(UserRole),
                 lattesUrl: z.url().nullable(),
                 orcid: z.string().nullable(),
                 phone: z.string().nullable(),

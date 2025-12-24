@@ -14,8 +14,8 @@ export interface ICreateInMemoriamDTO {
 
 export interface IFindAllInMemoriamDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     name?: string

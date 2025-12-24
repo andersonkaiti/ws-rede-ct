@@ -80,7 +80,9 @@ export class RegionalCongressRepository implements IRegionalCongressRepository {
         regionalCongressPartners: true,
         regionalCongressGalleryItems: true,
       },
-      orderBy: orderBy ? { startDate: orderBy } : { startDate: 'desc' },
+      orderBy: {
+        startDate: orderBy,
+      },
       skip: offset,
       take: limit,
     })

@@ -97,8 +97,8 @@ export const findCertificationsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             certifications: z.array(
               z.object({
                 description: z.string(),
@@ -118,7 +118,7 @@ export const findCertificationsRegistry: RouteConfig = {
                   orcid: z.string().nullable(),
                   phone: z.string().nullable(),
                   lattesUrl: z.url().nullable(),
-                  role: z.nativeEnum(UserRole),
+                  role: z.enum(UserRole),
                 }),
               }),
             ),

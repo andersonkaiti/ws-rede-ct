@@ -17,8 +17,8 @@ export interface ICreateRegionalCongressDTO {
 
 export interface IFindAllRegionalCongressDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     title?: string

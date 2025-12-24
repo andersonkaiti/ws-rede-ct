@@ -5,14 +5,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
 
 extendZodWithOpenApi(z)
 
 export const findNewsSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   content: z.string().optional(),
   authorId: z.string().optional(),
@@ -25,7 +23,7 @@ export class FindNewsController {
   async handle(req: Request, res: Response) {
     const { page, limit, ...filter } = findNewsSchema.parse(req.query)
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [news, totalNews] = await Promise.all([
       this.newsRepository.find({
@@ -41,7 +39,7 @@ export class FindNewsController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalNews / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(totalNews / limit), 1) : 1
 
     res.status(HttpStatus.OK).json({
       page,

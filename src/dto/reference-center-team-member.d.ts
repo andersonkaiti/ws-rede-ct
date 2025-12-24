@@ -7,9 +7,9 @@ export interface ICreateReferenceCenterTeamMemberDTO {
 }
 
 export interface IFindAllReferenceCenterTeamMembersDTO {
-  pagination?: {
-    offset: number
-    limit: number
+  pagination: {
+    offset?: number
+    limit?: number
   }
   filter: {
     role?: string

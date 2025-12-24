@@ -5,7 +5,6 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IInternationalScientificCongressGalleryRepository } from '../../repositories/international-scientific-congress/gallery/iinternational-scientific-congress-gallery-repository.js'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 9
 
 extendZodWithOpenApi(z)
 
@@ -13,7 +12,7 @@ export const findInternationalScientificCongressGalleriesByCongressIdSchema =
   z.object({
     id: z.uuid(),
     page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-    limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
+    limit: z.coerce.number().optional(),
     caption: z.string().optional(),
   })
 
@@ -29,7 +28,7 @@ export class FindInternationalScientificCongressGalleriesByCongressIdController 
         ...req.query,
       })
 
-    const offset = limit * page - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [galleryImages, totalGalleries] = await Promise.all([
       this.internationalScientificCongressGalleryRepository.findByCongressId({
@@ -50,7 +49,9 @@ export class FindInternationalScientificCongressGalleriesByCongressIdController 
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalGalleries / limit), 1)
+    const totalPages = limit
+      ? Math.max(Math.ceil(totalGalleries / limit), 1)
+      : 1
 
     return res.status(HttpStatus.OK).json({
       page,

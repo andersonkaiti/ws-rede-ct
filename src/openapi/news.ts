@@ -74,8 +74,8 @@ export const findAllNewsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             news: z.array(
               z.object({
                 title: z.string(),
@@ -132,8 +132,8 @@ export const findNewsByIdRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             news: z.object({
               title: z.string(),
               content: z.string(),
@@ -208,8 +208,8 @@ export const findNewsByAuthorIdRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             news: z.array(
               z.object({
                 title: z.string(),

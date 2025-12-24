@@ -8,12 +8,13 @@ export interface ICreateRegionalCongressGalleryDTO {
 
 export interface IFindAllRegionalCongressGalleryByCongressIdDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     caption?: string
     congressId: string
+    orderBy?: 'asc' | 'desc'
   }
 }
 

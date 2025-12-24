@@ -71,7 +71,9 @@ export class MeetingRepository implements IMeetingRepository {
       include: {
         minutes: true,
       },
-      orderBy: orderBy ? { scheduledAt: orderBy } : { scheduledAt: 'desc' },
+      orderBy: {
+        scheduledAt: orderBy,
+      },
       skip: offset,
       take: limit,
     })

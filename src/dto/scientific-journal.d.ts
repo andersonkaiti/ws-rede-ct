@@ -12,8 +12,8 @@ export interface ICreateScientificJournalDTO {
 
 export interface IFindScientificJournalsDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     name?: string

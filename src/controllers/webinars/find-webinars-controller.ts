@@ -5,14 +5,12 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import type { IWebinarRepository } from '../../repositories/webinar/iwebinar-repository.ts'
 
 const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 6
 
 extendZodWithOpenApi(z)
 
 export const findWebinarsControllerSchema = z.object({
   page: z.coerce.number().min(1).default(DEFAULT_PAGE),
-  limit: z.coerce.number().min(1).default(DEFAULT_LIMIT),
-
+  limit: z.coerce.number().optional(),
   title: z.string().optional(),
   description: z.string().optional(),
   orderBy: z.enum(['asc', 'desc']).default('desc'),
@@ -26,7 +24,7 @@ export class FindWebinarsController {
       req.query,
     )
 
-    const offset = page * limit - limit
+    const offset = limit ? limit * page - limit : undefined
 
     const [webinars, totalWebinars] = await Promise.all([
       this.webinarRepository.find({
@@ -42,7 +40,7 @@ export class FindWebinarsController {
       }),
     ])
 
-    const totalPages = Math.max(Math.ceil(totalWebinars / limit), 1)
+    const totalPages = limit ? Math.max(Math.ceil(totalWebinars / limit), 1) : 1
 
     return res.status(HttpStatus.OK).json({
       page,

@@ -14,8 +14,8 @@ export interface ICreateRedeCTHighlightDTO {
 
 export interface IFindAllRedeCTHighlightDTO {
   pagination: {
-    offset: number
-    limit: number
+    offset?: number
+    limit?: number
   }
   filter: {
     type?: RedeCTHighlightType
