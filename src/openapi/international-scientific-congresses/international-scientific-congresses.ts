@@ -137,8 +137,8 @@ export const findInternationalScientificCongressesRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             congresses: z.array(internationalScientificCongressSchema),
           }),
         },
@@ -501,8 +501,8 @@ export const findInternationalScientificCongressGalleriesByCongressIdRegistry: R
             schema: z.object({
               page: z.number(),
               totalPages: z.number(),
-              offset: z.number(),
-              limit: z.number(),
+              offset: z.number().optional(),
+              limit: z.number().optional(),
               galleries: z.array(congressGallerySchema),
             }),
           },

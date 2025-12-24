@@ -14,7 +14,7 @@ const regimentSchema = z.object({
   version: z.string(),
   publishedAt: z.date(),
   documentUrl: z.string(),
-  status: z.nativeEnum(RegimentStatus),
+  status: z.enum(RegimentStatus),
   createdAt: z.date(),
   updatedAt: z.date(),
 })
@@ -93,8 +93,8 @@ export const findRegimentsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             regiments: z.array(regimentSchema),
           }),
         },

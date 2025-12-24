@@ -96,8 +96,8 @@ export const findWebinarsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             webinars: z.array(
               z.object({
                 id: z.string(),

@@ -113,8 +113,8 @@ export const findResearchGroupsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             researchGroups: z.array(
               z.object({
                 id: z.string(),

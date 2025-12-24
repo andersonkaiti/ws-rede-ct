@@ -18,9 +18,9 @@ const researcherSchema = z.object({
   registrationNumber: z.string(),
   mainEtps: z.string().nullable(),
   formations: z.string().nullable(),
-  degrees: z.array(z.nativeEnum(Degree)),
+  degrees: z.array(z.enum(Degree)),
   occupations: z.string(),
-  seniority: z.nativeEnum(Seniority),
+  seniority: z.enum(Seniority),
   institutions: z.string(),
   biography: z.string().nullable(),
   createdAt: z.date(),
@@ -33,7 +33,7 @@ const researcherSchema = z.object({
     orcid: z.string().nullable(),
     phone: z.string().nullable(),
     lattesUrl: z.string().nullable(),
-    role: z.nativeEnum(UserRole),
+    role: z.enum(UserRole),
   }),
 })
 
@@ -147,7 +147,7 @@ export const findETPsRegistry: RouteConfig = {
       title: z.string().optional(),
       description: z.string().optional(),
       notes: z.string().optional(),
-      orderBy: z.enum(['asc', 'desc']).optional(),
+      orderBy: z.enum(['asc', 'desc']).default('desc'),
     }),
   },
   responses: {
@@ -159,8 +159,8 @@ export const findETPsRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             etps: z.array(etpSchema),
           }),
         },

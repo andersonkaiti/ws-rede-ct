@@ -136,8 +136,8 @@ export const findRegionalCongressesRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             congresses: z.array(regionalCongressSchema),
           }),
         },
@@ -491,8 +491,8 @@ export const findRegionalCongressGalleriesByCongressIdRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             galleries: z.array(congressGallerySchema),
           }),
         },

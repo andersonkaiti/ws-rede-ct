@@ -108,8 +108,8 @@ export const findCoursesRegistry: RouteConfig = {
           schema: z.object({
             page: z.number(),
             totalPages: z.number(),
-            offset: z.number(),
-            limit: z.number(),
+            offset: z.number().optional(),
+            limit: z.number().optional(),
             courses: z.array(
               z.object({
                 id: z.string(),

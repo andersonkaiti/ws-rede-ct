@@ -14,7 +14,7 @@ const userSchema = z.object({
   orcid: z.string().nullable(),
   phone: z.string().nullable(),
   lattesUrl: z.string().nullable(),
-  role: z.nativeEnum(UserRole),
+  role: z.enum(UserRole),
 })
 
 const memberSchema = z.object({
@@ -114,7 +114,7 @@ export const findManagementTeamsRegistry: RouteConfig = {
     query: z.object({
       name: z.string().optional(),
       description: z.string().optional(),
-      orderBy: z.enum(['asc', 'desc']).optional(),
+      orderBy: z.enum(['asc', 'desc']).default('desc'),
     }),
   },
   responses: {
