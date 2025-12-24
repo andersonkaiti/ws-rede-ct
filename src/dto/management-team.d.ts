@@ -11,6 +11,10 @@ export interface ICreateManagementTeamDTO {
 }
 
 export interface IFindAllManagementTeamsDTO {
+  pagination: {
+    offset?: number
+    limit?: number
+  }
   filter: {
     name?: string
     description?: string

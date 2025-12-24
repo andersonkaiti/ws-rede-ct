@@ -78,6 +78,7 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
 
   async find({
     filter: { name, description, orderBy },
+    pagination: { offset, limit },
   }: IFindAllManagementTeamsDTO) {
     const where: Prisma.ManagementTeamWhereInput = {}
 
@@ -124,6 +125,8 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
       orderBy: {
         updatedAt: orderBy,
       },
+      skip: offset,
+      take: limit,
     })
   }
 

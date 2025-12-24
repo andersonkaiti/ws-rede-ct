@@ -44,6 +44,7 @@ export class LegitimatorCommitteeMemberRepository
   }
 
   async find({
+    pagination: { offset, limit },
     filter: { role, orderBy },
   }: IFindAllLegitimatorCommitteeMembersDTO) {
     const where: Prisma.LegitimatorCommitteeMemberWhereInput = {}
@@ -64,23 +65,11 @@ export class LegitimatorCommitteeMemberRepository
           },
         },
       },
-      orderBy: orderBy
-        ? [
-            {
-              order: 'asc',
-            },
-            {
-              updatedAt: orderBy,
-            },
-          ]
-        : [
-            {
-              order: 'asc',
-            },
-            {
-              updatedAt: 'desc',
-            },
-          ],
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
     })
   }
 

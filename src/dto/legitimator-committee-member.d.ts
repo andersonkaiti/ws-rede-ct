@@ -8,6 +8,10 @@ export interface ICreateLegitimatorCommitteeMemberDTO {
 }
 
 export interface IFindAllLegitimatorCommitteeMembersDTO {
+  pagination: {
+    offset?: number
+    limit?: number
+  }
   filter: {
     role?: string
     orderBy?: 'asc' | 'desc'
