@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import { UnauthorizedError } from '../../errors/unauthorized-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
@@ -65,7 +65,7 @@ export class UpdateNewsController {
     if (image && news.imageUrl) {
       imageUrl = await this.firebaseStorageService.updateFile({
         file: image,
-        folder: File.NEWS,
+        folder: PATHS.NEWS,
         id,
         fileUrl: news.imageUrl,
       })

@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IPostGraduateProgramRepository } from '../../repositories/post-graduate-program/ipost-graduate-program-repository.ts'
@@ -75,7 +75,7 @@ export class UpdatePostGraduateProgramController {
       imageUrl = await this.firebaseStorageService.uploadFile({
         file: image,
         id,
-        folder: File.POST_GRADUATE_PROGRAM,
+        folder: PATHS.POST_GRADUATE_PROGRAM,
       })
     }
 

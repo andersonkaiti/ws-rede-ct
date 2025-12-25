@@ -20,6 +20,7 @@ export const findResearchersSchema = z.object({
   occupations: z.string().optional(),
   institutions: z.string().optional(),
   biography: z.string().optional(),
+  seniority: z.enum(['SENIOR', 'RESEARCHER', 'JUNIOR', 'HONOR']).optional(),
   orderBy: z.enum(['asc', 'desc']).default('desc'),
 })
 
@@ -37,16 +38,10 @@ export class FindResearchersController {
           offset,
           limit,
         },
-        filter: {
-          userName: filter.name,
-          ...filter,
-        },
+        filter,
       }),
       this.researcherRepository.count({
-        filter: {
-          userName: filter.name,
-          ...filter,
-        },
+        filter,
       }),
     ])
 

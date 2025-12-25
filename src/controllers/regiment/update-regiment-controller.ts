@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { RegimentStatus } from '../../../config/database/generated/enums.ts'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegimentRepository } from '../../repositories/regiment/iregiment-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -69,7 +69,7 @@ export class UpdateRegimentController {
       documentUrl = await this.firebaseStorageService.uploadFile({
         file: document,
         id,
-        folder: FileType.REGIMENT,
+        folder: PATHS.REGIMENT,
       })
     }
 

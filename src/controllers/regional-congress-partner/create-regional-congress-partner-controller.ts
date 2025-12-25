@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressRepository } from '../../repositories/regional-congress/iregional-congress-repository.d.ts'
 import type { IRegionalCongressPartnerRepository } from '../../repositories/regional-congress/partner/iregional-congress-partner-repository.js'
@@ -65,7 +65,7 @@ export class CreateRegionalCongressPartnerController {
       logoUrl = await this.firebaseStorageService.uploadFile({
         file: logo,
         id: partner.id,
-        folder: FileType.PARTNER,
+        folder: PATHS.PARTNER,
       })
 
       await this.regionalCongressPartnerRepository.update({

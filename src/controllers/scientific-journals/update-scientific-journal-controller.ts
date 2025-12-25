@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IScientificJournalRepository } from '../../repositories/scientific-journal/iscientific-journal-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -74,7 +74,7 @@ export class UpdateScientificJournalController {
       logoUrl = await this.firebaseStorageService.uploadFile({
         file: logo,
         id,
-        folder: File.SCIENTIFIC_JOURNAL,
+        folder: PATHS.SCIENTIFIC_JOURNAL,
       })
     }
 

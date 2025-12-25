@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import type { IPartnerRepository } from '../../repositories/partner/ipartner-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
@@ -64,7 +64,7 @@ export class CreatePartnerController {
     const logoUrl = await this.firebaseStorageService.uploadFile({
       file: logo,
       id: partner.id,
-      folder: FileType.PARTNER,
+      folder: PATHS.PARTNER,
     })
 
     await this.partnerRepository.update({

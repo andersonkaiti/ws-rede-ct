@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -49,7 +49,7 @@ export class CreateNewsController {
 
     const imageUrl = await this.firebaseStorageService.uploadFile({
       file: image,
-      folder: File.NEWS,
+      folder: PATHS.NEWS,
       id: authenticatedUserId,
     })
 

@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IInternationalScientificCongressGalleryRepository } from '../../repositories/international-scientific-congress/gallery/iinternational-scientific-congress-gallery-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
@@ -60,7 +60,7 @@ export class UpdateInternationalScientificCongressGalleryController {
       imageUrl = await this.firebaseStorageService.uploadFile({
         file: image,
         id,
-        folder: FileType.INTERNATIONAL_SCIENTIFIC_CONGRESS_GALLERY,
+        folder: PATHS.INTERNATIONAL_SCIENTIFIC_CONGRESS_GALLERY,
       })
     }
 
