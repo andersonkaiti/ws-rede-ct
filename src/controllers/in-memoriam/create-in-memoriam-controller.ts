@@ -2,8 +2,8 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { InMemoriamRole } from '../../../config/database/generated/enums.ts'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import type { IInMemoriamRepository } from '../../repositories/in-memoriam/iin-memoriam-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
@@ -68,7 +68,7 @@ export class CreateInMemoriamController {
       photoUrl = await this.firebaseStorageService.uploadFile({
         file: photo,
         id: InMemoriam.id,
-        folder: FileType.IN_MEMORIAM,
+        folder: PATHS.IN_MEMORIAM,
       })
 
       await this.inMemoriamRepository.update({

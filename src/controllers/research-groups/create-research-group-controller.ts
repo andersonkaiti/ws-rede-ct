@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import type { IResearchGroupRepository } from '../../repositories/research-group/iresearch-group-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -77,7 +77,7 @@ export class CreateResearchGroupController {
     if (logo) {
       const logoUrl = await this.firebaseStorageService.uploadFile({
         file: logo,
-        folder: File.RESEARCH_GROUP_LOGO,
+        folder: PATHS.RESEARCH_GROUP_LOGO,
         id: researchGroup.id,
       })
 

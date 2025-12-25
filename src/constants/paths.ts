@@ -1,4 +1,4 @@
-export const File = {
+export const PATHS = {
   NEWS: 'images/news',
   USER: 'images/user',
   IN_MEMORIAM: 'images/in-memoriam',
@@ -24,4 +24,4 @@ export const File = {
   REDECT_HIGHLIGHT: 'images/redect-highlights',
 } as const
 
-export type FileType = (typeof File)[keyof typeof File]
+export type PathType = (typeof PATHS)[keyof typeof PATHS]

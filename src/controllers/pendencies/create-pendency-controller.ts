@@ -2,7 +2,6 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
 import { PendencyStatus } from '../../../config/database/generated/enums.ts'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
 import type { IPendencyRepository } from '../../repositories/pendency/ipendency-repository.ts'
@@ -49,7 +48,7 @@ export class CreatePendencyController {
     const documentUrl = await this.firebaseStorageService.uploadFile({
       file: document,
       id,
-      folder: FileType.PENDENCY,
+      folder: PATHS.PENDENCY,
     })
 
     await this.pendencyRepository.create({

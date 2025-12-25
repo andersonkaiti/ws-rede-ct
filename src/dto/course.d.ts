@@ -28,6 +28,7 @@ export interface IFindCoursesDTO {
 export interface IUpdateCourseDTO
   extends Partial<Omit<Course, 'createdAt' | 'updatedAt'>> {
   id: string
+  instructorIds?: string[]
 }
 
 export interface ICountCoursesDTO {

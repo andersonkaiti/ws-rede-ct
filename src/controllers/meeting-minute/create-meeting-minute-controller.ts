@@ -1,12 +1,12 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
-import type { IMeetingRepository } from '../../repositories/meeting/imeeting-repository.d.ts'
 import type { IMeetingMinuteRepository } from '../../repositories/meeting-minute/imeeting-minute-repository.d.ts'
+import type { IMeetingRepository } from '../../repositories/meeting/imeeting-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
 
 const MAX_DOCUMENT_SIZE_MB = 10
@@ -71,7 +71,7 @@ export class CreateMeetingMinuteController {
     const documentUrl = await this.firebaseStorageService.uploadFile({
       file: document,
       id: meetingMinute.id,
-      folder: FileType.MEETING_MINUTE,
+      folder: PATHS.MEETING_MINUTE,
     })
 
     await this.meetingMinuteRepository.update({

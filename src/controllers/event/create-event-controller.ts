@@ -5,8 +5,8 @@ import {
   EventFormat,
   EventStatus,
 } from '../../../config/database/generated/enums.ts'
-import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import type { IEventRepository } from '../../repositories/event/ievent-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -96,7 +96,7 @@ export class CreateEventController {
 
     const imageUrl = await this.firebaseStorageService.uploadFile({
       file: image,
-      folder: File.EVENT,
+      folder: PATHS.EVENT,
       id: event.id,
     })
 

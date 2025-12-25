@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -51,7 +51,7 @@ export class UpdateCertificationController {
       certificationUrl = await this.firebaseStorageService.updateFile({
         file: certification,
         id: certificationExists.userId,
-        folder: FileType.CERTIFICATION,
+        folder: PATHS.CERTIFICATION,
         fileUrl: certificationExists.certificationUrl,
       })
     }

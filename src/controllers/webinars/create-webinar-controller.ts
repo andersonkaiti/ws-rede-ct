@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import type { IWebinarRepository } from '../../repositories/webinar/iwebinar-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
 
@@ -67,7 +67,7 @@ export class CreateWebinarController {
 
     const thumbnailUrl = await this.firebaseStorageService.uploadFile({
       file: thumbnail,
-      folder: File.WEBINAR,
+      folder: PATHS.WEBINAR,
       id: webinar.id,
     })
 

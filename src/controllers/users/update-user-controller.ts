@@ -1,8 +1,8 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import type { Request, Response } from 'express'
 import z from 'zod'
-import { File as FileType } from '../../@types/file.ts'
 import { HttpStatus } from '../../@types/status-code.ts'
+import { PATHS } from '../../constants/paths.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
@@ -80,14 +80,14 @@ export class UpdateUserController {
         avatarUrl = await this.firebaseStorageService.updateFile({
           file: avatarImage,
           id: authenticatedUserId,
-          folder: FileType.USER,
+          folder: PATHS.USER,
           fileUrl: user.avatarUrl,
         })
       } else {
         avatarUrl = await this.firebaseStorageService.uploadFile({
           file: avatarImage,
           id: authenticatedUserId,
-          folder: FileType.USER,
+          folder: PATHS.USER,
         })
       }
     }
