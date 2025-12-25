@@ -31,7 +31,7 @@ export interface IFindAllResearchersDTO {
     institutions?: string
     biography?: string
     userId?: string
-    userName?: string
+    name?: string
     orderBy?: 'asc' | 'desc'
   }
 }
@@ -51,7 +51,7 @@ export interface ICountResearchersDTO {
     seniority?: Seniority
     institutions?: string
     biography?: string
-    userName?: string
+    name?: string
     userId?: string
   }
 }

@@ -132,6 +132,7 @@ export const findResearchersRegistry: RouteConfig = {
       occupations: z.string().optional(),
       institutions: z.string().optional(),
       biography: z.string().optional(),
+      seniority: z.enum(['SENIOR', 'RESEARCHER', 'JUNIOR', 'HONOR']).optional(),
       orderBy: z.enum(['asc', 'desc']).default('desc'),
     }),
   },

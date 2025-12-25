@@ -46,7 +46,7 @@ export class ResearcherRepository implements IResearcherRepository {
       registrationNumber,
       seniority,
       userId,
-      userName,
+      name,
       orderBy,
     },
   }: IFindAllResearchersDTO) {
@@ -54,11 +54,11 @@ export class ResearcherRepository implements IResearcherRepository {
 
     const or: Prisma.ResearcherWhereInput[] = []
 
-    if (userName) {
+    if (name) {
       or.push({
         user: {
           name: {
-            contains: userName,
+            contains: name,
             mode: 'insensitive',
           },
         },
@@ -215,18 +215,18 @@ export class ResearcherRepository implements IResearcherRepository {
       registrationNumber,
       seniority,
       userId,
-      userName,
+      name,
     },
   }: ICountResearchersDTO) {
     const where: Prisma.ResearcherWhereInput = {}
 
     const or: Prisma.ResearcherWhereInput[] = []
 
-    if (userName) {
+    if (name) {
       or.push({
         user: {
           name: {
-            contains: userName,
+            contains: name,
             mode: 'insensitive',
           },
         },
