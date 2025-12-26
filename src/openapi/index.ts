@@ -47,6 +47,14 @@ import {
   updateEventRegistry,
 } from './events.ts'
 import {
+  createFinancialTransactionStatementRegistry,
+  deleteFinancialTransactionStatementRegistry,
+  findFinancialTransactionStatementByIdRegistry,
+  findFinancialTransactionStatementsRegistry,
+  findLatestFinancialTransactionStatementRegistry,
+  updateFinancialTransactionStatementRegistry,
+} from './financial-transaction-statements.ts'
+import {
   createInMemoriamRegistry,
   deleteInMemoriamRegistry,
   findInMemoriamByIdRegistry,
@@ -456,6 +464,13 @@ registry.registerPath(findResearchGroupsRegistry)
 registry.registerPath(findResearchGroupByIdRegistry)
 registry.registerPath(updateResearchGroupRegistry)
 registry.registerPath(deleteResearchGroupRegistry)
+
+registry.registerPath(createFinancialTransactionStatementRegistry)
+registry.registerPath(findFinancialTransactionStatementsRegistry)
+registry.registerPath(findLatestFinancialTransactionStatementRegistry)
+registry.registerPath(findFinancialTransactionStatementByIdRegistry)
+registry.registerPath(updateFinancialTransactionStatementRegistry)
+registry.registerPath(deleteFinancialTransactionStatementRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 
