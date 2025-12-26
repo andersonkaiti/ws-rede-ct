@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateFinancialTransactionStatementController } from '../factories/controllers/financial-transaction-statement.factory.ts'
+import {
+  makeCreateFinancialTransactionStatementController,
+  makeFindFinancialTransactionStatementsController,
+} from '../factories/controllers/financial-transaction-statement.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
 
@@ -20,5 +23,12 @@ router.post(
     await createFinancialTransactionStatementController.handle(req, res)
   },
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findFinancialTransactionStatementsController } =
+    makeFindFinancialTransactionStatementsController()
+
+  await findFinancialTransactionStatementsController.handle(req, res)
+})
 
 export { router as financialTransactionStatementRoutes }

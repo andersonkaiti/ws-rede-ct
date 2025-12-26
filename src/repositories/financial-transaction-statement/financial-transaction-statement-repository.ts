@@ -1,6 +1,10 @@
-import type { PrismaClient } from '../../../config/database/generated/client.ts'
+import type {
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
 import type {
   ICreateFinancialTransactionStatementDTO,
+  IFindAllFinancialTransactionStatementDTO,
   IUpdateFinancialTransactionStatementDTO,
 } from '../../dto/financial-transaction-statement.d.ts'
 import type { IFinancialTransactionStatementRepository } from './ifinancial-transaction-statement-repository.d.ts'
@@ -23,5 +27,25 @@ export class FinancialTransactionStatementRepository
       },
       data: statement,
     })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { orderBy },
+  }: IFindAllFinancialTransactionStatementDTO) {
+    const where: Prisma.FinancialTransactionStatementWhereInput = {}
+
+    return await this.prisma.financialTransactionStatement.findMany({
+      where,
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
+    })
+  }
+
+  async count() {
+    return await this.prisma.financialTransactionStatement.count()
   }
 }
