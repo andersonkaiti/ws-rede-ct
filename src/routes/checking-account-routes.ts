@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateCheckingAccountController,
+  makeFindCheckingAccountByIdController,
   makeFindCheckingAccountsController,
   makeFindLatestByTypeController,
   makeGetTotalBalanceController,
@@ -41,6 +42,13 @@ router.get('/latest/:type', async (req: Request, res: Response) => {
   const { findLatestByTypeController } = makeFindLatestByTypeController()
 
   await findLatestByTypeController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findCheckingAccountByIdController } =
+    makeFindCheckingAccountByIdController()
+
+  await findCheckingAccountByIdController.handle(req, res)
 })
 
 export { router as checkingAccountRoutes }

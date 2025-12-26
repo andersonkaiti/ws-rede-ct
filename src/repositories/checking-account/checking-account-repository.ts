@@ -38,6 +38,14 @@ export class CheckingAccountRepository implements ICheckingAccountRepository {
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.checkingAccount.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async findLatestByType(
     type: 'EXCLUSIVE_REDECT_USE' | 'EVENTS' | 'COLLOQUIUM',
   ) {
