@@ -1,5 +1,6 @@
 import { CreateCheckingAccountController } from '../../controllers/checking-account/create-checking-account-controller.ts'
 import { FindCheckingAccountsController } from '../../controllers/checking-account/find-checking-accounts-controller.ts'
+import { FindLatestByTypeController } from '../../controllers/checking-account/find-latest-by-type-controller.ts'
 import { GetTotalBalanceController } from '../../controllers/checking-account/get-total-balance-controller.ts'
 import { makeCheckingAccountRepository } from '../repositories/checking-account.factory.ts'
 
@@ -22,6 +23,14 @@ export function makeFindCheckingAccountsController() {
 export function makeGetTotalBalanceController() {
   return {
     getTotalBalanceController: new GetTotalBalanceController(
+      makeCheckingAccountRepository(),
+    ),
+  }
+}
+
+export function makeFindLatestByTypeController() {
+  return {
+    findLatestByTypeController: new FindLatestByTypeController(
       makeCheckingAccountRepository(),
     ),
   }

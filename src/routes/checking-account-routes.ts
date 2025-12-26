@@ -2,6 +2,7 @@ import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateCheckingAccountController,
   makeFindCheckingAccountsController,
+  makeFindLatestByTypeController,
   makeGetTotalBalanceController,
 } from '../factories/controllers/checking-account.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
@@ -34,6 +35,12 @@ router.get('/total-balance', async (req: Request, res: Response) => {
   const { getTotalBalanceController } = makeGetTotalBalanceController()
 
   await getTotalBalanceController.handle(req, res)
+})
+
+router.get('/latest/:type', async (req: Request, res: Response) => {
+  const { findLatestByTypeController } = makeFindLatestByTypeController()
+
+  await findLatestByTypeController.handle(req, res)
 })
 
 export { router as checkingAccountRoutes }
