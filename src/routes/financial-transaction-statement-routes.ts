@@ -2,6 +2,7 @@ import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateFinancialTransactionStatementController,
   makeFindFinancialTransactionStatementsController,
+  makeFindLatestFinancialTransactionStatementController,
 } from '../factories/controllers/financial-transaction-statement.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -29,6 +30,13 @@ router.get('/', async (req: Request, res: Response) => {
     makeFindFinancialTransactionStatementsController()
 
   await findFinancialTransactionStatementsController.handle(req, res)
+})
+
+router.get('/latest', async (req: Request, res: Response) => {
+  const { findLatestFinancialTransactionStatementController } =
+    makeFindLatestFinancialTransactionStatementController()
+
+  await findLatestFinancialTransactionStatementController.handle(req, res)
 })
 
 export { router as financialTransactionStatementRoutes }
