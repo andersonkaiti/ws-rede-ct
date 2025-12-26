@@ -26,6 +26,15 @@ import {
   updateCertificationRegistry,
 } from './certifications.ts'
 import {
+  createCheckingAccountRegistry,
+  deleteCheckingAccountRegistry,
+  findCheckingAccountByIdRegistry,
+  findCheckingAccountsRegistry,
+  findLatestByTypeRegistry,
+  getTotalBalanceRegistry,
+  updateCheckingAccountRegistry,
+} from './checking-accounts.ts'
+import {
   createCourseRegistry,
   deleteCourseRegistry,
   findCourseByIdRegistry,
@@ -284,6 +293,14 @@ registry.registerPath(findCertificationsRegistry)
 registry.registerPath(findCertificationByIdRegistry)
 registry.registerPath(updateCertificationRegistry)
 registry.registerPath(deleteCertificationRegistry)
+
+registry.registerPath(createCheckingAccountRegistry)
+registry.registerPath(findCheckingAccountsRegistry)
+registry.registerPath(getTotalBalanceRegistry)
+registry.registerPath(findLatestByTypeRegistry)
+registry.registerPath(findCheckingAccountByIdRegistry)
+registry.registerPath(updateCheckingAccountRegistry)
+registry.registerPath(deleteCheckingAccountRegistry)
 
 registry.registerPath(createPendencyRegistry)
 registry.registerPath(findPendenciesRegistry)
