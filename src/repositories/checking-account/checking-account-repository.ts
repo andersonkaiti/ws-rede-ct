@@ -38,6 +38,19 @@ export class CheckingAccountRepository implements ICheckingAccountRepository {
     })
   }
 
+  async findLatestByType(
+    type: 'EXCLUSIVE_REDECT_USE' | 'EVENTS' | 'COLLOQUIUM',
+  ) {
+    return await this.prisma.checkingAccount.findFirst({
+      where: {
+        type,
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    })
+  }
+
   async count({ filter: { type } }: ICountCheckingAccountDTO) {
     const where: Prisma.CheckingAccountWhereInput = {}
 

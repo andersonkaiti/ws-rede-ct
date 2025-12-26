@@ -15,5 +15,8 @@ export interface ICheckingAccountEntity {
 export interface ICheckingAccountRepository {
   create(account: ICreateCheckingAccountDTO): Promise<void>
   find(data: IFindAllCheckingAccountDTO): Promise<Array<ICheckingAccountEntity>>
+  findLatestByType(
+    type: 'EXCLUSIVE_REDECT_USE' | 'EVENTS' | 'COLLOQUIUM',
+  ): Promise<ICheckingAccountEntity | null>
   count(data: ICountCheckingAccountDTO): Promise<number>
 }
