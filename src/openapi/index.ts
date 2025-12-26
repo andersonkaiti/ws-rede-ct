@@ -26,6 +26,15 @@ import {
   updateCertificationRegistry,
 } from './certifications.ts'
 import {
+  createCheckingAccountRegistry,
+  deleteCheckingAccountRegistry,
+  findCheckingAccountByIdRegistry,
+  findCheckingAccountsRegistry,
+  findLatestByTypeRegistry,
+  getTotalBalanceRegistry,
+  updateCheckingAccountRegistry,
+} from './checking-accounts.ts'
+import {
   createCourseRegistry,
   deleteCourseRegistry,
   findCourseByIdRegistry,
@@ -46,6 +55,14 @@ import {
   findEventsRegistry,
   updateEventRegistry,
 } from './events.ts'
+import {
+  createFinancialTransactionStatementRegistry,
+  deleteFinancialTransactionStatementRegistry,
+  findFinancialTransactionStatementByIdRegistry,
+  findFinancialTransactionStatementsRegistry,
+  findLatestFinancialTransactionStatementRegistry,
+  updateFinancialTransactionStatementRegistry,
+} from './financial-transaction-statements.ts'
 import {
   createInMemoriamRegistry,
   deleteInMemoriamRegistry,
@@ -277,6 +294,14 @@ registry.registerPath(findCertificationByIdRegistry)
 registry.registerPath(updateCertificationRegistry)
 registry.registerPath(deleteCertificationRegistry)
 
+registry.registerPath(createCheckingAccountRegistry)
+registry.registerPath(findCheckingAccountsRegistry)
+registry.registerPath(getTotalBalanceRegistry)
+registry.registerPath(findLatestByTypeRegistry)
+registry.registerPath(findCheckingAccountByIdRegistry)
+registry.registerPath(updateCheckingAccountRegistry)
+registry.registerPath(deleteCheckingAccountRegistry)
+
 registry.registerPath(createPendencyRegistry)
 registry.registerPath(findPendenciesRegistry)
 registry.registerPath(findPendencyByIdRegistry)
@@ -456,6 +481,13 @@ registry.registerPath(findResearchGroupsRegistry)
 registry.registerPath(findResearchGroupByIdRegistry)
 registry.registerPath(updateResearchGroupRegistry)
 registry.registerPath(deleteResearchGroupRegistry)
+
+registry.registerPath(createFinancialTransactionStatementRegistry)
+registry.registerPath(findFinancialTransactionStatementsRegistry)
+registry.registerPath(findLatestFinancialTransactionStatementRegistry)
+registry.registerPath(findFinancialTransactionStatementByIdRegistry)
+registry.registerPath(updateFinancialTransactionStatementRegistry)
+registry.registerPath(deleteFinancialTransactionStatementRegistry)
 
 const generator = new OpenApiGeneratorV3(registry.definitions)
 

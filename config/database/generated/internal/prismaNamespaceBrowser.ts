@@ -93,6 +93,8 @@ export const ModelName = {
   ResearchGroup: 'ResearchGroup',
   Museum: 'Museum',
   RedeCTHighlight: 'RedeCTHighlight',
+  FinancialTransactionStatement: 'FinancialTransactionStatement',
+  CheckingAccount: 'CheckingAccount',
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -654,6 +656,27 @@ export const RedeCTHighlightScalarFieldEnum = {
 
 export type RedeCTHighlightScalarFieldEnum =
   (typeof RedeCTHighlightScalarFieldEnum)[keyof typeof RedeCTHighlightScalarFieldEnum]
+
+export const FinancialTransactionStatementScalarFieldEnum = {
+  id: 'id',
+  documentUrl: 'documentUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+} as const
+
+export type FinancialTransactionStatementScalarFieldEnum =
+  (typeof FinancialTransactionStatementScalarFieldEnum)[keyof typeof FinancialTransactionStatementScalarFieldEnum]
+
+export const CheckingAccountScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  balanceInCents: 'balanceInCents',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+} as const
+
+export type CheckingAccountScalarFieldEnum =
+  (typeof CheckingAccountScalarFieldEnum)[keyof typeof CheckingAccountScalarFieldEnum]
 
 export const SortOrder = {
   asc: 'asc',
