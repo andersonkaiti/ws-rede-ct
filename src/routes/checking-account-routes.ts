@@ -5,6 +5,7 @@ import {
   makeFindCheckingAccountsController,
   makeFindLatestByTypeController,
   makeGetTotalBalanceController,
+  makeUpdateCheckingAccountController,
 } from '../factories/controllers/checking-account.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
@@ -50,5 +51,18 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   await findCheckingAccountByIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { updateCheckingAccountController } =
+      makeUpdateCheckingAccountController()
+
+    await updateCheckingAccountController.handle(req, res)
+  },
+)
 
 export { router as checkingAccountRoutes }

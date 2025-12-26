@@ -3,6 +3,12 @@ export interface ICreateCheckingAccountDTO {
   balanceInCents: number
 }
 
+export interface IUpdateCheckingAccountDTO {
+  id: string
+  type?: 'EXCLUSIVE_REDECT_USE' | 'EVENTS' | 'COLLOQUIUM'
+  balanceInCents?: number
+}
+
 export interface IFindAllCheckingAccountDTO {
   pagination: {
     offset?: number

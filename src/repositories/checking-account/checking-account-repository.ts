@@ -6,6 +6,7 @@ import type {
   ICountCheckingAccountDTO,
   ICreateCheckingAccountDTO,
   IFindAllCheckingAccountDTO,
+  IUpdateCheckingAccountDTO,
 } from '../../dto/checking-account.d.ts'
 import type { ICheckingAccountRepository } from './ichecking-account-repository.d.ts'
 
@@ -14,6 +15,15 @@ export class CheckingAccountRepository implements ICheckingAccountRepository {
 
   async create(account: ICreateCheckingAccountDTO) {
     await this.prisma.checkingAccount.create({
+      data: account,
+    })
+  }
+
+  async update(account: IUpdateCheckingAccountDTO) {
+    await this.prisma.checkingAccount.update({
+      where: {
+        id: account.id,
+      },
       data: account,
     })
   }

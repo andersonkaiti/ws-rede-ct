@@ -3,6 +3,7 @@ import { FindCheckingAccountByIdController } from '../../controllers/checking-ac
 import { FindCheckingAccountsController } from '../../controllers/checking-account/find-checking-accounts-controller.ts'
 import { FindLatestByTypeController } from '../../controllers/checking-account/find-latest-by-type-controller.ts'
 import { GetTotalBalanceController } from '../../controllers/checking-account/get-total-balance-controller.ts'
+import { UpdateCheckingAccountController } from '../../controllers/checking-account/update-checking-account-controller.ts'
 import { makeCheckingAccountRepository } from '../repositories/checking-account.factory.ts'
 
 export function makeCreateCheckingAccountController() {
@@ -40,6 +41,14 @@ export function makeFindLatestByTypeController() {
 export function makeFindCheckingAccountByIdController() {
   return {
     findCheckingAccountByIdController: new FindCheckingAccountByIdController(
+      makeCheckingAccountRepository(),
+    ),
+  }
+}
+
+export function makeUpdateCheckingAccountController() {
+  return {
+    updateCheckingAccountController: new UpdateCheckingAccountController(
       makeCheckingAccountRepository(),
     ),
   }
