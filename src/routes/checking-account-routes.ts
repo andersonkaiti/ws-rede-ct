@@ -1,5 +1,8 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
-import { makeCreateCheckingAccountController } from '../factories/controllers/checking-account.factory.ts'
+import {
+  makeCreateCheckingAccountController,
+  makeFindCheckingAccountsController,
+} from '../factories/controllers/checking-account.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 
 const router: Router = Router()
@@ -18,5 +21,12 @@ router.post(
     await createCheckingAccountController.handle(req, res)
   },
 )
+
+router.get('/', async (req: Request, res: Response) => {
+  const { findCheckingAccountsController } =
+    makeFindCheckingAccountsController()
+
+  await findCheckingAccountsController.handle(req, res)
+})
 
 export { router as checkingAccountRoutes }

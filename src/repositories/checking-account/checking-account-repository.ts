@@ -1,5 +1,12 @@
-import type { PrismaClient } from '../../../config/database/generated/client.ts'
-import type { ICreateCheckingAccountDTO } from '../../dto/checking-account.d.ts'
+import type {
+  Prisma,
+  PrismaClient,
+} from '../../../config/database/generated/client.ts'
+import type {
+  ICountCheckingAccountDTO,
+  ICreateCheckingAccountDTO,
+  IFindAllCheckingAccountDTO,
+} from '../../dto/checking-account.d.ts'
 import type { ICheckingAccountRepository } from './ichecking-account-repository.d.ts'
 
 export class CheckingAccountRepository implements ICheckingAccountRepository {
@@ -8,6 +15,38 @@ export class CheckingAccountRepository implements ICheckingAccountRepository {
   async create(account: ICreateCheckingAccountDTO) {
     await this.prisma.checkingAccount.create({
       data: account,
+    })
+  }
+
+  async find({
+    pagination: { offset, limit },
+    filter: { type, orderBy },
+  }: IFindAllCheckingAccountDTO) {
+    const where: Prisma.CheckingAccountWhereInput = {}
+
+    if (type) {
+      where.type = type
+    }
+
+    return await this.prisma.checkingAccount.findMany({
+      where,
+      orderBy: {
+        updatedAt: orderBy,
+      },
+      skip: offset,
+      take: limit,
+    })
+  }
+
+  async count({ filter: { type } }: ICountCheckingAccountDTO) {
+    const where: Prisma.CheckingAccountWhereInput = {}
+
+    if (type) {
+      where.type = type
+    }
+
+    return await this.prisma.checkingAccount.count({
+      where,
     })
   }
 }
