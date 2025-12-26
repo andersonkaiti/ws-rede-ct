@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateFinancialTransactionStatementController,
+  makeDeleteFinancialTransactionStatementController,
   makeFindFinancialTransactionStatementByIdController,
   makeFindFinancialTransactionStatementsController,
   makeFindLatestFinancialTransactionStatementController,
@@ -59,6 +60,19 @@ router.put(
       makeUpdateFinancialTransactionStatementController()
 
     await updateFinancialTransactionStatementController.handle(req, res)
+  },
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteFinancialTransactionStatementController } =
+      makeDeleteFinancialTransactionStatementController()
+
+    await deleteFinancialTransactionStatementController.handle(req, res)
   },
 )
 

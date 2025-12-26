@@ -29,6 +29,14 @@ export class FinancialTransactionStatementRepository
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.financialTransactionStatement.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { orderBy },

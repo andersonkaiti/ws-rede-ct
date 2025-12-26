@@ -11,6 +11,7 @@ export interface IFinancialTransactionStatementRepository {
     statement: ICreateFinancialTransactionStatementDTO,
   ): Promise<FinancialTransactionStatement>
   update(statement: IUpdateFinancialTransactionStatementDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(
     data: IFindAllFinancialTransactionStatementDTO,
   ): Promise<FinancialTransactionStatement[] | null>
