@@ -28,6 +28,12 @@ export class CheckingAccountRepository implements ICheckingAccountRepository {
     })
   }
 
+  async deleteById(id: string) {
+    await this.prisma.checkingAccount.delete({
+      where: { id },
+    })
+  }
+
   async find({
     pagination: { offset, limit },
     filter: { type, orderBy },

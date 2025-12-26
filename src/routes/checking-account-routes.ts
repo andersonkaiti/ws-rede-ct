@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateCheckingAccountController,
+  makeDeleteCheckingAccountController,
   makeFindCheckingAccountByIdController,
   makeFindCheckingAccountsController,
   makeFindLatestByTypeController,
@@ -62,6 +63,19 @@ router.put(
       makeUpdateCheckingAccountController()
 
     await updateCheckingAccountController.handle(req, res)
+  },
+)
+
+router.delete(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  async (req: Request, res: Response) => {
+    const { deleteCheckingAccountController } =
+      makeDeleteCheckingAccountController()
+
+    await deleteCheckingAccountController.handle(req, res)
   },
 )
 

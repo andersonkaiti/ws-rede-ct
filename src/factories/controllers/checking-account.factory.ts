@@ -1,4 +1,5 @@
 import { CreateCheckingAccountController } from '../../controllers/checking-account/create-checking-account-controller.ts'
+import { DeleteCheckingAccountController } from '../../controllers/checking-account/delete-checking-account-controller.ts'
 import { FindCheckingAccountByIdController } from '../../controllers/checking-account/find-checking-account-by-id-controller.ts'
 import { FindCheckingAccountsController } from '../../controllers/checking-account/find-checking-accounts-controller.ts'
 import { FindLatestByTypeController } from '../../controllers/checking-account/find-latest-by-type-controller.ts'
@@ -49,6 +50,14 @@ export function makeFindCheckingAccountByIdController() {
 export function makeUpdateCheckingAccountController() {
   return {
     updateCheckingAccountController: new UpdateCheckingAccountController(
+      makeCheckingAccountRepository(),
+    ),
+  }
+}
+
+export function makeDeleteCheckingAccountController() {
+  return {
+    deleteCheckingAccountController: new DeleteCheckingAccountController(
       makeCheckingAccountRepository(),
     ),
   }

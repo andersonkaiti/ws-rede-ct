@@ -16,6 +16,7 @@ export interface ICheckingAccountEntity {
 export interface ICheckingAccountRepository {
   create(account: ICreateCheckingAccountDTO): Promise<void>
   update(account: IUpdateCheckingAccountDTO): Promise<void>
+  deleteById(id: string): Promise<void>
   find(data: IFindAllCheckingAccountDTO): Promise<Array<ICheckingAccountEntity>>
   findById(id: string): Promise<ICheckingAccountEntity | null>
   findLatestByType(
