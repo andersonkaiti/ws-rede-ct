@@ -14,5 +14,6 @@ export interface IFinancialTransactionStatementRepository {
   find(
     data: IFindAllFinancialTransactionStatementDTO,
   ): Promise<FinancialTransactionStatement[] | null>
+  findById(id: string): Promise<FinancialTransactionStatement | null>
   count(data: ICountFinancialTransactionStatementDTO): Promise<number>
 }

@@ -45,6 +45,14 @@ export class FinancialTransactionStatementRepository
     })
   }
 
+  async findById(id: string) {
+    return await this.prisma.financialTransactionStatement.findFirst({
+      where: {
+        id,
+      },
+    })
+  }
+
   async count() {
     return await this.prisma.financialTransactionStatement.count()
   }

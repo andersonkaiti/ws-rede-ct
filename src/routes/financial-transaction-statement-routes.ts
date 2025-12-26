@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response, Router } from 'express'
 import {
   makeCreateFinancialTransactionStatementController,
+  makeFindFinancialTransactionStatementByIdController,
   makeFindFinancialTransactionStatementsController,
   makeFindLatestFinancialTransactionStatementController,
 } from '../factories/controllers/financial-transaction-statement.factory.ts'
@@ -37,6 +38,13 @@ router.get('/latest', async (req: Request, res: Response) => {
     makeFindLatestFinancialTransactionStatementController()
 
   await findLatestFinancialTransactionStatementController.handle(req, res)
+})
+
+router.get('/:id', async (req: Request, res: Response) => {
+  const { findFinancialTransactionStatementByIdController } =
+    makeFindFinancialTransactionStatementByIdController()
+
+  await findFinancialTransactionStatementByIdController.handle(req, res)
 })
 
 export { router as financialTransactionStatementRoutes }
