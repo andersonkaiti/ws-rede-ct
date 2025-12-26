@@ -537,38 +537,39 @@ export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
 }
 
-export type EnumCurrentAccountTypeFilter<$PrismaModel = never> = {
+export type EnumCheckingAccountTypeFilter<$PrismaModel = never> = {
   equals?:
-    | $Enums.CurrentAccountType
-    | Prisma.EnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType
+    | Prisma.EnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   in?:
-    | $Enums.CurrentAccountType[]
-    | Prisma.ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType[]
+    | Prisma.ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   notIn?:
-    | $Enums.CurrentAccountType[]
-    | Prisma.ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType[]
+    | Prisma.ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   not?:
-    | Prisma.NestedEnumCurrentAccountTypeFilter<$PrismaModel>
-    | $Enums.CurrentAccountType
+    | Prisma.NestedEnumCheckingAccountTypeFilter<$PrismaModel>
+    | $Enums.CheckingAccountType
 }
 
-export type EnumCurrentAccountTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?:
-    | $Enums.CurrentAccountType
-    | Prisma.EnumCurrentAccountTypeFieldRefInput<$PrismaModel>
-  in?:
-    | $Enums.CurrentAccountType[]
-    | Prisma.ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel>
-  notIn?:
-    | $Enums.CurrentAccountType[]
-    | Prisma.ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel>
-  not?:
-    | Prisma.NestedEnumCurrentAccountTypeWithAggregatesFilter<$PrismaModel>
-    | $Enums.CurrentAccountType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumCurrentAccountTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumCurrentAccountTypeFilter<$PrismaModel>
-}
+export type EnumCheckingAccountTypeWithAggregatesFilter<$PrismaModel = never> =
+  {
+    equals?:
+      | $Enums.CheckingAccountType
+      | Prisma.EnumCheckingAccountTypeFieldRefInput<$PrismaModel>
+    in?:
+      | $Enums.CheckingAccountType[]
+      | Prisma.ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel>
+    notIn?:
+      | $Enums.CheckingAccountType[]
+      | Prisma.ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel>
+    not?:
+      | Prisma.NestedEnumCheckingAccountTypeWithAggregatesFilter<$PrismaModel>
+      | $Enums.CheckingAccountType
+    _count?: Prisma.NestedIntFilter<$PrismaModel>
+    _min?: Prisma.NestedEnumCheckingAccountTypeFilter<$PrismaModel>
+    _max?: Prisma.NestedEnumCheckingAccountTypeFilter<$PrismaModel>
+  }
 
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
@@ -1114,37 +1115,37 @@ export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolNullableFilter<$PrismaModel>
 }
 
-export type NestedEnumCurrentAccountTypeFilter<$PrismaModel = never> = {
+export type NestedEnumCheckingAccountTypeFilter<$PrismaModel = never> = {
   equals?:
-    | $Enums.CurrentAccountType
-    | Prisma.EnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType
+    | Prisma.EnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   in?:
-    | $Enums.CurrentAccountType[]
-    | Prisma.ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType[]
+    | Prisma.ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   notIn?:
-    | $Enums.CurrentAccountType[]
-    | Prisma.ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType[]
+    | Prisma.ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   not?:
-    | Prisma.NestedEnumCurrentAccountTypeFilter<$PrismaModel>
-    | $Enums.CurrentAccountType
+    | Prisma.NestedEnumCheckingAccountTypeFilter<$PrismaModel>
+    | $Enums.CheckingAccountType
 }
 
-export type NestedEnumCurrentAccountTypeWithAggregatesFilter<
+export type NestedEnumCheckingAccountTypeWithAggregatesFilter<
   $PrismaModel = never,
 > = {
   equals?:
-    | $Enums.CurrentAccountType
-    | Prisma.EnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType
+    | Prisma.EnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   in?:
-    | $Enums.CurrentAccountType[]
-    | Prisma.ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType[]
+    | Prisma.ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   notIn?:
-    | $Enums.CurrentAccountType[]
-    | Prisma.ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel>
+    | $Enums.CheckingAccountType[]
+    | Prisma.ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel>
   not?:
-    | Prisma.NestedEnumCurrentAccountTypeWithAggregatesFilter<$PrismaModel>
-    | $Enums.CurrentAccountType
+    | Prisma.NestedEnumCheckingAccountTypeWithAggregatesFilter<$PrismaModel>
+    | $Enums.CheckingAccountType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumCurrentAccountTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumCurrentAccountTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCheckingAccountTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCheckingAccountTypeFilter<$PrismaModel>
 }

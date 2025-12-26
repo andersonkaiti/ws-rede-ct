@@ -719,3 +719,23 @@ model FinancialTransactionStatement {
   @@index([id], name: "financial_transaction_statement_id")
   @@map("financial_transaction_statements")
 }
+
+enum CheckingAccountType {
+  EXCLUSIVE_REDECT_USE
+  EVENTS
+  COLLOQUIUM
+}
+
+model CheckingAccount {
+  id String @id @default(uuid())
+
+  type CheckingAccountType
+
+  balanceInCents Int @map("balance_in_cents")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([id], name: "checking_account_id")
+  @@map("checking_accounts")
+}

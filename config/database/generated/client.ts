@@ -241,7 +241,7 @@ export type RedeCTHighlight = Prisma.RedeCTHighlightModel
 export type FinancialTransactionStatement =
   Prisma.FinancialTransactionStatementModel
 /**
- * Model CurrentAccount
+ * Model CheckingAccount
  *
  */
-export type CurrentAccount = Prisma.CurrentAccountModel
+export type CheckingAccount = Prisma.CheckingAccountModel

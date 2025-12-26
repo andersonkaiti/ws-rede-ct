@@ -456,7 +456,7 @@ export const ModelName = {
   Museum: 'Museum',
   RedeCTHighlight: 'RedeCTHighlight',
   FinancialTransactionStatement: 'FinancialTransactionStatement',
-  CurrentAccount: 'CurrentAccount',
+  CheckingAccount: 'CheckingAccount',
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -517,7 +517,7 @@ export type TypeMap<
       | 'museum'
       | 'redeCTHighlight'
       | 'financialTransactionStatement'
-      | 'currentAccount'
+      | 'checkingAccount'
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3409,78 +3409,78 @@ export type TypeMap<
         }
       }
     }
-    CurrentAccount: {
-      payload: Prisma.$CurrentAccountPayload<ExtArgs>
-      fields: Prisma.CurrentAccountFieldRefs
+    CheckingAccount: {
+      payload: Prisma.$CheckingAccountPayload<ExtArgs>
+      fields: Prisma.CheckingAccountFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.CurrentAccountFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload> | null
+          args: Prisma.CheckingAccountFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.CurrentAccountFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+          args: Prisma.CheckingAccountFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>
         }
         findFirst: {
-          args: Prisma.CurrentAccountFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload> | null
+          args: Prisma.CheckingAccountFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.CurrentAccountFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+          args: Prisma.CheckingAccountFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>
         }
         findMany: {
-          args: Prisma.CurrentAccountFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>[]
+          args: Prisma.CheckingAccountFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>[]
         }
         create: {
-          args: Prisma.CurrentAccountCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+          args: Prisma.CheckingAccountCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>
         }
         createMany: {
-          args: Prisma.CurrentAccountCreateManyArgs<ExtArgs>
+          args: Prisma.CheckingAccountCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.CurrentAccountCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>[]
+          args: Prisma.CheckingAccountCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>[]
         }
         delete: {
-          args: Prisma.CurrentAccountDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+          args: Prisma.CheckingAccountDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>
         }
         update: {
-          args: Prisma.CurrentAccountUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+          args: Prisma.CheckingAccountUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>
         }
         deleteMany: {
-          args: Prisma.CurrentAccountDeleteManyArgs<ExtArgs>
+          args: Prisma.CheckingAccountDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.CurrentAccountUpdateManyArgs<ExtArgs>
+          args: Prisma.CheckingAccountUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.CurrentAccountUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>[]
+          args: Prisma.CheckingAccountUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>[]
         }
         upsert: {
-          args: Prisma.CurrentAccountUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+          args: Prisma.CheckingAccountUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CheckingAccountPayload>
         }
         aggregate: {
-          args: Prisma.CurrentAccountAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCurrentAccount>
+          args: Prisma.CheckingAccountAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCheckingAccount>
         }
         groupBy: {
-          args: Prisma.CurrentAccountGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CurrentAccountGroupByOutputType>[]
+          args: Prisma.CheckingAccountGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CheckingAccountGroupByOutputType>[]
         }
         count: {
-          args: Prisma.CurrentAccountCountArgs<ExtArgs>
+          args: Prisma.CheckingAccountCountArgs<ExtArgs>
           result:
-            | runtime.Types.Utils.Optional<Prisma.CurrentAccountCountAggregateOutputType>
+            | runtime.Types.Utils.Optional<Prisma.CheckingAccountCountAggregateOutputType>
             | number
         }
       }
@@ -4078,16 +4078,16 @@ export const FinancialTransactionStatementScalarFieldEnum = {
 export type FinancialTransactionStatementScalarFieldEnum =
   (typeof FinancialTransactionStatementScalarFieldEnum)[keyof typeof FinancialTransactionStatementScalarFieldEnum]
 
-export const CurrentAccountScalarFieldEnum = {
+export const CheckingAccountScalarFieldEnum = {
   id: 'id',
   type: 'type',
-  currentAccountInCents: 'currentAccountInCents',
+  balanceInCents: 'balanceInCents',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
 } as const
 
-export type CurrentAccountScalarFieldEnum =
-  (typeof CurrentAccountScalarFieldEnum)[keyof typeof CurrentAccountScalarFieldEnum]
+export type CheckingAccountScalarFieldEnum =
+  (typeof CheckingAccountScalarFieldEnum)[keyof typeof CheckingAccountScalarFieldEnum]
 
 export const SortOrder = {
   asc: 'asc',
@@ -4333,16 +4333,16 @@ export type ListEnumRedeCTHighlightTypeFieldRefInput<$PrismaModel> =
   FieldRefInputType<$PrismaModel, 'RedeCTHighlightType[]'>
 
 /**
- * Reference to a field of type 'CurrentAccountType'
+ * Reference to a field of type 'CheckingAccountType'
  */
-export type EnumCurrentAccountTypeFieldRefInput<$PrismaModel> =
-  FieldRefInputType<$PrismaModel, 'CurrentAccountType'>
+export type EnumCheckingAccountTypeFieldRefInput<$PrismaModel> =
+  FieldRefInputType<$PrismaModel, 'CheckingAccountType'>
 
 /**
- * Reference to a field of type 'CurrentAccountType[]'
+ * Reference to a field of type 'CheckingAccountType[]'
  */
-export type ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel> =
-  FieldRefInputType<$PrismaModel, 'CurrentAccountType[]'>
+export type ListEnumCheckingAccountTypeFieldRefInput<$PrismaModel> =
+  FieldRefInputType<$PrismaModel, 'CheckingAccountType[]'>
 
 /**
  * Reference to a field of type 'Float'
@@ -4501,7 +4501,7 @@ export type GlobalOmitConfig = {
   museum?: Prisma.MuseumOmit
   redeCTHighlight?: Prisma.RedeCTHighlightOmit
   financialTransactionStatement?: Prisma.FinancialTransactionStatementOmit
-  currentAccount?: Prisma.CurrentAccountOmit
+  checkingAccount?: Prisma.CheckingAccountOmit
 }
 
 /* Types for Logging */
