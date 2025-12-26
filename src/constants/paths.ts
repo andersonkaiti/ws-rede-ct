@@ -22,6 +22,7 @@ export const PATHS = {
   RESEARCH_GROUP_LOGO: 'images/research-groups',
   MUSEUM: 'images/museums',
   REDECT_HIGHLIGHT: 'images/redect-highlights',
+  FINANCIAL_TRANSACTION_STATEMENT: 'documents/financial-transaction-statements',
 } as const
 
 export type PathType = (typeof PATHS)[keyof typeof PATHS]

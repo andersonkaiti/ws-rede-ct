@@ -14,6 +14,7 @@ import { certificationRoutes } from './routes/certification-routes.ts'
 import { courseRoutes } from './routes/course-routes.ts'
 import { etpRoutes } from './routes/etp-routes.ts'
 import { eventRoutes } from './routes/event-routes.ts'
+import { financialTransactionStatementRoutes } from './routes/financial-transaction-statement-routes.ts'
 import { inMemoriamRoutes } from './routes/in-memoriam-routes.ts'
 import { indexRoutes } from './routes/index-routes.ts'
 import { internationalScientificCongressRoutes } from './routes/international-scientific-congress-routes.ts'
@@ -92,6 +93,7 @@ app.use('/law', lawRoutes)
 app.use('/research-groups', researchGroupRoutes)
 app.use('/museum', museumRoutes)
 app.use('/redect-highlight', redectHighlightRoutes)
+app.use('/financial-transaction-statement', financialTransactionStatementRoutes)
 
 app.use(
   (
