@@ -234,3 +234,14 @@ export type Museum = Prisma.MuseumModel
  *
  */
 export type RedeCTHighlight = Prisma.RedeCTHighlightModel
+/**
+ * Model FinancialTransactionStatement
+ *
+ */
+export type FinancialTransactionStatement =
+  Prisma.FinancialTransactionStatementModel
+/**
+ * Model CurrentAccount
+ *
+ */
+export type CurrentAccount = Prisma.CurrentAccountModel

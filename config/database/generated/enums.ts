@@ -96,3 +96,12 @@ export const RedeCTHighlightType = {
 
 export type RedeCTHighlightType =
   (typeof RedeCTHighlightType)[keyof typeof RedeCTHighlightType]
+
+export const CurrentAccountType = {
+  EXCLUSIVE_USE: 'EXCLUSIVE_USE',
+  EVENTS: 'EVENTS',
+  COLLOQUIUM: 'COLLOQUIUM',
+} as const
+
+export type CurrentAccountType =
+  (typeof CurrentAccountType)[keyof typeof CurrentAccountType]

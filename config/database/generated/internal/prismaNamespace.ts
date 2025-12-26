@@ -455,6 +455,8 @@ export const ModelName = {
   ResearchGroup: 'ResearchGroup',
   Museum: 'Museum',
   RedeCTHighlight: 'RedeCTHighlight',
+  FinancialTransactionStatement: 'FinancialTransactionStatement',
+  CurrentAccount: 'CurrentAccount',
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -514,6 +516,8 @@ export type TypeMap<
       | 'researchGroup'
       | 'museum'
       | 'redeCTHighlight'
+      | 'financialTransactionStatement'
+      | 'currentAccount'
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3329,6 +3333,158 @@ export type TypeMap<
         }
       }
     }
+    FinancialTransactionStatement: {
+      payload: Prisma.$FinancialTransactionStatementPayload<ExtArgs>
+      fields: Prisma.FinancialTransactionStatementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FinancialTransactionStatementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FinancialTransactionStatementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>
+        }
+        findFirst: {
+          args: Prisma.FinancialTransactionStatementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FinancialTransactionStatementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>
+        }
+        findMany: {
+          args: Prisma.FinancialTransactionStatementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>[]
+        }
+        create: {
+          args: Prisma.FinancialTransactionStatementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>
+        }
+        createMany: {
+          args: Prisma.FinancialTransactionStatementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FinancialTransactionStatementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>[]
+        }
+        delete: {
+          args: Prisma.FinancialTransactionStatementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>
+        }
+        update: {
+          args: Prisma.FinancialTransactionStatementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>
+        }
+        deleteMany: {
+          args: Prisma.FinancialTransactionStatementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FinancialTransactionStatementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FinancialTransactionStatementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>[]
+        }
+        upsert: {
+          args: Prisma.FinancialTransactionStatementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinancialTransactionStatementPayload>
+        }
+        aggregate: {
+          args: Prisma.FinancialTransactionStatementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFinancialTransactionStatement>
+        }
+        groupBy: {
+          args: Prisma.FinancialTransactionStatementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FinancialTransactionStatementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FinancialTransactionStatementCountArgs<ExtArgs>
+          result:
+            | runtime.Types.Utils.Optional<Prisma.FinancialTransactionStatementCountAggregateOutputType>
+            | number
+        }
+      }
+    }
+    CurrentAccount: {
+      payload: Prisma.$CurrentAccountPayload<ExtArgs>
+      fields: Prisma.CurrentAccountFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CurrentAccountFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CurrentAccountFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+        }
+        findFirst: {
+          args: Prisma.CurrentAccountFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CurrentAccountFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+        }
+        findMany: {
+          args: Prisma.CurrentAccountFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>[]
+        }
+        create: {
+          args: Prisma.CurrentAccountCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+        }
+        createMany: {
+          args: Prisma.CurrentAccountCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CurrentAccountCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>[]
+        }
+        delete: {
+          args: Prisma.CurrentAccountDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+        }
+        update: {
+          args: Prisma.CurrentAccountUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+        }
+        deleteMany: {
+          args: Prisma.CurrentAccountDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CurrentAccountUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CurrentAccountUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>[]
+        }
+        upsert: {
+          args: Prisma.CurrentAccountUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentAccountPayload>
+        }
+        aggregate: {
+          args: Prisma.CurrentAccountAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCurrentAccount>
+        }
+        groupBy: {
+          args: Prisma.CurrentAccountGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CurrentAccountGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CurrentAccountCountArgs<ExtArgs>
+          result:
+            | runtime.Types.Utils.Optional<Prisma.CurrentAccountCountAggregateOutputType>
+            | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3912,6 +4068,27 @@ export const RedeCTHighlightScalarFieldEnum = {
 export type RedeCTHighlightScalarFieldEnum =
   (typeof RedeCTHighlightScalarFieldEnum)[keyof typeof RedeCTHighlightScalarFieldEnum]
 
+export const FinancialTransactionStatementScalarFieldEnum = {
+  id: 'id',
+  documentUrl: 'documentUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+} as const
+
+export type FinancialTransactionStatementScalarFieldEnum =
+  (typeof FinancialTransactionStatementScalarFieldEnum)[keyof typeof FinancialTransactionStatementScalarFieldEnum]
+
+export const CurrentAccountScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  currentAccountInCents: 'currentAccountInCents',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+} as const
+
+export type CurrentAccountScalarFieldEnum =
+  (typeof CurrentAccountScalarFieldEnum)[keyof typeof CurrentAccountScalarFieldEnum]
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc',
@@ -4156,6 +4333,18 @@ export type ListEnumRedeCTHighlightTypeFieldRefInput<$PrismaModel> =
   FieldRefInputType<$PrismaModel, 'RedeCTHighlightType[]'>
 
 /**
+ * Reference to a field of type 'CurrentAccountType'
+ */
+export type EnumCurrentAccountTypeFieldRefInput<$PrismaModel> =
+  FieldRefInputType<$PrismaModel, 'CurrentAccountType'>
+
+/**
+ * Reference to a field of type 'CurrentAccountType[]'
+ */
+export type ListEnumCurrentAccountTypeFieldRefInput<$PrismaModel> =
+  FieldRefInputType<$PrismaModel, 'CurrentAccountType[]'>
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<
@@ -4311,6 +4500,8 @@ export type GlobalOmitConfig = {
   researchGroup?: Prisma.ResearchGroupOmit
   museum?: Prisma.MuseumOmit
   redeCTHighlight?: Prisma.RedeCTHighlightOmit
+  financialTransactionStatement?: Prisma.FinancialTransactionStatementOmit
+  currentAccount?: Prisma.CurrentAccountOmit
 }
 
 /* Types for Logging */

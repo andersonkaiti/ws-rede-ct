@@ -424,8 +424,8 @@ model RegionalCongressPartner {
   congressId String           @map("congress_id")
   congress   RegionalCongress @relation(fields: [congressId], references: [id], onDelete: Cascade)
 
-  createdAt                    DateTime                      @default(now()) @map("created_at")
-  updatedAt                    DateTime                      @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([congressId])
   @@map("regional_congress_partners")
@@ -439,8 +439,8 @@ model RegionalCongressGalleryItem {
   congressId String           @map("congress_id")
   congress   RegionalCongress @relation(fields: [congressId], references: [id], onDelete: Cascade)
 
-  createdAt                    DateTime                      @default(now()) @map("created_at")
-  updatedAt                    DateTime                      @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([congressId])
   @@map("regional_congress_galleries")
@@ -706,4 +706,16 @@ model RedeCTHighlight {
 
   @@index([id], name: "redect_highlight_id")
   @@map("redect_highlights")
+}
+
+model FinancialTransactionStatement {
+  id String @id @default(uuid())
+
+  documentUrl String @map("document_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([id], name: "financial_transaction_statement_id")
+  @@map("financial_transaction_statements")
 }
