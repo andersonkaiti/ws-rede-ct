@@ -4,6 +4,7 @@ import {
   makeFindFinancialTransactionStatementByIdController,
   makeFindFinancialTransactionStatementsController,
   makeFindLatestFinancialTransactionStatementController,
+  makeUpdateFinancialTransactionStatementController,
 } from '../factories/controllers/financial-transaction-statement.factory.ts'
 import { makeAuthMiddleware } from '../factories/middlewares/auth-middleware.ts'
 import { upload } from '../middlewares/multer.ts'
@@ -46,5 +47,19 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   await findFinancialTransactionStatementByIdController.handle(req, res)
 })
+
+router.put(
+  '/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware.isAdmin(req, res, next)
+  },
+  upload.single('document'),
+  async (req: Request, res: Response) => {
+    const { updateFinancialTransactionStatementController } =
+      makeUpdateFinancialTransactionStatementController()
+
+    await updateFinancialTransactionStatementController.handle(req, res)
+  },
+)
 
 export { router as financialTransactionStatementRoutes }

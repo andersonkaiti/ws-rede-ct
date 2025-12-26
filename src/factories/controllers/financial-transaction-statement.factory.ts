@@ -2,6 +2,7 @@ import { CreateFinancialTransactionStatementController } from '../../controllers
 import { FindFinancialTransactionStatementByIdController } from '../../controllers/financial-transaction-statement/find-financial-transaction-statement-by-id-controller.ts'
 import { FindFinancialTransactionStatementsController } from '../../controllers/financial-transaction-statement/find-financial-transaction-statements-controller.ts'
 import { FindLatestFinancialTransactionStatementController } from '../../controllers/financial-transaction-statement/find-latest-financial-transaction-statement-controller.ts'
+import { UpdateFinancialTransactionStatementController } from '../../controllers/financial-transaction-statement/update-financial-transaction-statement-controller.ts'
 import { makeFinancialTransactionStatementRepository } from '../repositories/financial-transaction-statement.factory.ts'
 import { makeFirebaseStorageService } from '../services/firebase-storage.factory.ts'
 
@@ -38,6 +39,16 @@ export function makeFindFinancialTransactionStatementByIdController() {
     findFinancialTransactionStatementByIdController:
       new FindFinancialTransactionStatementByIdController(
         makeFinancialTransactionStatementRepository(),
+      ),
+  }
+}
+
+export function makeUpdateFinancialTransactionStatementController() {
+  return {
+    updateFinancialTransactionStatementController:
+      new UpdateFinancialTransactionStatementController(
+        makeFinancialTransactionStatementRepository(),
+        makeFirebaseStorageService(),
       ),
   }
 }
