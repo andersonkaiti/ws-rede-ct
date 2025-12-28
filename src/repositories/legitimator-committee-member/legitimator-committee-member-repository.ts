@@ -17,10 +17,7 @@ export class LegitimatorCommitteeMemberRepository
 
   async create(member: ICreateLegitimatorCommitteeMemberDTO) {
     await this.prisma.legitimatorCommitteeMember.create({
-      data: {
-        ...member,
-        order: member.order ?? 0,
-      },
+      data: member,
     })
   }
 

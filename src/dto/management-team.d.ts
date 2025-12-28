@@ -6,7 +6,6 @@ export interface ICreateManagementTeamDTO {
   members: {
     userId: string
     role: string
-    order?: number
   }[]
 }
 

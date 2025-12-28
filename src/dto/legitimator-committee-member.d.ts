@@ -4,7 +4,6 @@ export interface ICreateLegitimatorCommitteeMemberDTO {
   role: string
   description?: string
   userId: string
-  order?: number
 }
 
 export interface IFindAllLegitimatorCommitteeMembersDTO {

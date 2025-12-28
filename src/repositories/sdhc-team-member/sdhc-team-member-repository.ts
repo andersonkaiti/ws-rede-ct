@@ -15,10 +15,7 @@ export class SDHCTeamMemberRepository implements ISDHCTeamMemberRepository {
 
   async create(member: ICreateSDHCTeamMemberDTO) {
     await this.prisma.sDHCTeamMember.create({
-      data: {
-        ...member,
-        order: member.order ?? 0,
-      },
+      data: member,
     })
   }
 

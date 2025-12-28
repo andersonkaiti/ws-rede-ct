@@ -20,25 +20,14 @@ export type SDHCTeamMemberModel =
 
 export type AggregateSDHCTeamMember = {
   _count: SDHCTeamMemberCountAggregateOutputType | null
-  _avg: SDHCTeamMemberAvgAggregateOutputType | null
-  _sum: SDHCTeamMemberSumAggregateOutputType | null
   _min: SDHCTeamMemberMinAggregateOutputType | null
   _max: SDHCTeamMemberMaxAggregateOutputType | null
-}
-
-export type SDHCTeamMemberAvgAggregateOutputType = {
-  order: number | null
-}
-
-export type SDHCTeamMemberSumAggregateOutputType = {
-  order: number | null
 }
 
 export type SDHCTeamMemberMinAggregateOutputType = {
   id: string | null
   role: string | null
   description: string | null
-  order: number | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -48,7 +37,6 @@ export type SDHCTeamMemberMaxAggregateOutputType = {
   id: string | null
   role: string | null
   description: string | null
-  order: number | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -58,26 +46,16 @@ export type SDHCTeamMemberCountAggregateOutputType = {
   id: number
   role: number
   description: number
-  order: number
   createdAt: number
   updatedAt: number
   userId: number
   _all: number
 }
 
-export type SDHCTeamMemberAvgAggregateInputType = {
-  order?: true
-}
-
-export type SDHCTeamMemberSumAggregateInputType = {
-  order?: true
-}
-
 export type SDHCTeamMemberMinAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -87,7 +65,6 @@ export type SDHCTeamMemberMaxAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -97,7 +74,6 @@ export type SDHCTeamMemberCountAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -147,18 +123,6 @@ export type SDHCTeamMemberAggregateArgs<
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    *
-   * Select which fields to average
-   **/
-  _avg?: SDHCTeamMemberAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
-   * Select which fields to sum
-   **/
-  _sum?: SDHCTeamMemberSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
    * Select which fields to find the minimum value
    **/
   _min?: SDHCTeamMemberMinAggregateInputType
@@ -195,8 +159,6 @@ export type SDHCTeamMemberGroupByArgs<
   take?: number
   skip?: number
   _count?: SDHCTeamMemberCountAggregateInputType | true
-  _avg?: SDHCTeamMemberAvgAggregateInputType
-  _sum?: SDHCTeamMemberSumAggregateInputType
   _min?: SDHCTeamMemberMinAggregateInputType
   _max?: SDHCTeamMemberMaxAggregateInputType
 }
@@ -205,13 +167,10 @@ export type SDHCTeamMemberGroupByOutputType = {
   id: string
   role: string
   description: string | null
-  order: number
   createdAt: Date
   updatedAt: Date
   userId: string
   _count: SDHCTeamMemberCountAggregateOutputType | null
-  _avg: SDHCTeamMemberAvgAggregateOutputType | null
-  _sum: SDHCTeamMemberSumAggregateOutputType | null
   _min: SDHCTeamMemberMinAggregateOutputType | null
   _max: SDHCTeamMemberMaxAggregateOutputType | null
 }
@@ -237,7 +196,6 @@ export type SDHCTeamMemberWhereInput = {
   id?: Prisma.StringFilter<'SDHCTeamMember'> | string
   role?: Prisma.StringFilter<'SDHCTeamMember'> | string
   description?: Prisma.StringNullableFilter<'SDHCTeamMember'> | string | null
-  order?: Prisma.IntFilter<'SDHCTeamMember'> | number
   createdAt?: Prisma.DateTimeFilter<'SDHCTeamMember'> | Date | string
   updatedAt?: Prisma.DateTimeFilter<'SDHCTeamMember'> | Date | string
   userId?: Prisma.StringFilter<'SDHCTeamMember'> | string
@@ -248,7 +206,6 @@ export type SDHCTeamMemberOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -263,7 +220,6 @@ export type SDHCTeamMemberWhereUniqueInput = Prisma.AtLeast<
     NOT?: Prisma.SDHCTeamMemberWhereInput | Prisma.SDHCTeamMemberWhereInput[]
     role?: Prisma.StringFilter<'SDHCTeamMember'> | string
     description?: Prisma.StringNullableFilter<'SDHCTeamMember'> | string | null
-    order?: Prisma.IntFilter<'SDHCTeamMember'> | number
     createdAt?: Prisma.DateTimeFilter<'SDHCTeamMember'> | Date | string
     updatedAt?: Prisma.DateTimeFilter<'SDHCTeamMember'> | Date | string
     userId?: Prisma.StringFilter<'SDHCTeamMember'> | string
@@ -276,15 +232,12 @@ export type SDHCTeamMemberOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.SDHCTeamMemberCountOrderByAggregateInput
-  _avg?: Prisma.SDHCTeamMemberAvgOrderByAggregateInput
   _max?: Prisma.SDHCTeamMemberMaxOrderByAggregateInput
   _min?: Prisma.SDHCTeamMemberMinOrderByAggregateInput
-  _sum?: Prisma.SDHCTeamMemberSumOrderByAggregateInput
 }
 
 export type SDHCTeamMemberScalarWhereWithAggregatesInput = {
@@ -301,7 +254,6 @@ export type SDHCTeamMemberScalarWhereWithAggregatesInput = {
     | Prisma.StringNullableWithAggregatesFilter<'SDHCTeamMember'>
     | string
     | null
-  order?: Prisma.IntWithAggregatesFilter<'SDHCTeamMember'> | number
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'SDHCTeamMember'>
     | Date
@@ -317,7 +269,6 @@ export type SDHCTeamMemberCreateInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSDHCTeamMemberInput
@@ -327,7 +278,6 @@ export type SDHCTeamMemberUncheckedCreateInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
@@ -337,7 +287,6 @@ export type SDHCTeamMemberUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSDHCTeamMemberNestedInput
@@ -347,7 +296,6 @@ export type SDHCTeamMemberUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -357,7 +305,6 @@ export type SDHCTeamMemberCreateManyInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
@@ -367,7 +314,6 @@ export type SDHCTeamMemberUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,7 +322,6 @@ export type SDHCTeamMemberUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -396,21 +341,15 @@ export type SDHCTeamMemberCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type SDHCTeamMemberAvgOrderByAggregateInput = {
-  order?: Prisma.SortOrder
 }
 
 export type SDHCTeamMemberMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -420,14 +359,9 @@ export type SDHCTeamMemberMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type SDHCTeamMemberSumOrderByAggregateInput = {
-  order?: Prisma.SortOrder
 }
 
 export type SDHCTeamMemberCreateNestedManyWithoutUserInput = {
@@ -544,7 +478,6 @@ export type SDHCTeamMemberCreateWithoutUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -553,7 +486,6 @@ export type SDHCTeamMemberUncheckedCreateWithoutUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -612,7 +544,6 @@ export type SDHCTeamMemberScalarWhereInput = {
   id?: Prisma.StringFilter<'SDHCTeamMember'> | string
   role?: Prisma.StringFilter<'SDHCTeamMember'> | string
   description?: Prisma.StringNullableFilter<'SDHCTeamMember'> | string | null
-  order?: Prisma.IntFilter<'SDHCTeamMember'> | number
   createdAt?: Prisma.DateTimeFilter<'SDHCTeamMember'> | Date | string
   updatedAt?: Prisma.DateTimeFilter<'SDHCTeamMember'> | Date | string
   userId?: Prisma.StringFilter<'SDHCTeamMember'> | string
@@ -622,7 +553,6 @@ export type SDHCTeamMemberCreateManyUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -631,7 +561,6 @@ export type SDHCTeamMemberUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -640,7 +569,6 @@ export type SDHCTeamMemberUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -649,7 +577,6 @@ export type SDHCTeamMemberUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -662,7 +589,6 @@ export type SDHCTeamMemberSelect<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -679,7 +605,6 @@ export type SDHCTeamMemberSelectCreateManyAndReturn<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -696,7 +621,6 @@ export type SDHCTeamMemberSelectUpdateManyAndReturn<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -709,7 +633,6 @@ export type SDHCTeamMemberSelectScalar = {
   id?: boolean
   role?: boolean
   description?: boolean
-  order?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -719,13 +642,7 @@ export type SDHCTeamMemberOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  | 'id'
-  | 'role'
-  | 'description'
-  | 'order'
-  | 'createdAt'
-  | 'updatedAt'
-  | 'userId',
+  'id' | 'role' | 'description' | 'createdAt' | 'updatedAt' | 'userId',
   ExtArgs['result']['sDHCTeamMember']
 >
 export type SDHCTeamMemberInclude<
@@ -760,7 +677,6 @@ export type $SDHCTeamMemberPayload<
       id: string
       role: string
       description: string | null
-      order: number
       createdAt: Date
       updatedAt: Date
       userId: string
@@ -1385,7 +1301,6 @@ export interface SDHCTeamMemberFieldRefs {
   readonly id: Prisma.FieldRef<'SDHCTeamMember', 'String'>
   readonly role: Prisma.FieldRef<'SDHCTeamMember', 'String'>
   readonly description: Prisma.FieldRef<'SDHCTeamMember', 'String'>
-  readonly order: Prisma.FieldRef<'SDHCTeamMember', 'Int'>
   readonly createdAt: Prisma.FieldRef<'SDHCTeamMember', 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<'SDHCTeamMember', 'DateTime'>
   readonly userId: Prisma.FieldRef<'SDHCTeamMember', 'String'>

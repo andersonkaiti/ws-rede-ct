@@ -21,7 +21,6 @@ const memberSchema = z.object({
   id: z.uuid(),
   role: z.string(),
   description: z.string().nullable(),
-  order: z.number(),
   teamId: z.uuid(),
   userId: z.uuid(),
   createdAt: z.date(),
