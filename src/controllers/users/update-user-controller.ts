@@ -6,11 +6,7 @@ import { PATHS } from '../../constants/paths.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
-
-const MAX_AVATAR_SIZE_MB = 2
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-const MAX_AVATAR_SIZE_BYTES = MAX_AVATAR_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 const ORCID_REGEX = /^\d{4}-\d{4}-\d{4}-\d{4}$/
 
@@ -23,33 +19,34 @@ export const updateUserSchema = z.object({
   lattesUrl: z.string().optional(),
   orcid: z
     .union([
-      z.string().regex(ORCID_REGEX, {
-        message: 'ORCID inválido. Deve estar no formato 0000-0000-0000-0000',
-      }),
+      z
+        .string()
+        .regex(
+          ORCID_REGEX,
+          'ORCID inválido. Deve estar no formato 0000-0000-0000-0000',
+        ),
       z.literal(''),
     ])
     .optional(),
   phone: z
     .union([
-      z.string().regex(PHONE_REGEX, {
-        message: 'Telefone inválido. Deve estar no formato (99) 99999-9999',
-      }),
+      z
+        .string()
+        .regex(
+          PHONE_REGEX,
+          'Telefone inválido. Deve estar no formato (99) 99999-9999',
+        ),
       z.literal(''),
     ])
     .optional(),
   avatarImage: z
     .any()
-    .refine((value) => {
-      if (value === undefined || value === null) {
-        return true
-      }
-
-      if (typeof value !== 'object' || typeof value.size !== 'number') {
-        return false
-      }
-
-      return value.size <= MAX_AVATAR_SIZE_BYTES
-    }, `A imagem deve ter no máximo ${MAX_AVATAR_SIZE_MB}MB.`)
+    .refine((file) =>
+      validateImageFile({
+        file,
+        optional: true,
+      }),
+    )
     .optional(),
 })
 

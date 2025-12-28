@@ -8,11 +8,7 @@ import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IMeetingRepository } from '../../repositories/meeting/imeeting-repository.d.ts'
 import type { IMeetingMinuteRepository } from '../../repositories/meeting-minute/imeeting-minute-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
-
-const MAX_DOCUMENT_SIZE_MB = 10
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-const MAX_DOCUMENT_SIZE_BYTES = MAX_DOCUMENT_SIZE_MB * MEGABYTE
+import { validatePdfFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -20,17 +16,11 @@ export const createMeetingMinuteSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório'),
   publishedAt: z.coerce.date(),
   id: z.uuid(),
-  document: z.any().refine((value) => {
-    if (value === undefined || value === null) {
-      return false
-    }
-
-    if (typeof value !== 'object' || typeof value.size !== 'number') {
-      return false
-    }
-
-    return value.size <= MAX_DOCUMENT_SIZE_BYTES
-  }, `O documento deve ter no máximo ${MAX_DOCUMENT_SIZE_MB}MB.`),
+  document: z.any().refine((file) =>
+    validatePdfFile({
+      file,
+    }),
+  ),
 })
 
 export class CreateMeetingMinuteController {

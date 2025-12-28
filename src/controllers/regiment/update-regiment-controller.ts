@@ -7,11 +7,7 @@ import { PATHS } from '../../constants/paths.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegimentRepository } from '../../repositories/regiment/iregiment-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
-
-const MAX_DOCUMENT_SIZE_MB = 10
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-const MAX_DOCUMENT_SIZE_BYTES = MAX_DOCUMENT_SIZE_MB * MEGABYTE
+import { validatePdfFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -22,17 +18,11 @@ export const updateRegimentSchema = z.object({
   publishedAt: z.coerce.date().optional(),
   document: z
     .any()
-    .refine((value) => {
-      if (value === undefined || value === null) {
-        return true
-      }
-
-      if (typeof value !== 'object' || typeof value.size !== 'number') {
-        return false
-      }
-
-      return value.size <= MAX_DOCUMENT_SIZE_BYTES
-    }, `O documento deve ter no máximo ${MAX_DOCUMENT_SIZE_MB}MB.`)
+    .refine((file) =>
+      validatePdfFile({
+        file,
+      }),
+    )
     .optional(),
   status: z.enum(RegimentStatus).optional(),
 })

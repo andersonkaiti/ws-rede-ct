@@ -8,7 +8,7 @@ import type { IRegionalCongressRepository } from '../../repositories/regional-co
 extendZodWithOpenApi(z)
 
 export const findRegionalCongressByIdSchema = z.object({
-  id: z.string().uuid('ID inválido'),
+  id: z.uuid('ID inválido'),
 })
 
 export class FindRegionalCongressByIdController {

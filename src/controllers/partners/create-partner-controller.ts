@@ -5,27 +5,17 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import { PATHS } from '../../constants/paths.ts'
 import type { IPartnerRepository } from '../../repositories/partner/ipartner-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
-
-const MAX_LOGO_SIZE_MB = 2
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-const MAX_LOGO_SIZE_BYTES = MAX_LOGO_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
 export const createPartnerSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
-  logo: z.any().refine((value) => {
-    if (value === undefined || value === null) {
-      return false
-    }
-
-    if (typeof value !== 'object' || typeof value.size !== 'number') {
-      return false
-    }
-
-    return value.size <= MAX_LOGO_SIZE_BYTES
-  }, `A imagem deve ter no máximo ${MAX_LOGO_SIZE_MB}MB.`),
+  logo: z.any().refine((file) =>
+    validateImageFile({
+      file,
+    }),
+  ),
   websiteUrl: z.url('URL do site deve ser válida').optional(),
   description: z.string().optional(),
   category: z.string().optional(),

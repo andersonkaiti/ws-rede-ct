@@ -12,8 +12,8 @@ export const createRedeCTHighlightSchema = z.object({
   description: z.string().optional(),
   honorableMention: z.coerce.boolean().optional(),
   honoredAt: z.coerce.date(),
-  meritUrl: z.string().url('URL do mérito deve ser válida').optional(),
-  userId: z.string().uuid('ID do usuário deve ser válido'),
+  meritUrl: z.url('URL do mérito deve ser válida').optional(),
+  userId: z.uuid('ID do usuário deve ser válido'),
 })
 
 export class CreateRedeCTHighlightController {

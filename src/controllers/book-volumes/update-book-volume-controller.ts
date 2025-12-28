@@ -6,12 +6,7 @@ import { PATHS } from '../../constants/paths.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IBookVolumeRepository } from '../../repositories/book-volume/ibook-volume-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
-
-const MAX_IMAGE_SIZE_MB = 5
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-
-const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -20,26 +15,20 @@ export const updateBookVolumeSchema = z.object({
   volumeNumber: z.coerce.number().int().positive().optional(),
   year: z.coerce.number().int().positive().optional(),
   title: z.string().min(1, 'Título é obrigatório.').optional(),
-  authorId: z.string().uuid('ID do autor deve ser um UUID válido.').optional(),
-  accessUrl: z.string().url('URL de acesso deve ser válida').optional(),
+  authorId: z.uuid('ID do autor deve ser um UUID válido.').optional(),
+  accessUrl: z.url('URL de acesso deve ser válida').optional(),
   catalogSheetUrl: z
-    .string()
     .url('URL da ficha catalográfica deve ser válida')
     .optional(),
   description: z.string().optional(),
   coverImage: z
     .any()
-    .refine((value) => {
-      if (value === undefined || value === null) {
-        return true
-      }
-
-      if (typeof value !== 'object' || typeof value.size !== 'number') {
-        return false
-      }
-
-      return value.size <= MAX_IMAGE_SIZE_BYTES
-    }, `A imagem da capa deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`)
+    .refine((value) =>
+      validateImageFile({
+        file: value,
+        optional: true,
+      }),
+    )
     .optional(),
 })
 

@@ -9,7 +9,7 @@ extendZodWithOpenApi(z)
 
 export const updateRegionalCongressSchema = z
   .object({
-    id: z.string().uuid('ID inválido'),
+    id: z.uuid('ID inválido'),
     title: z.string().min(1, 'Título é obrigatório').optional(),
     edition: z.coerce
       .number()
@@ -64,7 +64,7 @@ export class UpdateRegionalCongressController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    const { id } = z.object({ id: z.string().uuid() }).parse(req.params)
+    const { id } = z.object({ id: z.uuid() }).parse(req.params)
 
     const congress = await this.regionalCongressRepository.findById(id)
 

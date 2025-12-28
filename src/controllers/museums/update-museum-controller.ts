@@ -6,11 +6,7 @@ import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IMuseumRepository } from '../../repositories/museum/imuseum-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
-
-const MAX_LOGO_SIZE_MB = 2
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-const MAX_LOGO_SIZE_BYTES = MAX_LOGO_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -19,24 +15,19 @@ export const updateMuseumSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório').optional(),
   logo: z
     .any()
-    .refine((value) => {
-      if (value === undefined || value === null) {
-        return true
-      }
-
-      if (typeof value !== 'object' || typeof value.size !== 'number') {
-        return false
-      }
-
-      return value.size <= MAX_LOGO_SIZE_BYTES
-    }, `A imagem deve ter no máximo ${MAX_LOGO_SIZE_MB}MB.`)
+    .refine((file) =>
+      validateImageFile({
+        file,
+        optional: true,
+      }),
+    )
     .optional(),
   city: z.string().optional(),
   state: z.string().optional(),
   country: z.string().optional(),
   description: z.string().optional(),
   website: z.url('URL do site deve ser válida').optional(),
-  email: z.string().email('Email deve ser válido').optional(),
+  email: z.email('Email deve ser válido').optional(),
   phone: z.string().optional(),
   address: z.string().optional(),
   functioning: z.string().optional(),

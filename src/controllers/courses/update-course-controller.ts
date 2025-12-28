@@ -7,20 +7,15 @@ import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { ICourseRepository } from '../../repositories/course/icourse-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
-
-const MAX_IMAGE_SIZE_MB = 5
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-
-const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
 export const updateCourseSchema = z.object({
   id: z.uuid(),
   title: z.string().min(1, 'Título é obrigatório.').optional(),
-  coordinatorId: z.string().uuid('Coordenador é obrigatório.').optional(),
-  email: z.string().email('E-mail deve ser válido.').optional(),
+  coordinatorId: z.uuid('Coordenador é obrigatório.').optional(),
+  email: z.email('E-mail deve ser válido.').optional(),
   location: z.string().min(1, 'Localização é obrigatória.').optional(),
   scheduledAt: z.coerce.date().optional(),
   registrationLink: z.url('URL de inscrição deve ser válida').optional(),
@@ -33,17 +28,12 @@ export const updateCourseSchema = z.object({
     .optional(),
   image: z
     .any()
-    .refine((value) => {
-      if (value === undefined || value === null) {
-        return true
-      }
-
-      if (typeof value !== 'object' || typeof value.size !== 'number') {
-        return false
-      }
-
-      return value.size <= MAX_IMAGE_SIZE_BYTES
-    }, `A imagem deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`)
+    .refine((file) =>
+      validateImageFile({
+        file,
+        optional: true,
+      }),
+    )
     .optional(),
 })
 

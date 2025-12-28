@@ -7,12 +7,7 @@ import { NotFoundError } from '../../errors/not-found-error.ts'
 import { UnauthorizedError } from '../../errors/unauthorized-error.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
-
-const MAX_IMAGE_SIZE_MB = 5
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-
-export const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -22,17 +17,13 @@ const updateNewsSchema = z.object({
   content: z.string().min(1),
   image: z
     .any()
-    .optional()
-    .refine(
-      (file) =>
-        !file ||
-        (typeof file === 'object' &&
-          typeof file.mimetype === 'string' &&
-          file.mimetype.startsWith('image/') &&
-          typeof file.size === 'number' &&
-          file.size <= MAX_IMAGE_SIZE_BYTES),
-      'A imagem deve ser uma imagem válida de no máximo 5MB.',
-    ),
+    .refine((file) =>
+      validateImageFile({
+        file,
+        optional: true,
+      }),
+    )
+    .optional(),
 })
 
 export class UpdateNewsController {

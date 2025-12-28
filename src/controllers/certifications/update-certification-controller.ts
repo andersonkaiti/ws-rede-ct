@@ -6,6 +6,7 @@ import { PATHS } from '../../constants/paths.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
+import { validatePdfFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -15,13 +16,11 @@ export const updateCertificationSchema = z.object({
   description: z.string().min(1, 'Descrição é obrigatória.'),
   certification: z
     .any()
-    .refine(
-      (file) =>
-        file == null ||
-        (typeof file === 'object' &&
-          typeof file.size === 'number' &&
-          (file.size === 0 || file.size > 0)),
-      'Arquivo do certificado é inválido',
+    .refine((file) =>
+      validatePdfFile({
+        file,
+        optional: true,
+      }),
     )
     .optional(),
 })

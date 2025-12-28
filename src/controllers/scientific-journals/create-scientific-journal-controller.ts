@@ -5,12 +5,7 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import { PATHS } from '../../constants/paths.ts'
 import type { IScientificJournalRepository } from '../../repositories/scientific-journal/iscientific-journal-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
-
-const MAX_IMAGE_SIZE_MB = 5
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-
-const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -21,19 +16,11 @@ export const createScientificJournalSchema = z.object({
   journalUrl: z.url('URL da revista deve ser válida.'),
   directors: z.string().optional(),
   editorialBoard: z.string().optional(),
-  logo: z
-    .any()
-    .refine(
-      (file) =>
-        !file ||
-        (typeof file === 'object' &&
-          typeof file.mimetype === 'string' &&
-          file.mimetype.startsWith('image/') &&
-          typeof file.size === 'number' &&
-          file.size <= MAX_IMAGE_SIZE_BYTES),
-      'O logo deve ser uma imagem válida de no máximo 5MB.',
-    )
-    .optional(),
+  logo: z.any().refine((file) =>
+    validateImageFile({
+      file,
+    }),
+  ),
 })
 
 export class CreateScientificJournalController {

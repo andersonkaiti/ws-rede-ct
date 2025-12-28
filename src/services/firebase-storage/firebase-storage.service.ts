@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import type { Bucket } from '@google-cloud/storage'
+import sharp from 'sharp'
 import type {
   IDeleteFile,
   IFirebaseStorageService,
@@ -13,20 +14,19 @@ export class FirebaseStorageService implements IFirebaseStorageService {
   constructor(private readonly bucket: Bucket) {}
 
   async uploadFile({ file, folder, id }: IUploadFile): Promise<string> {
-    const fileName = `${randomUUID()}-${file?.originalname}`
+    const { buffer, extension, contentType } = await this.processFile(file)
 
+    const fileName = `${randomUUID()}.${extension}`
     const fileRef = this.bucket.file(`${folder}/${id}/${fileName}`)
 
     return await new Promise((resolve, reject) => {
       const fileStream = fileRef.createWriteStream({
         metadata: {
-          contentType: file?.mimetype,
+          contentType,
         },
       })
 
-      fileStream.on('error', (error) => {
-        reject(error)
-      })
+      fileStream.on('error', reject)
 
       fileStream.on('finish', async () => {
         try {
@@ -38,8 +38,31 @@ export class FirebaseStorageService implements IFirebaseStorageService {
         }
       })
 
-      fileStream.end(file.buffer)
+      fileStream.end(buffer)
     })
+  }
+
+  private async processFile(file: IUploadFile['file']) {
+    const isImage = file.mimetype.startsWith('image/')
+
+    if (isImage) {
+      return {
+        buffer: await sharp(file.buffer).webp().toBuffer(),
+        extension: 'webp',
+        contentType: 'image/webp',
+      }
+    }
+
+    return {
+      buffer: file.buffer,
+      extension: this.getFileExtension(file.originalname),
+      contentType: file.mimetype,
+    }
+  }
+
+  private getFileExtension(filename: string): string {
+    const match = filename.match(/\.([^.]+)$/)
+    return match ? match[1] : 'bin'
   }
 
   async updateFile({

@@ -7,12 +7,7 @@ import { InternalServerError } from '../../errors/internal-server-error.ts'
 import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IWebinarRepository } from '../../repositories/webinar/iwebinar-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
-
-const MAX_IMAGE_SIZE_MB = 5
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-
-const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -30,17 +25,12 @@ export const updateWebinarSchema = z.object({
     .optional(),
   thumbnail: z
     .any()
-    .refine((value) => {
-      if (value === undefined || value === null) {
-        return true
-      }
-
-      if (typeof value !== 'object' || typeof value.size !== 'number') {
-        return false
-      }
-
-      return value.size <= MAX_IMAGE_SIZE_BYTES
-    }, `A thumbnail deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`)
+    .refine((file) =>
+      validateImageFile({
+        file,
+        optional: true,
+      }),
+    )
     .optional(),
 })
 
