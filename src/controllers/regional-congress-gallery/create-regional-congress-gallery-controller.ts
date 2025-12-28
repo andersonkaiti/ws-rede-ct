@@ -7,27 +7,17 @@ import { NotFoundError } from '../../errors/not-found-error.ts'
 import type { IRegionalCongressGalleryRepository } from '../../repositories/regional-congress/gallery/iregional-congress-gallery-repository.js'
 import type { IRegionalCongressRepository } from '../../repositories/regional-congress/iregional-congress-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
-
-const MAX_IMAGE_SIZE_MB = 5
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
 export const createRegionalCongressGallerySchema = z.object({
   caption: z.string().optional(),
-  image: z.any().refine((value) => {
-    if (value === undefined || value === null) {
-      return false
-    }
-
-    if (typeof value !== 'object' || typeof value.size !== 'number') {
-      return false
-    }
-
-    return value.size <= MAX_IMAGE_SIZE_BYTES
-  }, `A imagem deve ter no máximo ${MAX_IMAGE_SIZE_MB}MB.`),
+  image: z.any().refine((file) =>
+    validateImageFile({
+      file,
+    }),
+  ),
   id: z.uuid(),
 })
 

@@ -8,7 +8,7 @@ import type { IRegionalCongressPartnerRepository } from '../../repositories/regi
 extendZodWithOpenApi(z)
 
 export const findRegionalCongressPartnerByIdSchema = z.object({
-  id: z.string().uuid('ID inválido'),
+  id: z.uuid('ID inválido'),
 })
 
 export class FindRegionalCongressPartnerByIdController {

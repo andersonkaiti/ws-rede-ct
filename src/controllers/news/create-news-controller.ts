@@ -5,32 +5,18 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import { PATHS } from '../../constants/paths.ts'
 import type { INewsRepository } from '../../repositories/news/inews-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
-
-const MAX_IMAGE_SIZE_MB = 5
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-
-const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
 export const createNewsSchema = z.object({
   title: z.string().min(1),
   content: z.string().min(1),
-  image: z
-    .any()
-    .refine(
-      (file) =>
-        !file ||
-        (typeof file === 'object' &&
-          typeof file.mimetype === 'string' &&
-          file.mimetype.startsWith('image/') &&
-          typeof file.size === 'number' &&
-          file.size <= MAX_IMAGE_SIZE_BYTES),
-      {
-        message: 'A imagem deve ser uma imagem válida de no máximo 5MB.',
-      },
-    ),
+  image: z.any().refine((file) =>
+    validateImageFile({
+      file,
+    }),
+  ),
 })
 
 export class CreateNewsController {

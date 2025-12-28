@@ -7,6 +7,7 @@ import { PATHS } from '../../constants/paths.ts'
 import { BadRequestError } from '../../errors/bad-request-error.ts'
 import type { IPendencyRepository } from '../../repositories/pendency/ipendency-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
+import { validatePdfFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -18,13 +19,11 @@ export const updatePendencySchema = z.object({
   dueDate: z.coerce.date().optional(),
   document: z
     .any()
-    .refine(
-      (file) =>
-        file == null ||
-        (typeof file === 'object' &&
-          typeof file.size === 'number' &&
-          (file.size === 0 || file.size > 0)),
-      'Arquivo do documento é inválido',
+    .refine((file) =>
+      validatePdfFile({
+        file,
+        optional: true,
+      }),
     )
     .optional(),
 })

@@ -5,12 +5,7 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import { PATHS } from '../../constants/paths.ts'
 import type { IResearchGroupRepository } from '../../repositories/research-group/iresearch-group-repository.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
-
-const MAX_IMAGE_SIZE_MB = 5
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-
-const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -26,15 +21,10 @@ export const createResearchGroupSchema = z.object({
   deputyLeaderId: z.uuid('Vice-líder é obrigatório.'),
   logo: z
     .any()
-    .refine(
-      (file) =>
-        !file ||
-        (typeof file === 'object' &&
-          typeof file.mimetype === 'string' &&
-          file.mimetype.startsWith('image/') &&
-          typeof file.size === 'number' &&
-          file.size <= MAX_IMAGE_SIZE_BYTES),
-      'O logo deve ser uma imagem válida de no máximo 5MB.',
+    .refine((file) =>
+      validateImageFile({
+        file,
+      }),
     )
     .optional(),
 })

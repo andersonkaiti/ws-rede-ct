@@ -6,11 +6,7 @@ import { HttpStatus } from '../../@types/status-code.ts'
 import { PATHS } from '../../constants/paths.ts'
 import type { IInMemoriamRepository } from '../../repositories/in-memoriam/iin-memoriam-repository.js'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.js'
-
-const MAX_PHOTO_SIZE_MB = 2
-const KILOBYTE = 1024
-const MEGABYTE = KILOBYTE * KILOBYTE
-const MAX_PHOTO_SIZE_BYTES = MAX_PHOTO_SIZE_MB * MEGABYTE
+import { validateImageFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -22,17 +18,12 @@ export const createInMemoriamSchema = z
     biography: z.string().optional(),
     photo: z
       .any()
-      .refine((value) => {
-        if (value === undefined || value === null) {
-          return true
-        }
-
-        if (typeof value !== 'object' || typeof value.size !== 'number') {
-          return false
-        }
-
-        return value.size <= MAX_PHOTO_SIZE_BYTES
-      }, `A imagem deve ter no máximo ${MAX_PHOTO_SIZE_MB}MB.`)
+      .refine((file) =>
+        validateImageFile({
+          file,
+          optional: true,
+        }),
+      )
       .optional(),
     role: z.enum(InMemoriamRole),
   })

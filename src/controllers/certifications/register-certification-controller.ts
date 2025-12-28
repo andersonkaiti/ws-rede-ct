@@ -7,6 +7,7 @@ import { BadRequestError } from '../../errors/bad-request-error.ts'
 import type { ICertificationRepository } from '../../repositories/certification/icertification-repository.ts'
 import type { IUserRepository } from '../../repositories/user/iuser-repository.d.ts'
 import type { IFirebaseStorageService } from '../../services/firebase-storage/ifirebase-storage.ts'
+import { validatePdfFile } from '../../utils/validate-file.ts'
 
 extendZodWithOpenApi(z)
 
@@ -14,12 +15,11 @@ export const registerCertificationSchema = z.object({
   userId: z.uuid(),
   title: z.string().min(1, 'Título é obrigatório.'),
   description: z.string().min(1, 'Descrição é obrigatória.'),
-  certification: z
-    .any()
-    .refine(
-      (file) => file && typeof file === 'object' && file.size > 0,
-      'Arquivo do certificado é obrigatório',
-    ),
+  certification: z.any().refine((file) =>
+    validatePdfFile({
+      file,
+    }),
+  ),
 })
 
 export class RegisterCertificationController {
