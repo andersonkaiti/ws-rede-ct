@@ -10,7 +10,6 @@ export const createLegitimatorCommitteeMemberSchema = z.object({
   role: z.string().min(1),
   description: z.string().optional(),
   userId: z.uuid(),
-  order: z.number().optional(),
 })
 
 export class CreateLegitimatorCommitteeMemberController {
@@ -19,14 +18,13 @@ export class CreateLegitimatorCommitteeMemberController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    const { role, description, userId, order } =
+    const { role, description, userId } =
       createLegitimatorCommitteeMemberSchema.parse(req.body)
 
     await this.legitimatorCommitteeMemberRepository.create({
       role,
       description,
       userId,
-      order: order ?? 0,
     })
 
     return res.sendStatus(HttpStatus.CREATED)

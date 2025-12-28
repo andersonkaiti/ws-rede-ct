@@ -10,7 +10,6 @@ export const createSDHCTeamMemberSchema = z.object({
   role: z.string().min(1),
   description: z.string().optional(),
   userId: z.uuid(),
-  order: z.number().optional(),
 })
 
 export class CreateSDHCTeamMemberController {
@@ -19,14 +18,14 @@ export class CreateSDHCTeamMemberController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    const { role, description, userId, order } =
-      createSDHCTeamMemberSchema.parse(req.body)
+    const { role, description, userId } = createSDHCTeamMemberSchema.parse(
+      req.body,
+    )
 
     await this.sdhcTeamMemberRepository.create({
       role,
       description,
       userId,
-      order: order ?? 0,
     })
 
     return res.sendStatus(HttpStatus.CREATED)

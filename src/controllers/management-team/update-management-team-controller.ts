@@ -17,7 +17,6 @@ export const updateManagementTeamSchema = z.object({
       z.object({
         userId: z.uuid(),
         role: z.string().min(1),
-        order: z.number().optional(),
       }),
     )
     .optional(),
@@ -55,13 +54,7 @@ export class UpdateManagementTeamController {
       id,
       name,
       description,
-      members: members
-        ? members.map((member) => ({
-            userId: member.userId,
-            role: member.role,
-            order: member.order ?? 0,
-          }))
-        : undefined,
+      members,
     })
 
     return res.sendStatus(HttpStatus.OK)

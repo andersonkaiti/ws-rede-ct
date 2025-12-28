@@ -12,7 +12,6 @@ export const updateSDHCTeamMemberSchema = z.object({
   role: z.string().min(1).optional(),
   description: z.string().optional(),
   userId: z.uuid().optional(),
-  order: z.number().optional(),
 })
 
 export class UpdateSDHCTeamMemberController {
@@ -21,11 +20,10 @@ export class UpdateSDHCTeamMemberController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    const { id, role, description, userId, order } =
-      updateSDHCTeamMemberSchema.parse({
-        id: req.params.id,
-        ...req.body,
-      })
+    const { id, role, description, userId } = updateSDHCTeamMemberSchema.parse({
+      id: req.params.id,
+      ...req.body,
+    })
 
     const existingMember = await this.sdhcTeamMemberRepository.findById(id)
 
@@ -38,7 +36,6 @@ export class UpdateSDHCTeamMemberController {
       role,
       description,
       userId,
-      order,
     })
 
     return res.sendStatus(HttpStatus.OK)

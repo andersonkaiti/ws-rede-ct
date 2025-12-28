@@ -20,25 +20,14 @@ export type ManagementTeamMemberModel =
 
 export type AggregateManagementTeamMember = {
   _count: ManagementTeamMemberCountAggregateOutputType | null
-  _avg: ManagementTeamMemberAvgAggregateOutputType | null
-  _sum: ManagementTeamMemberSumAggregateOutputType | null
   _min: ManagementTeamMemberMinAggregateOutputType | null
   _max: ManagementTeamMemberMaxAggregateOutputType | null
-}
-
-export type ManagementTeamMemberAvgAggregateOutputType = {
-  order: number | null
-}
-
-export type ManagementTeamMemberSumAggregateOutputType = {
-  order: number | null
 }
 
 export type ManagementTeamMemberMinAggregateOutputType = {
   id: string | null
   role: string | null
   description: string | null
-  order: number | null
   createdAt: Date | null
   updatedAt: Date | null
   teamId: string | null
@@ -49,7 +38,6 @@ export type ManagementTeamMemberMaxAggregateOutputType = {
   id: string | null
   role: string | null
   description: string | null
-  order: number | null
   createdAt: Date | null
   updatedAt: Date | null
   teamId: string | null
@@ -60,7 +48,6 @@ export type ManagementTeamMemberCountAggregateOutputType = {
   id: number
   role: number
   description: number
-  order: number
   createdAt: number
   updatedAt: number
   teamId: number
@@ -68,19 +55,10 @@ export type ManagementTeamMemberCountAggregateOutputType = {
   _all: number
 }
 
-export type ManagementTeamMemberAvgAggregateInputType = {
-  order?: true
-}
-
-export type ManagementTeamMemberSumAggregateInputType = {
-  order?: true
-}
-
 export type ManagementTeamMemberMinAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   teamId?: true
@@ -91,7 +69,6 @@ export type ManagementTeamMemberMaxAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   teamId?: true
@@ -102,7 +79,6 @@ export type ManagementTeamMemberCountAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   teamId?: true
@@ -153,18 +129,6 @@ export type ManagementTeamMemberAggregateArgs<
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    *
-   * Select which fields to average
-   **/
-  _avg?: ManagementTeamMemberAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
-   * Select which fields to sum
-   **/
-  _sum?: ManagementTeamMemberSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
    * Select which fields to find the minimum value
    **/
   _min?: ManagementTeamMemberMinAggregateInputType
@@ -203,8 +167,6 @@ export type ManagementTeamMemberGroupByArgs<
   take?: number
   skip?: number
   _count?: ManagementTeamMemberCountAggregateInputType | true
-  _avg?: ManagementTeamMemberAvgAggregateInputType
-  _sum?: ManagementTeamMemberSumAggregateInputType
   _min?: ManagementTeamMemberMinAggregateInputType
   _max?: ManagementTeamMemberMaxAggregateInputType
 }
@@ -213,14 +175,11 @@ export type ManagementTeamMemberGroupByOutputType = {
   id: string
   role: string
   description: string | null
-  order: number
   createdAt: Date
   updatedAt: Date
   teamId: string
   userId: string
   _count: ManagementTeamMemberCountAggregateOutputType | null
-  _avg: ManagementTeamMemberAvgAggregateOutputType | null
-  _sum: ManagementTeamMemberSumAggregateOutputType | null
   _min: ManagementTeamMemberMinAggregateOutputType | null
   _max: ManagementTeamMemberMaxAggregateOutputType | null
 }
@@ -254,7 +213,6 @@ export type ManagementTeamMemberWhereInput = {
     | Prisma.StringNullableFilter<'ManagementTeamMember'>
     | string
     | null
-  order?: Prisma.IntFilter<'ManagementTeamMember'> | number
   createdAt?: Prisma.DateTimeFilter<'ManagementTeamMember'> | Date | string
   updatedAt?: Prisma.DateTimeFilter<'ManagementTeamMember'> | Date | string
   teamId?: Prisma.StringFilter<'ManagementTeamMember'> | string
@@ -270,7 +228,6 @@ export type ManagementTeamMemberOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
@@ -294,7 +251,6 @@ export type ManagementTeamMemberWhereUniqueInput = Prisma.AtLeast<
       | Prisma.StringNullableFilter<'ManagementTeamMember'>
       | string
       | null
-    order?: Prisma.IntFilter<'ManagementTeamMember'> | number
     createdAt?: Prisma.DateTimeFilter<'ManagementTeamMember'> | Date | string
     updatedAt?: Prisma.DateTimeFilter<'ManagementTeamMember'> | Date | string
     teamId?: Prisma.StringFilter<'ManagementTeamMember'> | string
@@ -312,16 +268,13 @@ export type ManagementTeamMemberOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.ManagementTeamMemberCountOrderByAggregateInput
-  _avg?: Prisma.ManagementTeamMemberAvgOrderByAggregateInput
   _max?: Prisma.ManagementTeamMemberMaxOrderByAggregateInput
   _min?: Prisma.ManagementTeamMemberMinOrderByAggregateInput
-  _sum?: Prisma.ManagementTeamMemberSumOrderByAggregateInput
 }
 
 export type ManagementTeamMemberScalarWhereWithAggregatesInput = {
@@ -338,7 +291,6 @@ export type ManagementTeamMemberScalarWhereWithAggregatesInput = {
     | Prisma.StringNullableWithAggregatesFilter<'ManagementTeamMember'>
     | string
     | null
-  order?: Prisma.IntWithAggregatesFilter<'ManagementTeamMember'> | number
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'ManagementTeamMember'>
     | Date
@@ -355,7 +307,6 @@ export type ManagementTeamMemberCreateInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.ManagementTeamCreateNestedOneWithoutMembersInput
@@ -366,7 +317,6 @@ export type ManagementTeamMemberUncheckedCreateInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   teamId: string
@@ -377,7 +327,6 @@ export type ManagementTeamMemberUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.ManagementTeamUpdateOneRequiredWithoutMembersNestedInput
@@ -388,7 +337,6 @@ export type ManagementTeamMemberUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -399,7 +347,6 @@ export type ManagementTeamMemberCreateManyInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   teamId: string
@@ -410,7 +357,6 @@ export type ManagementTeamMemberUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -419,7 +365,6 @@ export type ManagementTeamMemberUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -440,22 +385,16 @@ export type ManagementTeamMemberCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
-export type ManagementTeamMemberAvgOrderByAggregateInput = {
-  order?: Prisma.SortOrder
-}
-
 export type ManagementTeamMemberMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
@@ -466,15 +405,10 @@ export type ManagementTeamMemberMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type ManagementTeamMemberSumOrderByAggregateInput = {
-  order?: Prisma.SortOrder
 }
 
 export type ManagementTeamMemberCreateNestedManyWithoutUserInput = {
@@ -697,19 +631,10 @@ export type ManagementTeamMemberUncheckedUpdateManyWithoutTeamNestedInput = {
     | Prisma.ManagementTeamMemberScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ManagementTeamMemberCreateWithoutUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.ManagementTeamCreateNestedOneWithoutMembersInput
@@ -719,7 +644,6 @@ export type ManagementTeamMemberUncheckedCreateWithoutUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   teamId: string
@@ -782,7 +706,6 @@ export type ManagementTeamMemberScalarWhereInput = {
     | Prisma.StringNullableFilter<'ManagementTeamMember'>
     | string
     | null
-  order?: Prisma.IntFilter<'ManagementTeamMember'> | number
   createdAt?: Prisma.DateTimeFilter<'ManagementTeamMember'> | Date | string
   updatedAt?: Prisma.DateTimeFilter<'ManagementTeamMember'> | Date | string
   teamId?: Prisma.StringFilter<'ManagementTeamMember'> | string
@@ -793,7 +716,6 @@ export type ManagementTeamMemberCreateWithoutTeamInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutManagementTeamMemberInput
@@ -803,7 +725,6 @@ export type ManagementTeamMemberUncheckedCreateWithoutTeamInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
@@ -856,7 +777,6 @@ export type ManagementTeamMemberCreateManyUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   teamId: string
@@ -866,7 +786,6 @@ export type ManagementTeamMemberUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.ManagementTeamUpdateOneRequiredWithoutMembersNestedInput
@@ -876,7 +795,6 @@ export type ManagementTeamMemberUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -886,7 +804,6 @@ export type ManagementTeamMemberUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -896,7 +813,6 @@ export type ManagementTeamMemberCreateManyTeamInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
@@ -906,7 +822,6 @@ export type ManagementTeamMemberUpdateWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutManagementTeamMemberNestedInput
@@ -916,7 +831,6 @@ export type ManagementTeamMemberUncheckedUpdateWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -926,7 +840,6 @@ export type ManagementTeamMemberUncheckedUpdateManyWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -940,7 +853,6 @@ export type ManagementTeamMemberSelect<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     teamId?: boolean
@@ -959,7 +871,6 @@ export type ManagementTeamMemberSelectCreateManyAndReturn<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     teamId?: boolean
@@ -978,7 +889,6 @@ export type ManagementTeamMemberSelectUpdateManyAndReturn<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     teamId?: boolean
@@ -993,7 +903,6 @@ export type ManagementTeamMemberSelectScalar = {
   id?: boolean
   role?: boolean
   description?: boolean
-  order?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   teamId?: boolean
@@ -1007,7 +916,6 @@ export type ManagementTeamMemberOmit<
   | 'id'
   | 'role'
   | 'description'
-  | 'order'
   | 'createdAt'
   | 'updatedAt'
   | 'teamId'
@@ -1050,7 +958,6 @@ export type $ManagementTeamMemberPayload<
       id: string
       role: string
       description: string | null
-      order: number
       createdAt: Date
       updatedAt: Date
       teamId: string
@@ -1700,7 +1607,6 @@ export interface ManagementTeamMemberFieldRefs {
   readonly id: Prisma.FieldRef<'ManagementTeamMember', 'String'>
   readonly role: Prisma.FieldRef<'ManagementTeamMember', 'String'>
   readonly description: Prisma.FieldRef<'ManagementTeamMember', 'String'>
-  readonly order: Prisma.FieldRef<'ManagementTeamMember', 'Int'>
   readonly createdAt: Prisma.FieldRef<'ManagementTeamMember', 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<'ManagementTeamMember', 'DateTime'>
   readonly teamId: Prisma.FieldRef<'ManagementTeamMember', 'String'>

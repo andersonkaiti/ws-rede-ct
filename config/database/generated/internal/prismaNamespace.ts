@@ -3569,7 +3569,6 @@ export const ManagementTeamMemberScalarFieldEnum = {
   id: 'id',
   role: 'role',
   description: 'description',
-  order: 'order',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   teamId: 'teamId',
@@ -3583,7 +3582,6 @@ export const SDHCTeamMemberScalarFieldEnum = {
   id: 'id',
   role: 'role',
   description: 'description',
-  order: 'order',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
@@ -3596,7 +3594,6 @@ export const LegitimatorCommitteeMemberScalarFieldEnum = {
   id: 'id',
   role: 'role',
   description: 'description',
-  order: 'order',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
@@ -4163,22 +4160,6 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<
 >
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<
-  $PrismaModel,
-  'Int'
->
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<
-  $PrismaModel,
-  'Int[]'
->
-
-/**
  * Reference to a field of type 'PendencyStatus'
  */
 export type EnumPendencyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
@@ -4287,6 +4268,22 @@ export type EnumMeetingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  */
 export type ListEnumMeetingStatusFieldRefInput<$PrismaModel> =
   FieldRefInputType<$PrismaModel, 'MeetingStatus[]'>
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<
+  $PrismaModel,
+  'Int'
+>
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<
+  $PrismaModel,
+  'Int[]'
+>
 
 /**
  * Reference to a field of type 'EventStatus'

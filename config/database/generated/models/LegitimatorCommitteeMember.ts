@@ -20,25 +20,14 @@ export type LegitimatorCommitteeMemberModel =
 
 export type AggregateLegitimatorCommitteeMember = {
   _count: LegitimatorCommitteeMemberCountAggregateOutputType | null
-  _avg: LegitimatorCommitteeMemberAvgAggregateOutputType | null
-  _sum: LegitimatorCommitteeMemberSumAggregateOutputType | null
   _min: LegitimatorCommitteeMemberMinAggregateOutputType | null
   _max: LegitimatorCommitteeMemberMaxAggregateOutputType | null
-}
-
-export type LegitimatorCommitteeMemberAvgAggregateOutputType = {
-  order: number | null
-}
-
-export type LegitimatorCommitteeMemberSumAggregateOutputType = {
-  order: number | null
 }
 
 export type LegitimatorCommitteeMemberMinAggregateOutputType = {
   id: string | null
   role: string | null
   description: string | null
-  order: number | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -48,7 +37,6 @@ export type LegitimatorCommitteeMemberMaxAggregateOutputType = {
   id: string | null
   role: string | null
   description: string | null
-  order: number | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -58,26 +46,16 @@ export type LegitimatorCommitteeMemberCountAggregateOutputType = {
   id: number
   role: number
   description: number
-  order: number
   createdAt: number
   updatedAt: number
   userId: number
   _all: number
 }
 
-export type LegitimatorCommitteeMemberAvgAggregateInputType = {
-  order?: true
-}
-
-export type LegitimatorCommitteeMemberSumAggregateInputType = {
-  order?: true
-}
-
 export type LegitimatorCommitteeMemberMinAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -87,7 +65,6 @@ export type LegitimatorCommitteeMemberMaxAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -97,7 +74,6 @@ export type LegitimatorCommitteeMemberCountAggregateInputType = {
   id?: true
   role?: true
   description?: true
-  order?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -147,18 +123,6 @@ export type LegitimatorCommitteeMemberAggregateArgs<
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    *
-   * Select which fields to average
-   **/
-  _avg?: LegitimatorCommitteeMemberAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
-   * Select which fields to sum
-   **/
-  _sum?: LegitimatorCommitteeMemberSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   *
    * Select which fields to find the minimum value
    **/
   _min?: LegitimatorCommitteeMemberMinAggregateInputType
@@ -197,8 +161,6 @@ export type LegitimatorCommitteeMemberGroupByArgs<
   take?: number
   skip?: number
   _count?: LegitimatorCommitteeMemberCountAggregateInputType | true
-  _avg?: LegitimatorCommitteeMemberAvgAggregateInputType
-  _sum?: LegitimatorCommitteeMemberSumAggregateInputType
   _min?: LegitimatorCommitteeMemberMinAggregateInputType
   _max?: LegitimatorCommitteeMemberMaxAggregateInputType
 }
@@ -207,13 +169,10 @@ export type LegitimatorCommitteeMemberGroupByOutputType = {
   id: string
   role: string
   description: string | null
-  order: number
   createdAt: Date
   updatedAt: Date
   userId: string
   _count: LegitimatorCommitteeMemberCountAggregateOutputType | null
-  _avg: LegitimatorCommitteeMemberAvgAggregateOutputType | null
-  _sum: LegitimatorCommitteeMemberSumAggregateOutputType | null
   _min: LegitimatorCommitteeMemberMinAggregateOutputType | null
   _max: LegitimatorCommitteeMemberMaxAggregateOutputType | null
 }
@@ -256,7 +215,6 @@ export type LegitimatorCommitteeMemberWhereInput = {
     | Prisma.StringNullableFilter<'LegitimatorCommitteeMember'>
     | string
     | null
-  order?: Prisma.IntFilter<'LegitimatorCommitteeMember'> | number
   createdAt?:
     | Prisma.DateTimeFilter<'LegitimatorCommitteeMember'>
     | Date
@@ -273,7 +231,6 @@ export type LegitimatorCommitteeMemberOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -295,7 +252,6 @@ export type LegitimatorCommitteeMemberWhereUniqueInput = Prisma.AtLeast<
       | Prisma.StringNullableFilter<'LegitimatorCommitteeMember'>
       | string
       | null
-    order?: Prisma.IntFilter<'LegitimatorCommitteeMember'> | number
     createdAt?:
       | Prisma.DateTimeFilter<'LegitimatorCommitteeMember'>
       | Date
@@ -314,15 +270,12 @@ export type LegitimatorCommitteeMemberOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.LegitimatorCommitteeMemberCountOrderByAggregateInput
-  _avg?: Prisma.LegitimatorCommitteeMemberAvgOrderByAggregateInput
   _max?: Prisma.LegitimatorCommitteeMemberMaxOrderByAggregateInput
   _min?: Prisma.LegitimatorCommitteeMemberMinOrderByAggregateInput
-  _sum?: Prisma.LegitimatorCommitteeMemberSumOrderByAggregateInput
 }
 
 export type LegitimatorCommitteeMemberScalarWhereWithAggregatesInput = {
@@ -341,7 +294,6 @@ export type LegitimatorCommitteeMemberScalarWhereWithAggregatesInput = {
     | Prisma.StringNullableWithAggregatesFilter<'LegitimatorCommitteeMember'>
     | string
     | null
-  order?: Prisma.IntWithAggregatesFilter<'LegitimatorCommitteeMember'> | number
   createdAt?:
     | Prisma.DateTimeWithAggregatesFilter<'LegitimatorCommitteeMember'>
     | Date
@@ -359,7 +311,6 @@ export type LegitimatorCommitteeMemberCreateInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutLegitimatorCommitteeMemberInput
@@ -369,7 +320,6 @@ export type LegitimatorCommitteeMemberUncheckedCreateInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
@@ -379,7 +329,6 @@ export type LegitimatorCommitteeMemberUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutLegitimatorCommitteeMemberNestedInput
@@ -389,7 +338,6 @@ export type LegitimatorCommitteeMemberUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -399,7 +347,6 @@ export type LegitimatorCommitteeMemberCreateManyInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
@@ -409,7 +356,6 @@ export type LegitimatorCommitteeMemberUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -418,7 +364,6 @@ export type LegitimatorCommitteeMemberUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -438,21 +383,15 @@ export type LegitimatorCommitteeMemberCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type LegitimatorCommitteeMemberAvgOrderByAggregateInput = {
-  order?: Prisma.SortOrder
 }
 
 export type LegitimatorCommitteeMemberMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -462,14 +401,9 @@ export type LegitimatorCommitteeMemberMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type LegitimatorCommitteeMemberSumOrderByAggregateInput = {
-  order?: Prisma.SortOrder
 }
 
 export type LegitimatorCommitteeMemberCreateNestedManyWithoutUserInput = {
@@ -588,7 +522,6 @@ export type LegitimatorCommitteeMemberCreateWithoutUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -597,7 +530,6 @@ export type LegitimatorCommitteeMemberUncheckedCreateWithoutUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -659,7 +591,6 @@ export type LegitimatorCommitteeMemberScalarWhereInput = {
     | Prisma.StringNullableFilter<'LegitimatorCommitteeMember'>
     | string
     | null
-  order?: Prisma.IntFilter<'LegitimatorCommitteeMember'> | number
   createdAt?:
     | Prisma.DateTimeFilter<'LegitimatorCommitteeMember'>
     | Date
@@ -675,7 +606,6 @@ export type LegitimatorCommitteeMemberCreateManyUserInput = {
   id?: string
   role: string
   description?: string | null
-  order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -684,7 +614,6 @@ export type LegitimatorCommitteeMemberUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -693,7 +622,6 @@ export type LegitimatorCommitteeMemberUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -702,7 +630,6 @@ export type LegitimatorCommitteeMemberUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -715,7 +642,6 @@ export type LegitimatorCommitteeMemberSelect<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -732,7 +658,6 @@ export type LegitimatorCommitteeMemberSelectCreateManyAndReturn<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -749,7 +674,6 @@ export type LegitimatorCommitteeMemberSelectUpdateManyAndReturn<
     id?: boolean
     role?: boolean
     description?: boolean
-    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -762,7 +686,6 @@ export type LegitimatorCommitteeMemberSelectScalar = {
   id?: boolean
   role?: boolean
   description?: boolean
-  order?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -772,13 +695,7 @@ export type LegitimatorCommitteeMemberOmit<
   ExtArgs extends
     runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
 > = runtime.Types.Extensions.GetOmit<
-  | 'id'
-  | 'role'
-  | 'description'
-  | 'order'
-  | 'createdAt'
-  | 'updatedAt'
-  | 'userId',
+  'id' | 'role' | 'description' | 'createdAt' | 'updatedAt' | 'userId',
   ExtArgs['result']['legitimatorCommitteeMember']
 >
 export type LegitimatorCommitteeMemberInclude<
@@ -813,7 +730,6 @@ export type $LegitimatorCommitteeMemberPayload<
       id: string
       role: string
       description: string | null
-      order: number
       createdAt: Date
       updatedAt: Date
       userId: string
@@ -1470,7 +1386,6 @@ export interface LegitimatorCommitteeMemberFieldRefs {
   readonly id: Prisma.FieldRef<'LegitimatorCommitteeMember', 'String'>
   readonly role: Prisma.FieldRef<'LegitimatorCommitteeMember', 'String'>
   readonly description: Prisma.FieldRef<'LegitimatorCommitteeMember', 'String'>
-  readonly order: Prisma.FieldRef<'LegitimatorCommitteeMember', 'Int'>
   readonly createdAt: Prisma.FieldRef<'LegitimatorCommitteeMember', 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<'LegitimatorCommitteeMember', 'DateTime'>
   readonly userId: Prisma.FieldRef<'LegitimatorCommitteeMember', 'String'>

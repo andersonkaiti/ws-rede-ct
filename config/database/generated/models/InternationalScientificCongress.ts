@@ -762,6 +762,14 @@ export type InternationalScientificCongressScalarRelationFilter = {
   isNot?: Prisma.InternationalScientificCongressWhereInput
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type InternationalScientificCongressCreateNestedOneWithoutPartnersInput =
   {
     create?: Prisma.XOR<

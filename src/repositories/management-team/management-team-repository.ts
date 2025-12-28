@@ -22,11 +22,10 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
       })
 
       await tx.managementTeamMember.createMany({
-        data: members.map(({ userId, role, order }) => ({
+        data: members.map(({ userId, role }) => ({
           teamId: createdTeam.id,
           userId,
           role,
-          order: order ?? 0,
         })),
       })
 
@@ -54,11 +53,10 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
 
         if (members.length > 0) {
           await tx.managementTeamMember.createMany({
-            data: members.map(({ userId, role, order }) => ({
+            data: members.map(({ userId, role }) => ({
               teamId: team.id,
               userId,
               role,
-              order: order ?? 0,
             })),
           })
         }
@@ -117,9 +115,6 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
               },
             },
           },
-          orderBy: {
-            order: 'asc',
-          },
         },
       },
       orderBy: {
@@ -144,9 +139,6 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
               },
             },
           },
-          orderBy: {
-            order: 'asc',
-          },
         },
       },
     })
@@ -165,9 +157,6 @@ export class ManagementTeamRepository implements IManagementTeamRepository {
                 passwordHash: true,
               },
             },
-          },
-          orderBy: {
-            order: 'asc',
           },
         },
       },

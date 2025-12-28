@@ -21,7 +21,6 @@ const sdhcTeamMemberSchema = z.object({
   id: z.uuid(),
   role: z.string(),
   description: z.string().nullable(),
-  order: z.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
   userId: z.uuid(),
