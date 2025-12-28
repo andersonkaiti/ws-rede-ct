@@ -48,6 +48,10 @@ export const updateUserSchema = z.object({
       }),
     )
     .optional(),
+  removeAvatarImage: z
+    .union([z.boolean(), z.literal('true'), z.literal('false')])
+    .transform((val) => val === true || val === 'true')
+    .optional(),
 })
 
 export class UpdateUserController {
@@ -57,7 +61,7 @@ export class UpdateUserController {
   ) {}
 
   async handle(req: Request, res: Response) {
-    const { avatarImage, ...rest } = updateUserSchema.parse({
+    const { avatarImage, removeAvatarImage, ...rest } = updateUserSchema.parse({
       ...req.body,
       avatarImage: req.file,
     })
@@ -89,10 +93,18 @@ export class UpdateUserController {
       }
     }
 
+    if (removeAvatarImage) {
+      if (user.avatarUrl) {
+        await this.firebaseStorageService.deleteFile({
+          fileUrl: user.avatarUrl,
+        })
+      }
+    }
+
     await this.userRepository.update({
       ...rest,
       id: authenticatedUserId,
-      avatarUrl: avatarUrl || undefined,
+      avatarUrl: removeAvatarImage ? undefined : avatarUrl,
     })
 
     return res.sendStatus(HttpStatus.NO_CONTENT)
