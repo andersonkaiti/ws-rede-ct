@@ -5,12 +5,13 @@
 **API REST da RedeCT** construída com Node.js, Express 5, TypeScript e Prisma (PostgreSQL)
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat&logo=node.js)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express-5.1.0-000000?style=flat&logo=express)](https://expressjs.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
-[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=flat&logo=prisma)](https://www.prisma.io/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?style=flat&logo=postgresql)](https://www.postgresql.org/)
+[![Express](https://img.shields.io/badge/Express-5.2.1-000000?style=flat&logo=express)](https://expressjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-7.1-2D3748?style=flat&logo=prisma)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-336791?style=flat&logo=postgresql)](https://www.postgresql.org/)
 [![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=flat&logo=jsonwebtokens)](https://jwt.io/)
 [![Firebase](https://img.shields.io/badge/Firebase-Storage-FFCA28?style=flat&logo=firebase)](https://firebase.google.com/)
+[![Sharp](https://img.shields.io/badge/Sharp-Image_Processing-99CC00?style=flat)](https://sharp.pixelplumbing.com/)
 [![OpenAPI](https://img.shields.io/badge/OpenAPI-Docs-6BA539?style=flat&logo=swagger)](https://swagger.io/specification/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat&logo=docker)](https://www.docker.com/)
 
@@ -36,24 +37,27 @@
 
 ## 🎯 Sobre
 
-API responsável por autenticação, gestão de usuários, notícias, equipes, certificações e pendências da RedeCT. Inclui proteção por JWT, upload de arquivos para o Firebase Storage e documentação interativa em `/docs`.
+API responsável por autenticação, gestão de usuários, notícias, equipes, certificações e pendências da RedeCT. Inclui proteção por JWT, upload de arquivos para o Firebase Storage com processamento automático de imagens (conversão para WebP via Sharp), e documentação interativa completa em `/docs` (Scalar/OpenAPI).
 
 ## 🛠 Tecnologias
 
 | Tecnologia | Versão | Descrição |
 |------------|--------|-----------|
 | Node.js | 18+ | Runtime JavaScript (ESM) |
-| Express | 5.1.0 | Framework web |
-| TypeScript | 5.8.3 | Tipagem estática |
-| Prisma | 6.9.0 | ORM para PostgreSQL |
+| Express | 5.2.1 | Framework web |
+| TypeScript | 5.9.3 | Tipagem estática |
+| Prisma | 7.1.0 | ORM para PostgreSQL |
 | PostgreSQL | 17 | Banco de dados relacional |
-| JSON Web Token | 9.0.2 | Autenticação por token |
-| Bcrypt | 3.0.2 | Hash de senhas |
-| Multer | 2.0.0 | Upload de arquivos |
-| Firebase Admin | 13.4.0 | Storage de arquivos |
+| JSON Web Token | 9.0.3 | Autenticação por token |
+| Bcrypt | 3.0.3 | Hash de senhas |
+| Multer | 2.0.2 | Upload de arquivos |
+| Firebase Admin | 13.6.0 | Storage de arquivos |
+| Sharp | 0.34.5 | Processamento de imagens (WebP) |
+| Google Cloud Storage | 7.18.0 | Cliente para Firebase Storage |
 | CORS | 2.8.5 | Cross-Origin Resource Sharing |
 | Scalar/OpenAPI | - | Documentação interativa em `/docs` |
-| tsup | 8.4.0 | Bundler/Build TS |
+| Zod | 4.1.13 | Validação de schemas e OpenAPI |
+| tsup | 8.5.1 | Bundler/Build TS |
 
 ## 🏗 Arquitetura
 
@@ -113,7 +117,7 @@ Credenciais (`docker-compose.yml`):
 Aplique Prisma e migrações:
 
 ```bash
-npm install
+pnpm install
 npx prisma generate
 npx prisma migrate deploy
 ```
@@ -121,8 +125,8 @@ npx prisma migrate deploy
 Opcional:
 
 ```bash
-npm run db:studio  # Prisma Studio
-npm run db:seed    # Seed, se aplicável
+pnpm run db:studio  # Prisma Studio
+pnpm run db:seed    # Seed, se aplicável
 ```
 
 ## 🚀 Execução
@@ -130,21 +134,28 @@ npm run db:seed    # Seed, se aplicável
 Dev (watch):
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Produção:
 
 ```bash
-npm run build
-npm start
+pnpm run build
+pnpm start
 ```
 
 A API inicia na porta `4000` (ver `bin/server.ts`).
 
 ## 📘 Documentação da API
 
-A documentação está em: https://ws-rede-ct.vercel.app/docs
+A documentação interativa completa está disponível em: https://ws-rede-ct.vercel.app/docs
+
+Esta documentação inclui:
+- **32 módulos de rotas** com todos os endpoints
+- **Schemas de requisição e resposta** para cada endpoint
+- **Autenticação e autorização** necessárias
+- **Exemplos de uso** para facilitar a integração
+- **Interface interativa** para testar os endpoints diretamente
 
 ## 🔒 Autenticação
 
@@ -155,13 +166,50 @@ A documentação está em: https://ws-rede-ct.vercel.app/docs
 
 ## 🖼 Uploads
 
-`multer` para campos de arquivo:
-- Notícias: `image`
-- Usuário: `avatarImage`
-- Certificação: `certification`
-- Pendência: `document`
+A API utiliza `multer` para gerenciar uploads de arquivos em diversos endpoints. Os arquivos são organizados por tipo de campo:
 
-Armazenamento no Firebase Storage (`src/services/firebase-storage`).
+### 📷 Campo `image` (imagens)
+- Notícias (`/news`)
+- Eventos (`/events`)
+- Cursos (`/courses`)
+- Programas de Pós-Graduação (`/post-graduate-programs`)
+- Galerias de Congressos Internacionais (`/international-scientific-congresses/:id/gallery`)
+- Galerias de Congressos Regionais (`/regional-congresses/:id/gallery`)
+- Destaques RedeCT (`/redect-highlights`)
+
+### 🖼️ Campo `logo` (logotipos)
+- Revistas Científicas (`/scientific-journals`)
+- Grupos de Pesquisa (`/research-groups`)
+- Parceiros de Congressos Internacionais (`/international-scientific-congresses/:id/partners`)
+- Parceiros de Congressos Regionais (`/regional-congresses/:id/partners`)
+- Parceiros (`/partners`)
+- Museus (`/museums`)
+
+### 📄 Campo `document` (documentos)
+- Regimentos (`/regiments`)
+- Pendências (`/pendencies`)
+- Atas de Reunião (`/meetings/:id/minutes`)
+- Extratos Financeiros (`/financial-transaction-statements`)
+
+### 👤 Campo `avatarImage` (avatar do usuário)
+- Usuários (`/users`)
+
+### 🎓 Campo `certification` (certificados)
+- Certificações (`/certifications`)
+
+### 📸 Campo `photo` (fotos)
+- In Memoriam (`/in-memoriam`)
+
+### 🎬 Campo `thumbnail` (miniaturas)
+- Webinários (`/webinars`)
+
+### ⚡ Processamento Automático de Imagens
+
+As imagens são automaticamente processadas com **Sharp** para:
+- Conversão para formato **WebP** (otimização de tamanho)
+- Qualidade de 80% para melhor performance
+
+Armazenamento no **Firebase Storage** (`src/services/firebase-storage`).
 
 <div align="center">
 
