@@ -11,7 +11,6 @@ export class AuthMiddleware {
     if (!authorizationHeader?.startsWith('Bearer ')) {
       return res.status(HttpStatus.UNAUTHORIZED).json({
         message: 'Token inválido.',
-        invalid: true,
       })
     }
 
@@ -23,26 +22,17 @@ export class AuthMiddleware {
       })
     }
 
-    try {
-      const decodedToken = this.jwtService.verify(token)
+    const decodedToken = this.jwtService.verify(token)
 
-      if (!decodedToken) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: 'Token inválido.',
-          invalid: true,
-        })
-      }
-
-      req.user = decodedToken
-
-      next()
-    } catch (err) {
-      if (err instanceof Error) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: err.message,
-        })
-      }
+    if (!decodedToken) {
+      return res.status(HttpStatus.UNAUTHORIZED).json({
+        message: 'Token inválido.',
+      })
     }
+
+    req.user = decodedToken
+
+    next()
   }
 
   isAdmin(req: Request, res: Response, next: NextFunction) {
@@ -51,7 +41,6 @@ export class AuthMiddleware {
     if (!authorizationHeader?.startsWith('Bearer ')) {
       return res.status(HttpStatus.UNAUTHORIZED).json({
         message: 'Token inválido.',
-        invalid: true,
       })
     }
 
@@ -63,31 +52,22 @@ export class AuthMiddleware {
       })
     }
 
-    try {
-      const decodedToken = this.jwtService.verify(token)
+    const decodedToken = this.jwtService.verify(token)
 
-      if (!decodedToken) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: 'Token inválido.',
-          invalid: true,
-        })
-      }
-
-      if (decodedToken.role !== 'ADMIN') {
-        return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: 'É necessário ter permissões de administrador.',
-        })
-      }
-
-      req.user = decodedToken
-
-      next()
-    } catch (err) {
-      if (err instanceof Error) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: err.message,
-        })
-      }
+    if (!decodedToken) {
+      return res.status(HttpStatus.UNAUTHORIZED).json({
+        message: 'Token inválido.',
+      })
     }
+
+    if (decodedToken.role !== 'ADMIN') {
+      return res.status(HttpStatus.UNAUTHORIZED).json({
+        message: 'É necessário ter permissões de administrador.',
+      })
+    }
+
+    req.user = decodedToken
+
+    next()
   }
 }
